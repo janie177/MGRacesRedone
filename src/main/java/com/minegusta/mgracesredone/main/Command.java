@@ -1,10 +1,11 @@
 package com.minegusta.mgracesredone.main;
 
+import com.minegusta.mgracesredone.commands.RaceCommand;
 import org.bukkit.command.CommandExecutor;
 
 public enum Command
 {
-    COMMANDNAME();
+    RACE(new RaceCommand());
 
     private CommandExecutor commandExecutor;
 

@@ -2,5 +2,6 @@ main: com.minegusta.mgracesredone.main.Main
 author: janie177
 name: MGRacesRedone
 version: ${project.version}
+softdepend: [WorldGuard]
 
 commands:
