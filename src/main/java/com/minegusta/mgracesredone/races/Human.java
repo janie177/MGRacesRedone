@@ -2,7 +2,8 @@ package com.minegusta.mgracesredone.races;
 
 import org.bukkit.entity.Player;
 
-public class Human extends Race {
+public class Human extends Race
+{
     @Override
     public double getHealth() {
         return 0;
@@ -27,4 +28,7 @@ public class Human extends Race {
     public void passiveBoost(Player p) {
 
     }
+
+
+
 }
