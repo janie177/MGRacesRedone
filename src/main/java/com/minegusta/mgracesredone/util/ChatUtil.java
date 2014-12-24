@@ -35,4 +35,9 @@ public class ChatUtil
         p.sendMessage(s3);
         p.sendMessage(s4);
     }
+
+    public static void sendFooter(Player p)
+    {
+        p.sendMessage(s2+s1+s2+s1+s2+s1+s2+s1+s2);
+    }
 }

@@ -14,6 +14,11 @@ public class Human extends Race {
     }
 
     @Override
+    public String[] getInfectionInfo() {
+        return new String[0];
+    }
+
+    @Override
     public String[] getInfo() {
         return new String[0];
     }

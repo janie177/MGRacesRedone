@@ -8,6 +8,8 @@ public abstract class Race
 
     public abstract String getName();
 
+    public abstract String[] getInfectionInfo();
+
     public abstract String[] getInfo();
 
     public abstract void passiveBoost(Player p);

@@ -34,6 +34,11 @@ public enum RaceType
         return race.getInfo();
     }
 
+    public String[] getInfectionInfo()
+    {
+        return race.getInfectionInfo();
+    }
+
     public void passiveBoost(Player p)
     {
         race.passiveBoost(p);
