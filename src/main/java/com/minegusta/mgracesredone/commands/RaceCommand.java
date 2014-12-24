@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.commands;
 
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.RaceCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,6 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import javax.swing.plaf.TextUI;
 
 public class RaceCommand implements CommandExecutor {
     private Player p;
@@ -31,6 +34,26 @@ public class RaceCommand implements CommandExecutor {
         //Check for args here
 
         return true;
+    }
+
+    private void sendHelp()
+    {
+
+    }
+
+    private void sendMessage(String[] text)
+    {
+        ChatUtil.sendFancyBanner(p);
+        for(String s : text)
+        {
+            p.sendMessage(ChatColor.LIGHT_PURPLE + s);
+        }
+    }
+
+    private void sendInfo(RaceType race)
+    {
+        ChatUtil.sendFancyBanner(p);
+
     }
 
 
