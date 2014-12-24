@@ -1,5 +1,8 @@
 package com.minegusta.mgracesredone.main;
 
+import com.minegusta.mgracesredone.files.FileManager;
+import com.minegusta.mgracesredone.tasks.BoostTask;
+import com.minegusta.mgracesredone.tasks.SaveTask;
 import com.minegusta.mgracesredone.util.OnReload;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -16,9 +19,14 @@ public class Main extends JavaPlugin
         //Initialize the plugin
         PLUGIN = this;
 
-        //
+        //Tasks
+        SaveTask.start();
+        BoostTask.start();
 
-        //Add all players to the map on reload.
+        //Files
+        FileManager.create();
+
+        //Add all players to the map on reload
         OnReload.addToMap();
 
         //Commands
@@ -40,7 +48,9 @@ public class Main extends JavaPlugin
     @Override
     public void onDisable()
     {
-
+        //Cancel tasks
+        SaveTask.stop();
+        BoostTask.stop();
     }
 
     /**

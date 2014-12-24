@@ -9,6 +9,7 @@ public enum RaceType
     DWARF(new Dwarf()),
     WEREWOLF(new Werewolf()),
     AURORA(new Aurora()),
+    ENDERBORN(new EnderBorn()),
     DEMON(new Demon());
 
     private Race race;

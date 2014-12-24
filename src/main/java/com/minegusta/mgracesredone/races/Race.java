@@ -12,6 +12,11 @@ public abstract class Race
 
     public abstract void passiveBoost(Player p);
 
-    public abstract void setHealth(Player p);
+    public void setHealth(Player p)
+    {
+        p.setMaxHealth(getHealth());
+        p.setHealthScaled(true);
+        p.setHealthScale(getHealth());
+    }
 
 }

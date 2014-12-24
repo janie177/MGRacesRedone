@@ -22,9 +22,4 @@ public class Human extends Race {
     public void passiveBoost(Player p) {
 
     }
-
-    @Override
-    public void setHealth(Player p) {
-
-    }
 }

@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentMap;
 
 public class Storage
@@ -39,6 +40,11 @@ public class Storage
     public static void remove(Player p)
     {
         if(racesMap.containsKey(p.getUniqueId().toString()))racesMap.remove(p.getUniqueId().toString());
+    }
+
+    public static Collection<MGPlayer> getPlayers()
+    {
+        return racesMap.values();
     }
 
     public static void remove(String uuid)

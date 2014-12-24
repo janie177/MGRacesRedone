@@ -3,5 +3,8 @@ author: janie177
 name: MGRacesRedone
 version: ${project.version}
 softdepend: [WorldGuard]
-
 commands:
+   race:
+      aliases: [races, class, classes, ra, rc]
+      usage: /Race
+      description: All information you need about races.
