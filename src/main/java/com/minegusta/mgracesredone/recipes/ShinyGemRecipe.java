@@ -1,11 +1,12 @@
 package com.minegusta.mgracesredone.recipes;
 
+import com.minegusta.mgracesredone.util.MGItem;
 import org.bukkit.inventory.ItemStack;
 
 public class ShinyGemRecipe implements IRecipe {
     @Override
-    public RecipeItem[] getIngriedients() {
-        return new RecipeItem[0];
+    public MGItem[] getIngriedients() {
+        return new MGItem[0];
     }
 
     @Override

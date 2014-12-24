@@ -10,7 +10,7 @@ public class ChatUtil
     public static void sendString(Player p, String message)
     {
         p.sendMessage(prefix);
-        p.sendMessage(message);
+        p.sendMessage(ChatColor.LIGHT_PURPLE + message);
 
     }
 

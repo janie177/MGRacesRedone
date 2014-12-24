@@ -1,8 +1,8 @@
 package com.minegusta.mgracesredone.commands;
 
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.util.MGItem;
 import com.minegusta.mgracesredone.recipes.Recipe;
-import com.minegusta.mgracesredone.recipes.RecipeItem;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Races;
 import org.bukkit.ChatColor;
@@ -99,7 +99,7 @@ public class RaceCommand implements CommandExecutor {
         {
             p.sendMessage(ChatColor.LIGHT_PURPLE + s);
         }
-        ChatUtil.sendFancyBanner(p);
+        ChatUtil.sendFooter(p);
     }
 
     private void sendList(RaceType[] list)
@@ -109,7 +109,7 @@ public class RaceCommand implements CommandExecutor {
         {
             p.sendMessage(ChatColor.LIGHT_PURPLE + type.getName());
         }
-        ChatUtil.sendFancyBanner(p);
+        ChatUtil.sendFooter(p);
     }
 
     private void sendList(Recipe[] list)
@@ -118,7 +118,7 @@ public class RaceCommand implements CommandExecutor {
         for(Recipe recipe : list)
         {
             p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + recipe.getRecipeName());
-            for(RecipeItem item : recipe.getRecipe().getIngriedients())
+            for(MGItem item : recipe.getRecipe().getIngriedients())
             {
                 p.sendMessage(ChatColor.YELLOW + " - " + ChatColor.DARK_PURPLE + item.getAmount() + ChatColor.LIGHT_PURPLE + item.getMaterial().toString());
             }

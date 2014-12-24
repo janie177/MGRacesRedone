@@ -1,13 +1,13 @@
-package com.minegusta.mgracesredone.recipes;
+package com.minegusta.mgracesredone.util;
 
 import org.bukkit.Material;
 
-public class RecipeItem
+public class MGItem
 {
     private Material material;
     private int amount;
 
-    public RecipeItem(Material material, int amount)
+    public MGItem(Material material, int amount)
     {
         this.material = material;
         this.amount = amount;

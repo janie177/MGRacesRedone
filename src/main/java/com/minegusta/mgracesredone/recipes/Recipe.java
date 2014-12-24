@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.recipes;
 
+import com.minegusta.mgracesredone.util.MGItem;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -34,7 +35,7 @@ public enum Recipe
         return recipe.getResult();
     }
 
-    public RecipeItem[] getIngredients()
+    public MGItem[] getIngredients()
     {
         return recipe.getIngriedients();
     }
@@ -44,7 +45,7 @@ public enum Recipe
         for(Recipe r : Recipe.values())
         {
             ShapelessRecipe recipe = new ShapelessRecipe(r.getResult());
-            for(RecipeItem i : r.getIngredients())
+            for(MGItem i : r.getIngredients())
             {
                 recipe.addIngredient(i.getAmount(), i.getMaterial());
             }
