@@ -10,7 +10,7 @@ public class ShinyGemRecipe implements IRecipe {
 
     @Override
     public String getName() {
-        return null;
+        return "Shiny Gem";
     }
 
     @Override

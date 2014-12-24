@@ -1,25 +1,54 @@
 package com.minegusta.mgracesredone.recipes;
 
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
+
 public enum Recipe
 {
-    SHINYGEM("Shiny Gem", new ShinyGemRecipe());
+    SHINYGEM(new ShinyGemRecipe());
 
-    private String name;
+
+
+
+
     private IRecipe recipe;
 
-    private Recipe(String name, IRecipe recipe)
+    private Recipe(IRecipe recipe)
     {
-        this.name = name;
         this.recipe = recipe;
     }
 
     public String getRecipeName()
     {
-        return name;
+        return recipe.getName();
     }
 
     public IRecipe getRecipe()
     {
         return recipe;
+    }
+
+    public ItemStack getResult()
+    {
+        return recipe.getResult();
+    }
+
+    public RecipeItem[] getIngredients()
+    {
+        return recipe.getIngriedients();
+    }
+
+    public static void registerRecipes()
+    {
+        for(Recipe r : Recipe.values())
+        {
+            ShapelessRecipe recipe = new ShapelessRecipe(r.getResult());
+            for(RecipeItem i : r.getIngredients())
+            {
+                recipe.addIngredient(i.getAmount(), i.getMaterial());
+            }
+            Bukkit.addRecipe(recipe);
+        }
     }
 }
