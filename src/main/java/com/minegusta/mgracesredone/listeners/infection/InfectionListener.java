@@ -4,14 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.races.Demon;
-import com.minegusta.mgracesredone.races.EnderBorn;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.util.*;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -250,9 +246,25 @@ public class InfectionListener implements Listener
 
     //Werewolf
     @EventHandler
-    public void onWerewolfInfect()
-    {
+    public void onWerewolfInfect(PlayerInteractEntityEvent e) {
+        Player p = e.getPlayer();
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
+        if (WeatherUtil.getMoonPhase(p.getWorld()) == WeatherUtil.MoonPhase.FULL) {
+            if (e.getRightClicked() instanceof Wolf && p.getItemInHand().equals(Recipe.WOLFBONE.getResult())) {
+                Wolf wolf = (Wolf) e.getRightClicked();
+                if (wolf.isTamed()) return;
 
+                wolf.getWorld().createExplosion(wolf.getLocation(), 0, false);
+
+                EffectUtil.playSound(p, Sound.WOLF_HOWL);
+                EffectUtil.playParticle(wolf, Effect.LARGE_SMOKE, 1, 1, 1, 300);
+                wolf.remove();
+
+                ItemUtil.removeOne(p, Recipe.WOLFBONE.getResult());
+
+                ChatUtil.sendList(p, new String[]{"You are now a Werewolf!", "Awoo!!"});
+
+            }
+        }
     }
-
 }

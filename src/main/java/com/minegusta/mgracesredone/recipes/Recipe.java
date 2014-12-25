@@ -10,6 +10,7 @@ public enum Recipe
     SHINYGEM(new ShinyGemRecipe()),
     ENDEREYE(new EnderCrystalRecipe()),
     ELFSTEW(new ElfStewRecipe()),
+    WOLFBONE(new WolfBoneRecipe()),
     ICECRYSTAL(new IceCrystalRecipe());
 
 

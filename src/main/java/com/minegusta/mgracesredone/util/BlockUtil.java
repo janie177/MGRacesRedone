@@ -1,8 +1,11 @@
 package com.minegusta.mgracesredone.util;
 
+import com.google.common.collect.Lists;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -35,6 +38,45 @@ public class BlockUtil
         }
         return count >= neededAmount;
     }
+
+    public static Block getHighestBlock(Location l)
+    {
+        return l.getWorld().getHighestBlockAt(l);
+    }
+
+    public static int getHighestBlockYAt(Location l)
+    {
+        return l.getWorld().getHighestBlockYAt(l);
+    }
+
+    public static Material getBlockAtLocation(Location l)
+    {
+        return l.getBlock().getType();
+    }
+
+    public static Material getBlockAtPlayer(Player p)
+    {
+        return getBlockAtLocation(p.getLocation());
+    }
+
+    public static List<Block> getCircle(Location center, int radius, boolean fill)
+    {
+        List<Block> list = Lists.newArrayList();
+        int x = (int) center.getX();
+        int y = (int) center.getY();
+        int z = (int) center.getZ();
+
+        if(fill)
+        {
+
+        }
+        else
+        {
+
+        }
+        return list;
+    }
+
 
     public static void poofBlocks(Block center, int radius, List<Material> searched, Material replacement, Effect effect)
     {

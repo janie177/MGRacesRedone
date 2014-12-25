@@ -6,6 +6,16 @@ import org.bukkit.World;
 
 public class WeatherUtil
 {
+    public enum BiomeType
+    {
+        HOT,WARM,NEUTRAL,COLD,ICE
+    }
+
+
+    public enum MoonPhase
+    {
+        FULL,QUARTER,HALF,NEW
+    }
 
     public static BiomeType getBiomeType(Location l)
     {
@@ -39,9 +49,32 @@ public class WeatherUtil
         return !isDay(w);
     }
 
-    public enum BiomeType
+    public static MoonPhase getMoonPhase(World w)
     {
-        HOT,WARM,NEUTRAL,COLD,ICE
-    }
+        int day = (int) w.getFullTime()/24000;
+        MoonPhase phase;
 
+        switch (day)
+        {
+            case 1: phase = MoonPhase.QUARTER;
+                break;
+            case 2: phase = MoonPhase.HALF;
+                break;
+            case 3: phase = MoonPhase.QUARTER;
+                break;
+            case 4: phase = MoonPhase.NEW;
+                break;
+            case 5: phase = MoonPhase.QUARTER;
+                break;
+            case 6: phase = MoonPhase.HALF;
+                break;
+            case 7: phase = MoonPhase.QUARTER;
+                break;
+            case 8: phase = MoonPhase.FULL;
+                break;
+            default: phase = MoonPhase.NEW;
+                break;
+        }
+        return phase;
+    }
 }
