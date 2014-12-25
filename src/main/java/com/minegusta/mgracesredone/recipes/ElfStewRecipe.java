@@ -9,26 +9,26 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class ShinyGemRecipe implements IRecipe {
+public class ElfStewRecipe implements IRecipe {
     @Override
     public MGItem[] getIngriedients() {
-        return new MGItem[]{new MGItem(Material.NETHER_STAR, 1), new MGItem(Material.GOLD_BLOCK, 4), new MGItem(Material.GOLD_INGOT, 4)};
+        return new MGItem[]{new MGItem(Material.LEAVES, 2), new MGItem(Material.CARROT_ITEM, 2), new MGItem(Material.POTATO_ITEM, 2), new MGItem(Material.GLOWSTONE, 3)};
     }
 
     @Override
     public String getName() {
-        return "Shiny Gem";
+        return "Elf Stew";
     }
 
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.NETHER_STAR, 1)
+        return new ItemStack(Material.MUSHROOM_SOUP, 1)
         {
             {
-                List<String> lore = Lists.newArrayList();
-                lore.add(ChatColor.WHITE + "The Arkenstone... Heart of the mountain...");
                 ItemMeta meta = getItemMeta();
-                meta.setDisplayName(ChatColor.YELLOW + getName());
+                List<String> lore = Lists.newArrayList();
+                lore.add(ChatColor.GREEN + "Vegan stew, loved by elves..");
+                meta.setDisplayName(ChatColor.DARK_GREEN + getName());
                 meta.setLore(lore);
                 setItemMeta(meta);
             }

@@ -9,26 +9,26 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class ShinyGemRecipe implements IRecipe {
+public class EnderCrystalRecipe implements IRecipe {
     @Override
     public MGItem[] getIngriedients() {
-        return new MGItem[]{new MGItem(Material.NETHER_STAR, 1), new MGItem(Material.GOLD_BLOCK, 4), new MGItem(Material.GOLD_INGOT, 4)};
+        return new MGItem[]{new MGItem(Material.EYE_OF_ENDER, 1), new MGItem(Material.DIAMOND, 4), new MGItem(Material.ENDER_PEARL, 4)};
     }
 
     @Override
     public String getName() {
-        return "Shiny Gem";
+        return "Ender Crystal";
     }
 
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.NETHER_STAR, 1)
+        return new ItemStack(Material.EYE_OF_ENDER, 1)
         {
             {
                 List<String> lore = Lists.newArrayList();
-                lore.add(ChatColor.WHITE + "The Arkenstone... Heart of the mountain...");
+                lore.add(ChatColor.BLUE + "A strange force is locked in this crystal...");
                 ItemMeta meta = getItemMeta();
-                meta.setDisplayName(ChatColor.YELLOW + getName());
+                meta.setDisplayName(ChatColor.DARK_PURPLE + getName());
                 meta.setLore(lore);
                 setItemMeta(meta);
             }

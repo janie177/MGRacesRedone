@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -24,6 +25,11 @@ public class EffectUtil
     public static void playParticle(LivingEntity e, Effect effect, int x, int y, int z, int amount)
     {
         e.getWorld().spigot().playEffect(e.getLocation(), effect, 1, 1, x, y, z, 1, amount, 15);
+    }
+
+    public static void playParticle(Location l, Effect effect, int x, int y, int z, int amount)
+    {
+        l.getWorld().spigot().playEffect(l, effect, 1, 1, x, y, z, 1, amount, 15);
     }
 
     public static void playSound(Player p, Sound sound)

@@ -27,20 +27,19 @@ public class CureListener implements Listener
 
         if(!WorldCheck.isEnabled(p.getWorld()))return;
 
+        if(Races.getRace(p) == RaceType.HUMAN)return;
+
         if(event.hasBlock() && event.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
             if(event.getClickedBlock().getType() != altarBlock) return;
 
             if(BlockUtil.radiusCheck(event.getClickedBlock(), radius, secondaryBlock, secondaryBlockAmount))
             {
-                if(Races.getRace(p) != RaceType.HUMAN)
-                {
-                    ChatUtil.sendString(p, "You are now human!");
-                    EffectUtil.playSound(p, Sound.VILLAGER_YES);
-                    EffectUtil.playParticle(p, Effect.ENDER_SIGNAL, 1, 1, 1, 6);
-                    EffectUtil.playParticle(p, Effect.POTION_SWIRL_TRANSPARENT, 1, 1, 1, 30);
-                    Races.setRace(p, RaceType.HUMAN);
-                }
+                ChatUtil.sendString(p, "You are now human!");
+                EffectUtil.playSound(p, Sound.VILLAGER_YES);
+                EffectUtil.playParticle(p, Effect.ENDER_SIGNAL, 1, 1, 1, 6);
+                EffectUtil.playParticle(p, Effect.POTION_SWIRL_TRANSPARENT, 1, 1, 1, 30);
+                Races.setRace(p, RaceType.HUMAN);
             }
 
         }

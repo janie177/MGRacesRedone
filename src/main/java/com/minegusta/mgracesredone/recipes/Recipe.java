@@ -8,6 +8,8 @@ import org.bukkit.inventory.ShapelessRecipe;
 public enum Recipe
 {
     SHINYGEM(new ShinyGemRecipe()),
+    ENDEREYE(new EnderCrystalRecipe()),
+    ELFSTEW(new ElfStewRecipe()),
     ICECRYSTAL(new IceCrystalRecipe());
 
 

@@ -1,7 +1,10 @@
 package com.minegusta.mgracesredone.util;
 
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+
+import java.util.List;
 
 public class BlockUtil
 {
@@ -31,5 +34,24 @@ public class BlockUtil
             }
         }
         return count >= neededAmount;
+    }
+
+    public static void poofBlocks(Block center, int radius, List<Material> searched, Material replacement, Effect effect)
+    {
+        for (int x = -(radius); x <= radius; x ++)
+        {
+            for (int y = -(radius); y <= radius; y ++)
+            {
+                for (int z = -(radius); z <= radius; z ++)
+                {
+                    Block block = center.getRelative(x,y,z);
+                    if (searched.contains(block.getType()))
+                    {
+                        EffectUtil.playParticle(block.getLocation(), effect, 1,1,1,10);
+                        block.setType(replacement);
+                    }
+                }
+            }
+        }
     }
 }
