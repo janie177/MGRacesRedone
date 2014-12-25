@@ -31,12 +31,12 @@ public class InfectionListener implements Listener
      */
     //Aurora
     @EventHandler
-    public void onAuroraDeath(PlayerDeathEvent e)
+    public void onAuroraInfect(PlayerDeathEvent e)
     {
         Player p = e.getEntity();
         if(!WorldCheck.isEnabled(p.getWorld()))return;
         if(Races.getRace(p) != RaceType.HUMAN)return;
-        if(p.getLocation().getBlock().getTemperature() > 0.15)return;
+        if(WeatherUtil.getBiomeType(p.getLocation()) != WeatherUtil.BiomeType.ICE)return;
         if(e.getEntity().getLastDamageCause() != null && e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.DROWNING)
         {
             if(p.getInventory().containsAtLeast(Recipe.ICECRYSTAL.getResult(), 1))
@@ -66,7 +66,7 @@ public class InfectionListener implements Listener
         {
             for(Entity entity : p.getNearbyEntities(15,15,15))
             {
-                if(entity instanceof Sheep && ((Sheep)entity).isAdult())
+                if(entity instanceof Sheep && !((Sheep)entity).isAdult())
                 {
                     hasSheep = true;
                 }
@@ -131,6 +131,7 @@ public class InfectionListener implements Listener
         if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && p.getItemInHand().equals(Recipe.SHINYGEM.getResult()))
         {
             Block b = e.getClickedBlock();
+            if(b.getType() != Material.DIAMOND_ORE)return;
             if(BlockUtil.radiusCheck(b, 6, Material.DIAMOND_ORE, 5) && BlockUtil.radiusCheck(b, 6, Material.EMERALD_ORE, 5) && BlockUtil.radiusCheck(b, 6, Material.REDSTONE_ORE, 5) && BlockUtil.radiusCheck(b, 6, Material.LAPIS_ORE, 5))
             {
                 BlockUtil.poofBlocks(b, 6, Lists.newArrayList(Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE), Material.AIR, Effect.CLOUD);
@@ -223,7 +224,7 @@ public class InfectionListener implements Listener
 
     //Elf
     @EventHandler
-    public void onElfKill(EntityDeathEvent e)
+    public void onElfBowKill(EntityDeathEvent e)
     {
         LivingEntity victim = e.getEntity();
 

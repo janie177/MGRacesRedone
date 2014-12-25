@@ -12,12 +12,12 @@ public class Human extends Race
 {
     @Override
     public double getHealth() {
-        return 0;
+        return 26;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Human";
     }
 
     @Override
@@ -41,11 +41,18 @@ public class Human extends Race
 
     @Override
     public String[] getInfo() {
-        return new String[0];
+        return new String[]
+                {
+                        "Humans are the default race.",
+                        "Humans have no real downsides nor advantages.",
+                        "When you cure yourself at a cure altar, you become Human."
+                };
     }
 
     @Override
     public void passiveBoost(Player p) {
+
+        //No powers :D
 
     }
 

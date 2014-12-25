@@ -77,10 +77,10 @@ public class RaceCommand implements CommandExecutor {
                 sendInfo(race);
                 return true;
             }
-            if((args[0].equalsIgnoreCase("infect") || args[0].equalsIgnoreCase("infection")) && RaceType.valueOf(args[1])!= null)
+            if((args[0].equalsIgnoreCase("infect") || args[0].equalsIgnoreCase("infection")) && RaceType.valueOf(args[1].toUpperCase())!= null)
             {
-                RaceType race = RaceType.valueOf(args[1]);
-                sendList(race.getInfectionInfo());
+                RaceType race = RaceType.valueOf(args[1].toUpperCase());
+                sendInfectList(race.getInfectionInfo());
                 return true;
             }
             sendList(help);
@@ -102,6 +102,19 @@ public class RaceCommand implements CommandExecutor {
         ChatUtil.sendFooter(p);
     }
 
+    private void sendInfectList(String[] list)
+    {
+        boolean first  = true;
+        ChatUtil.sendFancyBanner(p);
+        p.sendMessage(ChatColor.LIGHT_PURPLE + list[0]);
+        for(String s : list)
+        {
+            if(!first)p.sendMessage(ChatColor.LIGHT_PURPLE + " - " + ChatColor.GRAY + s);
+            first = false;
+        }
+        ChatUtil.sendFooter(p);
+    }
+
     private void sendList(RaceType[] list)
     {
         ChatUtil.sendFancyBanner(p);
@@ -117,7 +130,7 @@ public class RaceCommand implements CommandExecutor {
         ChatUtil.sendFancyBanner(p);
         for(Recipe recipe : list)
         {
-            p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + recipe.getRecipeName());
+            p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + recipe.getRecipeName() + ":");
             for(MGItem item : recipe.getRecipe().getIngriedients())
             {
                 p.sendMessage(ChatColor.YELLOW + " - " + ChatColor.DARK_PURPLE + item.getAmount() + ChatColor.LIGHT_PURPLE + item.getMaterial().toString());
