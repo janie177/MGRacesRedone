@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.entity.Player;
 
 public abstract class Race

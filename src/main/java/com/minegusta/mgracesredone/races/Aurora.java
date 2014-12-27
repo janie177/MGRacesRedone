@@ -1,6 +1,10 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.util.*;
+import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 public class Aurora extends Race {
     @Override
@@ -41,5 +45,46 @@ public class Aurora extends Race {
     @Override
     public void passiveBoost(Player p) {
 
+        Material mat = BlockUtil.getBlockAtLocation(p.getLocation());
+
+        if(mat == Material.WATER || mat == Material.STATIONARY_WATER)
+        {
+            if(p.isSneaking()) p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.2D));
+        }
+
+        if(WeatherUtil.isFullMoon(p.getWorld()))
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+        }
+
+        if(WeatherUtil.isRaining(p.getWorld()) && PlayerUtil.isInOpenAir(p))
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+        }
+
+        WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(p.getLocation());
+
+        if(biome == WeatherUtil.BiomeType.ICE)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
+            EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
+        }
+        else if(biome == WeatherUtil.BiomeType.COLD)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
+            EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
+        }
+        else if(biome == WeatherUtil.BiomeType.HOT)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 1, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 1, 3);
+            EffectUtil.playParticle(p, Effect.WATERDRIP);
+        }
     }
 }

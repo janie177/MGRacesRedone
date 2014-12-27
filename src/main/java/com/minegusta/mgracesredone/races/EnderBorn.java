@@ -1,7 +1,11 @@
 package com.minegusta.mgracesredone.races;
 
 
+import com.minegusta.mgracesredone.util.*;
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 public class EnderBorn extends Race {
     @Override
@@ -35,6 +39,8 @@ public class EnderBorn extends Race {
                 "eating raw meat.",
                 "Enderborn can turn to shadow to stay unseen.",
                 "The sharp claws of the enderborn will cause bleeding to opponents.",
+                "In the end, Enderborn have permanent boosts.",
+                "When in dark areas, enderborn gain more strength.",
                 "Though strong, they also have a weakness. Like all creatures from The End,",
                 "they fear water most. Rain and water burn through the Enderborn like lava."
 
@@ -42,7 +48,33 @@ public class EnderBorn extends Race {
     }
 
     @Override
-    public void passiveBoost(Player p) {
+    public void passiveBoost(Player p)
+    {
+        Location loc = p.getLocation();
+        WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
+
+        if(WeatherUtil.isEnd(loc))
+        {
+            EffectUtil.playParticle(p, Effect.PORTAL);
+            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
+        }
+
+        if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))
+        {
+            p.damage(1);
+        }
+
+        if(BlockUtil.getLightLevel(loc) == BlockUtil.LightLevel.DARK)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+        }
+
+        if(p.isSneaking())
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.INVISIBILITY, 0, 2);
+            EffectUtil.playParticle(p, Effect.PARTICLE_SMOKE, 1, 0, 1, 40);
+        }
 
     }
 }

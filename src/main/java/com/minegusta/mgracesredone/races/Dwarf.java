@@ -1,6 +1,13 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.ItemUtil;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import com.minegusta.mgracesredone.util.WeatherUtil;
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 public class Dwarf extends Race {
     @Override
@@ -40,7 +47,7 @@ public class Dwarf extends Race {
                         "Dwarves have the blood of a miner, and mine faster than other races.",
                         "When a dwarf mines ore, they gain even more of a mining boost.",
                         "Killstreaks are a dwarf's speciality. When they kill a foe using",
-                        "and axe, they gain more power.",
+                        "ad axe, they gain more power.",
                         "They also possess the power to knock back enemies using their axe."
 
                 };
@@ -49,6 +56,18 @@ public class Dwarf extends Race {
     @Override
     public void passiveBoost(Player p)
     {
+        Location loc = p.getLocation();
+        double height = p.getLocation().getY();
 
+        if(height < 40)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+        }
+
+        if(ItemUtil.isPickAxe(p.getItemInHand().getType()))
+        {
+            EffectUtil.playParticle(p, Effect.SMOKE);
+            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 2, 3);
+        }
     }
 }

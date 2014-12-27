@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.util;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 
 public class WeatherUtil
 {
@@ -15,6 +16,21 @@ public class WeatherUtil
     public enum MoonPhase
     {
         FULL,QUARTER,HALF,NEW
+    }
+
+    public static boolean isHell(Location loc)
+    {
+        return loc.getBlock().getBiome() == Biome.HELL;
+    }
+
+    public static boolean isEnd(Location loc)
+    {
+        return loc.getBlock().getBiome() == Biome.SKY;
+    }
+
+    public static boolean isOverWorld(Location loc)
+    {
+        return !isEnd(loc) && !isHell(loc);
     }
 
     public static BiomeType getBiomeType(Location l)

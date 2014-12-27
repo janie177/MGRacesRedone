@@ -1,6 +1,13 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.PlayerUtil;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import com.minegusta.mgracesredone.util.WeatherUtil;
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 public class Werewolf extends Race
 {
@@ -40,14 +47,40 @@ public class Werewolf extends Race
                         "die but the werewolf will absorb part of its health.",
                         "Werewolves will even take the shape of a wolf during a full moon.",
                         "This is when they are at their strongest.",
-                        "When there is moon, they are weakened slightly.",
-                        "Werewolves have one weakness: gold.",
+                        "Armour will weaken them during a full moon though.",
+                        "When there is no moon, they are weakened slightly.",
+                        "Werewolves have another weakness: gold.",
                         "When a werewolf is hit by golden weapons, they take insane damage.",
                 };
     }
 
     @Override
-    public void passiveBoost(Player p) {
+    public void passiveBoost(Player p)
+    {
+        Location loc = p.getLocation();
+        WeatherUtil.BiomeType type = WeatherUtil.getBiomeType(loc);
+        WeatherUtil.MoonPhase phase = WeatherUtil.getMoonPhase(p.getWorld());
 
+        if(phase == WeatherUtil.MoonPhase.FULL)
+        {
+            EffectUtil.playParticle(p, Effect.WITCH_MAGIC);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 2, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 3);
+
+            int armour = PlayerUtil.getArmorAmounr(p);
+            if(armour != 0)
+            {
+                PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, armour - 1, 3);
+            }
+            else
+            {
+                PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 2, 3);
+            }
+        }
+        else if(phase == WeatherUtil.MoonPhase.NEW)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 3);
+        }
     }
 }

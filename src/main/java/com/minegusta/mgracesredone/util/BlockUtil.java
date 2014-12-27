@@ -11,6 +11,10 @@ import java.util.List;
 
 public class BlockUtil
 {
+    public enum LightLevel{
+        DARK,LIGHT
+    }
+
     /**
      * Look in a radius around a block and count for a needed material. Return if there is enough.
      * @param center The block that is centered.
@@ -42,6 +46,12 @@ public class BlockUtil
     public static Block getHighestBlock(Location l)
     {
         return l.getWorld().getHighestBlockAt(l);
+    }
+
+    public static LightLevel getLightLevel(Location l)
+    {
+        if(l.getBlock().getLightLevel() <= 6) return LightLevel.DARK;
+        return LightLevel.LIGHT;
     }
 
     public static int getHighestBlockYAt(Location l)
