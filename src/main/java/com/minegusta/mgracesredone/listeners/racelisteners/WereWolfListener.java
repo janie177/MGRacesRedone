@@ -21,7 +21,7 @@ public class WereWolfListener implements Listener
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
         Player p = e.getPlayer();
 
-        if(isWereWofl(p) && !e.isCancelled())
+        if(isWereWolf(p) && !e.isCancelled())
         {
             if(e.getRightClicked() instanceof Wolf)
             {
@@ -53,7 +53,7 @@ public class WereWolfListener implements Listener
     }
 
 
-    public static boolean isWereWofl(Player p)
+    public static boolean isWereWolf(Player p)
     {
         return Races.getRace(p) == RaceType.WEREWOLF;
     }

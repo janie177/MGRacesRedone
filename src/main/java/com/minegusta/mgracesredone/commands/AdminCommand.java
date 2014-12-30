@@ -21,7 +21,7 @@ public class AdminCommand implements CommandExecutor
             s.sendMessage(ChatColor.RED + "You cannot use that :( Boohoo. -cri-");
         }
 
-        if(args.length < 2)
+        if(args.length != 3)
         {
             s.sendMessage(ChatColor.RED + "Invalid command. Usage: ");
             s.sendMessage(ChatColor.GRAY + "/RA Set <Player> <Race>");
@@ -32,9 +32,12 @@ public class AdminCommand implements CommandExecutor
             try
             {
                 Player p = Bukkit.getPlayer(args[1]);
-                RaceType race = RaceType.valueOf(args[2]);
+                RaceType race = RaceType.valueOf(args[2].toUpperCase());
 
                 Races.setRace(p, race);
+
+                s.sendMessage(ChatColor.GREEN + p.getName() + " is now the race: " + race.getName() + ".");
+                p.sendMessage(ChatColor.DARK_GREEN + "You are now a(n) " + race.getName() + "!");
             }
             catch (Exception ignored)
             {
