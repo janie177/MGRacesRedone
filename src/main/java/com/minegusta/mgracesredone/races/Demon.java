@@ -77,6 +77,8 @@ public class Demon extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 3);
         }
 
+        PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 1, 3);
+
     }
     public static String getChant()
     {

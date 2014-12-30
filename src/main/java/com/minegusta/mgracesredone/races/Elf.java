@@ -36,10 +36,10 @@ public class Elf extends Race {
         return new String[]
                 {
                         "Elves are closely related to nature.",
-                        "They gain regeneration from eating fruits.",
+                        "They gain regeneration from eating vegetarian food.",
                         "Elves regenerate in water and are skilled with bows.",
                         "All bow damage is thus increased.",
-                        "Animals will follow elves into battle. Elves are masters of taming.",
+                        "Elves are masters of taming.",
                         "Fire is one of the weaknesses to elves, though the sun empowers them.",
                         "Elves are most active during the day.",
                         "Elves may have less health than other races, but they are also fast.",

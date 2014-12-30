@@ -34,8 +34,9 @@ public class Aurora extends Race {
         return new String[]{
                 "Aurora's are the race of ice and water.",
                 "Their body temperature is to be kept low, or they will weaken.",
-                "They are natural swimmers and can breath underwater.",
+                "They are natural swimmers and can breathe underwater.",
                 "They are at their strongest in ice environments.",
+                "Aurora do not get fall damage in snow.",
                 "Heat weakens them, so you wont find them near a desert or savannah.",
                 "The moon empowers the Aurora. It will grant them more power.",
                 "Aurora's can rely on the power of ice and traps."
@@ -47,9 +48,13 @@ public class Aurora extends Race {
 
         Material mat = BlockUtil.getBlockAtLocation(p.getLocation());
 
-        if(mat == Material.WATER || mat == Material.STATIONARY_WATER)
+        if(PlayerUtil.isInWater(p))
         {
-            if(p.isSneaking()) p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.2D));
+            if(p.isSneaking())
+            {
+                p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.2D));
+            }
+            PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 3);
         }
 
         if(WeatherUtil.isFullMoon(p.getWorld()))

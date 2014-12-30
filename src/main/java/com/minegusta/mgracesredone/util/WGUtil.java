@@ -14,24 +14,6 @@ import org.bukkit.entity.Player;
 
 public class WGUtil
 {
-    public static boolean canPVP(Player p)
-    {
-        if(!Main.isWGEnabled())return true;
-        Location loc = p.getLocation();
-        ApplicableRegionSet set = WorldGuardPlugin.inst().getRegionManager(p.getWorld()).getApplicableRegions(loc);
-        if(set.size() > 0)
-        {
-            for(ProtectedRegion r : set.getRegions())
-            {
-                if(r.getFlags().containsKey(DefaultFlag.PVP) && r.getFlag(DefaultFlag.PVP) == StateFlag.State.DENY)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public static boolean canPVP(Entity e)
     {
         if(!Main.isWGEnabled())return true;
@@ -51,11 +33,11 @@ public class WGUtil
         return true;
     }
 
-    public static boolean canGetDamage(Player p)
+    public static boolean canGetDamage(Entity e)
     {
         if(!Main.isWGEnabled())return true;
-        Location loc = p.getLocation();
-        ApplicableRegionSet set = WorldGuardPlugin.inst().getRegionManager(p.getWorld()).getApplicableRegions(loc);
+        Location loc = e.getLocation();
+        ApplicableRegionSet set = WorldGuardPlugin.inst().getRegionManager(e.getWorld()).getApplicableRegions(loc);
         if(set.size() > 0)
         {
             for(ProtectedRegion r : set.getRegions())
@@ -67,5 +49,10 @@ public class WGUtil
             }
         }
         return true;
+    }
+
+    public static boolean canFightEachother(Entity e1, Entity e2)
+    {
+        return canPVP(e1) && canGetDamage(e1) && canPVP(e2) && canGetDamage(e2);
     }
 }
