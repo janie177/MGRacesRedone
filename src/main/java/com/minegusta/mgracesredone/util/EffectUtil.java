@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -22,12 +23,12 @@ public class EffectUtil
         p.getWorld().spigot().playEffect(p.getLocation(), effect, 1, 1, x, y, z, 1, amount, 15);
     }
 
-    public static void playParticle(LivingEntity e, Effect effect, int x, int y, int z, int amount)
+    public static void playParticle(Entity e, Effect effect, int x, int y, int z, int amount)
     {
         e.getWorld().spigot().playEffect(e.getLocation(), effect, 1, 1, x, y, z, 1, amount, 15);
     }
 
-    public static void playParticle(LivingEntity e, Effect effect)
+    public static void playParticle(Entity e, Effect effect)
     {
         e.getWorld().spigot().playEffect(e.getLocation(), effect, 1, 1, 0, 0, 0, 1, 9, 15);
     }
@@ -37,13 +38,13 @@ public class EffectUtil
         l.getWorld().spigot().playEffect(l, effect, 1, 1, x, y, z, 1, amount, 15);
     }
 
-    public static void playSound(Player p, Sound sound)
+    public static void playSound(Entity ent, Sound sound)
     {
-        p.getWorld().playSound(p.getLocation(), sound, 1, 1);
+        ent.getWorld().playSound(ent.getLocation(), sound, 1, 1);
     }
 
-    public static void playSound(Player p, Sound sound, float volume, float pitch)
+    public static void playSound(Entity ent, Sound sound, float volume, float pitch)
     {
-        p.getWorld().playSound(p.getLocation(), sound, volume, pitch);
+        ent.getWorld().playSound(ent.getLocation(), sound, volume, pitch);
     }
 }

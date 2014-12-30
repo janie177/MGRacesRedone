@@ -43,7 +43,7 @@ public class Dwarf extends Race {
                         "While deep underground, dwarves gain more strength.",
                         "The Dwarf prefers axes above all other weapons, and is quite",
                         "skilled in combat with them.",
-                        "Arrows are one of the few weaknesses of a Dwarf.",
+                        "Arrows and other projectiles are one of the few weaknesses of a Dwarf.",
                         "Dwarves have the blood of a miner, and mine faster than other races.",
                         "When a dwarf mines ore, they gain even more of a mining boost.",
                         "Killstreaks are a dwarf's speciality. When they kill a foe using",

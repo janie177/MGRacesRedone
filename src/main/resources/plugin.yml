@@ -8,3 +8,7 @@ commands:
       aliases: [races, class, classes, ra, rc]
       usage: /Race
       description: All information you need about races.
+   raceadmin:
+      aliases: [ra, raceowner, usetheprindl]
+      usage: /RaceAdmin
+      description: Admin commands for races. Don't you abuse those Lucas I swear.
