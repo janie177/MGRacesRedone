@@ -30,7 +30,8 @@ public class FileManager
 
     public static void setRace(String uuid, RaceType raceType)
     {
-        getConfig().set(uuid, raceType.toString());
+        String saved = raceType.getName().toUpperCase();
+        getConfig().set(uuid, saved);
     }
 
     public static boolean save()
