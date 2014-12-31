@@ -71,10 +71,15 @@ public class RaceCommand implements CommandExecutor {
         }
         if(args.length == 2)
         {
-            if(args[0].equalsIgnoreCase("info") && RaceType.valueOf(args[1]) != null)
+            if(args[0].equalsIgnoreCase("info"))
             {
-                RaceType race = RaceType.valueOf(args[1]);
-                sendInfo(race);
+                try {
+                    RaceType race = RaceType.valueOf(args[1].toUpperCase());
+                    sendInfo(race);
+                } catch (Exception ignored)
+                {
+                    ChatUtil.sendString(p, "That is not a valid race! Use /Race List for a list of races.");
+                }
                 return true;
             }
             if((args[0].equalsIgnoreCase("infect") || args[0].equalsIgnoreCase("infection")) && RaceType.valueOf(args[1].toUpperCase())!= null)
