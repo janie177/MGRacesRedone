@@ -25,6 +25,7 @@ public class AdminCommand implements CommandExecutor
         {
             s.sendMessage(ChatColor.RED + "Invalid command. Usage: ");
             s.sendMessage(ChatColor.GRAY + "/RA Set <Player> <Race>");
+            return true;
         }
 
         if(args[0].equalsIgnoreCase("Set"))
