@@ -74,6 +74,7 @@ public class AuroraListener implements Listener
 
             if(Cooldown.isCooledDown(name, uuid))
             {
+                p.sendMessage(ChatColor.DARK_AQUA + "You sent a blizzard at your enemies!");
                 for(double x : directions)
                 {
                     for(double z : directions)
