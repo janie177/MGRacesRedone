@@ -98,6 +98,7 @@ public class EnderBornListener implements Listener
             EnderPearl pearl = (EnderPearl) e.getEntity();
             if(pearl.getShooter() instanceof Player && isEnderBorn((Player) pearl.getShooter()))
             {
+                boolean cancelled = false;
                 Player p = (Player) pearl.getShooter();
                 String uuid = p.getUniqueId().toString();
                 if(pearlMap.containsKey(uuid) && pearlMap.get(uuid))
@@ -130,10 +131,11 @@ public class EnderBornListener implements Listener
                     {
                         p.sendMessage(ChatColor.DARK_PURPLE + "You have to wait another " + Cooldown.getRemaining("pearl", uuid) + " seconds to use minion pearls.");
                         p.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
+                        cancelled = true;
                     }
                 }
 
-                if(RandomUtil.fiftyfifty())
+                if(!cancelled && RandomUtil.fiftyfifty())
                 {
                     ((Player)pearl.getShooter()).getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
                 }
@@ -165,8 +167,11 @@ public class EnderBornListener implements Listener
         if(e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL)
         {
             if(!pearlMap.containsKey(p.getUniqueId().toString()))return;
-            if(!pearlMap.get(p.getUniqueId().toString()))return;
             e.setCancelled(true);
+            if(!pearlMap.get(p.getUniqueId().toString()))
+            {
+                p.teleport(e.getTo());
+            }
         }
     }
 
