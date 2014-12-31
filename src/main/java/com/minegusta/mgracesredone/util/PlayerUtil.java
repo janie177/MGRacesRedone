@@ -25,6 +25,12 @@ public class PlayerUtil
         return mat == Material.WATER || mat == Material.STATIONARY_WATER;
     }
 
+    public static boolean isInLava(Player p)
+    {
+        Material mat = p.getLocation().getBlock().getType();
+        return mat == Material.LAVA || mat == Material.STATIONARY_LAVA;
+    }
+
     public static int getArmorAmounr(Player p)
     {
         int amount = 0;

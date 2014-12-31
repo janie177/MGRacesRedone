@@ -40,6 +40,7 @@ public class Demon extends Race {
                         "They feel at home in warmer environments, and have a natural",
                         "weakness for cold climates.",
                         "When Demons are in the Nether, they are at their strongest.",
+                        "In hell, most mobs are friendly towards the Demon.",
                         "In the overworld, Demons are weakened. only the hottest biomes may support them.",
                         "Fire or Lava cannot harm Demons. As a downside, water and rain are fatal.",
                         "Hellish minions will aid the Demon when he is in need."
