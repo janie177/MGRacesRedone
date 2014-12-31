@@ -141,7 +141,7 @@ public class RaceCommand implements CommandExecutor {
                 p.sendMessage(ChatColor.YELLOW + " - " + ChatColor.DARK_PURPLE + item.getAmount() + ChatColor.LIGHT_PURPLE + item.getMaterial().toString());
             }
         }
-        ChatUtil.sendFancyBanner(p);
+        ChatUtil.sendFooter(p);
     }
 
     private void sendMessage(String[] text)
@@ -151,6 +151,7 @@ public class RaceCommand implements CommandExecutor {
         {
             p.sendMessage(ChatColor.LIGHT_PURPLE + s);
         }
+        ChatUtil.sendFooter(p);
     }
 
     private void sendInfo(RaceType race)
@@ -179,7 +180,4 @@ public class RaceCommand implements CommandExecutor {
         }
         ChatUtil.sendFooter(p);
     }
-
-
-
 }

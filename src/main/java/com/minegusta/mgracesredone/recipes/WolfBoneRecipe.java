@@ -12,7 +12,7 @@ import java.util.List;
 public class WolfBoneRecipe implements IRecipe {
     @Override
     public MGItem[] getIngriedients() {
-        return new MGItem[]{};
+        return new MGItem[]{new MGItem(Material.BONE, 1), new MGItem(Material.GLOWSTONE, 4), new MGItem(Material.GOLD_INGOT, 4)};
     }
 
     @Override
