@@ -11,4 +11,9 @@ public class RandomUtil
     {
         return rand.nextInt(100) > percentage;
     }
+
+    public static boolean fiftyfifty()
+    {
+        return rand.nextBoolean();
+    }
 }

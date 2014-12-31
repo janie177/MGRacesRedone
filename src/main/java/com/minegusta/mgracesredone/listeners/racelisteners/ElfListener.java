@@ -3,6 +3,9 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -26,6 +30,28 @@ public class ElfListener implements Listener
         {
             PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
             EffectUtil.playParticle(p, Effect.HEART);
+        }
+    }
+
+    @EventHandler
+    public void onElfShoot(EntityShootBowEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Player && isElf((Player) e.getEntity()))
+        {
+            if(RandomUtil.chance(25))
+            {
+                Arrow projectile = (Arrow) e.getProjectile();
+                Arrow arrow = (Arrow) e.getEntity().getWorld().spawnEntity(e.getProjectile().getLocation(), EntityType.ARROW);
+
+                arrow.setVelocity(projectile.getVelocity());
+                arrow.setShooter(projectile.getShooter());
+                arrow.setKnockbackStrength(projectile.getKnockbackStrength());
+                arrow.setCritical(projectile.isCritical());
+                arrow.setBounce(projectile.doesBounce());
+                ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
+            }
         }
     }
 

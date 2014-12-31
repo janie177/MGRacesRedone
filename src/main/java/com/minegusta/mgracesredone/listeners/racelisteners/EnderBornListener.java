@@ -16,6 +16,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -97,23 +98,44 @@ public class EnderBornListener implements Listener
             EnderPearl pearl = (EnderPearl) e.getEntity();
             if(pearl.getShooter() instanceof Player && isEnderBorn((Player) pearl.getShooter()))
             {
-                String uuid = ((Player) pearl.getShooter()).getUniqueId().toString();
+                Player p = (Player) pearl.getShooter();
+                String uuid = p.getUniqueId().toString();
                 if(pearlMap.containsKey(uuid) && pearlMap.get(uuid))
                 {
-                    Enderman man = (Enderman) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMAN);
-                    man.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1, 20 * 60));
-                    man.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 2, 20 * 60));
-                    man.setCustomName(ChatColor.DARK_PURPLE + "END OF MAN");
-                    man.setCustomNameVisible(true);
+                    if(Cooldown.isCooledDown("pearl", uuid)) {
 
-                    for(Entity ent : pearl.getNearbyEntities(7, 7, 7))
-                    {
-                        if(ent instanceof Player)
-                        {
-                            ((Creature)man).setTarget((Player) ent);
-                            break;
+                        Enderman man = (Enderman) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMAN);
+                        man.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1, 20 * 60));
+                        man.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 2, 20 * 60));
+                        man.setCustomName(ChatColor.DARK_PURPLE + "END OF MAN");
+                        man.setCustomNameVisible(true);
+
+                        for (int i = 0; i < 2; i++) {
+                            Endermite mite = (Endermite) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMITE);
+                            mite.setCustomNameVisible(true);
+                            mite.setCustomName(ChatColor.LIGHT_PURPLE + "U wot mite?");
                         }
+
+
+                        for (Entity ent : pearl.getNearbyEntities(7, 7, 7)) {
+                            if (ent instanceof Player) {
+                                ((Creature) man).setTarget((Player) ent);
+                                break;
+                            }
+                        }
+
+                        Cooldown.newCoolDown("pearl", uuid, 9);
                     }
+                    else
+                    {
+                        p.sendMessage(ChatColor.DARK_PURPLE + "You have to wait another " + Cooldown.getRemaining("pearl", uuid) + " seconds to use minion pearls.");
+                        p.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
+                    }
+                }
+
+                if(RandomUtil.fiftyfifty())
+                {
+                    ((Player)pearl.getShooter()).getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
                 }
             }
         }
@@ -123,7 +145,7 @@ public class EnderBornListener implements Listener
     public void onEnderMobTarget(EntityTargetLivingEntityEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
-        if(e.getTarget() instanceof Player && e.getEntity() instanceof Enderman)
+        if(e.getTarget() instanceof Player && (e.getEntity() instanceof Enderman || e.getEntity() instanceof Endermite))
         {
             Player p = (Player) e.getTarget();
             if(!isEnderBorn(p))return;

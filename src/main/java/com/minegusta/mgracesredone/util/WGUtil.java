@@ -51,6 +51,28 @@ public class WGUtil
         return true;
     }
 
+    public static boolean canBuild(Player p)
+    {
+        if(!Main.isWGEnabled())return true;
+        Location loc = p.getLocation();
+        ApplicableRegionSet set = WorldGuardPlugin.inst().getRegionManager(p.getWorld()).getApplicableRegions(loc);
+        if(set.size() > 0)
+        {
+            for(ProtectedRegion r : set.getRegions())
+            {
+                if(r.getFlags().containsKey(DefaultFlag.BUILD) && r.getFlag(DefaultFlag.BUILD) == StateFlag.State.ALLOW)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public static boolean canFightEachother(Entity e1, Entity e2)
     {
         return canPVP(e1) && canGetDamage(e1) && canPVP(e2) && canGetDamage(e2);

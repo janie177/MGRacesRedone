@@ -1,9 +1,9 @@
 package com.minegusta.mgracesredone.races;
 
 import com.minegusta.mgracesredone.util.*;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -39,9 +39,10 @@ public class Elf extends Race {
                         "They gain regeneration from eating vegetarian food.",
                         "Elves regenerate in water and are skilled with bows.",
                         "All bow damage is thus increased.",
-                        "Elves are masters of taming.",
+                        "When low on health, nearby animals will sacrifice their life for the elf.",
                         "Fire is one of the weaknesses to elves, though the sun empowers them.",
                         "Elves are most active during the day.",
+                        "When shooting a bow, there's a 25% two arrows are shot at once.",
                         "Elves may have less health than other races, but they are also fast.",
                         "They can avoid face-to-face combat by running and using a bow.",
                         "Other than that they feel at home in neutral temperature biomes."
@@ -71,6 +72,22 @@ public class Elf extends Race {
         {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 3);
+        }
+
+        if(p.getHealth() < 3)
+        {
+            for(Entity ent : p.getNearbyEntities(4, 4, 4))
+            {
+                if(ent instanceof Animals)
+                {
+                    EffectUtil.playSound(p, Sound.FIREWORK_LARGE_BLAST2);
+                    EffectUtil.playParticle(ent, Effect.CLOUD);
+                    EffectUtil.playParticle(p, Effect.HEART);
+                    ((Animals) ent).damage(5);
+                    p.setHealth(p.getHealth() + 5);
+                    p.sendMessage(ChatColor.GREEN + "An animal gave you some of it's life force!");
+                }
+            }
         }
     }
 }

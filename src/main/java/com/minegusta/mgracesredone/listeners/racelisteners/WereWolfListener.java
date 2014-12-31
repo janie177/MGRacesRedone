@@ -2,9 +2,11 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.Races;
 import com.minegusta.mgracesredone.util.WorldCheck;
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -12,6 +14,9 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.util.Vector;
 
 public class WereWolfListener implements Listener
 {
@@ -50,6 +55,38 @@ public class WereWolfListener implements Listener
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onWerewolfJump(PlayerToggleSneakEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+
+        if(!isWereWolf(e.getPlayer()))return;
+
+        Player p = e.getPlayer();
+
+        if(!p.isBlocking())return;
+
+        String name = "wolfjump";
+        String uuid = p.getUniqueId().toString();
+
+        if(Cooldown.isCooledDown(name, uuid))
+        {
+            //Jump
+            EffectUtil.playSound(p, Sound.WOLF_HOWL);
+            EffectUtil.playParticle(p, Effect.FLAME);
+
+            p.teleport(p.getLocation().add(0,0.1,0));
+            p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.2D));
+
+            Cooldown.newCoolDown(name, uuid, 15);
+        }
+        else
+        {
+            p.sendMessage(ChatColor.RED + "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use that.");
+        }
+
     }
 
 

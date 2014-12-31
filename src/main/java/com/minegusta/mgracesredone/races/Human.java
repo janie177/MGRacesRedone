@@ -52,7 +52,7 @@ public class Human extends Race
     @Override
     public void passiveBoost(Player p) {
 
-        //No powers :D
+        //You have no power here, Gandalf Greyhame!
 
     }
 
