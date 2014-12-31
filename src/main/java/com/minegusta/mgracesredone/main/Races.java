@@ -1,10 +1,10 @@
-package com.minegusta.mgracesredone.util;
+package com.minegusta.mgracesredone.main;
 
 import com.minegusta.mgracesredone.data.Storage;
 import com.minegusta.mgracesredone.files.FileManager;
-import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.util.RaceCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -48,9 +48,9 @@ public class Races
         for(RaceType type : RaceType.values())
         {
             int amount = 0;
-            for(String s : FileManager.get().getKeys(false))
+            for(String s : FileManager.getConfig().getKeys(false))
             {
-                if(FileManager.get().getString(s).equalsIgnoreCase(type.name()))
+                if(FileManager.getConfig().getString(s).equalsIgnoreCase(type.name()))
                 {
                     amount++;
                 }

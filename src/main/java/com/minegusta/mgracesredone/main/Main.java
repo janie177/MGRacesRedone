@@ -5,7 +5,6 @@ import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.tasks.BoostTask;
 import com.minegusta.mgracesredone.tasks.SaveTask;
 import com.minegusta.mgracesredone.util.OnReload;
-import com.minegusta.mgracesredone.util.Races;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,7 +59,7 @@ public class Main extends JavaPlugin
     }
 
     /**
-     * A method to get the instance of the plugin.
+     * A method to getConfig the instance of the plugin.
      * @return The plugin.
      */
     public static Plugin getPlugin()

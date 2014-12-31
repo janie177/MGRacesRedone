@@ -4,7 +4,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.Races;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -15,8 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
-import org.bukkit.util.Vector;
 
 public class WereWolfListener implements Listener
 {

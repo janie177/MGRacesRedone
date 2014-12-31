@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;

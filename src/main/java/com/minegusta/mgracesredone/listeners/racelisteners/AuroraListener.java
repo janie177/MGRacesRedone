@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;
@@ -13,13 +14,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
-
-import java.util.List;
 
 public class AuroraListener implements Listener
 {
@@ -74,7 +70,7 @@ public class AuroraListener implements Listener
 
             if(Cooldown.isCooledDown(name, uuid))
             {
-                p.sendMessage(ChatColor.DARK_AQUA + "You sent a blizzard at your enemies!");
+                p.sendMessage(ChatColor.DARK_AQUA + "You send a blizzard at your enemies!");
                 for(double x : directions)
                 {
                     for(double z : directions)

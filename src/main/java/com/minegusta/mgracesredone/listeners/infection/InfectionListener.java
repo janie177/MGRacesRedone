@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.listeners.infection;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Main;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.Demon;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.recipes.Recipe;

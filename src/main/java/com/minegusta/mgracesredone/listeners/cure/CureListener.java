@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.listeners.cure;
 
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.Effect;

@@ -1,7 +1,6 @@
 package com.minegusta.mgracesredone.files;
 
 import com.minegusta.mgracesredone.races.RaceType;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class FileManager
@@ -15,23 +14,23 @@ public class FileManager
         playerFile = YamlUtil.getConfiguration(path, fileName);
     }
 
-    public static FileConfiguration get()
+    public static FileConfiguration getConfig()
     {
         return playerFile;
     }
 
     public static RaceType getRace(String uuid)
     {
-        if(get().isSet(uuid))
+        if(getConfig().isSet(uuid))
         {
-            return RaceType.valueOf(get().getString(uuid));
+            return RaceType.valueOf(getConfig().getString(uuid));
         }
         return RaceType.HUMAN;
     }
 
     public static void setRace(String uuid, RaceType raceType)
     {
-        get().set(uuid, raceType.name());
+        getConfig().set(uuid, raceType.toString());
     }
 
     public static boolean save()

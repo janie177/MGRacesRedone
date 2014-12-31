@@ -26,7 +26,7 @@ public class MGPlayer
     public MGPlayer(String uuid)
     {
         this.uuid = uuid;
-        this.name = Bukkit.getPlayer(uuid).getName();
+        this.name = Bukkit.getPlayer(UUID.fromString(uuid)).getName();
         this.raceType = FileManager.getRace(uuid);
         updateHealth();
     }

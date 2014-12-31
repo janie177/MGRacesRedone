@@ -1,8 +1,7 @@
 package com.minegusta.mgracesredone.commands;
 
 import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Races;
+import com.minegusta.mgracesredone.main.Races;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
