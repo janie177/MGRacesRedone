@@ -231,7 +231,7 @@ public class InfectionListener implements Listener
 
         if(!WorldCheck.isEnabled(victim.getWorld()))return;
 
-        if(victim.getLastDamageCause() == null || !(victim.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.PROJECTILE))return;
+        if(victim.getLastDamageCause() == null || !(victim.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.PROJECTILE) || e.getEntity().getKiller() == null)return;
 
         Player killer = victim.getKiller();
 
