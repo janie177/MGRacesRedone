@@ -45,6 +45,9 @@ public class Werewolf extends Race
                         "The wolves in the pack are stronger than regular ones.",
                         "When a werewolf crouch-right clicks one of his fighter wolves, the wolf will",
                         "die but the werewolf will absorb part of its health.",
+                        "In combat, werewolves feel more comfortable using their claws at night.",
+                        "Damage done by other items is reduced while fist damage is increased.",
+                        "This only applies to the night.",
                         "During a full moon, the werewolf gets extreme power. This is when they are at their strongest.",
                         "Armour will weaken them during a full moon though.",
                         "When there is no moon, Werewolves have a weakness effect.",
@@ -87,6 +90,7 @@ public class Werewolf extends Race
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0 , 3);
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0 ,3);
         }
     }
 }

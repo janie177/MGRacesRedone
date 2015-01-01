@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.util;
 
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -21,5 +22,15 @@ public class PotionUtil
             }
         }
         p.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false));
+    }
+
+    public static void updatePotion(LivingEntity ent, PotionEffectType type, int amplifier, int seconds)
+    {
+        for (PotionEffect pe : ent.getActivePotionEffects()) {
+            if (pe.getType().equals(type) && pe.getAmplifier() <= amplifier) {
+                ent.removePotionEffect(type);
+            }
+        }
+        ent.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false));
     }
 }

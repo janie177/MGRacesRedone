@@ -107,8 +107,8 @@ public class EnderBornListener implements Listener
                     if(Cooldown.isCooledDown("pearl", uuid)) {
 
                         Enderman man = (Enderman) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMAN);
-                        man.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1, 20 * 60));
-                        man.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 2, 20 * 60));
+                        PotionUtil.updatePotion(man, PotionEffectType.INCREASE_DAMAGE, 2, 60);
+                        PotionUtil.updatePotion(man, PotionEffectType.DAMAGE_RESISTANCE, 1, 60);
                         man.setCustomName(ChatColor.DARK_PURPLE + "END OF MAN");
                         man.setCustomNameVisible(true);
 

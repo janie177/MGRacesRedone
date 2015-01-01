@@ -71,6 +71,7 @@ public class AuroraListener implements Listener
             if(Cooldown.isCooledDown(name, uuid))
             {
                 p.sendMessage(ChatColor.DARK_AQUA + "You send a blizzard at your enemies!");
+                Cooldown.newCoolDown(name, uuid, 15);
                 for(double x : directions)
                 {
                     for(double z : directions)
@@ -84,12 +85,11 @@ public class AuroraListener implements Listener
                     if(ent instanceof LivingEntity)
                     {
                         if((ent instanceof Player && isAurora((Player) ent)))return;
-                        ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 20 * 5));
-                        ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 6, 20 * 2));
+                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 2, 4);
+                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.WEAKNESS, 2, 2);
+                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.BLINDNESS, 1, 2);
                     }
                 }
-
-                Cooldown.newCoolDown(name, uuid, 15);
             }
             else
             {

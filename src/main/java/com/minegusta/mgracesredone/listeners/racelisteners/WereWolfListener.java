@@ -2,13 +2,11 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 
 import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.util.Cooldown;
-import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.*;
 import com.minegusta.mgracesredone.main.Races;
-import com.minegusta.mgracesredone.util.ItemUtil;
-import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -64,13 +62,24 @@ public class WereWolfListener implements Listener
 
         if(e.getEntity() instanceof Player && e.getDamager() instanceof Player)
         {
-            Player wolf = (Player) e.getEntity();
+            Player player = (Player) e.getEntity();
             Player damager = (Player) e.getDamager();
-            if(isWereWolf(wolf))
+            if(isWereWolf(player))
             {
                 if(ItemUtil.isGoldTool(damager.getItemInHand().getType()))
                 {
-                    e.setDamage(e.getDamage() + 16.0);
+                    e.setDamage(e.getDamage() + 12.0);
+                }
+            }
+            else if(isWereWolf(damager))
+            {
+                if(!WeatherUtil.isNight(damager.getWorld()))return;
+                if(damager.getItemInHand().getType() == null || damager.getItemInHand().getType() == Material.AIR)
+                {
+                    e.setDamage(e.getDamage() + 12.0);
+                }
+                else {
+                    e.setDamage(e.getDamage() / 2);
                 }
             }
         }
