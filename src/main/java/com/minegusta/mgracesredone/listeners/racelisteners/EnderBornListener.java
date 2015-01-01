@@ -123,18 +123,18 @@ public class EnderBornListener implements Listener
                         man.setCustomName(ChatColor.DARK_PURPLE + "END OF MAN");
                         man.setCustomNameVisible(true);
 
+                        for (Entity ent : pearl.getNearbyEntities(7, 7, 7)) {
+                            if (ent instanceof LivingEntity)
+                            {
+                                ((Creature) man).setTarget((LivingEntity) ent);
+                                break;
+                            }
+                        }
+
                         for (int i = 0; i < 2; i++) {
                             Endermite mite = (Endermite) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMITE);
                             mite.setCustomNameVisible(true);
                             mite.setCustomName(ChatColor.LIGHT_PURPLE + "U wot mite?");
-                        }
-
-
-                        for (Entity ent : pearl.getNearbyEntities(7, 7, 7)) {
-                            if (ent instanceof Player) {
-                                ((Creature) man).setTarget((Player) ent);
-                                break;
-                            }
                         }
 
                         Cooldown.newCoolDown("pearl", uuid, 9);
