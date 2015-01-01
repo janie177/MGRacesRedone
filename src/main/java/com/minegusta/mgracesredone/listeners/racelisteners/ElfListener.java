@@ -81,11 +81,12 @@ public class ElfListener implements Listener
 
         Player p = e.getPlayer();
 
+        if(!p.isSneaking())return;
+
         Material hand = p.getItemInHand().getType();
 
         if(hand == Material.RED_ROSE)
         {
-            Bukkit.broadcastMessage("1");
             Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 30);
         }
 
