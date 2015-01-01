@@ -44,7 +44,7 @@ public class ElfListener implements Listener
             if(RandomUtil.chance(25))
             {
                 Arrow projectile = (Arrow) e.getProjectile();
-                Arrow arrow = (Arrow) e.getEntity().getWorld().spawnEntity(e.getProjectile().getLocation(), EntityType.ARROW);
+                Arrow arrow = (Arrow) e.getEntity().getWorld().spawnEntity(e.getProjectile().getLocation().add(0,0.3,0), EntityType.ARROW);
                 arrow.setVelocity(projectile.getVelocity());
                 arrow.setShooter(projectile.getShooter());
                 arrow.setKnockbackStrength(projectile.getKnockbackStrength());
@@ -52,7 +52,7 @@ public class ElfListener implements Listener
                 arrow.setBounce(projectile.doesBounce());
                 ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
 
-                Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 60);
+                Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 15);
             }
         }
     }

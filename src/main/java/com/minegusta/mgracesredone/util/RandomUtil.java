@@ -9,7 +9,7 @@ public class RandomUtil
 
     public static boolean chance(int percentage)
     {
-        return rand.nextInt(100) > percentage;
+        return rand.nextInt(100) + 1 <= percentage;
     }
 
     public static boolean fiftyfifty()

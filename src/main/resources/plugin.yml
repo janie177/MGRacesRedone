@@ -5,7 +5,7 @@ version: ${project.version}
 softdepend: [WorldGuard]
 commands:
    race:
-      aliases: [races, class, classes, ra, rc]
+      aliases: [races, class, classes, rc]
       usage: /Race
       description: All information you need about races.
    raceadmin:
