@@ -87,7 +87,7 @@ public class AuroraListener implements Listener
                 {
                     for(double z : directions)
                     {
-                        Missile.createMissile(l, x, 0.06, z, effects, 500);
+                        Missile.createMissile(l, x, 0.06, z, effects, 600);
                     }
                 }
 
