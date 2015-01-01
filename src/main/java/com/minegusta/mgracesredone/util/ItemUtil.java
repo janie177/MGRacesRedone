@@ -69,7 +69,19 @@ public class ItemUtil
 
     public static boolean areEqualIgnoreAmount(ItemStack is1, ItemStack is2)
     {
-        return is1.getType().equals(is2.getType()) && is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore()) && is1.getItemMeta().getDisplayName().equals(is2.getItemMeta().getDisplayName());
+        if(is1 == null || is2 == null || is1.getType() == Material.AIR || is2.getType() == Material.AIR)return false;
+
+        if(is1.getType().equals(is2.getType()))
+        {
+            if((!is1.getItemMeta().hasLore() && !is2.getItemMeta().hasLore()) || is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore()))
+            {
+                if((!is1.getItemMeta().hasDisplayName() && !is2.getItemMeta().hasDisplayName()) || is1.getItemMeta().getDisplayName().equals(is2.getItemMeta().getDisplayName()))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean isRawMeat(Material m)
