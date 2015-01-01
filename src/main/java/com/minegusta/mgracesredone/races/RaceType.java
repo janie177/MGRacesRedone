@@ -1,21 +1,24 @@
 package com.minegusta.mgracesredone.races;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public enum RaceType
 {
-    HUMAN(new Human()),
-    ELF(new Elf()),
-    DWARF(new Dwarf()),
-    WEREWOLF(new Werewolf()),
-    AURORA(new Aurora()),
-    ENDERBORN(new EnderBorn()),
-    DEMON(new Demon());
+    HUMAN(new Human(), ChatColor.GRAY + "[Hu]"),
+    ELF(new Elf(), ChatColor.GREEN + "[El]"),
+    DWARF(new Dwarf(), ChatColor.DARK_GRAY + "[Dw]"),
+    WEREWOLF(new Werewolf(), ChatColor.DARK_GRAY + "[WW]"),
+    AURORA(new Aurora(), ChatColor.AQUA + "[Au]"),
+    ENDERBORN(new EnderBorn(), ChatColor.DARK_PURPLE + "[EB]"),
+    DEMON(new Demon(), ChatColor.RED + "[De]");
 
     private Race race;
+    private String tag;
 
-    private RaceType(Race race)
+    private RaceType(Race race, String tag)
     {
+        this.tag = tag;
         this.race = race;
     }
 
@@ -32,6 +35,11 @@ public enum RaceType
     public String[] getInfo()
     {
         return race.getInfo();
+    }
+
+    public String getTag()
+    {
+        return tag;
     }
 
     public String[] getInfectionInfo()
