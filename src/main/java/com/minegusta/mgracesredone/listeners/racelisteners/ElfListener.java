@@ -3,8 +3,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
-import org.bukkit.Effect;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -25,32 +24,13 @@ public class ElfListener implements Listener
 {
 
     @EventHandler
-    public void onElfFruitEat(PlayerItemConsumeEvent e)
-    {
+    public void onElfFruitEat(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
 
-        if(isElf(p) && ItemUtil.isFruit(e.getItem().getType()))
-        {
+        if (isElf(p) && ItemUtil.isFruit(e.getItem().getType())) {
             PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
             EffectUtil.playParticle(p, Effect.HEART);
-        }
-    }
-
-    @EventHandler
-    public void onElfBlows(PlayerInteractEvent e)
-    {
-        Player p = e.getPlayer();
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
-        if(!isElf(p))return;
-        if(e.getAction() != Action.RIGHT_CLICK_AIR)return;
-        if(!p.isSneaking())return;
-
-        Material hand = p.getItemInHand().getType();
-
-        if(hand == null || hand == Material.AIR)
-        {
-            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 20);
         }
     }
 
@@ -90,6 +70,25 @@ public class ElfListener implements Listener
                 e.setDamage(e.getDamage() + 1.0);
             }
         }
+    }
+
+    @EventHandler
+    public void onElfBlow(PlayerInteractEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+
+        if(!isElf(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR)return;
+
+        Player p = e.getPlayer();
+
+        Material hand = p.getItemInHand().getType();
+
+        if(hand == Material.RED_ROSE)
+        {
+            Bukkit.broadcastMessage("1");
+            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 30);
+        }
+
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
