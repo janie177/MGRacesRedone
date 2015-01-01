@@ -65,7 +65,7 @@ public class ElfListener implements Listener
         if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player p = (Player) e.getDamager();
-            if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE  && isElf(p) && WGUtil.canPVP(p) && !e.isCancelled())
+            if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE  && isElf(p) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled())
             {
                 e.setDamage(e.getDamage() + 1.0);
             }

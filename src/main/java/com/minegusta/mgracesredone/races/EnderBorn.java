@@ -64,7 +64,7 @@ public class EnderBorn extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
         }
 
-        if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))
+        if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p))
         {
             p.damage(1);
         }

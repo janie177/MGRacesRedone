@@ -1,9 +1,6 @@
 package com.minegusta.mgracesredone.races;
 
-import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.PlayerUtil;
-import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.WeatherUtil;
+import com.minegusta.mgracesredone.util.*;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -79,7 +76,7 @@ public class Demon extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 3);
         }
 
-        if(PlayerUtil.isInWater(p) || PlayerUtil.isInRain(p))
+        if(PlayerUtil.isInWater(p) || PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p))
         {
             p.damage(1.0);
         }

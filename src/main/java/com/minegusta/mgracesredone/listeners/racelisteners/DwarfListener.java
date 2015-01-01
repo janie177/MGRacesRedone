@@ -83,8 +83,9 @@ public class DwarfListener implements Listener
                 p.sendMessage(ChatColor.DARK_GRAY + "You yell and knock back all your enemies while boosting strength!");
                 PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 6);
                 for(Entity ent : p.getNearbyEntities(5.0, 5.0, 5.0)) {
-                    if (!(ent instanceof LivingEntity)) return;
+                    if (!(ent instanceof LivingEntity)) continue;
                     LivingEntity le = (LivingEntity) ent;
+                    if(!WGUtil.canFightEachother(p, ent))continue;
                     if (le instanceof Player)
                     {
                         ((Player) le).sendMessage(ChatColor.RED + "You were knocked back by an angry dwarf!");
@@ -109,7 +110,7 @@ public class DwarfListener implements Listener
 
         Player p = e.getPlayer();
 
-        if(isDwarf(p) && ItemUtil.isOre(e.getBlock().getType()))
+        if(isDwarf(p) && ItemUtil.isOre(e.getBlock().getType()) && !e.isCancelled())
         {
             PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 0);
         }

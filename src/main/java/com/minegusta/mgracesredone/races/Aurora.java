@@ -47,8 +47,6 @@ public class Aurora extends Race {
     @Override
     public void passiveBoost(Player p) {
 
-        Material mat = BlockUtil.getBlockAtLocation(p.getLocation());
-
         if(PlayerUtil.isInWater(p))
         {
             PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 3);

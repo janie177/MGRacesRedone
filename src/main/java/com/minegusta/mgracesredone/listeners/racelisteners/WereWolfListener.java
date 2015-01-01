@@ -84,7 +84,7 @@ public class WereWolfListener implements Listener
                 }
             }
         }
-        if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity && isWereWolf((Player) e.getDamager()))
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity && isWereWolf((Player) e.getDamager()) && WGUtil.canFightEachother(e.getDamager(), e.getEntity()))
         {
             Player damager = (Player) e.getDamager();
             if(!WeatherUtil.isNight(damager.getWorld()))return;
