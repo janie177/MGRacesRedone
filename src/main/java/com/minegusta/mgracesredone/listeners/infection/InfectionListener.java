@@ -252,24 +252,29 @@ public class InfectionListener implements Listener
     public void onWerewolfInfect(PlayerInteractEntityEvent e) {
         Player p = e.getPlayer();
         if (!WorldCheck.isEnabled(p.getWorld())) return;
-        if (WeatherUtil.getMoonPhase(p.getWorld()) == WeatherUtil.MoonPhase.FULL) {
-            if (e.getRightClicked() instanceof Wolf && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.WOLFBONE.getResult())) {
-                e.setCancelled(true);
-                Wolf wolf = (Wolf) e.getRightClicked();
-                if (wolf.isTamed()) return;
 
-                wolf.getWorld().createExplosion(wolf.getLocation(), 0, false);
-
-                EffectUtil.playSound(p, Sound.WOLF_HOWL);
-                EffectUtil.playParticle(wolf, Effect.LARGE_SMOKE, 1, 1, 1, 300);
-                wolf.remove();
-                Races.setRace(p, RaceType.WEREWOLF);
-
-                ItemUtil.removeOne(p, Recipe.WOLFBONE.getResult());
-
-                ChatUtil.sendList(p, new String[]{"You are now a Werewolf!", "Awoo!!"});
-
+        if (e.getRightClicked() instanceof Wolf && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.WOLFBONE.getResult()))
+        {
+            if(!WeatherUtil.isFullMoon(e.getPlayer().getWorld()))
+            {
+                p.sendMessage(ChatColor.RED + "It is not a full moon.");
+                return;
             }
+            e.setCancelled(true);
+            Wolf wolf = (Wolf) e.getRightClicked();
+            if (wolf.isTamed()) return;
+
+            wolf.getWorld().createExplosion(wolf.getLocation(), 0, false);
+
+            EffectUtil.playSound(p, Sound.WOLF_HOWL);
+            EffectUtil.playParticle(wolf, Effect.LARGE_SMOKE, 1, 1, 1, 300);
+            wolf.remove();
+            Races.setRace(p, RaceType.WEREWOLF);
+
+            ItemUtil.removeOne(p, Recipe.WOLFBONE.getResult());
+
+            ChatUtil.sendList(p, new String[]{"You are now a Werewolf!", "Awoo!!"});
+
         }
     }
 }
