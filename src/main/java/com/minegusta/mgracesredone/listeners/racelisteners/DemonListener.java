@@ -53,7 +53,7 @@ public class DemonListener implements Listener
 
         if(hand == Material.BLAZE_ROD)
         {
-            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.LAVADRIP, Effect.POTION_SWIRL, Effect.COLOURED_DUST}, 30);
+            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.POTION_SWIRL, Effect.COLOURED_DUST}, 30);
         }
     }
 
