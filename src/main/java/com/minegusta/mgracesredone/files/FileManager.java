@@ -1,6 +1,8 @@
 package com.minegusta.mgracesredone.files;
 
 import com.minegusta.mgracesredone.races.RaceType;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class FileManager
@@ -30,8 +32,7 @@ public class FileManager
 
     public static void setRace(String uuid, RaceType raceType)
     {
-        String saved = raceType.getName().toUpperCase();
-        getConfig().set(uuid, saved);
+        getConfig().set(uuid, raceType.name());
     }
 
     public static boolean save()

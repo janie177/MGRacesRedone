@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.util.ItemUtil;
 import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
@@ -50,6 +52,25 @@ public class WereWolfListener implements Listener
                     EffectUtil.playSound(p, Sound.WOLF_GROWL);
                     EffectUtil.playParticle(w, Effect.CRIT, 1, 1, 1, 30);
                     w.damage(1000);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onWerewolfGoldDamage(EntityDamageByEntityEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Player && e.getDamager() instanceof Player)
+        {
+            Player wolf = (Player) e.getEntity();
+            Player damager = (Player) e.getDamager();
+            if(isWereWolf(wolf))
+            {
+                if(ItemUtil.isGoldTool(damager.getItemInHand().getType()))
+                {
+                    e.setDamage(e.getDamage() + 16.0);
                 }
             }
         }

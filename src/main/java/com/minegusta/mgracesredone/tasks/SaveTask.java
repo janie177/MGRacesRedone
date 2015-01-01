@@ -17,7 +17,7 @@ public class SaveTask
             public void run() {
                 save();
             }
-        }, 20, 20);
+        }, 20 * 180, 20 * 180);
     }
 
     public static void stop()
@@ -29,7 +29,7 @@ public class SaveTask
     {
         for(MGPlayer mgp : Storage.getPlayers())
         {
-            FileManager.getConfig().set(mgp.getUniqueIdAsString(), mgp.getRaceType());
+            FileManager.getConfig().set(mgp.getUniqueIdAsString(), mgp.getRaceType().name());
         }
         FileManager.save();
     }
