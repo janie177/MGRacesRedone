@@ -62,7 +62,7 @@ public class Elf extends Race {
             double max = p.getMaxHealth() - p.getHealth();
             if(max >= 1)
             {
-                p.setHealthScale(p.getHealth() + 1);
+                p.setHealth(p.getHealth() + 1);
             }
         }
 
