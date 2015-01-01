@@ -77,6 +77,8 @@ public class MGPlayer
 
     public void restoreHealth()
     {
+        getPlayer().setHealthScaled(true);
+        getPlayer().setHealthScale(20);
         getPlayer().setMaxHealth(20);
     }
 
@@ -90,6 +92,7 @@ public class MGPlayer
         if(WorldCheck.isEnabled(getPlayer().getWorld()))
         {
             setHealth();
+            return;
         }
         restoreHealth();
     }

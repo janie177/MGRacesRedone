@@ -12,9 +12,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -27,10 +30,27 @@ public class ElfListener implements Listener
         Player p = e.getPlayer();
         if(!WorldCheck.isEnabled(p.getWorld()))return;
 
-        if(ItemUtil.isFruit(e.getItem().getType()))
+        if(isElf(p) && ItemUtil.isFruit(e.getItem().getType()))
         {
             PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
             EffectUtil.playParticle(p, Effect.HEART);
+        }
+    }
+
+    @EventHandler
+    public void onElfBlows(PlayerInteractEvent e)
+    {
+        Player p = e.getPlayer();
+        if(!WorldCheck.isEnabled(p.getWorld()))return;
+        if(!isElf(p))return;
+        if(e.getAction() != Action.RIGHT_CLICK_AIR)return;
+        if(!p.isSneaking())return;
+
+        Material hand = p.getItemInHand().getType();
+
+        if(hand == null || hand == Material.AIR)
+        {
+            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 20);
         }
     }
 
@@ -77,7 +97,7 @@ public class ElfListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) && isElf((Player) e.getEntity()) && WGUtil.canGetDamage((Player) e.getEntity()))
+        if(e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) && isElf((Player) e.getEntity()) && WGUtil.canGetDamage(e.getEntity()))
         {
             e.setDamage(e.getDamage() + 1.0);
         }

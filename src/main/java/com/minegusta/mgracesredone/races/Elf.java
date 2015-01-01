@@ -74,17 +74,17 @@ public class Elf extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 3);
         }
 
-        if(p.getHealth() < 3)
+        if(p.getHealth() <= 5 && !p.isDead())
         {
-            for(Entity ent : p.getNearbyEntities(4, 4, 4))
+            for(Entity ent : p.getNearbyEntities(6, 6, 6))
             {
                 if(ent instanceof Animals)
                 {
                     EffectUtil.playSound(p, Sound.FIREWORK_LARGE_BLAST2);
                     EffectUtil.playParticle(ent, Effect.CLOUD);
                     EffectUtil.playParticle(p, Effect.HEART);
-                    ((Animals) ent).damage(5);
-                    p.setHealth(p.getHealth() + 5);
+                    ((Animals) ent).damage(8);
+                    p.setHealth(p.getHealth() + 8);
                     p.sendMessage(ChatColor.GREEN + "An animal gave you some of it's life force!");
                 }
             }

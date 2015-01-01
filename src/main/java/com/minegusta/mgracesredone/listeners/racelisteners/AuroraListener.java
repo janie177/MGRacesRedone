@@ -28,7 +28,7 @@ public class AuroraListener implements Listener
     private static final List<Material> snowBlocks = Lists.newArrayList(Material.SNOW_BLOCK, Material.SNOW, Material.ICE, Material.PACKED_ICE);
 
     @EventHandler
-    public void onDrown(EntityDamageEvent e)
+    public void onDrownOrFall(EntityDamageEvent e)
     {
         if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.DROWNING)
         {
