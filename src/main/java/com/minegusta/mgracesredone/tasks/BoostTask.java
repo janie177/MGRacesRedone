@@ -55,10 +55,10 @@ public class BoostTask
                 {
                     for(org.bukkit.entity.Entity ent : mgp.getPlayer().getNearbyEntities(15, 15, 15))
                     {
-                        if(ent instanceof Wolf)
+                        if(ent instanceof Wolf && ((Wolf)ent).isTamed() && ((Wolf)ent).getOwner().getUniqueId().equals(mgp.getUniqueId()))
                         {
-                            ((Wolf) ent).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 25, 0));
-                            ((Wolf) ent).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 25, 0));
+                            PotionUtil.updatePotion((Wolf) ent, PotionEffectType.INCREASE_DAMAGE, 1, 25);
+                            PotionUtil.updatePotion((Wolf) ent, PotionEffectType.DAMAGE_RESISTANCE, 0, 25);
                         }
                     }
                 }

@@ -47,7 +47,8 @@ public class Werewolf extends Race
                         "die but the werewolf will absorb part of its health.",
                         "In combat, werewolves feel more comfortable using their claws at night.",
                         "Damage done by other items is reduced while fist damage is increased.",
-                        "This only applies to the night.",
+                        "This only applies during the night.",
+                        "When a werewolf crouches and clicks the air, they will leap forward.",
                         "During a full moon, the werewolf gets extreme power. This is when they are at their strongest.",
                         "Armour will weaken them during a full moon though.",
                         "When there is no moon, Werewolves have a weakness effect.",
@@ -60,8 +61,6 @@ public class Werewolf extends Race
     @Override
     public void passiveBoost(Player p)
     {
-        Location loc = p.getLocation();
-        WeatherUtil.BiomeType type = WeatherUtil.getBiomeType(loc);
         WeatherUtil.MoonPhase phase = WeatherUtil.getMoonPhase(p.getWorld());
 
         if(phase == WeatherUtil.MoonPhase.FULL)
@@ -90,7 +89,7 @@ public class Werewolf extends Race
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0 , 3);
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0 ,3);
+            PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0 ,10);
         }
     }
 }

@@ -12,8 +12,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 public class WereWolfListener implements Listener
@@ -35,6 +37,7 @@ public class WereWolfListener implements Listener
                     w.setOwner(p);
                     EffectUtil.playParticle(w, Effect.HEART);
                     EffectUtil.playSound(p, Sound.WOLF_HOWL);
+                    p.sendMessage(ChatColor.RED + "You tamed a wolf! It's now part of your pack.");
                 }
                 else if(p.isSneaking() && w.getOwner().getUniqueId().equals(p.getUniqueId()))
                 {
@@ -50,6 +53,7 @@ public class WereWolfListener implements Listener
                     EffectUtil.playSound(p, Sound.WOLF_GROWL);
                     EffectUtil.playParticle(w, Effect.CRIT, 1, 1, 1, 30);
                     w.damage(1000);
+                    p.sendMessage(ChatColor.RED + "You drained a wolf's life force.");
                 }
             }
         }
@@ -64,14 +68,18 @@ public class WereWolfListener implements Listener
         {
             Player player = (Player) e.getEntity();
             Player damager = (Player) e.getDamager();
+
+            if(!WGUtil.canFightEachother(player, damager))return;
+
             if(isWereWolf(player))
             {
                 if(ItemUtil.isGoldTool(damager.getItemInHand().getType()))
                 {
-                    e.setDamage(e.getDamage() + 12.0);
+                    e.setDamage(e.getDamage() + 10.0);
+                    return;
                 }
             }
-            else if(isWereWolf(damager))
+            if(isWereWolf(damager))
             {
                 if(!WeatherUtil.isNight(damager.getWorld()))return;
                 if(damager.getItemInHand().getType() == null || damager.getItemInHand().getType() == Material.AIR)
@@ -86,15 +94,15 @@ public class WereWolfListener implements Listener
     }
 
     @EventHandler
-    public void onWerewolfJump(PlayerToggleSneakEvent e)
+    public void onWerewolfJump(PlayerInteractEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(!isWereWolf(e.getPlayer()))return;
+        if(!isWereWolf(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR)return;
 
         Player p = e.getPlayer();
 
-        if(!p.isBlocking())return;
+        if(!p.isSneaking())return;
 
         String name = "wolfjump";
         String uuid = p.getUniqueId().toString();
@@ -108,7 +116,7 @@ public class WereWolfListener implements Listener
             p.teleport(p.getLocation().add(0,0.1,0));
             p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.2D));
 
-            Cooldown.newCoolDown(name, uuid, 15);
+            Cooldown.newCoolDown(name, uuid, 5);
         }
         else
         {
