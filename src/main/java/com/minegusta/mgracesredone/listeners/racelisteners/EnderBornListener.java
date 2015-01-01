@@ -6,6 +6,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -90,6 +91,10 @@ public class EnderBornListener implements Listener
         }
     }
 
+    private static final double[] directions = {0.1, -0.1, 0.18, -0.18};
+    private static final Effect[] effects = {Effect.PORTAL, Effect.ENDER_SIGNAL};
+
+
     @EventHandler
     public void onPearlThrow(ProjectileHitEvent e)
     {
@@ -101,10 +106,19 @@ public class EnderBornListener implements Listener
             {
                 boolean cancelled = false;
                 Player p = (Player) pearl.getShooter();
+                Location l = pearl.getLocation();
                 String uuid = p.getUniqueId().toString();
                 if(pearlMap.containsKey(uuid) && pearlMap.get(uuid))
                 {
                     if(Cooldown.isCooledDown("pearl", uuid)) {
+
+                        for(double x : directions)
+                        {
+                            for(double z : directions)
+                            {
+                                Missile.createMissile(l, x, 0.01, z, effects, 600);
+                            }
+                        }
 
                         Enderman man = (Enderman) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMAN);
                         PotionUtil.updatePotion(man, PotionEffectType.INCREASE_DAMAGE, 2, 60);
