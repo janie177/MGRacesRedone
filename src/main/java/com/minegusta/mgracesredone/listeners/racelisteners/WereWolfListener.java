@@ -116,7 +116,7 @@ public class WereWolfListener implements Listener
             EffectUtil.playParticle(p, Effect.FLAME);
 
             p.teleport(p.getLocation().add(0,0.1,0));
-            p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.2D));
+            p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.4D));
 
             Cooldown.newCoolDown(name, uuid, 5);
         }

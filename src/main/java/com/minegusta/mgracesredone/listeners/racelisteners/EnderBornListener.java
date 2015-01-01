@@ -33,7 +33,7 @@ public class EnderBornListener implements Listener
         Player p = e.getPlayer();
         if(!WorldCheck.isEnabled(p.getWorld()))return;
 
-        if(ItemUtil.isRawMeat(e.getItem().getType()))
+        if(isEnderBorn(p) && ItemUtil.isRawMeat(e.getItem().getType()))
         {
             PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 15);
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 15);
