@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -106,6 +107,20 @@ public class AuroraListener implements Listener
             {
                 p.sendMessage(ChatColor.AQUA + "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use that.");
             }
+        }
+    }
+
+    @EventHandler
+    public void onAuroraSneak(PlayerToggleSneakEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+
+        if(!isAurora(e.getPlayer()))return;
+
+        if(PlayerUtil.isInWater(e.getPlayer()))
+        {
+            Player p = e.getPlayer();
+            p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.0D));
         }
     }
 

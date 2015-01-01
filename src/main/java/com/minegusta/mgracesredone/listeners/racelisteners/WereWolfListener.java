@@ -90,7 +90,7 @@ public class WereWolfListener implements Listener
                 e.setDamage(e.getDamage() + 12.0);
             }
             else {
-                e.setDamage(e.getDamage() / 2);
+                e.setDamage(e.getDamage() / 5);
             }
         }
     }

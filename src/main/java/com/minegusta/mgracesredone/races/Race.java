@@ -17,8 +17,8 @@ public abstract class Race
 
     public void setHealth(Player p)
     {
-        p.setMaxHealth(getHealth());
         p.setHealthScaled(true);
+        p.setMaxHealth(getHealth());
         p.setHealthScale(getHealth());
     }
 

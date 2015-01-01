@@ -56,7 +56,7 @@ public class Elf extends Race {
         Material mat = BlockUtil.getBlockAtLocation(loc);
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
 
-        if(PlayerUtil.isInRain(p) && PlayerUtil.isInWater(p))
+        if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))
         {
             EffectUtil.playParticle(p, Effect.HEART);
             PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 2);

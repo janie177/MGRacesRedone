@@ -51,10 +51,6 @@ public class Aurora extends Race {
 
         if(PlayerUtil.isInWater(p))
         {
-            if(p.isSneaking())
-            {
-                p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.2D));
-            }
             PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 3);
         }
 
@@ -64,7 +60,7 @@ public class Aurora extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
         }
 
-        if(WeatherUtil.isRaining(p.getWorld()) && PlayerUtil.isInOpenAir(p))
+        if(PlayerUtil.isInRain(p))
         {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
