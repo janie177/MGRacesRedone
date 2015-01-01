@@ -78,8 +78,6 @@ public class MGPlayer
     public void restoreHealth()
     {
         getPlayer().setMaxHealth(20);
-        getPlayer().setHealthScaled(true);
-        getPlayer().setHealthScale(20);
     }
 
     public double getHealth()
