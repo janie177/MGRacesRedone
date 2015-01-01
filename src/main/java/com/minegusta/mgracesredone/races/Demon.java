@@ -89,6 +89,6 @@ public class Demon extends Race {
     }
     public static String getChant()
     {
-        return "Flames shall consume the last light, in fire I bind my soul. ";
+        return "Flames shall consume the last light, in fire I bind my soul.";
     }
 }
