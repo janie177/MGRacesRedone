@@ -239,7 +239,11 @@ public class InfectionListener implements Listener
 
         String uuid = killer.getUniqueId().toString();
 
-        elfKills.put(uuid, elfKills.get(uuid) + 1);
+        int amount = 0;
+
+        if(elfKills.containsKey(uuid))amount = elfKills.get(uuid);
+
+        elfKills.put(uuid, amount + 1);
         if(elfKills.get(uuid) % 5 == 0)
         {
             ChatUtil.sendString(killer, "You now have " + elfKills.get(uuid) + " bow kills.");
