@@ -63,7 +63,7 @@ public class Werewolf extends Race
     {
         WeatherUtil.MoonPhase phase = WeatherUtil.getMoonPhase(p.getWorld());
 
-        if(phase == WeatherUtil.MoonPhase.FULL)
+        if(phase == WeatherUtil.MoonPhase.FULL && WeatherUtil.isNight(p.getWorld()))
         {
             EffectUtil.playParticle(p, Effect.WITCH_MAGIC);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 3);

@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
@@ -79,16 +80,17 @@ public class WereWolfListener implements Listener
                     return;
                 }
             }
-            if(isWereWolf(damager))
+        }
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity && isWereWolf((Player) e.getDamager()))
+        {
+            Player damager = (Player) e.getDamager();
+            if(!WeatherUtil.isNight(damager.getWorld()))return;
+            if(damager.getItemInHand().getType() == null || damager.getItemInHand().getType() == Material.AIR)
             {
-                if(!WeatherUtil.isNight(damager.getWorld()))return;
-                if(damager.getItemInHand().getType() == null || damager.getItemInHand().getType() == Material.AIR)
-                {
-                    e.setDamage(e.getDamage() + 12.0);
-                }
-                else {
-                    e.setDamage(e.getDamage() / 2);
-                }
+                e.setDamage(e.getDamage() + 12.0);
+            }
+            else {
+                e.setDamage(e.getDamage() / 2);
             }
         }
     }
