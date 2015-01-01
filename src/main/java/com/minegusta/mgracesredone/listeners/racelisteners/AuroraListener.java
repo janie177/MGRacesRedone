@@ -96,9 +96,9 @@ public class AuroraListener implements Listener
                     if(ent instanceof LivingEntity)
                     {
                         if((ent instanceof Player && isAurora((Player) ent)))return;
-                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 2, 4);
-                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.WEAKNESS, 2, 2);
-                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.BLINDNESS, 1, 2);
+                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 2, 6);
+                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.WEAKNESS, 2, 3);
+                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.BLINDNESS, 1, 5);
                     }
                 }
             }
