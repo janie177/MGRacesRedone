@@ -76,7 +76,7 @@ public class Demon extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 3);
         }
 
-        if(PlayerUtil.isInWater(p) || PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p))
+        if((PlayerUtil.isInWater(p) || PlayerUtil.isInRain(p)) && WGUtil.canGetDamage(p))
         {
             p.damage(1.0);
         }
