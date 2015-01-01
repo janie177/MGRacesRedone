@@ -67,26 +67,26 @@ public class WeatherUtil
 
     public static MoonPhase getMoonPhase(World w)
     {
-        int day = (int) w.getFullTime()/24000;
+        int day = (int) (w.getFullTime()/24000) % 8;
         MoonPhase phase;
 
         switch (day)
         {
-            case 1: phase = MoonPhase.QUARTER;
-                break;
-            case 2: phase = MoonPhase.HALF;
-                break;
-            case 3: phase = MoonPhase.QUARTER;
-                break;
-            case 4: phase = MoonPhase.NEW;
-                break;
-            case 5: phase = MoonPhase.QUARTER;
+            case 7: phase = MoonPhase.QUARTER;
                 break;
             case 6: phase = MoonPhase.HALF;
                 break;
-            case 7: phase = MoonPhase.QUARTER;
+            case 5: phase = MoonPhase.QUARTER;
                 break;
-            case 8: phase = MoonPhase.FULL;
+            case 4: phase = MoonPhase.NEW;
+                break;
+            case 3: phase = MoonPhase.QUARTER;
+                break;
+            case 2: phase = MoonPhase.HALF;
+                break;
+            case 1: phase = MoonPhase.QUARTER;
+                break;
+            case 0: phase = MoonPhase.FULL;
                 break;
             default: phase = MoonPhase.NEW;
                 break;
