@@ -73,7 +73,7 @@ public class Werewolf extends Race
             int armour = PlayerUtil.getArmorAmounr(p);
             if(armour != 0)
             {
-                PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, armour - 1, 3);
+                PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, (armour * 2) + 2, 3);
             }
             else
             {
