@@ -16,4 +16,9 @@ public class RandomUtil
     {
         return rand.nextBoolean();
     }
+
+    public static int randomNumber(int max)
+    {
+        return rand.nextInt(max) + 1;
+    }
 }

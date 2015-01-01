@@ -91,7 +91,7 @@ public class EnderBornListener implements Listener
         }
     }
 
-    private static final double[] directions = {0.1, -0.1, 0.18, -0.18};
+    private static final double[] directions = {0.5, -0.5, 1.0, -1.0};
     private static final Effect[] effects = {Effect.PORTAL, Effect.ENDER_SIGNAL};
 
 
@@ -116,7 +116,7 @@ public class EnderBornListener implements Listener
                         {
                             for(double z : directions)
                             {
-                                Missile.createMissile(l, x, 0.01, z, effects, 600);
+                                Missile.createMissile(l, x, 0.01, z, effects, 60);
                             }
                         }
 

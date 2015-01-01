@@ -11,9 +11,10 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Missile
 {
-    private static ConcurrentMap<Missile, Boolean> missiles = Maps.newConcurrentMap();
+    private static ConcurrentMap<Integer, Missile> missiles = Maps.newConcurrentMap();
 
     private Location location;
+    private int id;
     private double xSpeed;
     private double yspeed;
     private double zspeed;
@@ -30,26 +31,25 @@ public class Missile
         this.zspeed = zSpeed;
         this.effects = effects;
         this.duration = duration;
+        this.id = RandomUtil.randomNumber(9999999);
+        if(missiles.containsKey(id))id = RandomUtil.randomNumber(99999999);
+        missiles.put(id, this);
     }
 
     public static Missile createMissile(Location location, double xSpeed, double ySpeed, double zSpeed, Effect[] effects, int duration)
     {
-        Missile missile = new Missile(location, xSpeed, ySpeed, zSpeed, effects, duration);
-        missiles.put(missile, true);
-        return missile;
+        return new Missile(location, xSpeed, ySpeed, zSpeed, effects, duration);
     }
 
     public static Missile createMissile(Location location, Vector velocity, Effect[] effects, int duration)
     {
-        Missile missile = new Missile(location, velocity.getX(), velocity.getY(), velocity.getZ(), effects, duration);
-        missiles.put(missile, true);
-        return missile;
+        return new Missile(location, velocity.getX(), velocity.getY(), velocity.getZ(), effects, duration);
     }
 
     public static void update()
     {
         if(missiles.size() == 0)return;
-        for(Missile m : missiles.keySet())
+        for(Missile m : missiles.values())
         {
             m.updateLocation();
             for(Effect effect : m.getEffects())
@@ -63,12 +63,17 @@ public class Missile
 
     public void stop()
     {
-        missiles.remove(this);
+        missiles.remove(id);
     }
 
     public void updateLifeTime()
     {
         lifeTime++;
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public boolean outlived()
