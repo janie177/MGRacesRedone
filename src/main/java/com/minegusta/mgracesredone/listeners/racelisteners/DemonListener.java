@@ -5,18 +5,18 @@ import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.util.Missile;
 import com.minegusta.mgracesredone.util.WeatherUtil;
 import com.minegusta.mgracesredone.util.WorldCheck;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.List;
 
@@ -35,6 +35,25 @@ public class DemonListener implements Listener
                 e.setDamage(0.0);
                 e.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onDemonLazor(PlayerInteractEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+
+        if(!isDemon(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR)return;
+
+        Player p = e.getPlayer();
+
+        if(!p.isSneaking())return;
+
+        Material hand = p.getItemInHand().getType();
+
+        if(hand == Material.BLAZE_ROD)
+        {
+            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.LAVADRIP, Effect.FLAME, Effect.SMALL_SMOKE}, 30);
         }
     }
 

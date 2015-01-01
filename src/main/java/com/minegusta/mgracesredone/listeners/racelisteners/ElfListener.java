@@ -89,7 +89,6 @@ public class ElfListener implements Listener
         {
             Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 30);
         }
-
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
