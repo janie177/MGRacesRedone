@@ -60,7 +60,7 @@ public class AuroraListener implements Listener
 
     }
 
-    private static final double[] directions = {0.1, -0.1, 0.2, -0.2};
+    private static final double[] directions = {0.04, -0.04, 0.06, -0.06};
     private static final Effect[] effects = {Effect.SNOW_SHOVEL, Effect.WATERDRIP, Effect.SNOWBALL_BREAK};
 
     @EventHandler
@@ -87,7 +87,7 @@ public class AuroraListener implements Listener
                 {
                     for(double z : directions)
                     {
-                        Missile.createMissile(l, x, 0.2, z, effects, 500);
+                        Missile.createMissile(l, x, 0.06, z, effects, 500);
                     }
                 }
 
