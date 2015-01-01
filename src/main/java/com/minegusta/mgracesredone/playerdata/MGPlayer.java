@@ -53,6 +53,7 @@ public class MGPlayer
     {
         this.raceType = raceType;
         FileManager.setRace(uuid, raceType);
+        updateHealth();
     }
 
     public UUID getUniqueId()

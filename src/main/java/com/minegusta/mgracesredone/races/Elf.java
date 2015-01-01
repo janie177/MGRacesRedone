@@ -59,7 +59,11 @@ public class Elf extends Race {
         if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))
         {
             EffectUtil.playParticle(p, Effect.HEART);
-            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 2);
+            double max = p.getMaxHealth() - p.getHealth();
+            if(max >= 1)
+            {
+                p.setHealthScale(p.getHealth() + 1);
+            }
         }
 
         if(biome == WeatherUtil.BiomeType.NEUTRAL && WeatherUtil.isDay(p.getWorld()))
@@ -83,8 +87,11 @@ public class Elf extends Race {
                     EffectUtil.playSound(p, Sound.FIREWORK_LARGE_BLAST2);
                     EffectUtil.playParticle(ent, Effect.CLOUD);
                     EffectUtil.playParticle(p, Effect.HEART);
-                    ((Animals) ent).damage(8);
-                    p.setHealth(p.getHealth() + 8);
+                    double max = p.getMaxHealth() - p.getHealth();
+                    double amount = 8;
+                    if(max < 8)amount = max;
+                    ((Animals) ent).damage(amount);
+                    p.setHealth(p.getHealth() + amount);
                     p.sendMessage(ChatColor.GREEN + "An animal gave you some of it's life force!");
                 }
             }
