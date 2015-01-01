@@ -25,7 +25,7 @@ public class Dwarf extends Race {
         return new String[]
                 {
                         "To become a dwarf, follow these steps:",
-                        "Gather 5 of the following ores: Diamond, Emerald, Lapis and Redstone.",
+                        "Gather 5 of the following ores: Diamond, Emerald, Lapis and Gold.",
                         "Place all these ores close together with a diamond ore centered.",
                         "Craft a Shiny Gem (/Race Recipes).",
                         "Right click the diamond ore with your gem.",
@@ -56,12 +56,12 @@ public class Dwarf extends Race {
     @Override
     public void passiveBoost(Player p)
     {
-        Location loc = p.getLocation();
         double height = p.getLocation().getY();
 
         if(height < 40)
         {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
         }
 
         if(ItemUtil.isPickAxe(p.getItemInHand().getType()))

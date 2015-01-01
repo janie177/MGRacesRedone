@@ -50,7 +50,7 @@ public class ItemUtil
         int slot = 0;
         for(ItemStack i : p.getInventory().getContents())
         {
-            if(i != null && i.equals(is))
+            if(i != null && areEqualIgnoreAmount(i, is))
             {
                 if(i.getAmount() > 1)
                 {
@@ -65,6 +65,11 @@ public class ItemUtil
             slot++;
         }
         p.updateInventory();
+    }
+
+    public static boolean areEqualIgnoreAmount(ItemStack is1, ItemStack is2)
+    {
+        return is1.getType().equals(is2.getType()) && is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore()) && is1.getItemMeta().getDisplayName().equals(is2.getItemMeta().getDisplayName());
     }
 
     public static boolean isRawMeat(Material m)

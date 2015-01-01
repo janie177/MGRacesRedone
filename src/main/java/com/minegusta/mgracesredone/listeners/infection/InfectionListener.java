@@ -70,11 +70,12 @@ public class InfectionListener implements Listener
                 if(entity instanceof Sheep && !((Sheep)entity).isAdult())
                 {
                     hasSheep = true;
+                    break;
                 }
             }
 
             if(!hasSheep)return;
-            if(BlockUtil.radiusCheck(center, 10, Material.OBSIDIAN, 55))
+            if(BlockUtil.radiusCheck(center, 12, Material.OBSIDIAN, 55))
             {
                 Races.setRace(p, RaceType.DEMON);
                 EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
@@ -129,13 +130,13 @@ public class InfectionListener implements Listener
         if(!WorldCheck.isEnabled(p.getWorld()))return;
 
         if(Races.getRace(p) != RaceType.HUMAN)return;
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && p.getItemInHand().equals(Recipe.SHINYGEM.getResult()))
+        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.SHINYGEM.getResult()))
         {
             Block b = e.getClickedBlock();
             if(b.getType() != Material.DIAMOND_ORE)return;
-            if(BlockUtil.radiusCheck(b, 6, Material.DIAMOND_ORE, 5) && BlockUtil.radiusCheck(b, 6, Material.EMERALD_ORE, 5) && BlockUtil.radiusCheck(b, 6, Material.REDSTONE_ORE, 5) && BlockUtil.radiusCheck(b, 6, Material.LAPIS_ORE, 5))
+            if(BlockUtil.radiusCheck(b, 8, Material.DIAMOND_ORE, 5) && BlockUtil.radiusCheck(b, 8, Material.EMERALD_ORE, 5) && BlockUtil.radiusCheck(b, 8, Material.GOLD_ORE, 5) && BlockUtil.radiusCheck(b, 8, Material.LAPIS_ORE, 5))
             {
-                BlockUtil.poofBlocks(b, 6, Lists.newArrayList(Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE), Material.AIR, Effect.CLOUD);
+                BlockUtil.poofBlocks(b, 8, Lists.newArrayList(Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE), Material.AIR, Effect.CLOUD);
                 Races.setRace(p, RaceType.DWARF);
                 ChatUtil.sendString(p, "Diggy diggy hole, you are now a Dwarf!");
                 EffectUtil.playSound(p, Sound.ANVIL_USE);
@@ -154,8 +155,9 @@ public class InfectionListener implements Listener
 
         if(!(e.getRightClicked() instanceof Enderman) || Races.getRace(p) != RaceType.HUMAN)return;
 
-        if(p.getItemInHand().equals(Recipe.ENDEREYE.getResult()))
+        if(ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.ENDEREYE.getResult()))
         {
+            e.setCancelled(true);
             for (int i = 0; i < 20 * 10; i++) {
                 final int k = i;
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
@@ -165,11 +167,6 @@ public class InfectionListener implements Listener
                     {
                         if(k % 20 == 0)
                         {
-                            if(p.getLocation().distance(e.getRightClicked().getLocation()) > 4)
-                            {
-                                ChatUtil.sendString(p, "You are too far from your target to complete the soul merge.");
-                                return;
-                            }
                             ChatUtil.sendString(p, (10 - (k/20)) + " Seconds remaining till soul-transfusion is completed.");
                         }
                         EffectUtil.playParticle(p, Effect.PORTAL, k/80,k/80,k/80, k/2);
@@ -256,7 +253,8 @@ public class InfectionListener implements Listener
         Player p = e.getPlayer();
         if (!WorldCheck.isEnabled(p.getWorld())) return;
         if (WeatherUtil.getMoonPhase(p.getWorld()) == WeatherUtil.MoonPhase.FULL) {
-            if (e.getRightClicked() instanceof Wolf && p.getItemInHand().equals(Recipe.WOLFBONE.getResult())) {
+            if (e.getRightClicked() instanceof Wolf && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.WOLFBONE.getResult())) {
+                e.setCancelled(true);
                 Wolf wolf = (Wolf) e.getRightClicked();
                 if (wolf.isTamed()) return;
 
@@ -265,6 +263,7 @@ public class InfectionListener implements Listener
                 EffectUtil.playSound(p, Sound.WOLF_HOWL);
                 EffectUtil.playParticle(wolf, Effect.LARGE_SMOKE, 1, 1, 1, 300);
                 wolf.remove();
+                Races.setRace(p, RaceType.WEREWOLF);
 
                 ItemUtil.removeOne(p, Recipe.WOLFBONE.getResult());
 
