@@ -45,13 +45,14 @@ public class ElfListener implements Listener
             {
                 Arrow projectile = (Arrow) e.getProjectile();
                 Arrow arrow = (Arrow) e.getEntity().getWorld().spawnEntity(e.getProjectile().getLocation(), EntityType.ARROW);
-
                 arrow.setVelocity(projectile.getVelocity());
                 arrow.setShooter(projectile.getShooter());
                 arrow.setKnockbackStrength(projectile.getKnockbackStrength());
                 arrow.setCritical(projectile.isCritical());
                 arrow.setBounce(projectile.doesBounce());
                 ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
+
+                Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 60);
             }
         }
     }
