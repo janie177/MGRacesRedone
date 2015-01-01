@@ -1,11 +1,14 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -17,8 +20,12 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
+
 public class AuroraListener implements Listener
 {
+    private static final List<Material> snowBlocks = Lists.newArrayList(Material.SNOW_BLOCK, Material.SNOW, Material.ICE, Material.PACKED_ICE);
+
     @EventHandler
     public void onDrown(EntityDamageEvent e)
     {
@@ -31,6 +38,19 @@ public class AuroraListener implements Listener
                 e.setCancelled(true);
             }
         }
+
+        else if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
+        {
+            Player p = (Player) e.getEntity();
+            if(isAurora(p))
+            {
+                Material mat = p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
+
+                if(!snowBlocks.contains(mat))return;
+                e.setDamage(0.0);
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
@@ -38,15 +58,6 @@ public class AuroraListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
-        {
-            Player p = (Player) e.getEntity();
-            if(isAurora(p))
-            {
-                e.setDamage(0.0);
-                e.setCancelled(true);
-            }
-        }
     }
 
     private static final double[] directions = {0.1, -0.1, 0.2, -0.2};

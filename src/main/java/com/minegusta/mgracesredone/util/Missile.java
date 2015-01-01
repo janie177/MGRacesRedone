@@ -1,15 +1,17 @@
 package com.minegusta.mgracesredone.util;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 public class Missile
 {
-    private static List<Missile> missiles = Lists.newArrayList();
+    private static ConcurrentMap<Missile, Boolean> missiles = Maps.newConcurrentMap();
 
     private Location location;
     private double xSpeed;
@@ -33,20 +35,21 @@ public class Missile
     public static Missile createMissile(Location location, double xSpeed, double ySpeed, double zSpeed, Effect[] effects, int duration)
     {
         Missile missile = new Missile(location, xSpeed, ySpeed, zSpeed, effects, duration);
-        missiles.add(missile);
+        missiles.put(missile, true);
         return missile;
     }
 
     public static Missile createMissile(Location location, Vector velocity, Effect[] effects, int duration)
     {
         Missile missile = new Missile(location, velocity.getX(), velocity.getY(), velocity.getZ(), effects, duration);
-        missiles.add(missile);
+        missiles.put(missile, true);
         return missile;
     }
 
     public static void update()
     {
-        for(Missile m : missiles)
+        if(missiles.size() == 0)return;
+        for(Missile m : missiles.keySet())
         {
             m.updateLocation();
             for(Effect effect : m.getEffects())
