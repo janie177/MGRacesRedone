@@ -26,7 +26,7 @@ public class ChatUtil
 
     private static String s1 = ChatColor.DARK_PURPLE + "=====";
     private static String s2 = ChatColor.YELLOW + "||";
-    private static String s3 = ChatColor.YELLOW + "" + ChatColor.BOLD + "     R   A   C   E   S";
+    private static String s3 = ChatColor.YELLOW + "" + ChatColor.BOLD + "        R   A   C   E   S";
     private static String s4 = s2+s1+s2+s1+s2+s1+s2+s1+s2+s1+s2;
 
     public static void sendFancyBanner(Player p)

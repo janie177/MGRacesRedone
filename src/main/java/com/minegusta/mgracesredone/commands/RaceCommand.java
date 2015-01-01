@@ -138,7 +138,7 @@ public class RaceCommand implements CommandExecutor {
             p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + recipe.getRecipeName() + ":");
             for(MGItem item : recipe.getRecipe().getIngriedients())
             {
-                p.sendMessage(ChatColor.YELLOW + " - " + ChatColor.DARK_PURPLE + item.getAmount() + ChatColor.LIGHT_PURPLE + item.getMaterial().toString());
+                p.sendMessage(ChatColor.YELLOW + " - " + ChatColor.DARK_PURPLE + item.getAmount() + " " + ChatColor.LIGHT_PURPLE + item.getMaterial().toString());
             }
         }
         ChatUtil.sendFooter(p);
