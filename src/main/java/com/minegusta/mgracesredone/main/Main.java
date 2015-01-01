@@ -60,6 +60,9 @@ public class Main extends JavaPlugin
         SaveTask.stop();
         BoostTask.stop();
         MissileTask.stop();
+
+        //Save
+        SaveTask.save();
     }
 
     /**

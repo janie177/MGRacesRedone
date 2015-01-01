@@ -173,17 +173,15 @@ public class EnderBornListener implements Listener
     public void onBlockTeleport(PlayerTeleportEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+        if(!(e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL))return;
 
         Player p = e.getPlayer();
         if(!isEnderBorn(p))return;
-        if(e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL)
+        if(!pearlMap.containsKey(p.getUniqueId().toString()))return;
+        e.setCancelled(true);
+        if(!pearlMap.get(p.getUniqueId().toString()))
         {
-            if(!pearlMap.containsKey(p.getUniqueId().toString()))return;
-            e.setCancelled(true);
-            if(!pearlMap.get(p.getUniqueId().toString()))
-            {
-                p.teleport(e.getTo());
-            }
+            p.teleport(e.getTo());
         }
     }
 

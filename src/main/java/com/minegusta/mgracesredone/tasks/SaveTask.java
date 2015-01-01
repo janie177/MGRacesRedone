@@ -25,7 +25,7 @@ public class SaveTask
         if(TASK != -1)Bukkit.getScheduler().cancelTask(TASK);
     }
 
-    private static void save()
+    public static void save()
     {
         for(MGPlayer mgp : Storage.getPlayers())
         {
