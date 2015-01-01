@@ -83,7 +83,8 @@ public class Missile
 
     public void updateLocation()
     {
-        setLocation(getLocation().add(xSpeed, yspeed, zspeed));
+        Location newLocation = getLocation().add(xSpeed, yspeed, zspeed);
+        setLocation(newLocation);
     }
 
     public void setLocation(Location location)

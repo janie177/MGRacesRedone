@@ -4,10 +4,7 @@ import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -92,7 +89,7 @@ public class EnderBornListener implements Listener
     }
 
     private static final double[] directions = {0.5, -0.5, 1.0, -1.0};
-    private static final Effect[] effects = {Effect.PORTAL, Effect.ENDER_SIGNAL};
+    private static final Effect[] effects = {Effect.PORTAL};
 
 
     @EventHandler
