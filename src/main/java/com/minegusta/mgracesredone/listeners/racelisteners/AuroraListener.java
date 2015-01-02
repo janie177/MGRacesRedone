@@ -46,8 +46,9 @@ public class AuroraListener implements Listener
             if(isAurora(p))
             {
                 Material mat = p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
+                Material mat2 = p.getLocation().getBlock().getType();
 
-                if(!snowBlocks.contains(mat))return;
+                if(!snowBlocks.contains(mat) || !snowBlocks.contains(mat2))return;
                 e.setDamage(0.0);
                 e.setCancelled(true);
             }
