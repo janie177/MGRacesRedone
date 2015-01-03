@@ -49,41 +49,41 @@ public class Aurora extends Race {
 
         if(PlayerUtil.isInWater(p))
         {
-            PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 5);
         }
 
         if(WeatherUtil.isFullMoon(p.getWorld()))
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
         }
 
         if(PlayerUtil.isInRain(p))
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
         }
 
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(p.getLocation());
 
         if(biome == WeatherUtil.BiomeType.ICE)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
         }
         else if(biome == WeatherUtil.BiomeType.COLD)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
         }
         else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 1, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 1, 5);
             EffectUtil.playParticle(p, Effect.WATERDRIP);
         }
     }

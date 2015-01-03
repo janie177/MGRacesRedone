@@ -53,7 +53,6 @@ public class Elf extends Race {
     public void passiveBoost(Player p) {
 
         Location loc = p.getLocation();
-        Material mat = BlockUtil.getBlockAtLocation(loc);
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
 
         if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))
@@ -69,32 +68,13 @@ public class Elf extends Race {
         if(biome == WeatherUtil.BiomeType.NEUTRAL && WeatherUtil.isDay(p.getWorld()))
         {
             EffectUtil.playParticle(p, Effect.HAPPY_VILLAGER);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 1, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 1, 5);
         }
         else
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 3);
-        }
-
-        if(p.getHealth() <= 5 && !p.isDead())
-        {
-            for(Entity ent : p.getNearbyEntities(6, 6, 6))
-            {
-                if(ent instanceof Animals)
-                {
-                    EffectUtil.playSound(p, Sound.FIREWORK_LARGE_BLAST2);
-                    EffectUtil.playParticle(ent, Effect.CLOUD);
-                    EffectUtil.playParticle(p, Effect.HEART);
-                    double max = p.getMaxHealth() - p.getHealth();
-                    double amount = 8;
-                    if(max < 8)amount = max;
-                    ((Animals) ent).damage(amount);
-                    p.setHealth(p.getHealth() + amount);
-                    p.sendMessage(ChatColor.GREEN + "An animal gave you some of it's life force!");
-                }
-            }
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
         }
     }
 }

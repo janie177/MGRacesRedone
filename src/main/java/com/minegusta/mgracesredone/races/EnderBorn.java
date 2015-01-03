@@ -60,8 +60,8 @@ public class EnderBorn extends Race {
         if(WeatherUtil.isEnd(loc))
         {
             EffectUtil.playParticle(p, Effect.PORTAL);
-            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
         }
 
         if((PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p)) && WGUtil.canGetDamage(p))
@@ -71,13 +71,13 @@ public class EnderBorn extends Race {
 
         if(BlockUtil.getLightLevel(loc) == BlockUtil.LightLevel.DARK)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
         }
 
         if(p.isSneaking())
         {
-            PotionUtil.updatePotion(p, PotionEffectType.INVISIBILITY, 0, 2);
-            EffectUtil.playParticle(p, Effect.PARTICLE_SMOKE, 1, 0, 1, 40);
+            PotionUtil.updatePotion(p, PotionEffectType.INVISIBILITY, 0, 5);
+            EffectUtil.playParticle(p, Effect.LARGE_SMOKE, 1, 0, 1, 40);
         }
 
     }

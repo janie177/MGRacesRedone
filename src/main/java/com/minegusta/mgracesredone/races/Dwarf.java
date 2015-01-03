@@ -58,16 +58,16 @@ public class Dwarf extends Race {
     {
         double height = p.getLocation().getY();
 
-        if(height < 40)
+        if(height < 50)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         }
 
         if(ItemUtil.isPickAxe(p.getItemInHand().getType()))
         {
             EffectUtil.playParticle(p, Effect.SMOKE);
-            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 2, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 5);
         }
     }
 }

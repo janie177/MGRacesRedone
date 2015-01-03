@@ -4,10 +4,7 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -68,6 +65,32 @@ public class ElfListener implements Listener
             if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE  && isElf(p) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled())
             {
                 e.setDamage(e.getDamage() + 1.0);
+            }
+        }
+
+        if(e.getEntity() instanceof Player && e.getDamager() instanceof LivingEntity)
+        {
+            Player p = (Player) e.getEntity();
+            if(isElf(p))
+            {
+                if(p.getHealth() <= 5 && !p.isDead())
+                {
+                    for(Entity ent : p.getNearbyEntities(6, 6, 6))
+                    {
+                        if(ent instanceof Animals)
+                        {
+                            EffectUtil.playSound(p, Sound.FIREWORK_LARGE_BLAST2);
+                            EffectUtil.playParticle(ent, Effect.CLOUD);
+                            EffectUtil.playParticle(p, Effect.HEART);
+                            double max = p.getMaxHealth() - p.getHealth();
+                            double amount = 8;
+                            if(max < 8)amount = max;
+                            ((Animals) ent).damage(amount);
+                            p.setHealth(p.getHealth() + amount);
+                            p.sendMessage(ChatColor.GREEN + "An animal gave you some of it's life force!");
+                        }
+                    }
+                }
             }
         }
     }

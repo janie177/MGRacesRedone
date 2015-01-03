@@ -54,26 +54,26 @@ public class Demon extends Race {
         if(WeatherUtil.isHell(loc))
         {
             EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         }
         else if(biome == WeatherUtil.BiomeType.HOT)
         {
             EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
         }
         else if(biome == WeatherUtil.BiomeType.COLD || biome == WeatherUtil.BiomeType.ICE)
         {
             EffectUtil.playParticle(p, Effect.LAVADRIP);
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 3);
-            PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 5);
         }
         else
         {
             EffectUtil.playParticle(p, Effect.LAVADRIP);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 3);
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 5);
         }
 
         if((PlayerUtil.isInWater(p) || PlayerUtil.isInRain(p)) && WGUtil.canGetDamage(p))
@@ -81,7 +81,7 @@ public class Demon extends Race {
             p.damage(1.0);
         }
 
-        PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 1, 3);
+        PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 1, 5);
 
     }
     public static String getChant()
