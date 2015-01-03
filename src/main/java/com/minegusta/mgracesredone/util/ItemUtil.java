@@ -45,6 +45,31 @@ public class ItemUtil
         p.updateInventory();
     }
 
+    public static void removeAmount(Player p, Material m, int amount)
+    {
+        int remaining = amount;
+        int slot = 0;
+        for(ItemStack i : p.getInventory().getContents())
+        {
+            if(i != null && i.getType() == m)
+            {
+                if(i.getAmount() > remaining)
+                {
+                    i.setAmount(i.getAmount() - remaining);
+                    break;
+                }
+                else
+                {
+                    remaining = remaining - i.getAmount();
+                    p.getInventory().setItem(slot, new ItemStack(Material.AIR));
+                }
+                if(remaining < 1) break;
+            }
+            slot++;
+        }
+        p.updateInventory();
+    }
+
     public static void removeOne(Player p, ItemStack is)
     {
         int slot = 0;

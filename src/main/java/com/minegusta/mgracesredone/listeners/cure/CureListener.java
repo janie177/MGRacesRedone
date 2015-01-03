@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class CureListener implements Listener
 {
@@ -36,6 +37,18 @@ public class CureListener implements Listener
 
             if(BlockUtil.radiusCheck(event.getClickedBlock(), radius, secondaryBlock, secondaryBlockAmount))
             {
+                for(MGItem item : requiredItems)
+                {
+                    if(!p.getInventory().containsAtLeast(new ItemStack(item.getMaterial()), item.getAmount()))
+                    {
+                        ChatUtil.sendString(p, "You do not have the required items to use this altar.");
+                        return;
+                    }
+                }
+                for(MGItem item : requiredItems)
+                {
+                    ItemUtil.removeAmount(p, item.getMaterial(), item.getAmount());
+                }
                 ChatUtil.sendString(p, "You are now human!");
                 EffectUtil.playSound(p, Sound.VILLAGER_YES);
                 EffectUtil.playParticle(p, Effect.ENDER_SIGNAL, 1, 1, 1, 6);
