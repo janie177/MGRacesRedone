@@ -112,7 +112,7 @@ public class DwarfListener implements Listener
 
         if(isDwarf(p) && ItemUtil.isOre(e.getBlock().getType()) && !e.isCancelled())
         {
-            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 0);
+            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 7);
         }
     }
 

@@ -67,7 +67,7 @@ public class Dwarf extends Race {
         if(ItemUtil.isPickAxe(p.getItemInHand().getType()))
         {
             EffectUtil.playParticle(p, Effect.SMOKE);
-            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 2, 5);
         }
     }
 }
