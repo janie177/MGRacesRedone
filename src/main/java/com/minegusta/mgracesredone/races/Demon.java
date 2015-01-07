@@ -59,7 +59,7 @@ public class Demon extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         }
-        else if(biome == WeatherUtil.BiomeType.HOT)
+        else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
         {
             EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
