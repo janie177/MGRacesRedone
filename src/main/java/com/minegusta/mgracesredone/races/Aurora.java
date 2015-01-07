@@ -81,10 +81,14 @@ public class Aurora extends Race {
         }
         else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 1, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 2, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 2, 5);
             EffectUtil.playParticle(p, Effect.WATERDRIP);
+            if(biome == WeatherUtil.BiomeType.HOT)
+            {
+                PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 10);
+            }
         }
     }
 }

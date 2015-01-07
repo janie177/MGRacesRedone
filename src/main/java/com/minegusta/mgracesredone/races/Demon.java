@@ -54,7 +54,8 @@ public class Demon extends Race {
         if(WeatherUtil.isHell(loc))
         {
             EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         }
