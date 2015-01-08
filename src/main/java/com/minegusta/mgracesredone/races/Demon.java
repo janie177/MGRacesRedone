@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races;
 
 import com.minegusta.mgracesredone.util.*;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public class Demon extends Race {
                         "Make an altar out of at least 55 obsidian blocks.",
                         "Get a baby sheep to stand on the altar.",
                         "Stand on your altar around the center.",
-                        "Say: " + getChant(),
+                        "Say: " + ChatColor.DARK_GRAY + getChant(),
                         "The sheep will be sacrificed and you will be a Demon!"
                 };
     }
