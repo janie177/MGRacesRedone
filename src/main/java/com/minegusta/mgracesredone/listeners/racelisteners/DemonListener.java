@@ -3,11 +3,8 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.util.Cooldown;
+import com.minegusta.mgracesredone.util.*;
 import com.minegusta.mgracesredone.main.Races;
-import com.minegusta.mgracesredone.util.Missile;
-import com.minegusta.mgracesredone.util.WeatherUtil;
-import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -17,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import java.util.List;
 
@@ -72,6 +70,21 @@ public class DemonListener implements Listener
             {
                 e.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onDemonSneak(PlayerToggleSneakEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+
+        if(!isDemon(e.getPlayer()))return;
+
+        Player p = e.getPlayer();
+
+        if(PlayerUtil.isInLava(p) && WeatherUtil.isHell(p.getLocation()))
+        {
+            p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.0D));
         }
     }
 
