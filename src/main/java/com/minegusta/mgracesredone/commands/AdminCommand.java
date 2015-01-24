@@ -18,6 +18,7 @@ public class AdminCommand implements CommandExecutor
         if(!s.isOp() || s instanceof ConsoleCommandSender)
         {
             s.sendMessage(ChatColor.RED + "You cannot use that :( Boohoo. -cri-");
+            return true;
         }
 
         if(args.length != 3)
