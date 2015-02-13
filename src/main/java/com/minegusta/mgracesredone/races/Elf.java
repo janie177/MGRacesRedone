@@ -45,7 +45,8 @@ public class Elf extends Race {
                         "When shooting a bow, there's a 25% two arrows are shot at once.",
                         "Elves may have less health than other races, but they are also fast.",
                         "They can avoid face-to-face combat by running and using a bow.",
-                        "Other than that they feel at home in neutral temperature biomes."
+                        "Other than that they feel at home in neutral temperature biomes.",
+                        "Elves are capable of sitting on any animal."
                 };
     }
 

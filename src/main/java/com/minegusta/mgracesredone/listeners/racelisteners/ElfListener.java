@@ -125,6 +125,17 @@ public class ElfListener implements Listener
         }
     }
 
+    @EventHandler
+    public void onElfRide(PlayerInteractEntityEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()) || Races.getRace(e.getPlayer()) != RaceType.ELF)return;
+
+        if(e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player))
+        {
+            e.getRightClicked().setPassenger(e.getPlayer());
+        }
+    }
+
     private static boolean isElf(Player p)
     {
         return Races.getRace(p) == RaceType.ELF;
