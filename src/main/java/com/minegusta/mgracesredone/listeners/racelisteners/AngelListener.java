@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class AngelListener implements Listener
@@ -24,8 +25,29 @@ public class AngelListener implements Listener
         Player p = e.getPlayer();
         if(p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER)
         {
-            p.setVelocity(p.getLocation().getDirection().setY(-0.2));
+            p.setVelocity(p.getLocation().getDirection().multiply(0.3).setY(-0.12));
         }
     }
 
+    @EventHandler
+    public void onNetherFallDamage(EntityDamageEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
+        {
+            Player p = (Player) e.getEntity();
+            if(isAngel(p))
+            {
+                e.setDamage(0.0);
+                e.setCancelled(true);
+            }
+        }
+    }
+
+
+    private boolean isAngel(Player p)
+    {
+        return Races.getRace(p) == RaceType.ANGEL;
+    }
 }
