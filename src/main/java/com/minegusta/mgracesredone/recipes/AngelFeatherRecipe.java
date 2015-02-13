@@ -18,7 +18,7 @@ public class AngelFeatherRecipe implements IRecipe
 
     @Override
     public String getName() {
-        return ChatColor.DARK_PURPLE + "Angel Feather";
+        return "Angel Feather";
     }
 
     @Override

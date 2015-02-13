@@ -11,12 +11,12 @@ import org.bukkit.potion.PotionEffectType;
 public class Angel extends Race {
     @Override
     public double getHealth() {
-        return 22;
+        return 24;
     }
 
     @Override
     public String getName() {
-        return "Angle";
+        return "Angel";
     }
 
     @Override
@@ -31,14 +31,16 @@ public class Angel extends Race {
     public String[] getInfo() {
         return new String[]
                 {
-                        "le"
+                        "le",
+                        "lele",
+                        "lelelele",
+                        "Llelelelele"
                 };
     }
 
     @Override
     public void passiveBoost(Player p)
     {
-        WeatherUtil.BiomeType type = WeatherUtil.getBiomeType(p.getLocation());
         int height = (int) p.getLocation().getY();
 
         //Weakness in the nether and end
@@ -71,7 +73,7 @@ public class Angel extends Race {
 
         if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0 ,1);
+            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 4);
         }
 
     }

@@ -16,6 +16,7 @@ public enum Listener
     CURE_LISTENER(new CureListener()),
     DEMON_LISTENER(new DemonListener()),
     WEREWOLF_LISTENER(new WereWolfListener()),
+    ANGEL_LISTENER(new AngelListener()),
     ENDERBORNLISTENER(new EnderBornListener());
 
     private org.bukkit.event.Listener listener;

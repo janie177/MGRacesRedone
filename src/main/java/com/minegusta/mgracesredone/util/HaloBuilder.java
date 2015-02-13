@@ -18,9 +18,9 @@ public class HaloBuilder
 
     private static void spawnParticles(World w, Location l)
     {
-        w.spigot().playEffect(l.add(-0.2,0,-0.2), Effect.MAGIC_CRIT, 1, 1, 0, 0, 0, 5, 1, 11);
-        w.spigot().playEffect(l.add(-0.2,0,0.2), Effect.MAGIC_CRIT, 1, 1, 0, 0, 0, 5, 1, 11);
-        w.spigot().playEffect(l.add(0.2,0,-0.2), Effect.MAGIC_CRIT, 1, 1, 0, 0, 0, 5, 1, 11);
-        w.spigot().playEffect(l.add(0.2,0,0.2), Effect.MAGIC_CRIT, 1, 1, 0, 0, 0, 5, 1, 11);
+        w.spigot().playEffect(l.add(-0.2,0,-0.2), Effect.SLIME, 1, 1, 0, 0, 0, 5, 1, 11);
+        w.spigot().playEffect(l.add(-0.2,0,0.2), Effect.SLIME, 1, 1, 0, 0, 0, 5, 1, 11);
+        w.spigot().playEffect(l.add(0.2,0,-0.2), Effect.SLIME, 1, 1, 0, 0, 0, 5, 1, 11);
+        w.spigot().playEffect(l.add(0.2,0,0.2), Effect.SLIME, 1, 1, 0, 0, 0, 5, 1, 11);
     }
 }
