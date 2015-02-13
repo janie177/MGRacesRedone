@@ -51,7 +51,19 @@ public class DemonListener implements Listener
 
         if(hand == Material.BLAZE_ROD)
         {
-            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.POTION_SWIRL, Effect.COLOURED_DUST}, 30);
+            Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
+            String uuid = p.getUniqueId().toString();
+            String name = "uhrain";
+            if (Cooldown.isCooledDown(name, uuid)) {
+                Cooldown.newCoolDown(name, uuid, 180);
+                EffectUtil.playParticle(p, Effect.MAGIC_CRIT);
+                EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
+                p.sendMessage(ChatColor.DARK_RED + "You call an unholy rain on your location!");
+
+                startRain(p.getLocation().add(0, 9, 0));
+            } else {
+                ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Unholy Rain.");
+            }
         }
     }
 
@@ -140,6 +152,12 @@ public class DemonListener implements Listener
                 }
             }
         }
+    }
+
+    private void startRain(Location l)
+    {
+        UnholyRain rain = new UnholyRain(18, l);
+        rain.start();
     }
 
     private static boolean isDemon(Player p)

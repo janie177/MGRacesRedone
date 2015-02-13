@@ -72,6 +72,7 @@ public class AngelListener implements Listener
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
                 e.setDamage(0.0);
+                e.setCancelled(true);
             }
         }
     }
@@ -86,6 +87,7 @@ public class AngelListener implements Listener
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
                 e.setDamage(0.0);
+                e.setCancelled(true);
             }
         }
     }
@@ -100,6 +102,7 @@ public class AngelListener implements Listener
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
                 e.setDamage(0.0);
+                e.setCancelled(true);
             }
         }
     }

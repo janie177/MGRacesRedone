@@ -66,7 +66,7 @@ public class Angel extends Race {
 
 
         //String at high areas
-        if(height > 90)
+        if(height > 100)
         {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);

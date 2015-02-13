@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-public class HolyRain
+public class UnholyRain
 {
     private int duration;
     private World w;
@@ -24,7 +24,7 @@ public class HolyRain
     private static final List<EntityType> unholy = Lists.newArrayList(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.WITCH, EntityType.BLAZE, EntityType.GHAST, EntityType.ENDERMAN, EntityType.PIG_ZOMBIE, EntityType.CAVE_SPIDER, EntityType.SPIDER, EntityType.CREEPER, EntityType.ENDERMITE, EntityType.GUARDIAN, EntityType.WITHER);
     private static final List<RaceType> unholyRaces = Lists.newArrayList(RaceType.DEMON, RaceType.WEREWOLF, RaceType.ENDERBORN);
 
-    public HolyRain(int duration, Location l)
+    public UnholyRain(int duration, Location l)
     {
         this.duration = duration * 4;
         this.location = l;
@@ -73,22 +73,22 @@ public class HolyRain
                 Player p = (Player) ent;
                 if(unholyRaces.contains(Races.getRace(p)))
                 {
-                    damage(p);
+                    heal(p);
                 }
                 else
                 {
-                    heal(p);
+                    damage(p);
                 }
             }
             else
             {
                 if(unholy.contains(ent.getType()))
                 {
-                    damage(le);
+                    heal(le);
                 }
                 else
                 {
-                    heal(le);
+                    damage(le);
                 }
             }
         }
@@ -97,9 +97,9 @@ public class HolyRain
 
     private void heal(LivingEntity ent)
     {
-        PotionUtil.updatePotion(ent, PotionEffectType.REGENERATION, 0, 5);
+        PotionUtil.updatePotion(ent, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.SPEED, 0, 5);
-        PotionUtil.updatePotion(ent, PotionEffectType.FIRE_RESISTANCE, 0, 5);
+        PotionUtil.updatePotion(ent, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
     }
 
     private void damage(LivingEntity ent)
@@ -107,6 +107,6 @@ public class HolyRain
 
         PotionUtil.updatePotion(ent, PotionEffectType.HUNGER, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.SLOW, 0, 5);
-        PotionUtil.updatePotion(ent, PotionEffectType.POISON, 0, 5);
+        ent.setFireTicks(20 * 5);
     }
 }
