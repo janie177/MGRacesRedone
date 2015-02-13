@@ -42,7 +42,7 @@ public class UnholyRain
                 @Override
                 public void run()
                 {
-                    w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
+                    w.spigot().playEffect(location, Effect.LAVADRIP, 1, 1, 8, 0, 8, 1, 25, 20);
                 }
             }, 5 * i);
 
@@ -54,7 +54,7 @@ public class UnholyRain
                     {
                         runRain();
                     }
-                }, 20 * i);
+                }, 20 * (i/4));
             }
         }
     }

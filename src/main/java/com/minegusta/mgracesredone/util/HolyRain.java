@@ -54,7 +54,7 @@ public class HolyRain
                     {
                         runRain();
                     }
-                }, 20 * i);
+                }, 20 * (i/4));
             }
         }
     }
