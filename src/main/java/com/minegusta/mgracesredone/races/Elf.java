@@ -57,6 +57,7 @@ public class Elf extends Race {
 
         if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))
         {
+            if(p.isDead())return;
             EffectUtil.playParticle(p, Effect.HEART);
             double max = p.getMaxHealth() - p.getHealth();
             if(max >= 1)

@@ -11,6 +11,7 @@ public enum Recipe
     ENDEREYE(new EnderCrystalRecipe()),
     ELFSTEW(new ElfStewRecipe()),
     WOLFBONE(new WolfBoneRecipe()),
+    ANGELRECIPE(new AngelFeatherRecipe()),
     ICECRYSTAL(new IceCrystalRecipe());
 
 

@@ -19,7 +19,7 @@ public class EntityUtil
                 public void run()
                 {
                     if(ent instanceof Player) ((Player)ent).sendMessage(ChatColor.RED + "You are bleeding! *ouch*");
-                    if(WGUtil.canGetDamage(ent)) ent.damage(2.0);
+                    if(WGUtil.canGetDamage(ent)) ent.damage(1.0);
                     EffectUtil.playParticle(ent, Effect.COLOURED_DUST);
 
                 }

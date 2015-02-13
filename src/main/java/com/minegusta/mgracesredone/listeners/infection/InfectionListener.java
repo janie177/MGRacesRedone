@@ -6,12 +6,14 @@ import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.Demon;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.recipes.AngelFeatherRecipe;
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -218,6 +220,24 @@ public class InfectionListener implements Listener
         }
         ChatUtil.sendString(p, "You do not have 100 bow kills yet!");
         ChatUtil.sendString(p, "You have " + kills + " kills.");
+    }
+
+    //Angel
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onAngelPowers(PlayerDeathEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+        Player p = e.getEntity();
+        if(Races.getRace(p) != RaceType.HUMAN) return;
+
+        if(p.getLastDamageCause().getCause() != null && p.getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.FALL)return;
+
+        if(p.getInventory().containsAtLeast(Recipe.ANGELRECIPE.getResult(), 1))
+        {
+            ItemUtil.removeOne(p, Recipe.ANGELRECIPE.getResult());
+            ChatUtil.sendString(p, "You are now an Angel!");
+            Races.setRace(p, RaceType.ANGEL);
+        }
     }
 
     //Elf

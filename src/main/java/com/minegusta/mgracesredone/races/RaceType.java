@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.races;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.EulerAngle;
 
 public enum RaceType
 {
@@ -11,6 +12,7 @@ public enum RaceType
     WEREWOLF(new Werewolf(), ChatColor.DARK_GRAY + "[WW]"),
     AURORA(new Aurora(), ChatColor.AQUA + "[Au]"),
     ENDERBORN(new EnderBorn(), ChatColor.DARK_PURPLE + "[EB]"),
+    ANGEL(new Angel(), ChatColor.YELLOW + "[An]"),
     DEMON(new Demon(), ChatColor.RED + "[De]");
 
     private Race race;
