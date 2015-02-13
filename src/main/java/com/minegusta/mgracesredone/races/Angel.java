@@ -40,7 +40,8 @@ public class Angel extends Race {
                         "Angels prefer to live in light areas at great heights.",
                         "Angels can float through the sky using feathers.",
                         "When an Angel is low on health, they gain boosts to flee.",
-                        ""
+                        "Right clicking with a sword while crouching will activate",
+                        "holy rain. This will damage unholy creatures and heal others."
                 };
     }
 
