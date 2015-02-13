@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -52,6 +53,21 @@ public class AngelListener implements Listener
 
 
     @EventHandler
+    public void onAngelDamage(EntityDamageByEntityEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getDamager() instanceof Player && Races.getRace((Player)e.getDamager()) == RaceType.ANGEL)
+        {
+            Player p = (Player) e.getDamager();
+            if(!ItemUtil.isSword(p.getItemInHand().getType()))
+            {
+                e.setDamage(0);
+            }
+        }
+    }
+
+    @EventHandler
     public void onHolyRain(PlayerInteractEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
@@ -80,7 +96,7 @@ public class AngelListener implements Listener
 
     private void startRain(Location l)
     {
-        HolyRain rain = new HolyRain(30, l);
+        HolyRain rain = new HolyRain(18, l);
         rain.start();
     }
 

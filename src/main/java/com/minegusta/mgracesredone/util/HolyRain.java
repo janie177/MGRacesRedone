@@ -21,13 +21,12 @@ public class HolyRain
     private int duration;
     private World w;
     private Location location;
-    private int ID = 0;
     private static final List<EntityType> unholy = Lists.newArrayList(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.WITCH, EntityType.BLAZE, EntityType.GHAST, EntityType.ENDERMAN, EntityType.PIG_ZOMBIE, EntityType.CAVE_SPIDER, EntityType.SPIDER, EntityType.CREEPER, EntityType.ENDERMITE, EntityType.GUARDIAN, EntityType.WITHER);
     private static final List<RaceType> unholyRaces = Lists.newArrayList(RaceType.DEMON, RaceType.WEREWOLF, RaceType.ENDERBORN);
 
     public HolyRain(int duration, Location l)
     {
-        this.duration = duration;
+        this.duration = duration * 4;
         this.location = l;
         this.w = location.getWorld();
 
@@ -36,27 +35,32 @@ public class HolyRain
 
     public void start()
     {
-        ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new Runnable() {
-            @Override
-            public void run()
-            {
-                runRain();
-                duration--;
-                if(duration <= 0)
+
+        for(int i = 0; i < duration; i++)
+        {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+                @Override
+                public void run()
                 {
-                    stop();
+                    w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
                 }
+            }, 5 * i);
+
+            if(i % 4 == 0)
+            {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        runRain();
+                    }
+                }, 20 * i);
             }
-        }, 5, 5);
+        }
     }
 
-    public void stop()
-    {
-        if(ID != 0) Bukkit.getScheduler().cancelTask(ID);
-    }
     private void runRain()
     {
-        w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
         Entity dummy = w.spawnEntity(location, EntityType.SNOWBALL);
         for(Entity ent : dummy.getNearbyEntities(8, 15, 8))
         {
@@ -93,15 +97,15 @@ public class HolyRain
 
     private void heal(LivingEntity ent)
     {
-        PotionUtil.updatePotion(ent, PotionEffectType.REGENERATION, 0, 2);
-        PotionUtil.updatePotion(ent, PotionEffectType.SPEED, 0, 2);
-        PotionUtil.updatePotion(ent, PotionEffectType.FIRE_RESISTANCE, 0, 2);
+        PotionUtil.updatePotion(ent, PotionEffectType.REGENERATION, 0, 5);
+        PotionUtil.updatePotion(ent, PotionEffectType.SPEED, 0, 5);
+        PotionUtil.updatePotion(ent, PotionEffectType.FIRE_RESISTANCE, 0, 5);
     }
 
     private void damage(LivingEntity ent)
     {
-        PotionUtil.updatePotion(ent, PotionEffectType.HUNGER, 0, 2);
-        PotionUtil.updatePotion(ent, PotionEffectType.SLOW, 0, 2);
-        PotionUtil.updatePotion(ent, PotionEffectType.POISON, 0, 2);
+        PotionUtil.updatePotion(ent, PotionEffectType.HUNGER, 0, 5);
+        PotionUtil.updatePotion(ent, PotionEffectType.SLOW, 0, 5);
+        PotionUtil.updatePotion(ent, PotionEffectType.POISON, 0, 5);
     }
 }

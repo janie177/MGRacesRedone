@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Angel extends Race {
     @Override
     public double getHealth() {
-        return 24;
+        return 20;
     }
 
     @Override
@@ -41,7 +41,10 @@ public class Angel extends Race {
                         "Angels can float through the sky using feathers.",
                         "When an Angel is low on health, they gain boosts to flee.",
                         "Right clicking with a sword while crouching will activate",
-                        "holy rain. This will damage unholy creatures and heal others."
+                        "holy rain. This will damage unholy creatures and heal others.",
+                        "In dark areas and on lower grounds, Angels are weakened.",
+                        "Another downside is that angels can only do damage when",
+                        "holding a sword or bow."
                 };
     }
 
