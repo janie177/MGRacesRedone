@@ -30,7 +30,7 @@ public class EffectUtil
 
     public static void playParticle(Entity e, Effect effect)
     {
-        e.getWorld().spigot().playEffect(e.getLocation(), effect, 1, 1, 0, 0, 0, 1, 9, 15);
+        e.getWorld().spigot().playEffect(e.getLocation(), effect, 1, 1, 1, 0, 1, 1, 9, 15);
     }
 
     public static void playParticle(Location l, Effect effect)

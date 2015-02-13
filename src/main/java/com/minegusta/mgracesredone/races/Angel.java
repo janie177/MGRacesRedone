@@ -44,7 +44,11 @@ public class Angel extends Race {
                         "holy rain. This will damage unholy creatures and heal others.",
                         "In dark areas and on lower grounds, Angels are weakened.",
                         "Another downside is that angels can only do damage when",
-                        "holding a sword or bow."
+                        "holding a sword or bow.",
+                        "Falling does not do any damage to Angels.",
+                        "RightClick + Shift when holding a feather activates",
+                        "Invincibility for 8 seconds. Nothing can harm you.",
+                        "When these 8 seconds end, you will be set to 1 health."
                 };
     }
 

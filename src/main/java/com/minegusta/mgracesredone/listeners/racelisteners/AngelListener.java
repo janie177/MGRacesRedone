@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -36,7 +37,7 @@ public class AngelListener implements Listener
     }
 
     @EventHandler
-    public void onNetherFallDamage(EntityDamageEvent e)
+    public void onFallDamage(EntityDamageEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
@@ -65,7 +66,44 @@ public class AngelListener implements Listener
                 e.setDamage(0);
             }
         }
+
+        if(e.getEntity()instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
+        {
+            if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
+            {
+                e.setDamage(0.0);
+            }
+        }
     }
+
+    @EventHandler
+    public void onAngelDamage(EntityDamageEvent e)
+    {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
+
+        if(e.getEntity()instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
+        {
+            if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
+            {
+                e.setDamage(0.0);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onAngelDamage(EntityDamageByBlockEvent e)
+    {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
+
+        if(e.getEntity()instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
+        {
+            if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
+            {
+                e.setDamage(0.0);
+            }
+        }
+    }
+
 
     @EventHandler
     public void onHolyRain(PlayerInteractEvent e)
@@ -74,22 +112,34 @@ public class AngelListener implements Listener
 
         Player p = e.getPlayer();
 
-        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && p.isSneaking() && isAngel(p) && ItemUtil.isSword(p.getItemInHand().getType()))
+        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && p.isSneaking() && isAngel(p))
         {
-            String uuid = p.getUniqueId().toString();
-            String name = "hrain";
-            if(Cooldown.isCooledDown(name, uuid))
+            if(ItemUtil.isSword(p.getItemInHand().getType()))
             {
-                Cooldown.newCoolDown(name, uuid, 180);
-                EffectUtil.playParticle(p, Effect.MAGIC_CRIT);
-                EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
-                p.sendMessage(ChatColor.AQUA + "You call a holy rain on your location!");
+                String uuid = p.getUniqueId().toString();
+                String name = "hrain";
+                if (Cooldown.isCooledDown(name, uuid)) {
+                    Cooldown.newCoolDown(name, uuid, 180);
+                    EffectUtil.playParticle(p, Effect.MAGIC_CRIT);
+                    EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
+                    p.sendMessage(ChatColor.AQUA + "You call a holy rain on your location!");
 
-                startRain(p.getLocation().add(0,9,0));
+                    startRain(p.getLocation().add(0, 9, 0));
+                } else {
+                    ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Holy Rain.");
+                }
             }
-            else
+            else if(p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER)
             {
-                ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Holy Rain.");
+                String uuid = p.getUniqueId().toString();
+                String name = "invince";
+                if (Cooldown.isCooledDown(name, uuid)) {
+                    Cooldown.newCoolDown(name, uuid, 360);
+                    p.sendMessage(ChatColor.GOLD + "You are invincible for 8 seconds!");
+                    AngelInvincibility.startInvincibility(p);
+                } else {
+                    ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Invincibility.");
+                }
             }
         }
     }
