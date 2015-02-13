@@ -25,7 +25,7 @@ public class AngelListener implements Listener
         Player p = e.getPlayer();
         if(p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER)
         {
-            p.setVelocity(p.getLocation().getDirection().multiply(0.3).setY(-0.12));
+            p.setVelocity(p.getLocation().getDirection().multiply(0.6).setY(-0.12));
         }
     }
 

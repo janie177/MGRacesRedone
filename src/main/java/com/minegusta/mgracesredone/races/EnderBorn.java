@@ -23,7 +23,7 @@ public class EnderBorn extends Race {
         return new String[]
                 {
                         "To become Enderborn, follow these steps:",
-                        "Craft an Ender Crystal (/Race recipes).",
+                        "Craft an Ender Crystal (/Race recipe).",
                         "Use the Ender Crystal on an enderman.",
                         "Maintain the spiritual connection. Don't wander too far!",
                         "After a wile, your souls will merge and you are Enderborn."

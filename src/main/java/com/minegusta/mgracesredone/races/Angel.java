@@ -23,7 +23,10 @@ public class Angel extends Race {
     public String[] getInfectionInfo() {
         return new String[]
                 {
-                        "Angel stuff YEAHHHH"
+                        "To become an Angel, follow these steps:",
+                        "Craft a Holy Feather (/Race Recipe).",
+                        "Fall to your death while holding the feather.",
+                        "You are now an angel."
                 };
     }
 
@@ -31,10 +34,13 @@ public class Angel extends Race {
     public String[] getInfo() {
         return new String[]
                 {
-                        "le",
-                        "lele",
-                        "lelelele",
-                        "Llelelelele"
+                        "Angels are holy mysterious creatures.",
+                        "They live in the sky and are peaceful.",
+                        "Angels and unholy creatures do not go together well.",
+                        "Angels prefer to live in light areas at great heights.",
+                        "Angels can float through the sky using feathers.",
+                        "When an Angel is low on health, they gain boosts to flee.",
+                        ""
                 };
     }
 
@@ -54,8 +60,8 @@ public class Angel extends Race {
         //String at high areas
         if(height > 90)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 1, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
         }
         //Weak in low areas and dark ones
