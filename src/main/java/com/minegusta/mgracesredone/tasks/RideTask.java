@@ -61,7 +61,7 @@ public class RideTask
 
             Player rider = Bukkit.getPlayer(uuid);
 
-            if(ent.isDead() || !ent.getPassenger().getUniqueId().toString().equals(s))
+            if(ent == null || ent.isDead() || !ent.getPassenger().getUniqueId().toString().equals(s))
             {
                 remove(s);
                 continue;
