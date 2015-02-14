@@ -4,6 +4,7 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,7 +48,7 @@ public class ElfListener implements Listener
                 arrow.setKnockbackStrength(projectile.getKnockbackStrength());
                 arrow.setCritical(projectile.isCritical());
                 arrow.setBounce(projectile.doesBounce());
-                ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
+                if(!((Player)e.getEntity()).getItemInHand().containsEnchantment(Enchantment.ARROW_INFINITE))ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
 
                 Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 15);
             }

@@ -97,7 +97,13 @@ public class UnholyRain
 
     private void heal(LivingEntity ent)
     {
-        PotionUtil.updatePotion(ent, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+        if(ent.isDead())return;
+
+        double max = ent.getMaxHealth() - ent.getHealth();
+        if(max >= 1)
+        {
+            ent.setHealth(ent.getHealth() + 1);
+        }
         PotionUtil.updatePotion(ent, PotionEffectType.SPEED, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
     }

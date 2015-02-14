@@ -1,8 +1,10 @@
 package com.minegusta.mgracesredone.races;
 
 import com.minegusta.mgracesredone.util.BlockUtil;
+import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WeatherUtil;
+import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
@@ -87,7 +89,12 @@ public class Angel extends Race {
 
         if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 4);
+            if(p.isDead())return;
+            double max = p.getMaxHealth() - p.getHealth();
+            if(max >= 1)
+            {
+                p.setHealth(p.getHealth() + 1);
+            }
         }
 
     }

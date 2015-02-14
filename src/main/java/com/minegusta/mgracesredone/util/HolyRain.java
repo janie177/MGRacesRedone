@@ -97,7 +97,13 @@ public class HolyRain
 
     private void heal(LivingEntity ent)
     {
-        PotionUtil.updatePotion(ent, PotionEffectType.REGENERATION, 0, 5);
+        if(ent.isDead())return;
+
+        double max = ent.getMaxHealth() - ent.getHealth();
+        if(max >= 1)
+        {
+            ent.setHealth(ent.getHealth() + 1);
+        }
         PotionUtil.updatePotion(ent, PotionEffectType.SPEED, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.FIRE_RESISTANCE, 0, 5);
     }
