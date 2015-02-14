@@ -23,37 +23,7 @@ public class RideTask
             @Override
             public void run()
             {
-                if(ElfListener.riders.isEmpty())return;
-                for(String s : ElfListener.riders.keySet())
-                {
-                    LivingEntity ent = ElfListener.riders.get(s);
-                    UUID uuid = UUID.fromString(s);
-
-                    if(!Bukkit.getOfflinePlayer(uuid).isOnline())
-                    {
-                        remove(s);
-                        continue;
-                    }
-
-                    Player rider = Bukkit.getPlayer(uuid);
-
-                    if(ent.isDead() || ent.getPassenger().getUniqueId() != uuid)
-                    {
-                        remove(s);
-                    }
-                    Block target = rider.getTargetBlock(null, 4);
-
-                    double y = -0.12;
-
-                    if(target.getType() != null && target.getType() != Material.AIR && ent.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR)
-                    {
-                        y = 1.6;
-                    }
-
-                    ent.setVelocity(rider.getLocation().getDirection().multiply(0.4).setY(y));
-
-
-                }
+                loop();
             }
         }, 10, 10);
     }
@@ -68,6 +38,43 @@ public class RideTask
         if(ElfListener.riders.containsKey(s))
         {
             ElfListener.riders.remove(s);
+        }
+    }
+
+    private static void loop()
+    {
+        if(ElfListener.riders.isEmpty())
+        {
+            return;
+        }
+        for(String s : ElfListener.riders.keySet())
+        {
+            LivingEntity ent = ElfListener.riders.get(s);
+            UUID uuid = UUID.fromString(s);
+
+            if(!Bukkit.getOfflinePlayer(uuid).isOnline())
+            {
+                remove(s);
+                continue;
+            }
+
+            Player rider = Bukkit.getPlayer(uuid);
+
+            if(ent.isDead() || ent.getPassenger().getUniqueId().equals(uuid))
+            {
+                remove(s);
+                continue;
+            }
+            Block target = rider.getTargetBlock(null, 4);
+
+            double y = -0.12;
+
+            if(target.getType() != null && target.getType() != Material.AIR && ent.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR)
+            {
+                y = 1.6;
+            }
+
+            ent.setVelocity(rider.getLocation().getDirection().multiply(0.5).setY(y));
         }
     }
 }
