@@ -10,6 +10,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class RideTask
             {
                 loop();
             }
-        }, 10, 10);
+        }, 5, 5);
     }
 
     public static void stop()
@@ -67,14 +68,22 @@ public class RideTask
             }
             Block target = rider.getTargetBlock(null, 4);
 
-            double y = -0.12;
+            double y = -0.5;
 
-            if(target.getType() != null && target.getType() != Material.AIR && ent.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR)
+            if(target.getType() != null && target.getType() != Material.AIR && ent.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid())
             {
-                y = 1.6;
+                y = 1.001;
             }
 
-            ent.setVelocity(rider.getLocation().getDirection().multiply(0.5).setY(y));
+            ent.setVelocity(new Vector(0,0,0));
+            ent.setVelocity(rider.getLocation().getDirection().multiply(0.6).setY(y));
+
+            ent.setFallDistance(0);
+
+            if(y > 1)
+            {
+                rider.setFallDistance(0);
+            }
         }
     }
 }
