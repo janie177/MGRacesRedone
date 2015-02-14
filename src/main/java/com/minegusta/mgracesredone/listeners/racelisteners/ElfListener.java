@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
+import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.*;
@@ -17,6 +18,9 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffectType;
+import org.spigotmc.event.entity.EntityDismountEvent;
+
+import java.util.concurrent.ConcurrentMap;
 
 public class ElfListener implements Listener
 {
@@ -126,14 +130,31 @@ public class ElfListener implements Listener
         }
     }
 
+    public static ConcurrentMap<String, LivingEntity> riders = Maps.newConcurrentMap();
+
+    @EventHandler
+    public void onDisMount(EntityDismountEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Player)
+        {
+            if(riders.containsKey(e.getEntity().getUniqueId().toString()))
+            {
+                riders.remove(e.getEntity().getUniqueId().toString());
+            }
+        }
+    }
+
     @EventHandler
     public void onElfRide(PlayerInteractEntityEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()) || Races.getRace(e.getPlayer()) != RaceType.ELF)return;
 
-        if(e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player))
+        if(e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player || e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Horse))
         {
             e.getRightClicked().setPassenger(e.getPlayer());
+            riders.put(e.getPlayer().getUniqueId().toString(), (LivingEntity)e.getRightClicked());
         }
     }
 
