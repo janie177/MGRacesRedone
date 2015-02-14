@@ -62,7 +62,7 @@ public class Angel extends Race {
         //Weakness in the nether and end
         if(WeatherUtil.isHell(p.getLocation()) || WeatherUtil.isEnd(p.getLocation()))
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 2, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
         }
 
