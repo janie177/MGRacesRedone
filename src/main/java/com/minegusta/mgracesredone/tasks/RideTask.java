@@ -12,6 +12,7 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 public class RideTask
@@ -66,7 +67,7 @@ public class RideTask
                 remove(s);
                 continue;
             }
-            Block target = rider.getTargetBlock(null, 4);
+            Block target = rider.getTargetBlock(new HashSet<Byte>(), 4);
 
             double y = -0.5;
 

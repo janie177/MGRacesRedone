@@ -12,6 +12,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
@@ -99,11 +100,16 @@ public class UnholyRain
     {
         if(ent.isDead())return;
 
-        double max = ent.getMaxHealth() - ent.getHealth();
-        if(max >= 1)
+        boolean regen = true;
+        for(PotionEffect e : ent.getActivePotionEffects())
         {
-            ent.setHealth(ent.getHealth() + 1);
+            if(e.getType().equals(PotionEffectType.REGENERATION))
+            {
+                regen = false;
+                break;
+            }
         }
+        if(regen)PotionUtil.updatePotion(ent, PotionEffectType.REGENERATION, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.SPEED, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
     }
