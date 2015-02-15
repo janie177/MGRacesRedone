@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.tasks;
 
+import com.google.common.collect.Sets;
 import com.minegusta.mgracesredone.listeners.racelisteners.ElfListener;
 import com.minegusta.mgracesredone.main.Main;
 import org.bukkit.Bukkit;
@@ -67,7 +68,7 @@ public class RideTask
                 remove(s);
                 continue;
             }
-            Block target = rider.getTargetBlock(new HashSet<Byte>(), 4);
+            Block target = rider.getTargetBlock(Sets.newHashSet(Material.AIR), 4);
 
             double y = -0.5;
 
