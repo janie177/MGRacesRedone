@@ -98,7 +98,7 @@ public class ItemUtil
 
         if(is1.getType().equals(is2.getType()))
         {
-            if((!is1.getItemMeta().hasLore() && !is2.getItemMeta().hasLore()) || is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore()))
+            if((!is1.hasItemMeta() && !is2.hasItemMeta()) || (!is1.getItemMeta().hasLore() && !is2.getItemMeta().hasLore()) || is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore()))
             {
                 if((!is1.getItemMeta().hasDisplayName() && !is2.getItemMeta().hasDisplayName()) || is1.getItemMeta().getDisplayName().equals(is2.getItemMeta().getDisplayName()))
                 {
