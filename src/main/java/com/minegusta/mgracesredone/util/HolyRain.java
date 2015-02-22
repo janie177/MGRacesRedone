@@ -62,6 +62,7 @@ public class HolyRain
 
     private void runRain()
     {
+        if(location == null)return;
         Entity dummy = w.spawnEntity(location, EntityType.SNOWBALL);
         for(Entity ent : dummy.getNearbyEntities(8, 15, 8))
         {
