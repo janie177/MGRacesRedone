@@ -47,7 +47,7 @@ public class Dwarf extends Race {
                         "Dwarves have the blood of a miner, and mine faster than other races.",
                         "When a dwarf mines ore, they gain even more of a mining boost.",
                         "Killstreaks are a dwarf's speciality. When they kill a foe using",
-                        "ad axe, they gain more power.",
+                        "an axe, they gain more power.",
                         "They also possess the power to knock back enemies using their axe."
 
                 };

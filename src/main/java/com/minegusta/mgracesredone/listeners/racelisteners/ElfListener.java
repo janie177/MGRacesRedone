@@ -151,10 +151,13 @@ public class ElfListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()) || Races.getRace(e.getPlayer()) != RaceType.ELF)return;
 
-        if(e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player || e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Horse))
-        {
-            e.getRightClicked().setPassenger(e.getPlayer());
-            riders.put(e.getPlayer().getUniqueId().toString(), (LivingEntity)e.getRightClicked());
+        if(e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player || e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Horse)) {
+            if (e.getPlayer().getItemInHand().getType() == null || e.getPlayer().getItemInHand().getType() == Material.AIR) {
+                ChatUtil.sendString(e.getPlayer(), "Elves can only ride animals with an empty hand.");
+            } else {
+                e.getRightClicked().setPassenger(e.getPlayer());
+                riders.put(e.getPlayer().getUniqueId().toString(), (LivingEntity) e.getRightClicked());
+            }
         }
     }
 
