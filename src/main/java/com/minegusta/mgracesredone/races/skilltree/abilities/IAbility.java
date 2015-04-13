@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface IAbility
      * Get the item used to display this perk in the perk shop.
      * @return
      */
-    public ItemStack getDisplayItem();
+    public Material getDisplayItem();
 
     /**
      * Get the price for this perk at a specific level. Make use of switch/case or just return 1.

@@ -39,7 +39,7 @@ public class Elf extends Race {
                         "They gain regeneration from eating vegetarian food.",
                         "Elves regenerate in water and are skilled with bows.",
                         "All bow damage is thus increased.",
-                        "When low on health, nearby animals will sacrifice their life for the elf.",
+                        "When low on health, nearby animals will sacrifice their life for the perks.",
                         "Fire is one of the weaknesses to elves, though the sun empowers them.",
                         "Elves are most active during the day.",
                         "When shooting a bow, there's a 25% two arrows are shot at once.",

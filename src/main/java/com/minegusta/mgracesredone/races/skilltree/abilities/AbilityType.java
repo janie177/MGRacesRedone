@@ -1,12 +1,16 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.races.skilltree.abilities.elf.Ranger;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.*;
 
 import java.util.List;
 
 public enum AbilityType
 {
+    TREEHUGGING(new TreeHugging()),
+    ANIMALRIDER(new AnimalRider()),
+    NATURALIST(new Naturalist()),
+    FRUITFANATIC(new FruitFanatic()),
     RANGER(new Ranger());
 
     private IAbility ability;
