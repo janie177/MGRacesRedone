@@ -20,6 +20,7 @@ public class MGPlayer
     private String name;
     private RaceType raceType;
     private FileConfiguration conf;
+    private int perkpoints;
     private ConcurrentMap<AbilityType, Integer> abilities = Maps.newConcurrentMap();
 
     private void buildMGPlayer(String uuid, FileConfiguration f)
@@ -28,6 +29,7 @@ public class MGPlayer
         this.name = Bukkit.getPlayer(UUID.fromString(uuid)).getName();
         this.conf = f;
         this.raceType = RaceType.valueOf(conf.getString("racetype", "HUMAN"));
+        this.perkpoints = conf.getInt("perkpoints", 0);
         updateHealth();
         AbilityFileManager.loadAbilities(this);
     }
@@ -85,6 +87,32 @@ public class MGPlayer
         }
     }
 
+    public int getPerkPoints()
+    {
+        return perkpoints;
+    }
+
+    public void setPerkPoints(int newPoints)
+    {
+        this.perkpoints = newPoints;
+    }
+
+    public void addPerkPoints(int added)
+    {
+        perkpoints = perkpoints + added;
+    }
+
+    //Only removes points when you can afford it (wont drop below 0).
+    public boolean removePerkPoints(int removed)
+    {
+        if(perkpoints - removed >= 0)
+        {
+            perkpoints = perkpoints - removed;
+            return true;
+        }
+        return false;
+    }
+
     public Player getPlayer()
     {
         return Bukkit.getPlayer(UUID.fromString(uuid));
@@ -99,6 +127,8 @@ public class MGPlayer
     {
         this.raceType = raceType;
         updateHealth();
+        perkpoints = 0;
+        abilities.clear();
         saveFile();
     }
 
@@ -138,6 +168,7 @@ public class MGPlayer
     public void updateConfig()
     {
         conf.set("racetype", raceType.name());
+        conf.set("perkpoints", perkpoints);
         AbilityFileManager.saveAbilities(this);
     }
 

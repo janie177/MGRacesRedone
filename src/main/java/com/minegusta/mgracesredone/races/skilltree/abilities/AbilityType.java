@@ -1,6 +1,9 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities;
 
+import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.elf.Ranger;
+
+import java.util.List;
 
 public enum AbilityType
 {
@@ -21,6 +24,16 @@ public enum AbilityType
     public String getName()
     {
         return ability.getName();
+    }
+
+    public List<RaceType> getRaces()
+    {
+        return ability.getRaces();
+    }
+
+    public int getCost()
+    {
+        return ability.getPrice();
     }
 
     public int getID()

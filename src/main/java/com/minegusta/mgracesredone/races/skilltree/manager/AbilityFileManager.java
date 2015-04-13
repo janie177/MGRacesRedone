@@ -21,6 +21,10 @@ public class AbilityFileManager
     public static void saveAbilities(MGPlayer mgp)
     {
         ConfigurationSection abilityConf = mgp.getConfig().getConfigurationSection(path);
+
+        //Clear all old abilities before adding the new ones.
+        mgp.getConfig().set(path, null);
+
         for(AbilityType ability : mgp.getAbilities().keySet())
         {
             abilityConf.set(path, ability.name());

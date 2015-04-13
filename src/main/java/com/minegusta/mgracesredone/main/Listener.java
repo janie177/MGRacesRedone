@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.listeners.cure.CureListener;
 import com.minegusta.mgracesredone.listeners.general.GeneralListener;
 import com.minegusta.mgracesredone.listeners.infection.InfectionListener;
 import com.minegusta.mgracesredone.listeners.racelisteners.*;
+import com.minegusta.mgracesredone.races.skilltree.racemenu.MenuListener;
 
 public enum Listener
 {
@@ -17,7 +18,8 @@ public enum Listener
     DEMON_LISTENER(new DemonListener()),
     WEREWOLF_LISTENER(new WereWolfListener()),
     ANGEL_LISTENER(new AngelListener()),
-    ENDERBORNLISTENER(new EnderBornListener());
+    ENDERBORNLISTENER(new EnderBornListener()),
+    MENU_LISTENER(new MenuListener());
 
     private org.bukkit.event.Listener listener;
 
