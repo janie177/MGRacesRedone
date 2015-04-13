@@ -47,6 +47,13 @@ public class MenuListener implements Listener
         MGPlayer mgp = Races.getMGPlayer(p);
         AbilityType bought = null;
 
+        if(i.equals(AbilityMenu.getResetStack()))
+        {
+            ChatUtil.sendString(p, "To reset your perks, use: " + ChatColor.DARK_RED + "/perkreset");
+            p.closeInventory();
+            return;
+        }
+
         for (AbilityType ability : AbilityType.values())
         {
             if (!(ability.getName().equals(i.getItemMeta().getDisplayName()))) continue;

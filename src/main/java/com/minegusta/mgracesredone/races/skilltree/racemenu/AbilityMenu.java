@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +32,7 @@ public class AbilityMenu
     public static void buildInventory(Player p)
     {
         String name = ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Perk-Points: " + Races.getMGPlayer(p).getPerkPoints();
-        Inventory inv = Bukkit.createInventory(null, 45, name);
+        Inventory inv = Bukkit.createInventory(null, 54, name);
         MGPlayer mgp = Races.getMGPlayer(p);
 
         int count = 0;
@@ -72,7 +73,29 @@ public class AbilityMenu
 
             }
             count++;
+
+            inv.setItem(54, getResetStack());
         }
         p.openInventory(inv);
+    }
+
+    public static ItemStack getResetStack()
+    {
+        return new ItemStack(Material.BARRIER, 1)
+        {
+            {
+                ItemMeta meta = getItemMeta();
+                List<String> lore = Lists.newArrayList();
+
+                meta.setDisplayName(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RESET PERKS");
+
+                lore.add(ChatColor.RED + "Use this to reset your perks.");
+                lore.add(ChatColor.RED + "Your spent perk-points will NOT be refunded.");
+                lore.add(ChatColor.RED + "Use " + ChatColor.DARK_RED + "/perkreset" + ChatColor.RED + "to do this.");
+
+                meta.setLore(lore);
+                setItemMeta(meta);
+            }
+        };
     }
 }

@@ -15,7 +15,7 @@ public class RaceCommand implements CommandExecutor {
     private Player p;
 
     //Help list
-    private String[] help = {"/Race Help " + ChatColor.GRAY + "- Show this help menu.", "/Race List " + ChatColor.GRAY + "- Display a list of races.", "/Race Info <Race> " + ChatColor.GRAY + "- Info on the given race.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Cure " + ChatColor.GRAY + "- Display cure info.", "/Race Infection <Race> " + ChatColor.GRAY + "- Show how to become a race.", "/Race Recipes " + ChatColor.GRAY + "- Show all recipes related to races."};
+    private String[] help = {"/Race Help " + ChatColor.GRAY + "- Show this help menu.", "/Race List " + ChatColor.GRAY + "- Display a list of races.", "/Race Info <Race> " + ChatColor.GRAY + "- Info on the given race.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Info <Race> " + ChatColor.GRAY + "- Info on the given race.", "/Race Perks " + ChatColor.GRAY + "- Show your race's perk tree.", "/Race Reset-Perks " + ChatColor.GRAY + "- Reset all your perks.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Cure " + ChatColor.GRAY + "- Display cure info.", "/Race Infection <Race> " + ChatColor.GRAY + "- Show how to become a race.", "/Race Recipes " + ChatColor.GRAY + "- Show all recipes related to races."};
 
     //Command
 
@@ -49,6 +49,16 @@ public class RaceCommand implements CommandExecutor {
             if(args[0].equalsIgnoreCase("show"))
             {
                 sendOwnInfo();
+                return true;
+            }
+            if(args[0].equalsIgnoreCase("perks"))
+            {
+                p.chat("/perk");
+                return true;
+            }
+            if(args[0].equalsIgnoreCase("reset-perks"))
+            {
+                p.chat("/perkreset");
                 return true;
             }
             if(args[0].equalsIgnoreCase("cure"))

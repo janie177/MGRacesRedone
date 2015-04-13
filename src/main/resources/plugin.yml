@@ -12,3 +12,10 @@ commands:
       aliases: [ra, raceowner, usetheprindl]
       usage: /RaceAdmin
       description: Admin commands for races. Don't you abuse those Lucas I swear.
+   perkreset:
+      usage: /perkreset
+      description: Resets your perks WITHOUT refunding you.
+   perk:
+      aliases: [perks, power, powers, pp, skilltree, tree, ]
+      usage: /Race
+      description: All information you need about races.

@@ -1,7 +1,6 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -53,7 +52,7 @@ public interface IAbility
 
     /**
      * A method to retrieve the max level of this perk.
-     * @return The maxium level possible. May NEVER be over 9.
+     * @return The maxium level possible. May NEVER be over 5.
      */
     public int getMaxLevel();
 
