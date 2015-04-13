@@ -1,11 +1,13 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.elf;
 
+import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import org.bukkit.inventory.ItemStack;
 
-public class Ranger implements IAbility
-{
+import java.util.List;
 
+public class Ranger implements IAbility {
     @Override
     public void run(int level) {
 
@@ -13,12 +15,12 @@ public class Ranger implements IAbility
 
     @Override
     public String getName() {
-        return "Ranger";
+        return null;
     }
 
     @Override
     public AbilityType getType() {
-        return AbilityType.RANGER;
+        return null;
     }
 
     @Override
@@ -27,7 +29,27 @@ public class Ranger implements IAbility
     }
 
     @Override
+    public ItemStack getDisplayItem() {
+        return null;
+    }
+
+    @Override
+    public int getPrice(int level) {
+        return 0;
+    }
+
+    @Override
+    public List<RaceType> getRaces() {
+        return null;
+    }
+
+    @Override
     public int getMaxLevel() {
-        return 4;
+        return 0;
+    }
+
+    @Override
+    public String[] getDescription(int level) {
+        return new String[0];
     }
 }

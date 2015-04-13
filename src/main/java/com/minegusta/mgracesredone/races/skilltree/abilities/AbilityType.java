@@ -31,9 +31,9 @@ public enum AbilityType
         return ability.getRaces();
     }
 
-    public int getCost()
+    public int getCost(int level)
     {
-        return ability.getPrice();
+        return ability.getPrice(level);
     }
 
     public int getID()

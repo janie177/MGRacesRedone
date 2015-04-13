@@ -20,7 +20,7 @@ public class MenuListener implements Listener
     public void buyItem(InventoryClickEvent e)
     {
         Player p = (Player) e.getWhoClicked();
-        if (e.getInventory().getName() != null && e.getInventory().getName().contains(ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Credits: ")) {
+        if (e.getInventory().getName() != null && e.getInventory().getName().contains(ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Perk-Points: ")) {
             if (!e.getCursor().getType().equals(Material.AIR))
             {
                 e.setCancelled(true);
@@ -32,7 +32,7 @@ public class MenuListener implements Listener
                 e.setCancelled(true);
                 return;
             }
-            if (e.getCurrentItem().getItemMeta().getDisplayName() == null)
+            if (!e.getCurrentItem().hasItemMeta() || e.getCurrentItem().getItemMeta().getDisplayName() == null)
             {
                 e.setCancelled(true);
                 return;
@@ -57,23 +57,25 @@ public class MenuListener implements Listener
         if(bought == null)return;
 
         int pointsPresent = mgp.getPerkPoints();
+        List<String> lore = i.getItemMeta().getLore();
+        int level = Integer.parseInt(lore.get(1).replace(ChatColor.YELLOW + "Level: ", ""));
 
         int totalAbilities = 0;
         for(AbilityType t : mgp.getAbilities().keySet())
         {
-            totalAbilities = totalAbilities + t.getCost();
+            totalAbilities = totalAbilities + t.getCost(level);
         }
 
         //The cap for perks
         int cap = 12;
 
-        if(totalAbilities >= cap || totalAbilities + bought.getCost() > cap)
+        if(totalAbilities >= cap || totalAbilities + bought.getCost(level) > cap)
         {
             ChatUtil.sendString(p, "You cannot unlock this. Perk-point-cap: " + cap + ".");
             return;
         }
 
-        if (bought.getCost() > pointsPresent) {
+        if (bought.getCost(level) > pointsPresent) {
             ChatUtil.sendString(p, "You do not have enough perk-points to buy this.");
             p.closeInventory();
             return;
@@ -85,8 +87,6 @@ public class MenuListener implements Listener
             playerlevel = mgp.getAbilityLevel(bought);
         }
 
-        List<String> lore = i.getItemMeta().getLore();
-        int level = Integer.parseInt(lore.get(1).replace(ChatColor.YELLOW + "Level: ", ""));
 
         if(level != playerlevel + 1)
         {
@@ -102,7 +102,7 @@ public class MenuListener implements Listener
             return;
         }
 
-        if(mgp.removePerkPoints(bought.getCost()))
+        if(mgp.removePerkPoints(bought.getCost(level)))
         {
             ChatUtil.sendString(p, "You have unlocked " + bought.getName() + " level " + level + "!");
             mgp.addAbility(bought, level);
