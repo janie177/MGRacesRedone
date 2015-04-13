@@ -174,7 +174,6 @@ public class MGPlayer
 
     public FileConfiguration getConfig()
     {
-        updateConfig();
         return conf;
     }
 

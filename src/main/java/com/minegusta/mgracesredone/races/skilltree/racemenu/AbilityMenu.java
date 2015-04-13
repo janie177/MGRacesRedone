@@ -69,13 +69,13 @@ public class AbilityMenu
 
                 meta.setLore(lore);
                 is.setItemMeta(meta);
-                inv.setItem(count + (level - 1) * 9, is);
+                int slot = count + ((level - 1) * 9);
+                inv.setItem(slot, is);
 
             }
             count++;
-
-            inv.setItem(54, getResetStack());
         }
+        inv.setItem(53, getResetStack());
         p.openInventory(inv);
     }
 

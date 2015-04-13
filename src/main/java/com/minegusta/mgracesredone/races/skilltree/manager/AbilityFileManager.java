@@ -2,7 +2,7 @@ package com.minegusta.mgracesredone.races.skilltree.manager;
 
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class AbilityFileManager
 {
@@ -11,25 +11,25 @@ public class AbilityFileManager
 
     public static void loadAbilities(MGPlayer mgp)
     {
-        ConfigurationSection abilityConf = mgp.getConfig().getConfigurationSection(path);
-        for(String s : abilityConf.getKeys(false))
+        FileConfiguration conf = mgp.getConfig();
+
+        if(!conf.isSet(path))return;
+
+        for(String s : conf.getConfigurationSection(path).getKeys(false))
         {
-            mgp.addAbility(AbilityType.valueOf(s), abilityConf.getInt(s + ".level"));
+            mgp.addAbility(AbilityType.valueOf(s), conf.getInt(path + "." + s));
         }
     }
 
     public static void saveAbilities(MGPlayer mgp)
     {
-        ConfigurationSection abilityConf = mgp.getConfig().getConfigurationSection(path);
-
+        FileConfiguration conf = mgp.getConfig();
         //Clear all old abilities before adding the new ones.
-        mgp.getConfig().set(path, null);
+        conf.set(path, null);
 
         for(AbilityType ability : mgp.getAbilities().keySet())
         {
-            abilityConf.set(path, ability.name());
-            abilityConf.set(path + ".level", mgp.getAbilityLevel(ability));
+            conf.set(path + "." + ability.name(), mgp.getAbilityLevel(ability));
         }
-        mgp.saveFile();
     }
 }
