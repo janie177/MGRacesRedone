@@ -32,13 +32,13 @@ public class MenuListener implements Listener
                 e.setCancelled(true);
                 return;
             }
-            if (!e.getCurrentItem().hasItemMeta() || e.getCurrentItem().getItemMeta().getDisplayName() == null)
+            if (!e.getCurrentItem().hasItemMeta() || !e.getCurrentItem().getItemMeta().hasDisplayName())
             {
                 e.setCancelled(true);
                 return;
             }
-            e.setCancelled(true);
             apply(p, e.getCurrentItem());
+            e.setCancelled(true);
         }
     }
 
@@ -47,8 +47,7 @@ public class MenuListener implements Listener
         MGPlayer mgp = Races.getMGPlayer(p);
         AbilityType bought = null;
 
-        if(i.equals(AbilityMenu.getResetStack()))
-        {
+        if(i.equals(AbilityMenu.getResetStack())) {
             ChatUtil.sendString(p, "To reset your perks, use: " + ChatColor.DARK_RED + "/perkreset");
             p.closeInventory();
             return;
@@ -56,7 +55,7 @@ public class MenuListener implements Listener
 
         for (AbilityType ability : AbilityType.values())
         {
-            if (!(ability.getName().equals(i.getItemMeta().getDisplayName()))) continue;
+            if (!(ChatColor.stripColor(ability.getAbility().getName()).equals(ChatColor.stripColor(i.getItemMeta().getDisplayName())))) continue;
             bought = ability;
             break;
         }
