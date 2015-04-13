@@ -2,18 +2,15 @@ package com.minegusta.mgracesredone.tasks;
 
 import com.minegusta.mgracesredone.data.Storage;
 import com.minegusta.mgracesredone.main.Main;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.RaceCheck;
 import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import javax.swing.text.html.parser.Entity;
 
 public class BoostTask
 {
@@ -42,7 +39,7 @@ public class BoostTask
         {
             if(WorldCheck.isEnabled(p.getWorld()))
             {
-                RaceCheck.getRace(p).passiveBoost(p);
+                Races.getRace(p).passiveBoost(p);
             }
         }
         if(count > 20)

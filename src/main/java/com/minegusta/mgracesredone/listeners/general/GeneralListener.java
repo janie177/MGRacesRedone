@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.listeners.general;
 
 import com.minegusta.mgracesredone.data.Storage;
+import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.playerdata.MapManager;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,7 @@ public class GeneralListener implements Listener
     @EventHandler
     public void onJoin(PlayerJoinEvent e)
     {
-        MapManager.add(e.getPlayer());
+        MapManager.add(e.getPlayer(), FileManager.getFile(e.getPlayer().getUniqueId()));
     }
 
     @EventHandler

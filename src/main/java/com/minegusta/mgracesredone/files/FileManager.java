@@ -1,42 +1,29 @@
 package com.minegusta.mgracesredone.files;
 
-import com.minegusta.mgracesredone.races.RaceType;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.UUID;
 
 public class FileManager
 {
-    private static String path = "/players/";
-    private static String fileName = "playerfile.yml";
-    private static FileConfiguration playerFile;
 
-    public static void create()
+    public static FileConfiguration getFile(String uuid)
     {
-        playerFile = YamlUtil.getConfiguration(path, fileName);
+        return YamlUtil.getConfiguration("/players/", uuid + ".yml");
     }
 
-    public static FileConfiguration getConfig()
+    public static FileConfiguration getFile(UUID uuid)
     {
-        return playerFile;
+        return getFile(uuid.toString());
     }
 
-    public static RaceType getRace(String uuid)
+    public static boolean save(String uuid, FileConfiguration f)
     {
-        if(getConfig().isSet(uuid))
-        {
-            return RaceType.valueOf(getConfig().getString(uuid));
-        }
-        return RaceType.HUMAN;
+        return YamlUtil.saveFile("/players/", uuid + ".yml", f);
     }
 
-    public static void setRace(String uuid, RaceType raceType)
+    public static boolean save(UUID uuid, FileConfiguration f)
     {
-        getConfig().set(uuid, raceType.name());
-    }
-
-    public static boolean save()
-    {
-        return YamlUtil.saveFile(path, fileName, playerFile);
+        return save(uuid.toString(), f);
     }
 }

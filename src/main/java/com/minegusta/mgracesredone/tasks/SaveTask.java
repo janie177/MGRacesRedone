@@ -29,8 +29,7 @@ public class SaveTask
     {
         for(MGPlayer mgp : Storage.getPlayers())
         {
-            FileManager.getConfig().set(mgp.getUniqueIdAsString(), mgp.getRaceType().name());
+            mgp.saveFile();
         }
-        FileManager.save();
     }
 }

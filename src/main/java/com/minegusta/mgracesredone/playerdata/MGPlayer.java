@@ -1,9 +1,12 @@
 package com.minegusta.mgracesredone.playerdata;
 
+import com.minegusta.mgracesredone.data.Storage;
 import com.minegusta.mgracesredone.files.FileManager;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -14,29 +17,30 @@ public class MGPlayer
     private String uuid;
     private String name;
     private RaceType raceType;
+    private FileConfiguration conf;
 
-    public MGPlayer(UUID uuid)
-    {
-        this.uuid = uuid.toString();
-        this.name = Bukkit.getPlayer(uuid).getName();
-        this.raceType = FileManager.getRace(uuid.toString());
-        updateHealth();
-    }
-
-    public MGPlayer(String uuid)
+    private void buildMGPlayer(String uuid, FileConfiguration f)
     {
         this.uuid = uuid;
         this.name = Bukkit.getPlayer(UUID.fromString(uuid)).getName();
-        this.raceType = FileManager.getRace(uuid);
+        this.conf = f;
+        this.raceType = RaceType.valueOf(conf.getString("racetype", "HUMAN"));
         updateHealth();
     }
 
-    public MGPlayer(Player p)
+    public MGPlayer(Player p, FileConfiguration f)
     {
-        this.uuid = p.getUniqueId().toString();
-        this.name = p.getName();
-        this.raceType = FileManager.getRace(uuid);
-        updateHealth();
+        buildMGPlayer(p.getUniqueId().toString(), f);
+    }
+
+    public MGPlayer(UUID uuid, FileConfiguration f)
+    {
+        buildMGPlayer(uuid.toString(), f);
+    }
+
+    public MGPlayer(String uuid, FileConfiguration f)
+    {
+        buildMGPlayer(uuid, f);
     }
 
     public Player getPlayer()
@@ -52,7 +56,6 @@ public class MGPlayer
     public void setRaceType(RaceType raceType)
     {
         this.raceType = raceType;
-        FileManager.setRace(uuid, raceType);
         updateHealth();
     }
 
@@ -86,6 +89,24 @@ public class MGPlayer
     public double getHealth()
     {
         return getPlayer().getHealth();
+    }
+
+    //Update all the values here
+    public void updateConfig()
+    {
+        conf.set("racetype", raceType.name());
+    }
+
+    public FileConfiguration getConfig()
+    {
+        updateConfig();
+        return conf;
+    }
+
+    public void saveFile()
+    {
+        updateConfig();
+        FileManager.save(uuid, conf);
     }
 
     public void updateHealth()

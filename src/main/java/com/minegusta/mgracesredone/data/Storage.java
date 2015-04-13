@@ -17,14 +17,18 @@ public class Storage
         return racesMap.get(uuid);
     }
 
-    public static MGPlayer getPlayer(Player p)
-    {
-        return racesMap.get(p.getUniqueId().toString());
+    public static MGPlayer getPlayer(Player p) {
+        return getPlayer(p.getUniqueId().toString());
     }
 
     public static RaceType getRace(String uuid)
     {
         return getPlayer(uuid).getRaceType();
+    }
+
+    public static RaceType getRace(Player p)
+    {
+        return getRace(p.getUniqueId().toString());
     }
 
     public static void add(Player p, MGPlayer mgp)

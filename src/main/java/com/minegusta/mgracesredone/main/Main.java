@@ -22,9 +22,6 @@ public class Main extends JavaPlugin
         //Initialize the plugin
         PLUGIN = this;
 
-        //Files
-        FileManager.create();
-
         //Add all players to the map on reload
         OnReload.addToMap();
 
@@ -41,8 +38,6 @@ public class Main extends JavaPlugin
         }
 
         WG_ENABLED = Bukkit.getPluginManager().isPluginEnabled("WorldGuard");
-
-        Races.countRaces();
 
         Recipe.registerRecipes();
 

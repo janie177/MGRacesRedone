@@ -15,7 +15,7 @@ public class RaceCommand implements CommandExecutor {
     private Player p;
 
     //Help list
-    private String[] help = {"/Race Help " + ChatColor.GRAY + "- Show this help menu.", "/Race Amount " + ChatColor.GRAY + "- Show how many people there are per race.", "/Race List " + ChatColor.GRAY + "- Display a list of races.", "/Race Info <Race> " + ChatColor.GRAY + "- Info on the given race.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Cure " + ChatColor.GRAY + "- Display cure info.", "/Race Infection <Race> " + ChatColor.GRAY + "- Show how to become a race.", "/Race Recipes " + ChatColor.GRAY + "- Show all recipes related to races."};
+    private String[] help = {"/Race Help " + ChatColor.GRAY + "- Show this help menu.", "/Race List " + ChatColor.GRAY + "- Display a list of races.", "/Race Info <Race> " + ChatColor.GRAY + "- Info on the given race.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Cure " + ChatColor.GRAY + "- Display cure info.", "/Race Infection <Race> " + ChatColor.GRAY + "- Show how to become a race.", "/Race Recipes " + ChatColor.GRAY + "- Show all recipes related to races."};
 
     //Command
 
@@ -39,11 +39,6 @@ public class RaceCommand implements CommandExecutor {
             if(args[0].equalsIgnoreCase("help"))
             {
                 sendList(help);
-                return true;
-            }
-            if(args[0].equalsIgnoreCase("amount"))
-            {
-                sendList(Races.getRaceAmounts());
                 return true;
             }
             if(args[0].equalsIgnoreCase("list"))

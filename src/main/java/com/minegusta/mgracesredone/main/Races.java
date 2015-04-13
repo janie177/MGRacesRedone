@@ -1,13 +1,12 @@
 package com.minegusta.mgracesredone.main;
 
 import com.minegusta.mgracesredone.data.Storage;
-import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.util.RaceCheck;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.util.UUID;
 
 public class Races
 {
@@ -17,7 +16,6 @@ public class Races
      *
      */
 
-    private static String[] raceAmounts;
 
 
     public static Plugin getPlugin()
@@ -25,9 +23,19 @@ public class Races
         return Main.getPlugin();
     }
 
+    public static RaceType getRace(UUID uuid)
+    {
+        return getRace(uuid.toString());
+    }
+
     public static RaceType getRace(Player p)
     {
-        return RaceCheck.getRace(p);
+        return getRace(p.getUniqueId().toString());
+    }
+
+    public static RaceType getRace(String uuid)
+    {
+        return Storage.getRace(uuid);
     }
 
     public static void setRace(Player p, RaceType race)
@@ -35,36 +43,23 @@ public class Races
         Storage.getPlayer(p).setRaceType(race);
     }
 
+    public static void setRace(UUID uuid, RaceType race)
+    {
+        Storage.getPlayer(uuid.toString()).setRaceType(race);
+    }
+
+    public static void setRace(String uuid, RaceType race)
+    {
+        Storage.getPlayer(uuid).setRaceType(race);
+    }
+
     public static MGPlayer getMGPlayer(Player p)
     {
         return Storage.getPlayer(p);
     }
 
-    public static void countRaces()
+    public static void savePlayerFile(String uuid)
     {
-        int count = 0;
-        String[] list = new String[RaceType.values().length];
-
-        for(RaceType type : RaceType.values())
-        {
-            int amount = 0;
-            for(String s : FileManager.getConfig().getKeys(false))
-            {
-                if(FileManager.getConfig().getString(s).equalsIgnoreCase(type.name()))
-                {
-                    amount++;
-                }
-            }
-            String info = type.getName() + ": " + ChatColor.YELLOW + amount;
-            list[count] = info;
-            count++;
-        }
-
-        raceAmounts = list;
-    }
-
-    public static String[] getRaceAmounts()
-    {
-        return raceAmounts;
+        Storage.getPlayer(uuid).saveFile();
     }
 }
