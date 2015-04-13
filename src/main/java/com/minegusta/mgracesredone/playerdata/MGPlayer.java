@@ -1,15 +1,17 @@
 package com.minegusta.mgracesredone.playerdata;
 
-import com.minegusta.mgracesredone.data.Storage;
+import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.files.FileManager;
-import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.manager.AbilityFileManager;
 import com.minegusta.mgracesredone.util.WorldCheck;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 
 public class MGPlayer
 {
@@ -18,6 +20,7 @@ public class MGPlayer
     private String name;
     private RaceType raceType;
     private FileConfiguration conf;
+    private ConcurrentMap<AbilityType, Integer> abilities = Maps.newConcurrentMap();
 
     private void buildMGPlayer(String uuid, FileConfiguration f)
     {
@@ -26,6 +29,7 @@ public class MGPlayer
         this.conf = f;
         this.raceType = RaceType.valueOf(conf.getString("racetype", "HUMAN"));
         updateHealth();
+        AbilityFileManager.loadAbilities(this);
     }
 
     public MGPlayer(Player p, FileConfiguration f)
@@ -43,6 +47,44 @@ public class MGPlayer
         buildMGPlayer(uuid, f);
     }
 
+
+    //------------------------------------------------------------------------------//
+
+    public void addAbility(AbilityType type, int level)
+    {
+        abilities.put(type, level);
+    }
+
+    public void removeAbility(AbilityType type)
+    {
+        if(abilities.containsKey(type));
+    }
+
+    public void clearAbilities()
+    {
+        abilities.clear();
+    }
+
+    public boolean hasAbility(AbilityType ability)
+    {
+        return abilities.containsKey(ability);
+    }
+
+    public ConcurrentMap<AbilityType, Integer> getAbilities()
+    {
+        return abilities;
+    }
+
+    public int getAbilityLevel(AbilityType ability)
+    {
+        try {
+            return abilities.get(ability);
+        } catch (Exception Ignored)
+        {
+            return 0;
+        }
+    }
+
     public Player getPlayer()
     {
         return Bukkit.getPlayer(UUID.fromString(uuid));
@@ -57,6 +99,7 @@ public class MGPlayer
     {
         this.raceType = raceType;
         updateHealth();
+        saveFile();
     }
 
     public UUID getUniqueId()
@@ -95,6 +138,7 @@ public class MGPlayer
     public void updateConfig()
     {
         conf.set("racetype", raceType.name());
+        AbilityFileManager.saveAbilities(this);
     }
 
     public FileConfiguration getConfig()
