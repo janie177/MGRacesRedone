@@ -8,6 +8,8 @@ import org.bukkit.command.CommandExecutor;
 
 public enum Command
 {
+    //Name equals command
+
     RACEADMIN(new AdminCommand()),
     RACE(new RaceCommand()),
     PERK(new PerkCommand()),

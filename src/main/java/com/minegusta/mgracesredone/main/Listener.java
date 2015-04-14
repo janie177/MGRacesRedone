@@ -4,12 +4,14 @@ package com.minegusta.mgracesredone.main;
 import com.minegusta.mgracesredone.listeners.cure.CureListener;
 import com.minegusta.mgracesredone.listeners.general.GeneralListener;
 import com.minegusta.mgracesredone.listeners.infection.InfectionListener;
+import com.minegusta.mgracesredone.listeners.perkpoints.PerkPointListener;
 import com.minegusta.mgracesredone.listeners.racelisteners.*;
 import com.minegusta.mgracesredone.races.skilltree.racemenu.MenuListener;
 
 public enum Listener
 {
     GENERAL_LISTENER(new GeneralListener()),
+    PERKPOINT_LISTENER(new PerkPointListener()),
     INFECTION_LISTENER(new InfectionListener()),
     ELF_LISTENER(new ElfListener()),
     DWARF_LISTENER(new DwarfListener()),
