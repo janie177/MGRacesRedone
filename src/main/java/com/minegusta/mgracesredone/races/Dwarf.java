@@ -25,7 +25,7 @@ public class Dwarf extends Race {
         return new String[]
                 {
                         "To become a dwarf, follow these steps:",
-                        "Gather 5 of the following ores: Diamond, Emerald, Lapis and Gold.",
+                        "Gather 2 each of the following ores: Diamond, Emerald, Lapis and Gold.",
                         "Place all these ores close together with a diamond ore centered.",
                         "Craft a Shiny Gem (/Race Recipes).",
                         "Right click the diamond ore with your gem.",

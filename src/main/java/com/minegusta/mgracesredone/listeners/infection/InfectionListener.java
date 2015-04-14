@@ -136,7 +136,7 @@ public class InfectionListener implements Listener
         {
             Block b = e.getClickedBlock();
             if(b.getType() != Material.DIAMOND_ORE)return;
-            if(BlockUtil.radiusCheck(b, 8, Material.DIAMOND_ORE, 5) && BlockUtil.radiusCheck(b, 8, Material.EMERALD_ORE, 5) && BlockUtil.radiusCheck(b, 8, Material.GOLD_ORE, 5) && BlockUtil.radiusCheck(b, 8, Material.LAPIS_ORE, 5))
+            if(BlockUtil.radiusCheck(b, 8, Material.DIAMOND_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.EMERALD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.GOLD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.LAPIS_ORE, 2))
             {
                 BlockUtil.poofBlocks(b, 8, Lists.newArrayList(Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE), Material.AIR, Effect.CLOUD);
                 Races.setRace(p, RaceType.DWARF);
