@@ -2,6 +2,8 @@ package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 
 import java.util.List;
 
@@ -48,5 +50,15 @@ public enum AbilityType
     public int getMaxLevel()
     {
         return ability.getMaxLevel();
+    }
+
+    public void run(Player player)
+    {
+        ability.run(player);
+    }
+
+    public void run(Event event)
+    {
+        ability.run(event);
     }
 }

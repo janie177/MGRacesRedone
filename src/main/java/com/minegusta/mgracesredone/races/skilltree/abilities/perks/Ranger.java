@@ -5,11 +5,23 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 
 import java.util.List;
 
 public class Ranger implements IAbility
 {
+    @Override
+    public void run(Event event) {
+
+    }
+
+    @Override
+    public void run(Player player) {
+
+    }
+
     @Override
     public String getName()
     {

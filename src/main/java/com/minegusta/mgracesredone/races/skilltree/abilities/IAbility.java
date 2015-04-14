@@ -2,12 +2,26 @@ package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public interface IAbility
 {
+    /**
+     * Run the ability at an event.
+     * @param event The event to run the ability for.
+     */
+    public void run(Event event);
+
+    /**
+     * Run the ability for a specific player without an event involved.
+     * @param player The player to run the event for.
+     */
+    public void run(Player player);
+
     /**
      * Get the string for this perk. This is used in the perk shop.
      * @return
