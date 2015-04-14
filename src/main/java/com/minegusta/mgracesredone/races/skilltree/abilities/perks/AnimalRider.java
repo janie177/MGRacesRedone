@@ -11,12 +11,6 @@ import java.util.List;
 public class AnimalRider implements IAbility
 {
     @Override
-    public void run(int level)
-    {
-
-    }
-
-    @Override
     public String getName()
     {
         return "Animal Rider";

@@ -7,7 +7,7 @@ import java.util.List;
 
 public enum AbilityType
 {
-    TREEHUGGING(new TreeHugging()),
+    FORESTFRIEND(new ForestFriend()),
     ANIMALRIDER(new AnimalRider()),
     NATURALIST(new Naturalist()),
     FRUITFANATIC(new FruitFanatic()),
@@ -48,10 +48,5 @@ public enum AbilityType
     public int getMaxLevel()
     {
         return ability.getMaxLevel();
-    }
-
-    public void run(int level)
-    {
-        ability.run(level);
     }
 }

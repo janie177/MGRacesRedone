@@ -11,12 +11,6 @@ import java.util.List;
 public class Ranger implements IAbility
 {
     @Override
-    public void run(int level)
-    {
-
-    }
-
-    @Override
     public String getName()
     {
         return "Ranger";
