@@ -78,6 +78,7 @@ public class AbilityMenu
             count++;
         }
         inv.setItem(53, getResetStack());
+        inv.setItem(52, getInfoStack());
         p.openInventory(inv);
     }
 
@@ -94,6 +95,28 @@ public class AbilityMenu
                 lore.add(ChatColor.RED + "Use this to reset your perks.");
                 lore.add(ChatColor.RED + "Your spent perk-points will NOT be refunded.");
                 lore.add(ChatColor.RED + "Use " + ChatColor.DARK_RED + "/perkreset" + ChatColor.RED + " to do this.");
+
+                meta.setLore(lore);
+                setItemMeta(meta);
+            }
+        };
+    }
+
+    public static ItemStack getInfoStack()
+    {
+        return new ItemStack(Material.WRITTEN_BOOK, 1)
+        {
+            {
+                ItemMeta meta = getItemMeta();
+                List<String> lore = Lists.newArrayList();
+
+                meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "INFO");
+
+                lore.add(ChatColor.LIGHT_PURPLE + "Perks are unlocked by killing different people.");
+                lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of 18 perk-points.");
+                lore.add(ChatColor.LIGHT_PURPLE + "Click a perk to unlock it.");
+                lore.add(ChatColor.LIGHT_PURPLE + "Choose wisely because you cannot un-buy perks.");
+                lore.add(ChatColor.LIGHT_PURPLE + "If you want to reset, click the skull next to this book.");
 
                 meta.setLore(lore);
                 setItemMeta(meta);

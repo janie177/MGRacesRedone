@@ -52,6 +52,9 @@ public class MenuListener implements Listener
             p.closeInventory();
             return;
         }
+        if(i == AbilityMenu.getInfoStack()) {
+            return;
+        }
 
         for (AbilityType ability : AbilityType.values())
         {
