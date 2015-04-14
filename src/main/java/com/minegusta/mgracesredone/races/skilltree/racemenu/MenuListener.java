@@ -70,7 +70,7 @@ public class MenuListener implements Listener
         int totalAbilities = 0;
         for(AbilityType t : mgp.getAbilities().keySet())
         {
-            for(int levels = 1; levels <= t.getMaxLevel(); levels++)
+            for(int levels = 1; levels <= mgp.getAbilityLevel(t); levels++)
             {
                 totalAbilities = totalAbilities + t.getCost(levels);
             }
