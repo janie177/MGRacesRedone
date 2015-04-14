@@ -61,7 +61,7 @@ public class AdminCommand implements CommandExecutor
                     if(amount < 0) amount = 0;
                     mgp.addPerkPoints(amount);
 
-                    s.sendMessage(ChatColor.GREEN + p.getName() + "now have " + mgp.getPerkPoints() + " PerkPoints.");
+                    s.sendMessage(ChatColor.GREEN + p.getName() + " now has " + mgp.getPerkPoints() + " PerkPoints.");
                     p.sendMessage(ChatColor.DARK_GREEN + "You now have " + mgp.getPerkPoints() + " PerkPoints!");
                 }
                 catch (Exception ignored)
@@ -83,7 +83,7 @@ public class AdminCommand implements CommandExecutor
                     if(amount < 0) amount = 0;
                     mgp.setPerkPoints(amount);
 
-                    s.sendMessage(ChatColor.GREEN + p.getName() + "now has " + mgp.getPerkPoints() + " PerkPoints.");
+                    s.sendMessage(ChatColor.GREEN + p.getName() + " now has " + mgp.getPerkPoints() + " PerkPoints.");
                     p.sendMessage(ChatColor.DARK_GREEN + "You now have " + mgp.getPerkPoints() + " PerkPoints!");
                 }
                 catch (Exception ignored)
@@ -105,7 +105,7 @@ public class AdminCommand implements CommandExecutor
                     if(amount < 0) amount = 0;
                     mgp.removePerkPoints(amount);
 
-                    s.sendMessage(ChatColor.GREEN + p.getName() + "now has " + mgp.getPerkPoints() + " PerkPoints.");
+                    s.sendMessage(ChatColor.GREEN + p.getName() + " now has " + mgp.getPerkPoints() + " PerkPoints.");
                     p.sendMessage(ChatColor.DARK_GREEN + "You now have " + mgp.getPerkPoints() + " PerkPoints!");
                 }
                 catch (Exception ignored)

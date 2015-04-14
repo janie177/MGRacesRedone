@@ -47,8 +47,8 @@ public class MenuListener implements Listener
         MGPlayer mgp = Races.getMGPlayer(p);
         AbilityType bought = null;
 
-        if(i.equals(AbilityMenu.getResetStack())) {
-            ChatUtil.sendString(p, "To reset your perks, use: " + ChatColor.DARK_RED + "/perkreset");
+        if(i == AbilityMenu.getResetStack()) {
+            p.chat("/perkreset");
             p.closeInventory();
             return;
         }
@@ -64,7 +64,7 @@ public class MenuListener implements Listener
 
         int pointsPresent = mgp.getPerkPoints();
         List<String> lore = i.getItemMeta().getLore();
-        int level = Integer.parseInt(ChatColor.stripColor(lore.get(1).replace(ChatColor.YELLOW + "Level: ", "")));
+        int level = Integer.parseInt(ChatColor.stripColor(lore.get(1).replace("Level: ", "")));
 
         int totalAbilities = 0;
         for(AbilityType t : mgp.getAbilities().keySet())

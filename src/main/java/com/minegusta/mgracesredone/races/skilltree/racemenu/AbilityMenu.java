@@ -91,7 +91,7 @@ public class AbilityMenu
 
                 lore.add(ChatColor.RED + "Use this to reset your perks.");
                 lore.add(ChatColor.RED + "Your spent perk-points will NOT be refunded.");
-                lore.add(ChatColor.RED + "Use " + ChatColor.DARK_RED + "/perkreset" + ChatColor.RED + "to do this.");
+                lore.add(ChatColor.RED + "Use " + ChatColor.DARK_RED + "/perkreset" + ChatColor.RED + " to do this.");
 
                 meta.setLore(lore);
                 setItemMeta(meta);
