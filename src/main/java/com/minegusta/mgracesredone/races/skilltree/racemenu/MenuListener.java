@@ -83,13 +83,11 @@ public class MenuListener implements Listener
         {
             int newAmountSpent = bought.getCost(level) + totalAbilities;
             ChatUtil.sendList(p, new String[]{"Buying this perk would exceed the Perk-Point cap.", "You spent " + totalAbilities + " Perk-Points.", "The maximum of Perk-Points spent is: " + cap + ".", "When buying this perk, your total would be: " + newAmountSpent + "."});
-            p.closeInventory();
             return;
         }
 
         if (bought.getCost(level) > pointsPresent) {
             ChatUtil.sendString(p, "You do not have enough perk-points to buy this.");
-            p.closeInventory();
             return;
         }
 
@@ -110,7 +108,6 @@ public class MenuListener implements Listener
             {
                 ChatUtil.sendString(p, "You need to unlock the lower perks in this series first.");
             }
-            p.closeInventory();
             return;
         }
 
@@ -118,7 +115,7 @@ public class MenuListener implements Listener
         {
             ChatUtil.sendString(p, "You have unlocked " + bought.getName() + " level " + level + "!");
             mgp.addAbility(bought, level);
-            p.closeInventory();
+            AbilityMenu.buildInventory(p);
         } else
         {
             ChatUtil.sendString(p, "You did not have enough perk-points after all.");
