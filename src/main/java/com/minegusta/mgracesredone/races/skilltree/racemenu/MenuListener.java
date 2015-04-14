@@ -42,7 +42,7 @@ public class MenuListener implements Listener
         }
     }
 
-    public void apply(Player p, ItemStack i)
+    private static void apply(Player p, ItemStack i)
     {
         MGPlayer mgp = Races.getMGPlayer(p);
         AbilityType bought = null;
@@ -64,7 +64,7 @@ public class MenuListener implements Listener
 
         int pointsPresent = mgp.getPerkPoints();
         List<String> lore = i.getItemMeta().getLore();
-        int level = Integer.parseInt(lore.get(1).replace(ChatColor.YELLOW + "Level: ", ""));
+        int level = Integer.parseInt(ChatColor.stripColor(lore.get(1).replace(ChatColor.YELLOW + "Level: ", "")));
 
         int totalAbilities = 0;
         for(AbilityType t : mgp.getAbilities().keySet())
