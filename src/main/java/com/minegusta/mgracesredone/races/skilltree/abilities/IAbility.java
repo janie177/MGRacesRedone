@@ -10,6 +10,7 @@ public interface IAbility
 {
     /**
      * Apply the boosts for this ability. This can vary alot per perk. Also make use of levels: Exponential growth or switch/case/if/else.
+     * Perks that require an event will have to use the mgp.getAbilityLevel() method and then apply it in a listener.
      * @param level
      */
     public void run(int level);
@@ -37,7 +38,7 @@ public interface IAbility
      * @return
      */
     public Material getDisplayItem();
-
+    
     /**
      * Get the price for this perk at a specific level. Make use of switch/case or just return 1.
      * @param level

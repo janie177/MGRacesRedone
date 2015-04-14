@@ -41,7 +41,7 @@ public class AbilityMenu
         {
             for(int level = 1; level <= type.getMaxLevel(); level++)
             {
-                ItemStack is = new ItemStack(type.getAbility().getDisplayItem());
+                ItemStack is = new ItemStack(type.getAbility().getDisplayItem(), level);
                 ItemMeta meta = is.getItemMeta();
                 List<String> lore = Lists.newArrayList();
 
@@ -57,6 +57,8 @@ public class AbilityMenu
                 }
                 else
                 {
+                    is.setAmount(1);
+                    is.
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.YELLOW + "Cost: " + ChatColor.LIGHT_PURPLE + type.getCost(level));
                     lore.add(ChatColor.YELLOW + "Level: " + ChatColor.LIGHT_PURPLE + level);
