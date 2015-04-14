@@ -4,6 +4,7 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.ChatUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -69,15 +70,22 @@ public class MenuListener implements Listener
         int totalAbilities = 0;
         for(AbilityType t : mgp.getAbilities().keySet())
         {
-            totalAbilities = totalAbilities + t.getCost(level);
+            for(int levels = 1; levels <= t.getMaxLevel(); levels++)
+            {
+                totalAbilities = totalAbilities + t.getCost(levels);
+            }
         }
 
         //The cap for perks
-        int cap = 12;
+        int cap = 18;
+
+        Bukkit.broadcastMessage("Cap: " + cap);
+        Bukkit.broadcastMessage("Total Abilities: " + totalAbilities);
 
         if(totalAbilities >= cap || totalAbilities + bought.getCost(level) > cap)
         {
             ChatUtil.sendString(p, "You cannot unlock this. Perk-point-cap: " + cap + ".");
+            p.closeInventory();
             return;
         }
 

@@ -41,14 +41,14 @@ public class AbilityMenu
         {
             for(int level = 1; level <= type.getMaxLevel(); level++)
             {
-                ItemStack is = new ItemStack(Material.BARRIER, level);
+                ItemStack is = new ItemStack(Material.BARRIER);
                 ItemMeta meta = is.getItemMeta();
                 List<String> lore = Lists.newArrayList();
 
                 if(mgp.hasAbility(type) && level <= mgp.getAbilityLevel(type))
                 {
                     is.setType(type.getAbility().getDisplayItem());
-                    is.setAmount(1);
+                    is.setAmount(level);
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "UNLOCKED");
                     lore.add(ChatColor.GRAY + "Level: " + level);
@@ -83,7 +83,7 @@ public class AbilityMenu
 
     public static ItemStack getResetStack()
     {
-        return new ItemStack(Material.SKULL, 1)
+        return new ItemStack(Material.SKULL_ITEM, 1)
         {
             {
                 ItemMeta meta = getItemMeta();
