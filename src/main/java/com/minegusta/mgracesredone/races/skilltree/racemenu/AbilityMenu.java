@@ -47,6 +47,7 @@ public class AbilityMenu
 
                 if(mgp.hasAbility(type) && level <= mgp.getAbilityLevel(type))
                 {
+                    is.setAmount(1);
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "UNLOCKED");
                     lore.add(ChatColor.GRAY + "Level: " + level);
@@ -57,7 +58,6 @@ public class AbilityMenu
                 }
                 else
                 {
-                    is.setAmount(1);
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.YELLOW + "Cost: " + ChatColor.LIGHT_PURPLE + type.getCost(level));
                     lore.add(ChatColor.YELLOW + "Level: " + ChatColor.LIGHT_PURPLE + level);
