@@ -79,12 +79,9 @@ public class MenuListener implements Listener
         //The cap for perks
         int cap = 18;
 
-        Bukkit.broadcastMessage("Cap: " + cap);
-        Bukkit.broadcastMessage("Total Abilities: " + totalAbilities);
-
         if(totalAbilities >= cap || totalAbilities + bought.getCost(level) > cap)
         {
-            ChatUtil.sendString(p, "You cannot unlock this. Perk-point-cap: " + cap + ".");
+            ChatUtil.sendList(p, new String[]{"Buying this perk would exceed the Perk-Point cap.", "You spent " + totalAbilities + " Perk-Points.", "The maximum of Perk-Points spent is: " + cap + ".", "When buying this perk, your total would be: " + bought.getCost(level) + totalAbilities + "."});
             p.closeInventory();
             return;
         }
