@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.Race;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
@@ -66,6 +67,16 @@ public class ElfListener implements Listener
             if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE  && isElf(p) && Races.getMGPlayer(p).hasAbility(AbilityType.RANGER) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled())
             {
                 AbilityType.RANGER.run(e);
+            }
+        }
+
+        if(e.getEntity() instanceof Animals && e.getDamager() instanceof Player && isElf((Player) e.getDamager()))
+        {
+            MGPlayer mgp = Races.getMGPlayer((Player) e.getDamager());
+
+            if(mgp.hasAbility(AbilityType.FORESTFRIEND))
+            {
+                AbilityType.FORESTFRIEND.run(e);
             }
         }
 
@@ -166,7 +177,7 @@ public class ElfListener implements Listener
     }
 
     @EventHandler
-    public void onArrowHit(ProjectileHitEvent e)
+    public void onProjectileHit(ProjectileHitEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
@@ -176,6 +187,15 @@ public class ElfListener implements Listener
             if(Races.getRace(p) == RaceType.ELF && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
             {
                 AbilityType.POINTYSHOOTY.run(e);
+            }
+        }
+
+        if(e.getEntityType() == EntityType.EGG && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
+        {
+            Player p = (Player) e.getEntity().getShooter();
+            if(Races.getRace(p) == RaceType.ELF && Races.getMGPlayer(p).hasAbility(AbilityType.FORESTFRIEND))
+            {
+                AbilityType.FORESTFRIEND.run(e);
             }
         }
     }
