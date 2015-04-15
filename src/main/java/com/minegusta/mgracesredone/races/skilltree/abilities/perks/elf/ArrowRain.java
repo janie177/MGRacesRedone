@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -26,10 +27,17 @@ public class ArrowRain implements IAbility {
         Player p = (Player) e.getEntity().getShooter();
         MGPlayer mgp = Races.getMGPlayer(p);
 
-        int duration = mgp.getAbilityLevel(getType()) * 5;
-        Location l = e.getEntity().getLocation();
+        if(Cooldown.isCooledDown("ArrowRain", p.getUniqueId().toString()))
+        {
+            int duration = mgp.getAbilityLevel(getType()) * 5;
+            Location l = e.getEntity().getLocation();
 
-        startRain(duration, l);
+            startRain(duration, l);
+        }
+        else
+        {
+            Cooldown.newCoolDown("ArrowRain", p.getUniqueId().toString(), 15);
+        }
     }
 
     private void startRain(int duration, final Location l)
