@@ -9,6 +9,7 @@ import java.util.List;
 
 public enum AbilityType
 {
+    ARROWRAIN(new ArrowRain()),
     FLAMERESISTANCE(new FlameResistance()),
     POINTYSHOOTY(new PointyShooty()),
     FORESTFRIEND(new ForestFriend()),

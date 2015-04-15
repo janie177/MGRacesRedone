@@ -184,9 +184,13 @@ public class ElfListener implements Listener
         if(e.getEntityType() == EntityType.ARROW && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
         {
             Player p = (Player) e.getEntity().getShooter();
-            if(Races.getRace(p) == RaceType.ELF && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
+            if(isElf(p) && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
             {
                 AbilityType.POINTYSHOOTY.run(e);
+            }
+            if(p.isSneaking() && isElf(p) && Races.getMGPlayer(p).hasAbility(AbilityType.ARROWRAIN))
+            {
+                AbilityType.ARROWRAIN.run(e);
             }
         }
 
