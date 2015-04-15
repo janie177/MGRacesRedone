@@ -79,8 +79,8 @@ public class FruitFanatic implements IAbility
                 break;
         }
 
-        PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, duration1, amp1);
-        PotionUtil.updatePotion(p, PotionEffectType.SPEED, duration2, amp2);
+        PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, amp1, duration1);
+        PotionUtil.updatePotion(p, PotionEffectType.SPEED, amp2, duration2);
 
     }
 
