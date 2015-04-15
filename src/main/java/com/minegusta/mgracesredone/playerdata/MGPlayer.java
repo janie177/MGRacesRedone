@@ -192,4 +192,9 @@ public class MGPlayer
         }
         restoreHealth();
     }
+
+    public boolean isRace(RaceType race)
+    {
+        return raceType == race;
+    }
 }

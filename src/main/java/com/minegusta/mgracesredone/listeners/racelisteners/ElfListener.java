@@ -2,7 +2,10 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.FruitFanatic;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -30,9 +33,10 @@ public class ElfListener implements Listener
         Player p = e.getPlayer();
         if (!WorldCheck.isEnabled(p.getWorld())) return;
 
-        if (isElf(p) && ItemUtil.isFruit(e.getItem().getType())) {
-            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
-            EffectUtil.playParticle(p, Effect.HEART);
+        MGPlayer mgp = Races.getMGPlayer(p);
+
+        if (mgp.isRace(RaceType.ELF) && ItemUtil.isFruit(e.getItem().getType()) && mgp.hasAbility(AbilityType.FRUITFANATIC)) {
+            AbilityType.FRUITFANATIC.run(e);
         }
     }
 

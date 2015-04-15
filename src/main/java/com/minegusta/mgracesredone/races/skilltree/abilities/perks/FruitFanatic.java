@@ -1,19 +1,86 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.Elf;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.ItemUtil;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
 public class FruitFanatic implements IAbility
 {
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+        PlayerItemConsumeEvent e = (PlayerItemConsumeEvent) event;
+        Player p = e.getPlayer();
+        MGPlayer mgp = Races.getMGPlayer(p);
+        int level = mgp.getAbilityLevel(getType());
+
+        int duration1,duration2,amp1,amp2;
+
+        switch (level)
+        {
+            case 1: {
+                amp1 = 0;
+                amp2 = 0;
+                duration1 = 20 *2;
+                duration2 = 0;
+            }
+                break;
+            case 2: {
+                amp1 = 0;
+                amp2 = 0;
+                duration1 = 20 *4;
+                duration2 = 0;
+            }
+                break;
+            case 3: {
+                amp1 = 0;
+                amp2 = 1;
+                duration1 = 20 *6;
+                duration2 = 20 *4;
+            }
+                break;
+            case 4: {
+                amp1 = 0;
+                amp2 = 1;
+                duration1 = 20 *6;
+                duration2 = 20 *6;
+            }
+                break;
+            case 5: {
+                amp1 = 0;
+                amp2 = 1;
+                duration1 = 20 *6;
+                duration2 = 20 *8;
+            }
+                break;
+            default: {
+                amp1 = 0;
+                amp2 = 0;
+                duration1 = 20 *2;
+                duration2 = 20 *2;
+            }
+                break;
+        }
+
+        PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, duration1, amp1);
+        PotionUtil.updatePotion(p, PotionEffectType.SPEED, duration2, amp2);
 
     }
 
@@ -71,17 +138,17 @@ public class FruitFanatic implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{"bla", "bla"};
+            case 1: desc = new String[]{"When eating fruit, you gain 2 seconds of regeneration."};
                 break;
-            case 2: desc = new String[]{"BLAAAAA", "bla"};
+            case 2: desc = new String[]{"When eating fruit, you gain 4 seconds of regeneration."};
                 break;
-            case 3: desc = new String[]{"gibberish", "Lol nope nothing here"};
+            case 3: desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 4 seconds of speed II."};
                 break;
-            case 4: desc = new String[]{"unlockable shizzle woooo", " :D!!!!!! "};
+            case 4: desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 6 seconds of speed II."};
                 break;
-            case 5: desc = new String[]{"Meow?", "blablabla"};
+            case 5: desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 8 seconds of speed II."};
                 break;
-            default: desc = new String[]{"*-o", "YARR HARR"};
+            default: desc = new String[]{"This is an error.", "Report it to Jan!"};
                 break;
 
         }
