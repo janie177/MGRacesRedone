@@ -5,7 +5,6 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
-import com.minegusta.mgracesredone.races.skilltree.abilities.perks.FruitFanatic;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -17,10 +16,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.concurrent.ConcurrentMap;
@@ -45,20 +44,12 @@ public class ElfListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(e.getEntity() instanceof Player && isElf((Player) e.getEntity()))
+        if(e.getEntity() instanceof Player)
         {
-            if(RandomUtil.chance(25))
+            Player p = (Player) e.getEntity();
+            if(isElf(p) && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
             {
-                Arrow projectile = (Arrow) e.getProjectile();
-                Arrow arrow = (Arrow) e.getEntity().getWorld().spawnEntity(e.getProjectile().getLocation().add(0,0.3,0), EntityType.ARROW);
-                arrow.setVelocity(projectile.getVelocity());
-                arrow.setShooter(projectile.getShooter());
-                arrow.setKnockbackStrength(projectile.getKnockbackStrength());
-                arrow.setCritical(projectile.isCritical());
-                arrow.setBounce(projectile.doesBounce());
-                if(!((Player)e.getEntity()).getItemInHand().containsEnchantment(Enchantment.ARROW_INFINITE))ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
-
-                Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 15);
+                AbilityType.POINTYSHOOTY.run(e);
             }
         }
     }
@@ -68,15 +59,17 @@ public class ElfListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
+        //Arrows do more damage.
         if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player p = (Player) e.getDamager();
-            if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE  && isElf(p) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled())
+            if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE  && isElf(p) && Races.getMGPlayer(p).hasAbility(AbilityType.RANGER) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled())
             {
-                e.setDamage(e.getDamage() + 1.0);
+                AbilityType.RANGER.run(e);
             }
         }
 
+        //Animals saving the elf.
         if(e.getEntity() instanceof Player && e.getDamager() instanceof LivingEntity)
         {
             Player p = (Player) e.getEntity();
@@ -109,15 +102,18 @@ public class ElfListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(!isElf(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR)return;
+        if(!isElf(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR || e.getAction() != Action.LEFT_CLICK_AIR)return;
 
         Player p = e.getPlayer();
 
-        if(!p.isSneaking())return;
-
         Material hand = p.getItemInHand().getType();
 
-        if(hand == Material.RED_ROSE)
+        if(hand == Material.BOW && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
+        {
+            SpecialArrows.nextArrow(p);
+        }
+
+        if(hand == Material.RED_ROSE && p.isSneaking())
         {
             Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 30);
         }
@@ -161,6 +157,19 @@ public class ElfListener implements Listener
             } else {
                 e.getRightClicked().setPassenger(e.getPlayer());
                 riders.put(e.getPlayer().getUniqueId().toString(), (LivingEntity) e.getRightClicked());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onArrowHit(ProjectileHitEvent e)
+    {
+        if(e.getEntityType() == EntityType.ARROW && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
+        {
+            Player p = (Player) e.getEntity().getShooter();
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
+            {
+                AbilityType.POINTYSHOOTY.run(e);
             }
         }
     }

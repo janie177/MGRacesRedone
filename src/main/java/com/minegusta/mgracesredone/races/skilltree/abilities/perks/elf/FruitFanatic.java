@@ -1,4 +1,4 @@
-package com.minegusta.mgracesredone.races.skilltree.abilities.perks;
+package com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Races;
@@ -38,43 +38,43 @@ public class FruitFanatic implements IAbility
             case 1: {
                 amp1 = 0;
                 amp2 = 0;
-                duration1 = 20 *2;
+                duration1 = 2;
                 duration2 = 0;
             }
                 break;
             case 2: {
                 amp1 = 0;
                 amp2 = 0;
-                duration1 = 20 *4;
+                duration1 = 4;
                 duration2 = 0;
             }
                 break;
             case 3: {
                 amp1 = 0;
                 amp2 = 1;
-                duration1 = 20 *6;
-                duration2 = 20 *4;
+                duration1 = 6;
+                duration2 = 4;
             }
                 break;
             case 4: {
                 amp1 = 0;
                 amp2 = 1;
-                duration1 = 20 *6;
-                duration2 = 20 *6;
+                duration1 = 6;
+                duration2 = 6;
             }
                 break;
             case 5: {
                 amp1 = 0;
                 amp2 = 1;
-                duration1 = 20 *6;
-                duration2 = 20 *8;
+                duration1 = 6;
+                duration2 = 8;
             }
                 break;
             default: {
                 amp1 = 0;
                 amp2 = 0;
-                duration1 = 20 *2;
-                duration2 = 20 *2;
+                duration1 = 2;
+                duration2 = 2;
             }
                 break;
         }

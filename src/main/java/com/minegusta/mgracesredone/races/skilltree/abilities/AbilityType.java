@@ -1,7 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.races.skilltree.abilities.perks.*;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -9,6 +9,7 @@ import java.util.List;
 
 public enum AbilityType
 {
+    POINTYSHOOTY(new PointyShooty()),
     FORESTFRIEND(new ForestFriend()),
     ANIMALRIDER(new AnimalRider()),
     NATURALIST(new Naturalist()),

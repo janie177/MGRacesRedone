@@ -1,4 +1,4 @@
-package com.minegusta.mgracesredone.races.skilltree.abilities.perks;
+package com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -28,7 +28,7 @@ public class ForestFriend implements IAbility {
 
     @Override
     public AbilityType getType() {
-        return AbilityType.ANIMALRIDER;
+        return AbilityType.FORESTFRIEND;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ForestFriend implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.RED_ROSE;
+        return Material.YELLOW_FLOWER;
     }
 
     @Override

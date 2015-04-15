@@ -1,4 +1,4 @@
-package com.minegusta.mgracesredone.races.skilltree.abilities.perks;
+package com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
