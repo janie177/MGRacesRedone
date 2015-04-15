@@ -87,7 +87,7 @@ public class Naturalist implements IAbility
     private void naturalize(Block b)
     {
 
-        int chance = RandomUtil.randomNumber(6);
+        int chance = RandomUtil.randomNumber(12);
         byte data = 0;
         Material m = Material.LONG_GRASS;
 
@@ -109,8 +109,9 @@ public class Naturalist implements IAbility
             default:
             {
                 m = Material.LONG_GRASS;
-                data = (byte) (RandomUtil.randomNumber(2) + 1);
+                data = (byte) (RandomUtil.randomNumber(2));
             }
+            break;
         }
 
         b.setType(m);
