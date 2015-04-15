@@ -1,18 +1,30 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf;
 
+
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.List;
 
-public class ForestFriend implements IAbility {
+public class FlameResistance implements IAbility {
     @Override
     public void run(Event event) {
+
+        EntityDamageEvent e = (EntityDamageEvent) event;
+        Player p = (Player) e.getEntity();
+        MGPlayer mgp = Races.getMGPlayer(p);
+
+        e.setDamage(e.getDamage() - mgp.getAbilityLevel(getType()));
+
+
 
     }
 
@@ -23,12 +35,12 @@ public class ForestFriend implements IAbility {
 
     @Override
     public String getName() {
-        return "Forest Friend";
+        return "Flame Resistance";
     }
 
     @Override
     public AbilityType getType() {
-        return AbilityType.FORESTFRIEND;
+        return AbilityType.FLAMERESISTANCE;
     }
 
     @Override
@@ -38,12 +50,24 @@ public class ForestFriend implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.YELLOW_FLOWER;
+        return Material.FLINT_AND_STEEL;
     }
 
     @Override
     public int getPrice(int level) {
-        return 1;
+
+        int cost = 1;
+        switch (level)
+        {
+            case 1: cost = 1;
+                break;
+            case 2: cost = 2;
+                break;
+            case 3: cost = 2;
+                break;
+        }
+
+        return cost;
     }
 
     @Override
@@ -53,7 +77,7 @@ public class ForestFriend implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -62,22 +86,16 @@ public class ForestFriend implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{""};
+                desc = new String[]{"You take 1 damage less from fire."};
                 break;
             case 2:
-                desc = new String[]{"BLAAAAA", "bla"};
+                desc = new String[]{"You take 2 damage less from fire."};
                 break;
             case 3:
-                desc = new String[]{"In forest biomes, you will get a speed II and jump II boost during the day."};
-                break;
-            case 4:
-                desc = new String[]{"unlockable shizzle woooo", " :D!!!!!! "};
-                break;
-            case 5:
-                desc = new String[]{"Meow?", "blablabla"};
+                desc = new String[]{"You take 3 damage less from fire."};
                 break;
             default:
-                desc = new String[]{"*-o", "YARR HARR"};
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

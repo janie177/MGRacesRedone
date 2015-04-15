@@ -73,49 +73,41 @@ public class ElfListener implements Listener
         if(e.getEntity() instanceof Player && e.getDamager() instanceof LivingEntity)
         {
             Player p = (Player) e.getEntity();
-            if(isElf(p))
+            MGPlayer mgp = Races.getMGPlayer(p);
+            if(isElf(p) && mgp.hasAbility(AbilityType.NATURALIST))
             {
-                if(p.getHealth() <= 5 && !p.isDead())
-                {
-                    for(Entity ent : p.getNearbyEntities(6, 6, 6))
-                    {
-                        if(ent instanceof Animals)
-                        {
-                            EffectUtil.playSound(p, Sound.FIREWORK_LARGE_BLAST2);
-                            EffectUtil.playParticle(ent, Effect.CLOUD);
-                            EffectUtil.playParticle(p, Effect.HEART);
-                            double max = p.getMaxHealth() - p.getHealth();
-                            double amount = 8;
-                            if(max < 8)amount = max;
-                            ((Animals) ent).damage(amount);
-                            p.setHealth(p.getHealth() + amount);
-                            p.sendMessage(ChatColor.GREEN + "An animal gave you some of it's life force!");
-                        }
-                    }
-                }
+                AbilityType.NATURALIST.run(e);
             }
         }
     }
 
     @EventHandler
-    public void onElfBlow(PlayerInteractEvent e)
+    public void onElfInteract(PlayerInteractEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(!isElf(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR || e.getAction() != Action.LEFT_CLICK_AIR)return;
+        if(!isElf(e.getPlayer()))return;
 
         Player p = e.getPlayer();
 
         Material hand = p.getItemInHand().getType();
 
-        if(hand == Material.BOW && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
+        if(e.getAction() == Action.RIGHT_CLICK_BLOCK && p.getItemInHand().getType() == Material.AIR && e.getClickedBlock().getType() == Material.GRASS && Races.getMGPlayer(p).hasAbility(AbilityType.NATURALIST))
         {
-            SpecialArrows.nextArrow(p);
+            AbilityType.NATURALIST.run(e);
+            return;
         }
 
-        if(hand == Material.RED_ROSE && p.isSneaking())
+        if(hand == Material.BOW && e.getAction() == Action.LEFT_CLICK_AIR && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
+        {
+            SpecialArrows.nextArrow(p);
+            return;
+        }
+
+        if(hand == Material.RED_ROSE && e.getAction() == Action.RIGHT_CLICK_AIR && p.isSneaking())
         {
             Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 30);
+            return;
         }
     }
 
@@ -126,7 +118,14 @@ public class ElfListener implements Listener
 
         if(e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) && isElf((Player) e.getEntity()) && WGUtil.canGetDamage(e.getEntity()))
         {
-            e.setDamage(e.getDamage() + 1.0);
+            Player p = (Player) e.getEntity();
+
+            e.setDamage(e.getDamage() + 4.0);
+
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.FLAMERESISTANCE))
+            {
+                AbilityType.FLAMERESISTANCE.run(e);
+            }
         }
     }
 

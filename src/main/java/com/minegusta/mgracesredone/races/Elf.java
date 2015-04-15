@@ -1,5 +1,8 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.entity.Animals;
@@ -55,8 +58,9 @@ public class Elf extends Race {
 
         Location loc = p.getLocation();
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
+        MGPlayer mgp = Races.getMGPlayer(p);
 
-        if(PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))
+        if(mgp.hasAbility(AbilityType.NATURALIST) && ((mgp.getAbilityLevel(AbilityType.NATURALIST) > 1 && PlayerUtil.isInWater(p)) || (mgp.getAbilityLevel(AbilityType.NATURALIST) > 2 && PlayerUtil.isInRain(p))))
         {
             if(p.isDead())return;
             EffectUtil.playParticle(p, Effect.HEART);
@@ -67,13 +71,13 @@ public class Elf extends Race {
             }
         }
 
-        if(biome == WeatherUtil.BiomeType.NEUTRAL && WeatherUtil.isDay(p.getWorld()))
+        if(mgp.hasAbility(AbilityType.FORESTFRIEND) && mgp.getAbilityLevel(AbilityType.FORESTFRIEND) > 2 && biome == WeatherUtil.BiomeType.NEUTRAL && WeatherUtil.isDay(p.getWorld()))
         {
             EffectUtil.playParticle(p, Effect.HAPPY_VILLAGER);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 1, 5);
         }
-        else
+        if(mgp.hasAbility(AbilityType.NATURALIST))
         {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
