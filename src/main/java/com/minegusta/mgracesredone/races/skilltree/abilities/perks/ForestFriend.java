@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
@@ -9,8 +10,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class ForestFriend implements IAbility
-{
+public class ForestFriend implements IAbility {
     @Override
     public void run(Event event) {
 
@@ -23,12 +23,12 @@ public class ForestFriend implements IAbility
 
     @Override
     public String getName() {
-        return null;
+        return "Forest Friend";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.ANIMALRIDER;
     }
 
     @Override
@@ -38,26 +38,49 @@ public class ForestFriend implements IAbility
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.RED_ROSE;
     }
 
     @Override
     public int getPrice(int level) {
-        return 0;
+        return 1;
     }
 
     @Override
     public List<RaceType> getRaces() {
-        return null;
+        return Lists.newArrayList(RaceType.ELF);
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 5;
     }
 
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        String[] desc;
+
+        switch (level) {
+            case 1:
+                desc = new String[]{"bla", "bla"};
+                break;
+            case 2:
+                desc = new String[]{"BLAAAAA", "bla"};
+                break;
+            case 3:
+                desc = new String[]{"gibberish", "Lol nope nothing here"};
+                break;
+            case 4:
+                desc = new String[]{"unlockable shizzle woooo", " :D!!!!!! "};
+                break;
+            case 5:
+                desc = new String[]{"Meow?", "blablabla"};
+                break;
+            default:
+                desc = new String[]{"*-o", "YARR HARR"};
+                break;
+
+        }
+        return desc;
     }
 }

@@ -95,11 +95,13 @@ public class MGPlayer
     public void setPerkPoints(int newPoints)
     {
         this.perkpoints = newPoints;
+        if(perkpoints > 1000) perkpoints = 1000;
     }
 
     public void addPerkPoints(int added)
     {
         perkpoints = perkpoints + added;
+        if(perkpoints > 1000) perkpoints = 1000;
     }
 
     //Only removes points when you can afford it (wont drop below 0).
@@ -108,6 +110,7 @@ public class MGPlayer
         if(perkpoints - removed >= 0)
         {
             perkpoints = perkpoints - removed;
+            if(perkpoints > 1000) perkpoints = 1000;
             return true;
         }
         return false;

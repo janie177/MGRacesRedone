@@ -104,7 +104,7 @@ public class AbilityMenu
 
     public static ItemStack getInfoStack()
     {
-        return new ItemStack(Material.WRITTEN_BOOK, 1)
+        return new ItemStack(Material.BOOK, 1)
         {
             {
                 ItemMeta meta = getItemMeta();
