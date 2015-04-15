@@ -168,10 +168,10 @@ public class ElfListener implements Listener
             if(!mgp.hasAbility(AbilityType.ANIMALRIDER))return;
 
             if (e.getPlayer().getItemInHand().getType() == null || e.getPlayer().getItemInHand().getType() == Material.AIR) {
-                ChatUtil.sendString(e.getPlayer(), "Elves can only ride animals with an empty hand.");
+                AbilityType.ANIMALRIDER.run(e);
             } else
             {
-                AbilityType.ANIMALRIDER.run(e);
+                ChatUtil.sendString(e.getPlayer(), "Elves can only ride animals with an empty hand.");
             }
         }
     }
