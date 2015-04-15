@@ -79,7 +79,7 @@ public class MenuListener implements Listener
         }
 
         //The cap for perks
-        int cap = 18;
+        int cap = 26;
 
         if(totalAbilities >= cap || totalAbilities + bought.getCost(level) > cap)
         {
