@@ -27,16 +27,12 @@ public class ArrowRain implements IAbility {
         Player p = (Player) e.getEntity().getShooter();
         MGPlayer mgp = Races.getMGPlayer(p);
 
-        if(Cooldown.isCooledDown("ArrowRain", p.getUniqueId().toString()))
+        if(Cooldown.isCooledDown("arrowrain", p.getUniqueId().toString()))
         {
             int duration = mgp.getAbilityLevel(getType()) * 5;
             Location l = e.getEntity().getLocation();
-
             startRain(duration, l);
-        }
-        else
-        {
-            Cooldown.newCoolDown("ArrowRain", p.getUniqueId().toString(), 15);
+            Cooldown.newCoolDown("arrowrain", p.getUniqueId().toString(), 15);
         }
     }
 
