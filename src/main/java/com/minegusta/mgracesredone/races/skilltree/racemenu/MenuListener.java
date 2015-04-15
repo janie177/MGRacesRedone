@@ -52,7 +52,7 @@ public class MenuListener implements Listener
             p.closeInventory();
             return;
         }
-        if(i == AbilityMenu.getInfoStack()) {
+        if(i == AbilityMenu.getInfoStack(mgp)) {
             return;
         }
 

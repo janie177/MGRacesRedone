@@ -78,7 +78,7 @@ public class AbilityMenu
             count++;
         }
         inv.setItem(53, getResetStack());
-        inv.setItem(52, getInfoStack());
+        inv.setItem(52, getInfoStack(mgp));
         p.openInventory(inv);
     }
 
@@ -102,25 +102,35 @@ public class AbilityMenu
         };
     }
 
-    public static ItemStack getInfoStack()
+    public static ItemStack getInfoStack(MGPlayer mgp)
     {
-        return new ItemStack(Material.BOOK, 1)
+        int totalAbilities = 0;
+        for(AbilityType t : mgp.getAbilities().keySet())
         {
+            for(int levels = 1; levels <= mgp.getAbilityLevel(t); levels++)
             {
-                ItemMeta meta = getItemMeta();
-                List<String> lore = Lists.newArrayList();
-
-                meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "INFO");
-
-                lore.add(ChatColor.LIGHT_PURPLE + "Perks are unlocked by killing different people.");
-                lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of 18 perk-points.");
-                lore.add(ChatColor.LIGHT_PURPLE + "Click a perk to unlock it.");
-                lore.add(ChatColor.LIGHT_PURPLE + "Choose wisely because you cannot un-buy perks.");
-                lore.add(ChatColor.LIGHT_PURPLE + "If you want to reset, click the skull next to this book.");
-
-                meta.setLore(lore);
-                setItemMeta(meta);
+                totalAbilities = totalAbilities + t.getCost(levels);
             }
-        };
+        }
+
+        ItemStack info = new ItemStack(Material.BOOK, 1);
+
+        ItemMeta meta = info.getItemMeta();
+        List<String> lore = Lists.newArrayList();
+
+        meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "INFO");
+
+        lore.add(ChatColor.LIGHT_PURPLE + "Perks are unlocked by killing different people.");
+        lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of 18 perk-points.");
+        lore.add(ChatColor.LIGHT_PURPLE + "You have currently spent: " + ChatColor.DARK_PURPLE + totalAbilities + ChatColor.LIGHT_PURPLE + " Perk-Points.");
+        lore.add(ChatColor.LIGHT_PURPLE + "Click a perk to unlock it.");
+        lore.add(ChatColor.LIGHT_PURPLE + "Choose wisely because you cannot un-buy perks.");
+        lore.add(ChatColor.LIGHT_PURPLE + "If you want to reset, click the skull next to this book.");
+
+        meta.setLore(lore);
+        info.setItemMeta(meta);
+
+        return info;
+
     }
 }
