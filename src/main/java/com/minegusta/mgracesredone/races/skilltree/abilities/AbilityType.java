@@ -9,14 +9,15 @@ import java.util.List;
 
 public enum AbilityType
 {
-    ARROWRAIN(new ArrowRain()),
-    FLAMERESISTANCE(new FlameResistance()),
-    POINTYSHOOTY(new PointyShooty()),
+    RANGER(new Ranger()),
     FORESTFRIEND(new ForestFriend()),
+    ARROWRAIN(new ArrowRain()),
+    POINTYSHOOTY(new PointyShooty()),
     ANIMALRIDER(new AnimalRider()),
     NATURALIST(new Naturalist()),
-    FRUITFANATIC(new FruitFanatic()),
-    RANGER(new Ranger());
+    FLAMERESISTANCE(new FlameResistance()),
+    FRUITFANATIC(new FruitFanatic());
+
 
     private IAbility ability;
 

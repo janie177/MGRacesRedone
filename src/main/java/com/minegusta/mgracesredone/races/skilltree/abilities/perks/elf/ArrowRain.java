@@ -42,7 +42,8 @@ public class ArrowRain implements IAbility {
                 {
                     int xAdded = -4 + RandomUtil.randomNumber(8);
                     int zAdded = -4 + RandomUtil.randomNumber(8);
-                    l.getWorld().spawnEntity(l.add(xAdded,15,zAdded), EntityType.ARROW);
+                    Location dropLocation = new Location(l.getWorld(), l.getX(), l.getY(), l.getZ());
+                    l.getWorld().spawnEntity(dropLocation.add(xAdded,15,zAdded), EntityType.ARROW);
                 }
             }, 5 * duration);
         }
