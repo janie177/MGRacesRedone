@@ -168,10 +168,12 @@ public class ElfListener implements Listener
     @EventHandler
     public void onArrowHit(ProjectileHitEvent e)
     {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
         if(e.getEntityType() == EntityType.ARROW && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
         {
             Player p = (Player) e.getEntity().getShooter();
-            if(Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
+            if(Races.getRace(p) == RaceType.ELF && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
             {
                 AbilityType.POINTYSHOOTY.run(e);
             }

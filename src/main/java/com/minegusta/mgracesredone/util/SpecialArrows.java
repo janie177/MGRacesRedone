@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.util;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgracesredone.listeners.general.FallDamageManager;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
@@ -50,6 +51,7 @@ public class SpecialArrows
 
     public static void setArrowType(Player p, ArrowType type)
     {
+        ChatUtil.sendString(p, "You are now using " + type.name() + " arrows.");
         arrowMap.put(p.getUniqueId().toString(), type);
     }
 
@@ -112,9 +114,10 @@ public class SpecialArrows
 
     private static void runGrapple(Location l, Player p)
     {
-        FishHook hook = (FishHook) p.getWorld().spawnEntity(p.getLocation(), EntityType.FISHING_HOOK);
-        p.setVelocity(l.getDirection().multiply(1.8));
-        hook.setVelocity(l.getDirection().multiply(1.8));
+        FallDamageManager.addToFallMap(p);
+        p.getLocation().setY(p.getLocation().getY() + 0.05);
+        p.getLocation().setDirection(l.getDirection());
+        p.setVelocity(p.getLocation().getDirection().multiply(2.5));
     }
 
     private static void runExplode(Location l)
