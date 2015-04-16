@@ -4,6 +4,7 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,6 +20,8 @@ public class MenuListener implements Listener
     @EventHandler
     public void buyItem(InventoryClickEvent e)
     {
+        if(!WorldCheck.isEnabled(e.getWhoClicked().getWorld()))return;
+
         Player p = (Player) e.getWhoClicked();
         if (e.getInventory().getName() != null && e.getInventory().getName().contains(ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Perk-Points: ")) {
             if (!e.getCursor().getType().equals(Material.AIR))

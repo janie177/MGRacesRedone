@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +22,8 @@ public class PerkPointListener implements Listener
     @EventHandler
     public void onPerkAward(PlayerDeathEvent e)
     {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
         EntityDamageEvent damageEvent = e.getEntity().getLastDamageCause();
         if(damageEvent != null && damageEvent instanceof EntityDamageByEntityEvent)
         {
