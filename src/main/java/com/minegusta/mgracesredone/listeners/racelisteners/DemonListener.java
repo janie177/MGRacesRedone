@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import com.minegusta.mgracesredone.main.Races;
 import org.bukkit.*;
@@ -21,18 +22,32 @@ import java.util.List;
 public class DemonListener implements Listener
 {
     @EventHandler
-    public void onNetherFallDamage(EntityDamageEvent e)
+    public void onDemonDamage(EntityDamageEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
+        if(e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
-            if(isDemon(p) && WeatherUtil.isHell(p.getLocation()))
+            if(!isDemon(p)) return;
+
+
+            //Demon falls in hell
+            if(e.getCause() == EntityDamageEvent.DamageCause.FALL && WeatherUtil.isHell(p.getLocation()))
             {
-                e.setDamage(0.0);
-                e.setCancelled(true);
+
+
             }
+
+            //Demon takes fire/lava/firetick damage
+            else if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.LAVA)
+            {
+                if(Races.getMGPlayer(p).hasAbility(AbilityType.FIREPROOF))
+                {
+                    AbilityType.FIREPROOF.run(e);
+                }
+            }
+
         }
     }
 

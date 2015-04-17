@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -9,6 +10,14 @@ import java.util.List;
 
 public enum AbilityType
 {
+    FIREPROOF(new FireProof()),
+    FLAMETHROWER(new FlameThrower()),
+    HELLISHTRUCE(new HellishTruce()),
+    HELLSPAWN(new HellSpawn()),
+    LAVALOVER(new LavaLover()),
+    METEORSTORM(new MeteorStorm()),
+    MINIONMASTER(new MinionMaster()),
+    UNHOLYRAIN(new UnholyRain()),
     RANGER(new Ranger()),
     FORESTFRIEND(new ForestFriend()),
     ARROWRAIN(new ArrowRain()),
