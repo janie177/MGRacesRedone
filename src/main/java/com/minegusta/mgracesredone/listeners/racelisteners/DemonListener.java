@@ -109,9 +109,9 @@ public class DemonListener implements Listener
 
         Player p = e.getPlayer();
 
-        if(PlayerUtil.isInLava(p) && WeatherUtil.isHell(p.getLocation()))
+        if(PlayerUtil.isInLava(p) && Races.getMGPlayer(p).hasAbility(AbilityType.LAVALOVER))
         {
-            p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.0D));
+            AbilityType.LAVALOVER.run(p);
         }
     }
 
@@ -126,7 +126,7 @@ public class DemonListener implements Listener
             Player p = (Player) e.getDamager();
             if(!isDemon(p))return;
 
-            if(Races.getMGPlayer(p).hasAbility(AbilityType.HELLISHTRUCE))
+            if(!e.isCancelled() && Races.getMGPlayer(p).hasAbility(AbilityType.HELLISHTRUCE))
             {
                 AbilityType.HELLISHTRUCE.run(e);
             }

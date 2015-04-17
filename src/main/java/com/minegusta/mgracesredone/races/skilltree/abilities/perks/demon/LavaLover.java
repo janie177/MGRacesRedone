@@ -1,5 +1,8 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
+import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
@@ -11,23 +14,30 @@ import java.util.List;
 
 public class LavaLover implements IAbility {
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
 
     }
 
     @Override
-    public void run(Player player) {
+    public void run(Player player)
+    {
+        MGPlayer mgp = Races.getMGPlayer(player);
 
+        int level = mgp.getAbilityLevel(getType());
+        double boost = 0.5 + 0.5 * level;
+
+        player.setVelocity(player.getLocation().getDirection().normalize().multiply(boost));
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Lava Lover";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.LAVALOVER;
     }
 
     @Override
@@ -37,22 +47,22 @@ public class LavaLover implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.IRON_BOOTS;
     }
 
     @Override
     public int getPrice(int level) {
-        return 0;
+        return level;
     }
 
     @Override
     public List<RaceType> getRaces() {
-        return null;
+        return Lists.newArrayList(RaceType.DEMON);
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 3;
     }
 
     @Override
@@ -61,15 +71,11 @@ public class LavaLover implements IAbility {
 
         switch (level)
         {
-            case 1: desc = new String[]{"You gain a speed I and jump I boost permanently."};
+            case 1: desc = new String[]{"When toggling crouch in lava, you will be launched forward."};
                 break;
-            case 2: desc = new String[]{"You regenerate health in water."};
+            case 2: desc = new String[]{"The launch boost is 50% faster."};
                 break;
-            case 3: desc = new String[]{"You regenerate health in the rain."};
-                break;
-            case 4: desc = new String[]{"When nearly dead, you absorb life from nearby animals."};
-                break;
-            case 5: desc = new String[]{"Right-clicking grass with your hands acts as bone meal."};
+            case 3: desc = new String[]{"The launch boost is now 100% faster."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;
