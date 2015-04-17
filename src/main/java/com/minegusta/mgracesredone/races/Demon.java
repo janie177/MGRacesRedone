@@ -7,6 +7,8 @@ import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -59,6 +61,12 @@ public class Demon extends Race {
 
         MGPlayer mgp = Races.getMGPlayer(p);
 
+        //Check for obsidian
+        if(p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+        }
+
         if(WeatherUtil.isHell(loc))
         {
             if(mgp.hasAbility(AbilityType.HELLSPAWN)) {
@@ -80,7 +88,7 @@ public class Demon extends Race {
         }
         else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
         {
-            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.HELLSPAWN) > 4)
+            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 4)
             {
                 EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);

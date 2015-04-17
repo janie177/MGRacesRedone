@@ -60,7 +60,6 @@ public class DemonListener implements Listener
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
         if(!isDemon(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR)return;
-
         Player p = e.getPlayer();
 
         if(!p.isSneaking())return;
@@ -85,8 +84,6 @@ public class DemonListener implements Listener
         }
     }
 
-    private final static List<EntityType> hellMobs = Lists.newArrayList(EntityType.MAGMA_CUBE, EntityType.GHAST, EntityType.PIG_ZOMBIE, EntityType.BLAZE);
-
     @EventHandler
     public void onDemonMobtarget(EntityTargetLivingEntityEvent e)
     {
@@ -94,11 +91,11 @@ public class DemonListener implements Listener
         if(e.getTarget() instanceof Player)
         {
             Player p = (Player) e.getTarget();
-            if(!isDemon(p) || !WeatherUtil.isHell(p.getLocation()))return;
+            if(!isDemon(p))return;
 
-            if(hellMobs.contains(e.getEntityType()))
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.HELLISHTRUCE))
             {
-                e.setCancelled(true);
+                AbilityType.HELLISHTRUCE.run(e);
             }
         }
     }
@@ -122,15 +119,29 @@ public class DemonListener implements Listener
     public void onDemonNearDeath(EntityDamageByEntityEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        //When demon hits something
+        if(e.getEntity() instanceof LivingEntity && e.getDamager() instanceof Player)
+        {
+            Player p = (Player) e.getDamager();
+            if(!isDemon(p))return;
+
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.HELLISHTRUCE))
+            {
+                AbilityType.HELLISHTRUCE.run(e);
+            }
+        }
+
+        //Spawn hell minions.
         if(e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
             if(!isDemon(p))return;
 
+            if(!(e.getDamager() instanceof LivingEntity) || !(p.getHealth() < 6))return;
+
             String name = "hellminion";
             String uuid = p.getUniqueId().toString();
-
-            if(!(e.getDamager() instanceof LivingEntity) || !(p.getHealth() < 6))return;
 
             if(Cooldown.isCooledDown(name, uuid))
             {

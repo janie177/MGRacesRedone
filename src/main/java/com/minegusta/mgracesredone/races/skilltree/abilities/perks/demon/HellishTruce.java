@@ -1,17 +1,56 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
+import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 
 import java.util.List;
 
 public class HellishTruce implements IAbility {
+
+    private final static List<EntityType> hellMobs = Lists.newArrayList(EntityType.MAGMA_CUBE, EntityType.GHAST, EntityType.PIG_ZOMBIE, EntityType.BLAZE);
+
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+        if(event instanceof EntityTargetLivingEntityEvent)
+        {
+            EntityTargetLivingEntityEvent e = (EntityTargetLivingEntityEvent) event;
+            e.setCancelled(true);
+        }
+
+        if(event instanceof EntityDamageByEntityEvent)
+        {
+            EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
+            Player p = (Player) e.getDamager();
+            MGPlayer mgp = Races.getMGPlayer(p);
+
+            int level = mgp.getAbilityLevel(getType());
+
+            if(level < 2)return;
+
+            if(RandomUtil.chance(10 * (level - 1)))
+            {
+                for(Entity ent : p.getNearbyEntities(10, 10, 10))
+                {
+                    if(hellMobs.contains(ent.getType()))
+                    {
+                        ((Creature)ent).setTarget((LivingEntity) e.getEntity());
+                    }
+                }
+            }
+
+
+        }
 
     }
 
@@ -22,12 +61,12 @@ public class HellishTruce implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Hellish Truce";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.HELLISHTRUCE;
     }
 
     @Override
@@ -37,22 +76,22 @@ public class HellishTruce implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.BLAZE_ROD;
     }
 
     @Override
     public int getPrice(int level) {
-        return 0;
+        return level;
     }
 
     @Override
     public List<RaceType> getRaces() {
-        return null;
+        return Lists.newArrayList(RaceType.DEMON);
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 3;
     }
 
     @Override
@@ -61,15 +100,11 @@ public class HellishTruce implements IAbility {
 
         switch (level)
         {
-            case 1: desc = new String[]{"You gain a speed I and jump I boost permanently."};
+            case 1: desc = new String[]{"Hell mobs will no longer target you."};
                 break;
-            case 2: desc = new String[]{"You regenerate health in water."};
+            case 2: desc = new String[]{"When attacking an enemy, there's a 10% chance nearby hell-mobs will help you fight."};
                 break;
-            case 3: desc = new String[]{"You regenerate health in the rain."};
-                break;
-            case 4: desc = new String[]{"When nearly dead, you absorb life from nearby animals."};
-                break;
-            case 5: desc = new String[]{"Right-clicking grass with your hands acts as bone meal."};
+            case 3: desc = new String[]{"When attacking an enemy, there's a 20% chance nearby hell-mobs will help you fight."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;
