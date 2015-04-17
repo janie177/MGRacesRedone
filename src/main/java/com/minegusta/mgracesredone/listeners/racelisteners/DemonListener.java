@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Main;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
@@ -140,46 +141,11 @@ public class DemonListener implements Listener
 
             if(!(e.getDamager() instanceof LivingEntity) || !(p.getHealth() < 6))return;
 
-            String name = "hellminion";
-            String uuid = p.getUniqueId().toString();
-
-            if(Cooldown.isCooledDown(name, uuid))
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.MINIONMASTER))
             {
-                p.sendMessage(ChatColor.RED + "The minions of hell are here to help you!");
-                final Location l = p.getLocation();
-                Cooldown.newCoolDown(name, uuid, 300);
-                for(int n = 0; n < 7; n++)
-                {
-                    Entity ent = l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
-                    PigZombie m = (PigZombie) ent;
-                    ((Creature)m).setTarget((LivingEntity)e.getDamager());
-                }
-
-                for(int le = -5; le < 5; le++)
-                {
-                    for(int le2 = -5; le2 < 5; le2++)
-                    {
-                        if(Math.abs(le2) + Math.abs(le) > 3 && Math.abs(le2) + Math.abs(le) < 5)
-                        {
-                            final int loc1 = le2;
-                            final int loc2 = le;
-                            for(int i = 0; i < 20 * 6; i++)
-                            {
-                                final int k = i;
-                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable()
-                                {
-                                    @Override
-                                    public void run() {
-
-                                        l.getWorld().spigot().playEffect(l.getBlock().getRelative(loc1, 0, loc2).getLocation(), Effect.LAVADRIP, 1, 1, 0, k/30, 0, 1, 25, 30);
-
-                                    }
-                                },i);
-                            }
-                        }
-                    }
-                }
+                AbilityType.MINIONMASTER.run(e);
             }
+
         }
     }
 

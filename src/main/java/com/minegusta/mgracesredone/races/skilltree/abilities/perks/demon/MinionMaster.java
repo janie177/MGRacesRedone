@@ -1,17 +1,94 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
+import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Main;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
+import com.minegusta.mgracesredone.util.Cooldown;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.List;
 
 public class MinionMaster implements IAbility {
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+        EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
+        Player p = (Player) e.getEntity();
+
+        String name = "hellminion";
+        String uuid = p.getUniqueId().toString();
+        int level = Races.getMGPlayer(p).getAbilityLevel(getType());
+
+        if(Cooldown.isCooledDown(name, uuid))
+        {
+            p.sendMessage(ChatColor.RED + "The minions of hell are here to help you!");
+            final Location l = p.getLocation();
+            Cooldown.newCoolDown(name, uuid, 300);
+
+            //spawn the minions
+            for(int n = 0; n < 3; n++)
+            {
+                Creature ent = (Creature) l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
+                ent.setTarget((LivingEntity) e.getDamager());
+            }
+            if(level > 1)
+            {
+                for(int n = 0; n < 4; n++)
+                {
+                    Creature ent = (Creature) l.getWorld().spawnEntity(l, EntityType.BLAZE);
+                    ent.setTarget((LivingEntity) e.getDamager());
+                }
+            }
+            if(level > 2)
+            {
+                for(int n = 0; n < 2; n++)
+                {
+                    Creature ent = (Creature) l.getWorld().spawnEntity(l, EntityType.GHAST);
+                    ent.setTarget((LivingEntity) e.getDamager());
+                }
+            }
+            if(level > 3)
+            {
+                for(int n = 0; n < 5; n++)
+                {
+                    Creature ent = (Creature) l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
+                    ent.setTarget((LivingEntity) e.getDamager());
+                }
+            }
+
+
+            //Spawning the particles
+            for(int le = -5; le < 5; le++)
+            {
+                for(int le2 = -5; le2 < 5; le2++)
+                {
+                    if(Math.abs(le2) + Math.abs(le) > 3 && Math.abs(le2) + Math.abs(le) < 5)
+                    {
+                        final int loc1 = le2;
+                        final int loc2 = le;
+                        for(int i = 0; i < 20 * 6; i++)
+                        {
+                            final int k = i;
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable()
+                            {
+                                @Override
+                                public void run() {
+
+                                    l.getWorld().spigot().playEffect(l.getBlock().getRelative(loc1, 0, loc2).getLocation(), Effect.LAVADRIP, 1, 1, 0, k/30, 0, 1, 25, 30);
+
+                                }
+                            },i);
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
@@ -22,12 +99,12 @@ public class MinionMaster implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Minion Master";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.MINIONMASTER;
     }
 
     @Override
@@ -37,22 +114,22 @@ public class MinionMaster implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.MONSTER_EGG;
     }
 
     @Override
     public int getPrice(int level) {
-        return 0;
+        return 1;
     }
 
     @Override
     public List<RaceType> getRaces() {
-        return null;
+        return Lists.newArrayList(RaceType.DEMON);
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 4;
     }
 
     @Override
@@ -61,15 +138,13 @@ public class MinionMaster implements IAbility {
 
         switch (level)
         {
-            case 1: desc = new String[]{"You gain a speed I and jump I boost permanently."};
+            case 1: desc = new String[]{"When below 6 health, 3 zombie-pig-men will come to aid you."};
                 break;
-            case 2: desc = new String[]{"You regenerate health in water."};
+            case 2: desc = new String[]{"An additional blaze will spawn."};
                 break;
-            case 3: desc = new String[]{"You regenerate health in the rain."};
+            case 3: desc = new String[]{"two ghasts will also aid you now."};
                 break;
-            case 4: desc = new String[]{"When nearly dead, you absorb life from nearby animals."};
-                break;
-            case 5: desc = new String[]{"Right-clicking grass with your hands acts as bone meal."};
+            case 4: desc = new String[]{"There will be 5 additional zombie-pig-men."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;
