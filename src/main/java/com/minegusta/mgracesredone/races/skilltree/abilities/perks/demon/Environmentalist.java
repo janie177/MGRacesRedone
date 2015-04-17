@@ -1,33 +1,20 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
 import com.google.common.collect.Lists;
-import com.minegusta.mgracesredone.main.Races;
-import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.List;
 
-public class FireProof implements IAbility {
+public class Environmentalist implements IAbility {
     @Override
     public void run(Event event)
     {
-        EntityDamageEvent e = (EntityDamageEvent) event;
-        Player p = (Player) e.getEntity();
 
-        MGPlayer mgp = Races.getMGPlayer(p);
-
-        if(mgp.getAbilityLevel(getType()) > 1 || RandomUtil.fiftyfifty())
-        {
-            e.setDamage(0);
-            e.setCancelled(true);
-        }
     }
 
     @Override
@@ -37,12 +24,12 @@ public class FireProof implements IAbility {
 
     @Override
     public String getName() {
-        return "Fireproof";
+        return "Environmentalist";
     }
 
     @Override
     public AbilityType getType() {
-        return AbilityType.FIREPROOF;
+        return AbilityType.ENVIRONMENTALIST;
     }
 
     @Override
@@ -52,7 +39,7 @@ public class FireProof implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.LAVA_BUCKET;
+        return Material.NETHER_WARTS;
     }
 
     @Override
@@ -67,7 +54,7 @@ public class FireProof implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 2;
+        return 5;
     }
 
     @Override
@@ -76,9 +63,15 @@ public class FireProof implements IAbility {
 
         switch (level)
         {
-            case 1: desc = new String[]{"There's a 50% chance you take no fire and lava damage."};
+            case 1: desc = new String[]{"Slowness in cold biomes is only half as bad."};
                 break;
-            case 2: desc = new String[]{"You never take fire or lava damage."};
+            case 2: desc = new String[]{"You will no longer get nausea when in ice biomes."};
+                break;
+            case 3: desc = new String[]{"You only take half as much rain damage."};
+                break;
+            case 4: desc = new String[]{"You only take half as much water damage."};
+                break;
+            case 5: desc = new String[]{"In hot biomes, you will gain a speed boost."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;

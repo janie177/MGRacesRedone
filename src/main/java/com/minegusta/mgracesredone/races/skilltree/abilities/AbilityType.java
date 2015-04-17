@@ -18,6 +18,7 @@ public enum AbilityType
     METEORSTORM(new MeteorStorm()),
     MINIONMASTER(new MinionMaster()),
     UNHOLYRAIN(new UnholyRain()),
+    ENVIRONMENTALIST(new Environmentalist()),
     RANGER(new Ranger()),
     FORESTFRIEND(new ForestFriend()),
     ARROWRAIN(new ArrowRain()),

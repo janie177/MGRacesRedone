@@ -35,7 +35,10 @@ public class DemonListener implements Listener
             //Demon falls in hell
             if(e.getCause() == EntityDamageEvent.DamageCause.FALL && WeatherUtil.isHell(p.getLocation()))
             {
-
+                if(Races.getMGPlayer(p).hasAbility(AbilityType.HELLSPAWN))
+                {
+                    AbilityType.HELLSPAWN.run(e);
+                }
 
             }
 

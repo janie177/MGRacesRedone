@@ -1,17 +1,25 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.List;
 
 public class HellSpawn implements IAbility{
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+        if(event instanceof EntityDamageEvent)
+        {
+            EntityDamageEvent e = (EntityDamageEvent) event;
+            e.setCancelled(true);
+        }
 
     }
 
@@ -22,12 +30,12 @@ public class HellSpawn implements IAbility{
 
     @Override
     public String getName() {
-        return null;
+        return "Hell Spawn";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.HELLSPAWN;
     }
 
     @Override
@@ -37,22 +45,22 @@ public class HellSpawn implements IAbility{
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.FIREBALL;
     }
 
     @Override
     public int getPrice(int level) {
-        return 0;
+        return 2;
     }
 
     @Override
     public List<RaceType> getRaces() {
-        return null;
+        return Lists.newArrayList(RaceType.DEMON);
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 5;
     }
 
     @Override
@@ -61,15 +69,15 @@ public class HellSpawn implements IAbility{
 
         switch (level)
         {
-            case 1: desc = new String[]{"You gain a speed I and jump I boost permanently."};
+            case 1: desc = new String[]{"In the nether, you will no longer take fall damage."};
                 break;
-            case 2: desc = new String[]{"You regenerate health in water."};
+            case 2: desc = new String[]{"When standing on obsidian, you will gain a defence boost."};
                 break;
-            case 3: desc = new String[]{"You regenerate health in the rain."};
+            case 3: desc = new String[]{"In the nether, you will gain a strength boost."};
                 break;
-            case 4: desc = new String[]{"When nearly dead, you absorb life from nearby animals."};
+            case 4: desc = new String[]{"In the nether, you will gain a massive speed boost."};
                 break;
-            case 5: desc = new String[]{"Right-clicking grass with your hands acts as bone meal."};
+            case 5: desc = new String[]{"In the nether, you will gain a massive jump and defence boost."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;

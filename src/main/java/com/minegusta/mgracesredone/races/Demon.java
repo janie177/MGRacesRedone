@@ -1,5 +1,8 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
@@ -54,25 +57,50 @@ public class Demon extends Race {
         Location loc = p.getLocation();
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
 
+        MGPlayer mgp = Races.getMGPlayer(p);
+
         if(WeatherUtil.isHell(loc))
         {
-            EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+            if(mgp.hasAbility(AbilityType.HELLSPAWN)) {
+                int level = mgp.getAbilityLevel(AbilityType.HELLSPAWN);
+                EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
+
+                if (level > 2) {
+                    PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+                }
+                if (level > 3) {
+                    PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 5);
+                }
+                if (level > 4) {
+                    PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
+                    PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+                }
+            }
+
         }
         else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
         {
-            EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
+            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.HELLSPAWN) > 4)
+            {
+                EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
+                PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
+            }
         }
         else if(biome == WeatherUtil.BiomeType.COLD || biome == WeatherUtil.BiomeType.ICE)
         {
-            EffectUtil.playParticle(p, Effect.LAVADRIP);
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 1, 5);
+            int slowAmp = 1;
+            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST))
+            {
+                int level = mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST);
+                slowAmp = 0;
+                if(level < 2)
+                {
+                    PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 5);
+                }
+            }
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW, slowAmp, 5);
+            EffectUtil.playParticle(p, Effect.LAVADRIP);
         }
         else
         {
@@ -80,13 +108,18 @@ public class Demon extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 5);
         }
 
-        if((PlayerUtil.isInWater(p) || PlayerUtil.isInRain(p)) && WGUtil.canGetDamage(p))
+        if((PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p)))
         {
-            p.damage(1.0);
+            int damage = 2;
+            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 3) damage = 1;
+            p.damage(damage);
         }
-
-        PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 1, 5);
-
+        else if(PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p))
+        {
+            int damage = 2;
+            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 2) damage = 1;
+            p.damage(damage);
+        }
     }
     public static String getChant()
     {
