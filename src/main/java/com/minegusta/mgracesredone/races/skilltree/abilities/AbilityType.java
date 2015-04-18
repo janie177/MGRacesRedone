@@ -11,7 +11,7 @@ import java.util.List;
 public enum AbilityType
 {
     FIREPROOF(new FireProof()),
-    FLAMETHROWER(new FlameThrower()),
+    HELLRIFT(new HellRift()),
     HELLISHTRUCE(new HellishTruce()),
     HELLSPAWN(new HellSpawn()),
     LAVALOVER(new LavaLover()),

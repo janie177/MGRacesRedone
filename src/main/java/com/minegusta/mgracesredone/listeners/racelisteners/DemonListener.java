@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -19,6 +20,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 public class DemonListener implements Listener
 {
@@ -56,17 +58,50 @@ public class DemonListener implements Listener
     }
 
     @EventHandler
-    public void onDemonLazor(PlayerInteractEvent e)
+    public void onDemonInteract(PlayerInteractEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(!isDemon(e.getPlayer()) || e.getAction() != Action.RIGHT_CLICK_AIR)return;
+        if(!isDemon(e.getPlayer()))return;
         Player p = e.getPlayer();
-
-        if(!p.isSneaking())return;
-
         Material hand = p.getItemInHand().getType();
+        if(hand != Material.BLAZE_ROD)return;
 
+        String uuid = e.getPlayer().getUniqueId().toString();
+
+         MGPlayer mgp = Races.getMGPlayer(p);
+
+        //Check to see if the player even has an ability.
+        if(!(mgp.hasAbility(AbilityType.UNHOLYRAIN) || mgp.hasAbility(AbilityType.METEORSTORM) || mgp.hasAbility(AbilityType.HELLRIFT)))return;
+
+        DemonPowers.DemonPower power = DemonPowers.getPower(p);
+
+
+        //Switch to next
+        if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)
+        {
+            power = DemonPowers.nextPower(p);
+        }
+
+        //Do the powers
+
+        if(power == DemonPowers.DemonPower.HELL_RIFT)
+        {
+            AbilityType.UNHOLYRAIN.run(p);
+        }
+
+        else if (power == DemonPowers.DemonPower.UNHOLY_RAIN)
+        {
+
+        }
+
+        else if (power == DemonPowers.DemonPower.METEOR_STORM)
+        {
+
+        }
+
+
+        //Unholy Rain
         if(hand == Material.BLAZE_ROD)
         {
             String uuid = p.getUniqueId().toString();

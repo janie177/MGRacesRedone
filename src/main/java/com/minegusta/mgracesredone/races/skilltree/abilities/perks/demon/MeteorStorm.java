@@ -52,7 +52,7 @@ public class MeteorStorm implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 3;
     }
 
     @Override

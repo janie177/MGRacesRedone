@@ -52,4 +52,9 @@ public class EffectUtil
     {
         ent.getWorld().playSound(ent.getLocation(), sound, volume, pitch);
     }
+
+    public static void playSound(Location l, Sound sound)
+    {
+        l.getWorld().playSound(l, sound, 1 , 1);
+    }
 }
