@@ -42,7 +42,7 @@ public class MeteorStorm implements IAbility {
         if(Cooldown.isCooledDown(name, id))
         {
             Cooldown.newCoolDown(name, id, cooldownTime);
-            Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 18, 0);
+            Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 30, 0);
 
             MGPlayer mgp = Races.getMGPlayer(player);
             int level = mgp.getAbilityLevel(getType());
@@ -81,6 +81,7 @@ public class MeteorStorm implements IAbility {
                     {
                         Fireball ball = (Fireball) location.getWorld().spawnEntity(spawnLocation, EntityType.FIREBALL);
                         ball.setVelocity(new Vector(0, -2, 0));
+                        ball.setYield(3);
                     }
                 }, i);
             }
