@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
@@ -22,12 +23,12 @@ public class MeteorStorm implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Meteor Storm";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.METEORSTORM;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class MeteorStorm implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.FIREBALL;
     }
 
     @Override
@@ -47,12 +48,12 @@ public class MeteorStorm implements IAbility {
 
     @Override
     public List<RaceType> getRaces() {
-        return null;
+        return Lists.newArrayList(RaceType.DEMON);
     }
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return 0;
     }
 
     @Override

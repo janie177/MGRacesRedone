@@ -47,7 +47,7 @@ public class DemonPowers
                     return power;
                 }
             }
-            return UNHOLY_RAIN;
+            return getFromIndex(0, p);
         }
 
         public static DemonPower getNext(Player p)

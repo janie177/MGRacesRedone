@@ -8,11 +8,13 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -28,6 +30,16 @@ public class HellRift implements IAbility {
     {
         MGPlayer mgp = Races.getMGPlayer(player);
 
+        String name = "hrift";
+        String id = player.getUniqueId().toString();
+
+        if(!Cooldown.isCooledDown(name, id)) {
+            player.sendMessage(ChatColor.RED + "HellRift will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
+            return;
+        }
+
+        Cooldown.newCoolDown(name, id, 30);
+
         //Get the target a block above the floor.
         Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 20).getRelative(0, 2, 0);
 
@@ -40,8 +52,6 @@ public class HellRift implements IAbility {
         boolean explode = level > 2;
 
         runHellRift(target, duration, explode);
-
-
     }
 
     private void runHellRift(final Block target, int duration, boolean explode)
@@ -52,18 +62,23 @@ public class HellRift implements IAbility {
         {
             if(i%4 == 0)
             {
+                final int k = i;
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run()
                     {
                         //Effects lol
-                        EffectUtil.playParticle(l, Effect.ENDER_SIGNAL);
-                        EffectUtil.playParticle(l, Effect.LARGE_SMOKE);
-                        EffectUtil.playParticle(l, Effect.LARGE_SMOKE);
-                        EffectUtil.playParticle(l, Effect.FLAME);
-                        EffectUtil.playParticle(l, Effect.FLYING_GLYPH);
-                        EffectUtil.playParticle(l, Effect.LAVADRIP);
-                        EffectUtil.playSound(l, Sound.PORTAL);
+                        EffectUtil.playParticle(l, Effect.ENDER_SIGNAL, 30);
+                        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
+                        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
+                        EffectUtil.playParticle(l, Effect.FLAME, 30);
+                        EffectUtil.playParticle(l, Effect.FLYING_GLYPH, 30);
+                        EffectUtil.playParticle(l, Effect.LAVADRIP, 30);
+
+                        if(k % 20 == 0)
+                        {
+                            EffectUtil.playSound(l, Sound.PORTAL);
+                        }
 
                         //The sucking people in effect
                         Entity dummy = l.getWorld().spawnEntity(l, EntityType.SMALL_FIREBALL);
@@ -79,10 +94,17 @@ public class HellRift implements IAbility {
                                 }
 
                                 //The closer to the center, the stronger the force.
-                                double amplifier = 0.25 + 1/ent.getLocation().distance(l);
+                                double amplifier = 0.05 + 1/ent.getLocation().distance(l);
+                                if(amplifier > 1.05) amplifier = 1.05;
 
-                                ent.getLocation().setDirection(l.getDirection());
-                                ent.setVelocity(ent.getLocation().getDirection().multiply(amplifier));
+                                double x = ent.getLocation().getX() - l.getX();
+                                double y = ent.getLocation().getY() - l.getY();
+                                double z = ent.getLocation().getZ() - l.getZ();
+
+                                Vector v = new Vector(x, y, z);
+                                v.normalize();
+
+                                ent.getVelocity().add(v.multiply(amplifier));
                             }
                         }
 
