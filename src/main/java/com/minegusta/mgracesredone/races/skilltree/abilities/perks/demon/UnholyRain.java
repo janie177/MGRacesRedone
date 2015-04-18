@@ -129,7 +129,7 @@ public class UnholyRain implements IAbility
             Cooldown.newCoolDown(name, uuid, 60);
             EffectUtil.playParticle(player, Effect.MAGIC_CRIT);
             EffectUtil.playSound(player, Sound.AMBIENCE_THUNDER);
-            player.sendMessage(ChatColor.DARK_RED + "You call an unholy rain on your location!");
+            ChatUtil.sendString(player, ChatColor.DARK_RED + "You call an unholy rain on your location!");
 
             MGPlayer mgp = Races.getMGPlayer(player);
             int level = mgp.getAbilityLevel(getType());

@@ -9,6 +9,7 @@ import com.minegusta.mgracesredone.races.Race;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Bukkit;
@@ -41,10 +42,12 @@ public class MeteorStorm implements IAbility {
         if(Cooldown.isCooledDown(name, id))
         {
             Cooldown.newCoolDown(name, id, cooldownTime);
-            Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 9, 0);
+            Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 18, 0);
 
             MGPlayer mgp = Races.getMGPlayer(player);
             int level = mgp.getAbilityLevel(getType());
+
+            ChatUtil.sendString(player, "You opened a Hell Rift!");
 
             int interval = 16;
             int duration = 6;
@@ -57,7 +60,7 @@ public class MeteorStorm implements IAbility {
         }
         else
         {
-            player.sendMessage(ChatColor.RED + "You need to wait another " + Cooldown.getRemaining(name, id) + " seconds to use Meteor Storm.");
+            ChatUtil.sendString(player, ChatColor.RED + "You need to wait another " + Cooldown.getRemaining(name, id) + " seconds to use Meteor Storm.");
         }
     }
 
@@ -65,7 +68,7 @@ public class MeteorStorm implements IAbility {
     {
         for(int i = 0; i <= duration * 20; i++)
         {
-            if(1 % interval == 0)
+            if(i % interval == 0)
             {
                 double offsetX = RandomUtil.randomNumber(16) - 8;
                 double offsetZ = RandomUtil.randomNumber(16) - 8;

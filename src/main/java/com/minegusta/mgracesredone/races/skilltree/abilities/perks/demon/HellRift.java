@@ -8,6 +8,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import org.bukkit.*;
@@ -34,7 +35,7 @@ public class HellRift implements IAbility {
         String id = player.getUniqueId().toString();
 
         if(!Cooldown.isCooledDown(name, id)) {
-            player.sendMessage(ChatColor.RED + "Hell Rift will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
+            ChatUtil.sendString(player, ChatColor.RED + "Hell Rift will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
             return;
         }
 

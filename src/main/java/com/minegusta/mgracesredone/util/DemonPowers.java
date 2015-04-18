@@ -43,7 +43,7 @@ public class DemonPowers
             {
                 if(power.getIndex() > i && Races.getMGPlayer(p).hasAbility(power.getType()))
                 {
-                    p.sendMessage(ChatColor.RED + "You are now using " + power.getType().getName() + ".");
+                    ChatUtil.sendString(p, ChatColor.RED + "You are now using " + power.getType().getName() + ".");
                     return power;
                 }
             }
