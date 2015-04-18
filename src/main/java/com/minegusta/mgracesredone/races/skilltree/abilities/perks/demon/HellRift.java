@@ -34,7 +34,7 @@ public class HellRift implements IAbility {
         String id = player.getUniqueId().toString();
 
         if(!Cooldown.isCooledDown(name, id)) {
-            player.sendMessage(ChatColor.RED + "HellRift will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
+            player.sendMessage(ChatColor.RED + "Hell Rift will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
             return;
         }
 
@@ -68,7 +68,7 @@ public class HellRift implements IAbility {
                     public void run()
                     {
                         //Effects lol
-                        EffectUtil.playParticle(l, Effect.ENDER_SIGNAL, 30);
+                        EffectUtil.playParticle(l, Effect.PORTAL, 30);
                         EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
                         EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
                         EffectUtil.playParticle(l, Effect.FLAME, 30);
@@ -85,7 +85,7 @@ public class HellRift implements IAbility {
 
                         for(Entity ent : dummy.getNearbyEntities(15,15,15))
                         {
-                            if(ent instanceof LivingEntity || ent instanceof Item)
+                            if(ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)
                             {
                                 //Demons are immune
                                 if(ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON)
@@ -104,7 +104,7 @@ public class HellRift implements IAbility {
                                 Vector v = new Vector(x, y, z);
                                 v.normalize();
 
-                                ent.getVelocity().add(v.multiply(amplifier));
+                                ent.setVelocity(ent.getVelocity().add(v.multiply(-amplifier)));
                             }
                         }
 
@@ -147,7 +147,17 @@ public class HellRift implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 2;
+        int price = 1;
+        switch (level)
+        {
+            case 1: price = 2;
+                break;
+            case 2: price = 1;
+                break;
+            case 3: price = 1;
+                break;
+        }
+        return price;
     }
 
     @Override

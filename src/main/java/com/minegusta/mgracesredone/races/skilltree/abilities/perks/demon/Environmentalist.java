@@ -39,7 +39,7 @@ public class Environmentalist implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.NETHER_WARTS;
+        return Material.NETHER_STALK;
     }
 
     @Override

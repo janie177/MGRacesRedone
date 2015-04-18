@@ -98,7 +98,7 @@ public class DemonListener implements Listener
 
         else if (power == DemonPowers.DemonPower.METEOR_STORM)
         {
-
+            AbilityType.METEORSTORM.run(p);
         }
     }
 
