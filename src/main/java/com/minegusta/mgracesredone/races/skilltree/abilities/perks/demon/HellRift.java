@@ -52,6 +52,8 @@ public class HellRift implements IAbility {
 
         boolean explode = level > 2;
 
+        ChatUtil.sendString(player, "You opened a Hell Rift!");
+
         runHellRift(target, duration, explode);
     }
 

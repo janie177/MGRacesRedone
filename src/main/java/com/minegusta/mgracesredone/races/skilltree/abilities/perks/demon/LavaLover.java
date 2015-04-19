@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.listeners.general.FallDamageManager;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -28,6 +29,11 @@ public class LavaLover implements IAbility {
         double boost = 0.5 + 0.5 * level;
 
         player.setVelocity(player.getLocation().getDirection().normalize().multiply(boost));
+
+        if(player.getVelocity().getY() > 1.2)
+        {
+            FallDamageManager.addToFallMap(player.getUniqueId().toString());
+        }
     }
 
     @Override

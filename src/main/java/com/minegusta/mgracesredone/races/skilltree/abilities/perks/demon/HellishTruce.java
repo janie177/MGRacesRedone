@@ -25,7 +25,10 @@ public class HellishTruce implements IAbility {
         if(event instanceof EntityTargetLivingEntityEvent)
         {
             EntityTargetLivingEntityEvent e = (EntityTargetLivingEntityEvent) event;
-            e.setCancelled(true);
+            if(hellMobs.contains(e.getEntityType()))
+            {
+                e.setCancelled(true);
+            }
         }
 
         if(event instanceof EntityDamageByEntityEvent)

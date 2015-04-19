@@ -29,7 +29,7 @@ public class MinionMaster implements IAbility {
         {
             p.sendMessage(ChatColor.RED + "The minions of hell are here to help you!");
             final Location l = p.getLocation();
-            Cooldown.newCoolDown(name, uuid, 300);
+            Cooldown.newCoolDown(name, uuid, 180);
 
             //spawn the minions
             for(int n = 0; n < 3; n++)
@@ -49,8 +49,7 @@ public class MinionMaster implements IAbility {
             {
                 for(int n = 0; n < 2; n++)
                 {
-                    Creature ent = (Creature) l.getWorld().spawnEntity(l, EntityType.GHAST);
-                    ent.setTarget((LivingEntity) e.getDamager());
+                    l.getWorld().spawnEntity(l, EntityType.GHAST);
                 }
             }
             if(level > 3)

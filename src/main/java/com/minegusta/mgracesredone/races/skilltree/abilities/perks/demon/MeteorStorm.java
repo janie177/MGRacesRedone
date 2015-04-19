@@ -47,7 +47,7 @@ public class MeteorStorm implements IAbility {
             MGPlayer mgp = Races.getMGPlayer(player);
             int level = mgp.getAbilityLevel(getType());
 
-            ChatUtil.sendString(player, "You opened a Hell Rift!");
+            ChatUtil.sendString(player, "You call a Meteor Storm on your enemies!");
 
             int interval = 16;
             int duration = 6;
@@ -80,7 +80,7 @@ public class MeteorStorm implements IAbility {
                     public void run()
                     {
                         Fireball ball = (Fireball) location.getWorld().spawnEntity(spawnLocation, EntityType.FIREBALL);
-                        ball.setVelocity(new Vector(0, -2, 0));
+                        ball.setDirection(new Vector(0, -1, 0));
                         ball.setYield(3);
                     }
                 }, i);
@@ -110,7 +110,7 @@ public class MeteorStorm implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return level;
     }
 
     @Override

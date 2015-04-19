@@ -62,7 +62,7 @@ public class Demon extends Race {
         MGPlayer mgp = Races.getMGPlayer(p);
 
         //Check for obsidian
-        if(p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN)
+        if(p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN && mgp.hasAbility(AbilityType.HELLSPAWN) && mgp.getAbilityLevel(AbilityType.HELLSPAWN) > 1)
         {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
         }
@@ -116,13 +116,15 @@ public class Demon extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 5);
         }
 
-        if((PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p)))
+
+
+        if((PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p)) && biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
         {
             int damage = 2;
             if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 3) damage = 1;
             p.damage(damage);
         }
-        else if(PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p))
+        else if(PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p) && biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
         {
             int damage = 2;
             if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 2) damage = 1;
