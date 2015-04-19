@@ -23,12 +23,12 @@ public class HolyRain implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Holy Rain";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.HOLYRAIN;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class HolyRain implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.WATER_BUCKET;
     }
 
     @Override
