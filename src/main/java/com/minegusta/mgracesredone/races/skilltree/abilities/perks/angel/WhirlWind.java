@@ -56,13 +56,12 @@ public class WhirlWind implements IAbility{
 
     private void runWhirlWind(final Block target, int duration, boolean lightning)
     {
-
+        final Location center = target.getLocation();
         for(int i = 0; i <= 20 * duration; i++)
         {
             if(i%2 == 0)
             {
                 final int k = i;
-                final Location l = new Location(target.getWorld(), target.getX(), target.getY(), target.getZ());
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                     @Override
@@ -70,15 +69,15 @@ public class WhirlWind implements IAbility{
                     {
                         if(k % 20 == 0)
                         {
-                            EffectUtil.playSound(l, Sound.ENDERDRAGON_WINGS);
+                            EffectUtil.playSound(center, Sound.ENDERDRAGON_WINGS);
                         }
 
-                        EffectUtil.playParticle(l, Effect.ENDER_SIGNAL);
+                        EffectUtil.playParticle(center, Effect.ENDER_SIGNAL);
 
                         //The sucking people in effect
-                        Entity dummy = l.getWorld().spawnEntity(l, EntityType.EXPERIENCE_ORB);
+                        Entity dummy = center.getWorld().spawnEntity(center, EntityType.EXPERIENCE_ORB);
 
-                        for(Entity ent : dummy.getNearbyEntities(17,17,17))
+                        for(Entity ent : dummy.getNearbyEntities(15,10,15))
                         {
                             if(ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)
                             {
@@ -88,26 +87,28 @@ public class WhirlWind implements IAbility{
                                     continue;
                                 }
 
-                                //The closer to the center, the stronger the force.
-                                double amplifier = 0.5 + 2/ent.getLocation().distance(l);
-                                if(amplifier > 1.6) amplifier = 1.6;
+                                double angle = Math.toRadians(15);
+                                double radius = Math.abs(ent.getLocation().distance(center));
 
-                                double angle = 25;
-                                double radius = ent.getLocation().distance(l);
+                                double x = ent.getLocation().getX() - center.getX();
+                                double z = ent.getLocation().getZ() - center.getZ();
 
-                                double x = l.getX() + (radius * Math.sin(angle));
-                                double z = l.getZ() + (radius * Math.cos(angle));
+                                double dx = x * Math.cos(angle) - z * Math.sin(angle);
+                                double dz = x * Math.sin(angle) + z * Math.cos(angle);
 
-                                double offsetX = x - ent.getLocation().getX();
-                                double offsetZ = z - ent.getLocation().getZ();
+                                Location target = new Location(ent.getWorld(), dx + center.getX(), ent.getLocation().getY(), dz + center.getZ());
 
-                                Vector v = new Vector(offsetX, 0.35, offsetZ);
+                                double ix = ent.getLocation().getX() - target.getX();
+                                double iz = ent.getLocation().getZ() - target.getZ();
+
+                                Vector v = new Vector(ix, -0.1, iz);
                                 v.normalize();
 
-                                ent.setVelocity(ent.getVelocity().add(v.multiply(amplifier)));
+                                //The closer to the center, the stronger the force.
+                                double amplifier = 0.25 + 2/radius;
+                                ent.setVelocity(ent.getVelocity().add(v).multiply(-amplifier));
                             }
                         }
-
                         dummy.remove();
                     }
                 }, i);
