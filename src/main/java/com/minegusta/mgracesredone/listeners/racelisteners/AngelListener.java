@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -131,7 +132,13 @@ public class AngelListener implements Listener
             }
             else if(p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER)
             {
-                String uuid = p.getUniqueId().toString();
+                if(Races.getMGPlayer(p).hasAbility(AbilityType.WHIRLWIND))
+                {
+                    AbilityType.WHIRLWIND.run(p);
+                }
+
+                //Old invincible boost
+                /* String uuid = p.getUniqueId().toString();
                 String name = "invince";
                 if (Cooldown.isCooledDown(name, uuid)) {
                     Cooldown.newCoolDown(name, uuid, 360);
@@ -139,7 +146,7 @@ public class AngelListener implements Listener
                     AngelInvincibility.startInvincibility(p);
                 } else {
                     ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Invincibility.");
-                }
+                } */
             }
         }
     }
