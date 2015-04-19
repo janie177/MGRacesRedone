@@ -23,12 +23,12 @@ public class WhirlWind implements IAbility{
 
     @Override
     public String getName() {
-        return null;
+        return "WhirlWind";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.WHIRLWIND;
     }
 
     @Override
@@ -38,12 +38,22 @@ public class WhirlWind implements IAbility{
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.NETHER_STAR;
     }
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 120;
     }
 
     @Override
@@ -62,15 +72,15 @@ public class WhirlWind implements IAbility{
 
         switch (level)
         {
-            case 1: desc = new String[]{"NADOOOO"};
+            case 1: desc = new String[]{"Right click a feather to start a tornado in that direction.", "Your tornado lasts for 8 seconds."};
                 break;
-            case 2: desc = new String[]{"le meme"};
+            case 2: desc = new String[]{"Your tornado is now twice as strong."};
                 break;
-            case 3: desc = new String[]{"le meme"};
+            case 3: desc = new String[]{"Your tornado will last for 16 seconds."};
                 break;
-            case 4: desc = new String[]{"le meme"};
+            case 4: desc = new String[]{"When reaching the center of the tornado, entities will be launched up."};
                 break;
-            case 5: desc = new String[]{"le meme"};
+            case 5: desc = new String[]{"Your tornado will be twice as large."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;

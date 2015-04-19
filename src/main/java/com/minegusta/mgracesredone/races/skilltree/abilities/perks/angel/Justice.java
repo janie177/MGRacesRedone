@@ -23,12 +23,12 @@ public class Justice implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Justice";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.JUSTICE;
     }
 
     @Override
@@ -38,12 +38,23 @@ public class Justice implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.DIAMOND_SWORD;
     }
 
     @Override
     public int getPrice(int level) {
         return 1;
+    }
+
+    @Override
+    public AbilityGroup getGroup()
+    {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 90;
     }
 
     @Override
@@ -53,7 +64,7 @@ public class Justice implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 4;
     }
 
     @Override
@@ -62,19 +73,16 @@ public class Justice implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Jump and do damage explosion"};
+                desc = new String[]{"Right click using your sword when crouching to activate Justice.", "You will be launched into the air."};
                 break;
             case 2:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"When activating justice, you push back enemies."};
                 break;
             case 3:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Justice launches you 50% faster."};
                 break;
             case 4:
-                desc = new String[]{"le meme"};
-                break;
-            case 5:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"An explosion is caused when activating Justice."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

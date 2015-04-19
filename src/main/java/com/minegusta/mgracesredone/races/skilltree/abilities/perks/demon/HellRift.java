@@ -39,7 +39,7 @@ public class HellRift implements IAbility {
             return;
         }
 
-        Cooldown.newCoolDown(name, id, 30);
+        Cooldown.newCoolDown(name, id, getCooldown(mgp.getAbilityLevel(getType())));
 
         //Get the target a block above the floor.
         Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 20).getRelative(0, 2, 0);
@@ -161,6 +161,16 @@ public class HellRift implements IAbility {
                 break;
         }
         return price;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 30;
     }
 
     @Override

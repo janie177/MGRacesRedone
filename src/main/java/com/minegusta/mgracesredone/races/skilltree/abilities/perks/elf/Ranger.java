@@ -98,6 +98,16 @@ public class Ranger implements IAbility
     }
 
     @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.PASSIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 0;
+    }
+
+    @Override
     public List<RaceType> getRaces()
     {
         return Lists.newArrayList(RaceType.ELF);

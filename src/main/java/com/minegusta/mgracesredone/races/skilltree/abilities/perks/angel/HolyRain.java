@@ -47,13 +47,23 @@ public class HolyRain implements IAbility {
     }
 
     @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 90;
+    }
+
+    @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ANGEL);
     }
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 4;
     }
 
     @Override
@@ -62,19 +72,16 @@ public class HolyRain implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Call a holy rain on your location that heals holy creatures.", "Duration: 9 seconds.","Can only be called in light areas."};
                 break;
             case 2:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Your holy rain damages unholy creatures now."};
                 break;
             case 3:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"The duration of your holy rain is now 18 seconds."};
                 break;
             case 4:
-                desc = new String[]{"le meme"};
-                break;
-            case 5:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Your holy rain can now be called in dark areas."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

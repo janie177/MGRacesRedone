@@ -114,6 +114,16 @@ public class MeteorStorm implements IAbility {
     }
 
     @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 0;
+    }
+
+    @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.DEMON);
     }

@@ -24,12 +24,12 @@ public class Holyness implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Holyness";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.HOLYNESS;
     }
 
     @Override
@@ -39,12 +39,22 @@ public class Holyness implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.POTION;
     }
 
     @Override
     public int getPrice(int level) {
         return 1;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.PASSIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 0;
     }
 
     @Override
@@ -63,19 +73,19 @@ public class Holyness implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"angel increase light etc, hunger in light, at heights"};
+                desc = new String[]{"You will no longer take fall damage."};
                 break;
             case 2:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"You will get a speed boost in light areas."};
                 break;
             case 3:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Food will not drain in light areas."};
                 break;
             case 4:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"When up in the sky, you will get a defence boost."};
                 break;
             case 5:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"When on low health, you gain a Speed and Jump III boost."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

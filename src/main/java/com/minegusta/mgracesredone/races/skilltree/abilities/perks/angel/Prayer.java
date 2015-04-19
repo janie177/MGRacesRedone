@@ -23,12 +23,12 @@ public class Prayer implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Prayer";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.PRAYER;
     }
 
     @Override
@@ -38,12 +38,22 @@ public class Prayer implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.BOOK;
     }
 
     @Override
     public int getPrice(int level) {
         return 1;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 120;
     }
 
     @Override
@@ -53,7 +63,7 @@ public class Prayer implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -62,19 +72,13 @@ public class Prayer implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Right click a book to activate Prayer.", "This will summon a killer bunny to aid you."};
                 break;
             case 2:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"You will get two killer bunnies instead."};
                 break;
             case 3:
-                desc = new String[]{"le meme"};
-                break;
-            case 4:
-                desc = new String[]{"le meme"};
-                break;
-            case 5:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Your killer bunnies will have a speed and strength boost."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

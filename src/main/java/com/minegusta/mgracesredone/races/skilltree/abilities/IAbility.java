@@ -53,6 +53,20 @@ public interface IAbility
      */
     public int getPrice(int level);
 
+
+    /**
+     * Get the group this ability belongs to.
+     * @return Active or passive.
+     */
+    public AbilityGroup getGroup();
+
+    /**
+     * If this ability has a cooldown, get the cooldown. 0 if not specified.
+     * @param level The cooldown for that specific level.
+     * @return The cooldown time in seconds for this ability.
+     */
+    public int getCooldown(int level);
+
     /**
      * Get all races this perk applies to. Some races will have shared perks.
      * @return
@@ -71,4 +85,9 @@ public interface IAbility
      * @return The strings that for the description for this level of the item.
      */
     public String[] getDescription(int level);
+
+    public enum AbilityGroup
+    {
+        ACTIVE,PASSIVE
+    }
 }

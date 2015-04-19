@@ -23,12 +23,12 @@ public class Purge implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Purge";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.PURGE;
     }
 
     @Override
@@ -38,12 +38,22 @@ public class Purge implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.IRON_SWORD;
     }
 
     @Override
     public int getPrice(int level) {
         return 1;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.PASSIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 0;
     }
 
     @Override
@@ -62,19 +72,19 @@ public class Purge implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Stuff to damage unholy mobs etc"};
+                desc = new String[]{"You will now do 2 extra damage to unholy mobs."};
                 break;
             case 2:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Against unholy races, you have a 10% chance for a critical hit.", "This does +5% damage."};
                 break;
             case 3:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"You will now do 4 extra damage to unholy mobs."};
                 break;
             case 4:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Against unholy races, you have a 10% chance for a critical hit.", "This does +10% damage."};
                 break;
             case 5:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"You do 6 extra damage against unholy mobs."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

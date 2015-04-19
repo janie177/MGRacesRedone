@@ -52,6 +52,8 @@ public class AbilityMenu
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "UNLOCKED");
                     lore.add(ChatColor.GRAY + "Level: " + level);
+                    lore.add(ChatColor.YELLOW + "Type: " + ChatColor.DARK_PURPLE + type.getGroup().name());
+                    if(type.getCooldown(level) != 0) lore.add(ChatColor.YELLOW + "Cooldown Time: " + ChatColor.LIGHT_PURPLE + type.getCooldown(level) + " seconds.");
                     for(String s : type.getAbility().getDescription(level))
                     {
                         lore.add(ChatColor.DARK_GRAY + s);
@@ -62,6 +64,8 @@ public class AbilityMenu
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.YELLOW + "Cost: " + ChatColor.LIGHT_PURPLE + type.getCost(level));
                     lore.add(ChatColor.YELLOW + "Level: " + ChatColor.LIGHT_PURPLE + level);
+                    lore.add(ChatColor.YELLOW + "Type: " + ChatColor.DARK_PURPLE + type.getGroup().name());
+                    if(type.getCooldown(level) != 0) lore.add(ChatColor.YELLOW + "Cooldown Time: " + ChatColor.LIGHT_PURPLE + type.getCooldown(level) + " seconds.");
                     for(String s : type.getAbility().getDescription(level))
                     {
                         lore.add(ChatColor.GREEN + s);

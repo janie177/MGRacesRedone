@@ -32,7 +32,7 @@ public class ArrowRain implements IAbility {
             int duration = mgp.getAbilityLevel(getType()) * 5;
             Location l = e.getEntity().getLocation();
             startRain(duration, l);
-            Cooldown.newCoolDown("arrowrain", p.getUniqueId().toString(), 15);
+            Cooldown.newCoolDown("arrowrain", p.getUniqueId().toString(), getCooldown(mgp.getAbilityLevel(getType())));
         }
     }
 
@@ -82,6 +82,16 @@ public class ArrowRain implements IAbility {
     public int getPrice(int level) {
 
         return 4 - level;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 20;
     }
 
     @Override

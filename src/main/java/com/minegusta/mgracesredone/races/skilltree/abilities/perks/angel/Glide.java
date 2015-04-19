@@ -23,12 +23,12 @@ public class Glide implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Glide";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.GLIDE;
     }
 
     @Override
@@ -38,12 +38,22 @@ public class Glide implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.FEATHER;
     }
 
     @Override
     public int getPrice(int level) {
         return 1;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.PASSIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 0;
     }
 
     @Override
@@ -53,7 +63,7 @@ public class Glide implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 2;
     }
 
     @Override
@@ -62,24 +72,14 @@ public class Glide implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"When holding a feather you will glide down instead of falling."};
                 break;
             case 2:
-                desc = new String[]{"le meme"};
-                break;
-            case 3:
-                desc = new String[]{"le meme"};
-                break;
-            case 4:
-                desc = new String[]{"le meme"};
-                break;
-            case 5:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Gliding lasts twice as long."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};
                 break;
-
         }
         return desc;
     }

@@ -29,7 +29,7 @@ public class MinionMaster implements IAbility {
         {
             p.sendMessage(ChatColor.RED + "The minions of hell are here to help you!");
             final Location l = p.getLocation();
-            Cooldown.newCoolDown(name, uuid, 180);
+            Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
             //spawn the minions
             for(int n = 0; n < 3; n++)
@@ -122,6 +122,16 @@ public class MinionMaster implements IAbility {
     }
 
     @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.PASSIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 180;
+    }
+
+    @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.DEMON);
     }
@@ -137,7 +147,7 @@ public class MinionMaster implements IAbility {
 
         switch (level)
         {
-            case 1: desc = new String[]{"When below 6 health, 3 zombie-pig-men will come to aid you."};
+            case 1: desc = new String[]{"When below 6 health, 3 zombie-pig-men will come to aid you.", "It is strongly advised to also have Hellish Truce perk 1."};
                 break;
             case 2: desc = new String[]{"An additional blaze will spawn."};
                 break;

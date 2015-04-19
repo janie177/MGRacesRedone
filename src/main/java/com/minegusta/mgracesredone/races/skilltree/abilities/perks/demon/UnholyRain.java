@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.Race;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
@@ -126,7 +127,7 @@ public class UnholyRain implements IAbility
         String name = "uhrain";
         if (Cooldown.isCooledDown(name, uuid)) {
             Missile.createMissile(player.getLocation(), player.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
-            Cooldown.newCoolDown(name, uuid, 60);
+            Cooldown.newCoolDown(name, uuid, getCooldown(Races.getMGPlayer(player).getAbilityLevel(getType())));
             EffectUtil.playParticle(player, Effect.MAGIC_CRIT);
             EffectUtil.playSound(player, Sound.AMBIENCE_THUNDER);
             ChatUtil.sendString(player, ChatColor.DARK_RED + "You call an unholy rain on your location!");
@@ -167,6 +168,16 @@ public class UnholyRain implements IAbility
     @Override
     public int getPrice(int level) {
         return 1;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 90;
     }
 
     @Override

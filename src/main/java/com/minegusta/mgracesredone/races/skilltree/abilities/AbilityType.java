@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.angel.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf.*;
 import org.bukkit.entity.Player;
@@ -10,6 +11,15 @@ import java.util.List;
 
 public enum AbilityType
 {
+    GLIDE(new Glide()),
+    HOLYNESS(new Holyness()),
+    HOLYRAIN(new HolyRain()),
+    JUSTICE(new Justice()),
+    NYCTOPHOBIA(new Nyctophobia()),
+    PRAYER(new Prayer()),
+    PURGE(new Purge()),
+    STEELSKIN(new SteelSkin()),
+    WHIRLWIND(new WhirlWind()),
     FIREPROOF(new FireProof()),
     HELLRIFT(new HellRift()),
     HELLISHTRUCE(new HellishTruce()),
@@ -64,6 +74,16 @@ public enum AbilityType
     public int getMaxLevel()
     {
         return ability.getMaxLevel();
+    }
+
+    public int getCooldown(int level)
+    {
+        return ability.getCooldown(level);
+    }
+
+    public IAbility.AbilityGroup getGroup()
+    {
+        return ability.getGroup();
     }
 
     public void run(Player player)

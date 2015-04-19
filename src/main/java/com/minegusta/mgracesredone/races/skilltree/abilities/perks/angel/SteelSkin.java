@@ -23,12 +23,12 @@ public class SteelSkin implements IAbility {
 
     @Override
     public String getName() {
-        return null;
+        return "Steel Skin";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.STEELSKIN;
     }
 
     @Override
@@ -38,12 +38,22 @@ public class SteelSkin implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.POISONOUS_POTATO;
+        return Material.DIAMOND_CHESTPLATE;
     }
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
+    }
+
+    @Override
+    public AbilityGroup getGroup() {
+        return AbilityGroup.ACTIVE;
+    }
+
+    @Override
+    public int getCooldown(int level) {
+        return 120;
     }
 
     @Override
@@ -53,7 +63,7 @@ public class SteelSkin implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -62,19 +72,13 @@ public class SteelSkin implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Invincibility skill"};
+                desc = new String[]{"Become invincible for 5 seconds.", "When time runs out, your health is set to 3."};
                 break;
             case 2:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Your invincibility lasts for 8 seconds.", "When time runes out, your health is set to 2."};
                 break;
             case 3:
-                desc = new String[]{"le meme"};
-                break;
-            case 4:
-                desc = new String[]{"le meme"};
-                break;
-            case 5:
-                desc = new String[]{"le meme"};
+                desc = new String[]{"Your invincibility lasts for 10 seconds.", "When time runs out your health is set to 1.", "You will also obtain a weakness effect for 6 seconds."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};
