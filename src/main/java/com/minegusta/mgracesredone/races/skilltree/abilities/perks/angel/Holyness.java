@@ -5,15 +5,29 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.BlockUtil;
+import com.minegusta.mgracesredone.util.WeatherUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 import java.util.List;
 
 public class Holyness implements IAbility {
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+
+        if(event instanceof FoodLevelChangeEvent)
+        {
+            FoodLevelChangeEvent e = (FoodLevelChangeEvent) event;
+            Player p = (Player) e.getEntity();
+            if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT)
+            {
+                e.setCancelled(true);
+            }
+        }
 
     }
 
@@ -76,16 +90,16 @@ public class Holyness implements IAbility {
                 desc = new String[]{"You will no longer take fall damage."};
                 break;
             case 2:
-                desc = new String[]{"You will get a speed boost in light areas."};
+                desc = new String[]{"You will get a healing boost in light areas."};
                 break;
             case 3:
                 desc = new String[]{"Food will not drain in light areas."};
                 break;
             case 4:
-                desc = new String[]{"When up in the sky, you will get a defence boost."};
+                desc = new String[]{"When up in the sky, you will get a defence, speed and jump boost."};
                 break;
             case 5:
-                desc = new String[]{"When on low health, you gain a Speed and Jump III boost."};
+                desc = new String[]{"When on low health, you gain a Speed and protection boost."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

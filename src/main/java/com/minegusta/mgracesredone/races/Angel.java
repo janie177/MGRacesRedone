@@ -1,5 +1,8 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.BlockUtil;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
@@ -7,6 +10,7 @@ import com.minegusta.mgracesredone.util.WeatherUtil;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 
@@ -59,6 +63,8 @@ public class Angel extends Race {
     {
         int height = (int) p.getLocation().getY();
 
+        MGPlayer mgp = Races.getMGPlayer(p);
+
         //Weakness in the nether and end
         if(WeatherUtil.isHell(p.getLocation()) || WeatherUtil.isEnd(p.getLocation()))
         {
@@ -68,7 +74,7 @@ public class Angel extends Race {
 
 
         //String at high areas
-        if(height > 100)
+        if(height > 100 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 3)
         {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
@@ -81,20 +87,16 @@ public class Angel extends Race {
         }
 
         //At low health they will be able to escape
-        if(p.getHealth() < 6)
+        if(p.getHealth() < 6 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 4)
         {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
         }
 
-        if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT)
+        //Heal in light areas with the holiness perk.
+        if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && mgp.hasAbility(AbilityType.HOLYNESS) && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 1)
         {
-            if(p.isDead())return;
-            double max = p.getMaxHealth() - p.getHealth();
-            if(max >= 1)
-            {
-                p.setHealth(p.getHealth() + 1);
-            }
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 3, 0, false));
         }
 
     }

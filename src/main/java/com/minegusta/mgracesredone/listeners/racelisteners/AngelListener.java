@@ -1,6 +1,8 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.Race;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
@@ -15,6 +17,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffectType;
@@ -45,14 +48,29 @@ public class AngelListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
-        {
+        if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             Player p = (Player) e.getEntity();
-            if(isAngel(p))
-            {
-                e.setDamage(0.0);
-                e.setCancelled(true);
-            }
+
+            if (!isAngel(p)) return;
+
+            if (!Races.getMGPlayer(p).hasAbility(AbilityType.HOLYNESS)) return;
+
+            //Do not run this in the holyness class because YOLO ;D
+            e.setDamage(0);
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onAngelFood(FoodLevelChangeEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Player && isAngel((Player) e.getEntity()))
+        {
+            MGPlayer mgp = Races.getMGPlayer((Player) e.getEntity());
+            if(mgp.getAbilityLevel(AbilityType.HOLYNESS) < 3)return;
+            AbilityType.HOLYNESS.run(e);
         }
     }
 
@@ -62,6 +80,8 @@ public class AngelListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
+
+        //Angels cannot damage anything without a sword or bow.
         if(e.getDamager() instanceof Player && Races.getRace((Player)e.getDamager()) == RaceType.ANGEL)
         {
             Player p = (Player) e.getDamager();
@@ -71,7 +91,8 @@ public class AngelListener implements Listener
             }
         }
 
-        if(e.getEntity()instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
+        //Angels wont get damage in invincibility mode.
+        if(e.getEntity() instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
         {
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
