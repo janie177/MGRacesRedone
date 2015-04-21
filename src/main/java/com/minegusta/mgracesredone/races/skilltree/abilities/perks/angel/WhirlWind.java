@@ -11,6 +11,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -41,20 +42,25 @@ public class WhirlWind implements IAbility{
         Cooldown.newCoolDown(name, id, getCooldown(mgp.getAbilityLevel(getType())));
 
         //Get the target a block above the floor.
-        Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 20).getRelative(0, 2, 0);
+        Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 2, 0);
 
         int level = mgp.getAbilityLevel(getType());
 
         int duration = 10 + ((level / 3) * 8);
 
-        boolean lightning = level > 3;
+        boolean lightning = level > 4;
+
+        boolean launch = level > 3;
+
+        double startingStrength = 0.12;
+        if(level > 1) startingStrength = 0.25;
 
         ChatUtil.sendString(player, "You summon a Whirlwind!");
 
-        runWhirlWind(target, duration, lightning);
+        runWhirlWind(target, duration, launch, lightning, startingStrength);
     }
 
-    private void runWhirlWind(final Block target, int duration, boolean lightning)
+    private void runWhirlWind(final Block target, int duration, final boolean launch, final boolean lightning, final double startingStrength)
     {
         final Location center = target.getLocation();
         for(int i = 0; i <= 20 * duration; i++)
@@ -70,6 +76,15 @@ public class WhirlWind implements IAbility{
                         if(k % 20 == 0)
                         {
                             EffectUtil.playSound(center, Sound.ENDERDRAGON_WINGS);
+                            if(lightning && RandomUtil.chance(30))
+                            {
+                                double x = center.getX() + (RandomUtil.randomNumber(14) - 7);
+                                double z = center.getZ() + (RandomUtil.randomNumber(14) - 7);
+                                double y = center.getY();
+                                Location l = new Location(center.getWorld(),x, y, z);
+
+                                center.getWorld().strikeLightning(l);
+                            }
                         }
                         EffectUtil.playParticle(center, Effect.PARTICLE_SMOKE, 1, 10, 1, 30, 50);
 
@@ -105,13 +120,13 @@ public class WhirlWind implements IAbility{
                                 Vector v = new Vector(ix, -0.2, iz);
                                 v.normalize();
 
-                                if(ent.getLocation().getY() > center.getY() + 9)
+                                if(launch && radius < 3)
                                 {
-                                    v.setY(0.0);
+                                    v.setY(-1.3);
                                 }
 
                                 //The closer to the center, the stronger the force.
-                                double amplifier = 0.25 + 2/radius;
+                                double amplifier = startingStrength + 2/radius;
                                 ent.setVelocity(ent.getVelocity().add(v).multiply(-amplifier));
                             }
                         }
