@@ -120,9 +120,9 @@ public class WhirlWind implements IAbility{
                                 Vector v = new Vector(ix, -0.2, iz);
                                 v.normalize();
 
-                                if(launch && radius < 3)
+                                if(launch && radius < 2)
                                 {
-                                    v.setY(-1.3);
+                                    v.setY(-2.3);
                                 }
 
                                 //The closer to the center, the stronger the force.
