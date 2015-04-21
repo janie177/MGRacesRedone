@@ -113,7 +113,7 @@ public class AngelListener implements Listener
 
         Player p = e.getPlayer();
 
-        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && p.isSneaking() && isAngel(p))
+        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && isAngel(p))
         {
             if(ItemUtil.isSword(p.getItemInHand().getType()))
             {

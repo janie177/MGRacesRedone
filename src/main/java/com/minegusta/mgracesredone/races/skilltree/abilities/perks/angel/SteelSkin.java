@@ -75,7 +75,7 @@ public class SteelSkin implements IAbility {
                 desc = new String[]{"Become invincible for 5 seconds.", "When time runs out, your health is set to 3."};
                 break;
             case 2:
-                desc = new String[]{"Your invincibility lasts for 8 seconds.", "When time runes out, your health is set to 2."};
+                desc = new String[]{"Your invincibility lasts for 8 seconds.", "When time runs out, your health is set to 2."};
                 break;
             case 3:
                 desc = new String[]{"Your invincibility lasts for 10 seconds.", "When time runs out your health is set to 1.", "You will also obtain a weakness effect for 6 seconds."};

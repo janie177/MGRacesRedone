@@ -24,7 +24,7 @@ public class Holyness implements IAbility {
 
     @Override
     public String getName() {
-        return "Holyness";
+        return "Holiness";
     }
 
     @Override

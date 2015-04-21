@@ -71,13 +71,14 @@ public class WhirlWind implements IAbility{
                         {
                             EffectUtil.playSound(center, Sound.ENDERDRAGON_WINGS);
                         }
+                        EffectUtil.playParticle(center, Effect.PARTICLE_SMOKE, 1, 10, 1, 30, 50);
 
-                        EffectUtil.playParticle(center, Effect.ENDER_SIGNAL);
+
 
                         //The sucking people in effect
                         Entity dummy = center.getWorld().spawnEntity(center, EntityType.EXPERIENCE_ORB);
 
-                        for(Entity ent : dummy.getNearbyEntities(15,10,15))
+                        for(Entity ent : dummy.getNearbyEntities(15,15,15))
                         {
                             if(ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)
                             {
@@ -87,7 +88,7 @@ public class WhirlWind implements IAbility{
                                     continue;
                                 }
 
-                                double angle = Math.toRadians(15);
+                                double angle = Math.toRadians(14);
                                 double radius = Math.abs(ent.getLocation().distance(center));
 
                                 double x = ent.getLocation().getX() - center.getX();
@@ -101,8 +102,13 @@ public class WhirlWind implements IAbility{
                                 double ix = ent.getLocation().getX() - target.getX();
                                 double iz = ent.getLocation().getZ() - target.getZ();
 
-                                Vector v = new Vector(ix, -0.1, iz);
+                                Vector v = new Vector(ix, -0.2, iz);
                                 v.normalize();
+
+                                if(ent.getLocation().getY() > center.getY() + 9)
+                                {
+                                    v.setY(0.0);
+                                }
 
                                 //The closer to the center, the stronger the force.
                                 double amplifier = 0.25 + 2/radius;

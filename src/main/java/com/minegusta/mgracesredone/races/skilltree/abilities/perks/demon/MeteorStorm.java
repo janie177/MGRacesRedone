@@ -81,7 +81,7 @@ public class MeteorStorm implements IAbility {
                     {
                         Fireball ball = (Fireball) location.getWorld().spawnEntity(spawnLocation, EntityType.FIREBALL);
                         ball.setDirection(new Vector(0, -1, 0));
-                        ball.setYield(3);
+                        ball.setYield(4);
                     }
                 }, i);
             }
