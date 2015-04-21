@@ -31,9 +31,12 @@ public class AngelListener implements Listener
         if(e.getFrom().getY() <= e.getTo().getY())return;
 
         Player p = e.getPlayer();
+
+        if(!Races.getMGPlayer(p).hasAbility(AbilityType.GLIDE))return;
+
         if(p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER)
         {
-            p.setVelocity(p.getLocation().getDirection().multiply(0.6).setY(-0.12));
+            AbilityType.GLIDE.run(p);
         }
     }
 
