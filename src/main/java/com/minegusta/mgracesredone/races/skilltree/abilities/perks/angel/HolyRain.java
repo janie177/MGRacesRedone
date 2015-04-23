@@ -40,7 +40,7 @@ public class HolyRain implements IAbility
                 @Override
                 public void run()
                 {
-                    w.spigot().playEffect(location, Effect.LAVADRIP, 1, 1, 8, 0, 8, 1, 25, 20);
+                    w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
                 }
             }, 5 * i);
 
@@ -117,7 +117,6 @@ public class HolyRain implements IAbility
 
         PotionUtil.updatePotion(ent, PotionEffectType.HUNGER, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.SLOW, 0, 5);
-        ent.setFireTicks(20 * 5);
     }
 
     @Override
