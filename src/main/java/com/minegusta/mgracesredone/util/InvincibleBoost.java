@@ -10,17 +10,21 @@ public class InvincibleBoost
 {
     private Player p;
     private String uuid;
+    private int endHealth;
+    private int seconds;
 
-    public InvincibleBoost(Player p)
+    public InvincibleBoost(Player p, int seconds, int endHealth)
     {
         this.p = p;
+        this.endHealth = endHealth;
+        this.seconds = seconds;
         this.uuid = p.getUniqueId().toString();
         start();
     }
 
     public void start()
     {
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < seconds; i++)
         {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                 @Override
@@ -45,12 +49,12 @@ public class InvincibleBoost
                 if(p.isOnline())
                 {
                     AngelInvincibility.remove(uuid);
-                    p.setHealth(1);
+                    p.setHealth(endHealth);
                     EffectUtil.playSound(p, Sound.WITHER_DEATH);
                     EffectUtil.playParticle(p, Effect.CLOUD);
                 }
             }
-        }, 20 * 8);
+        }, 20 * seconds);
 
     }
 }

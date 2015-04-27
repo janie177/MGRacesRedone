@@ -194,7 +194,7 @@ public class HolyRain implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{"Call a holy rain on your location that heals holy creatures.", "Duration: 9 seconds."};
+                desc = new String[]{"Call a holy rain on your location that heals holy creatures.", "Duration: 9 seconds.", "Activate by right-clicking a sword."};
                 break;
             case 2:
                 desc = new String[]{"Your holy rain damages unholy creatures now."};

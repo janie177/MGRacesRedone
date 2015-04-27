@@ -139,20 +139,9 @@ public class AngelListener implements Listener
 
         if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && isAngel(p))
         {
-            if(ItemUtil.isSword(p.getItemInHand().getType()))
+            if(ItemUtil.isSword(p.getItemInHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.HOLYRAIN))
             {
-                String uuid = p.getUniqueId().toString();
-                String name = "hrain";
-                if (Cooldown.isCooledDown(name, uuid)) {
-                    Cooldown.newCoolDown(name, uuid, 180);
-                    EffectUtil.playParticle(p, Effect.MAGIC_CRIT);
-                    EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
-                    p.sendMessage(ChatColor.AQUA + "You call a holy rain on your location!");
-
-                    startRain(p.getLocation().add(0, 9, 0));
-                } else {
-                    ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Holy Rain.");
-                }
+                AbilityType.HOLYRAIN.run(p);
             }
             else if(p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER)
             {
@@ -160,25 +149,15 @@ public class AngelListener implements Listener
                 {
                     AbilityType.WHIRLWIND.run(p);
                 }
-
-                //Old invincible boost
-                /* String uuid = p.getUniqueId().toString();
-                String name = "invince";
-                if (Cooldown.isCooledDown(name, uuid)) {
-                    Cooldown.newCoolDown(name, uuid, 360);
-                    p.sendMessage(ChatColor.GOLD + "You are invincible for 8 seconds!");
-                    AngelInvincibility.startInvincibility(p);
-                } else {
-                    ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Invincibility.");
-                } */
+            }
+            else if(p.getItemInHand().getType() == Material.IRON_INGOT)
+            {
+                if(Races.getMGPlayer(p).hasAbility(AbilityType.STEELSKIN))
+                {
+                    AbilityType.STEELSKIN.run(p);
+                }
             }
         }
-    }
-
-    private void startRain(Location l)
-    {
-        HolyRain rain = new HolyRain(18, l);
-        rain.start();
     }
 
     private boolean isAngel(Player p)

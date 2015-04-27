@@ -1,9 +1,14 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.angel;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.AngelInvincibility;
+import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.Cooldown;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -17,8 +22,25 @@ public class SteelSkin implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public void run(Player player)
+    {
+        String uuid = player.getUniqueId().toString();
+        String name = "invince";
+        if (Cooldown.isCooledDown(name, uuid))
+        {
+            int duration = 5;
+            int level = Races.getMGPlayer(player).getAbilityLevel(getType());
+            if(level > 1) duration = 8;
+            if(level > 2) duration = 10;
 
+            int endHealth = 4 - level;
+
+            Cooldown.newCoolDown(name, uuid, 360);
+            player.sendMessage(ChatColor.GOLD + "You are invincible for 8 seconds!");
+            AngelInvincibility.startInvincibility(player, duration, endHealth);
+        } else {
+            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Invincibility.");
+        }
     }
 
     @Override

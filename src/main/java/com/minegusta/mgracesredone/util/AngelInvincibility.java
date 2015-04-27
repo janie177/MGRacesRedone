@@ -19,9 +19,9 @@ public class AngelInvincibility
         return false;
     }
 
-    public static void startInvincibility(Player p)
+    public static void startInvincibility(Player p, int seconds, int endHealth)
     {
-        invincibleMap.put(p.getUniqueId().toString(), new InvincibleBoost(p));
+        invincibleMap.put(p.getUniqueId().toString(), new InvincibleBoost(p, seconds, endHealth));
     }
 
     public static boolean contains(String uuid)
