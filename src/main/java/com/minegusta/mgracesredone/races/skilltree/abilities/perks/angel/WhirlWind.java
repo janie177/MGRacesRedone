@@ -8,10 +8,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
-import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.RandomUtil;
+import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -39,10 +36,20 @@ public class WhirlWind implements IAbility{
             return;
         }
 
-        Cooldown.newCoolDown(name, id, getCooldown(mgp.getAbilityLevel(getType())));
-
         //Get the target a block above the floor.
         Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 2, 0);
+
+        //Only in non-building areas.
+        if(!WGUtil.canBuild(player, target.getLocation()))
+        {
+            ChatUtil.sendString(player, "You cannot use this here!");
+            return;
+        }
+
+
+        //Start the new cooldown.
+        Cooldown.newCoolDown(name, id, getCooldown(mgp.getAbilityLevel(getType())));
+
 
         int level = mgp.getAbilityLevel(getType());
 

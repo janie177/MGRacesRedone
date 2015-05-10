@@ -53,9 +53,13 @@ public class WGUtil
 
     public static boolean canBuild(Player p)
     {
+        return canBuild(p, p.getLocation());
+    }
+
+    public static boolean canBuild(Player p, Location l)
+    {
         if(!Main.isWGEnabled())return true;
-        Location loc = p.getLocation();
-        ApplicableRegionSet set = WorldGuardPlugin.inst().getRegionManager(p.getWorld()).getApplicableRegions(loc);
+        ApplicableRegionSet set = WorldGuardPlugin.inst().getRegionManager(p.getWorld()).getApplicableRegions(l);
         if(set.size() > 0)
         {
             for(ProtectedRegion r : set.getRegions())

@@ -73,7 +73,7 @@ public class Justice implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Right click using your sword when crouching to activate Justice.", "You will be launched into the air."};
+                desc = new String[]{"To activate justice, .", "You will be launched into the air."};
                 break;
             case 2:
                 desc = new String[]{"When activating justice, you push back enemies."};
