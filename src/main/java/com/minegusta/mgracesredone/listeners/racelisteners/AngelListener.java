@@ -137,6 +137,15 @@ public class AngelListener implements Listener
 
         Player p = e.getPlayer();
 
+        //Activate justice
+        if(e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.JUSTICE) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY())
+        {
+            if(isAngel(p))
+            {
+                AbilityType.JUSTICE.run(p);
+            }
+        }
+
         if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && isAngel(p))
         {
             if(ItemUtil.isSword(p.getItemInHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.HOLYRAIN))
