@@ -21,7 +21,7 @@ public class PotionUtil
                 p.removePotionEffect(type);
             }
         }
-        p.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false));
+        p.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false, false));
     }
 
     public static void updatePotion(LivingEntity ent, PotionEffectType type, int amplifier, int seconds)
@@ -31,6 +31,6 @@ public class PotionUtil
                 ent.removePotionEffect(type);
             }
         }
-        ent.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false));
+        ent.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false, false));
     }
 }

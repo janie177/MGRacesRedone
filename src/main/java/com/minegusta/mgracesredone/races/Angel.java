@@ -69,7 +69,7 @@ public class Angel extends Race {
         if(WeatherUtil.isHell(p.getLocation()) || WeatherUtil.isEnd(p.getLocation()))
         {
             PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
+            if(mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) < 2)PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
         }
 
 
@@ -81,9 +81,18 @@ public class Angel extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
         }
         //Weak in low areas and dark ones
-        else if(height < 50 || BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.DARK)
+        else if(height < 50)
         {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
+        }
+        else if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.DARK)
+        {
+            int strength = 1;
+            if(mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) > 0)
+            {
+                strength = 0;
+            }
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, strength, 5);
         }
 
         //At low health they will be able to escape

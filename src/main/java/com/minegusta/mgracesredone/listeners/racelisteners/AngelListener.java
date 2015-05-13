@@ -10,14 +10,12 @@ import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByBlockEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffectType;
@@ -62,6 +60,15 @@ public class AngelListener implements Listener
     }
 
     @EventHandler
+    public void onAngelTargetEntity(EntityTargetLivingEntityEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
+
+        if (e.getTarget() instanceof Player && isAngel((Player) e.getTarget()) && e.getEntity() instanceof Rabbit) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onAngelFood(FoodLevelChangeEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
@@ -91,8 +98,47 @@ public class AngelListener implements Listener
             }
         }
 
+        if(e.getDamager() instanceof Player && isAngel((Player) e.getDamager()) && e.getEntity() instanceof LivingEntity)
+        {
+            Player p = (Player) e.getDamager();
+            int level = Races.getMGPlayer(p).getAbilityLevel(AbilityType.PURGE);
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.PURGE) && MonsterUtil.isUnholy(e.getEntityType()))
+            {
+                //Apply extra damage.
+                int damage = level + 1;
+                if(level % 2 != 0)
+                {
+                    e.setDamage(e.getDamage() + damage);
+                }
+                else
+                {
+                    e.setDamage(e.getDamage() + level);
+                }
+            }
+            if(e.getEntity() instanceof Player && PlayerUtil.isUnholy((Player) e.getEntity()))
+            {
+                //Crit chance against RACES.
+                if(level > 3)
+                {
+                    if(RandomUtil.chance(10))
+                    {
+                        double added = e.getDamage() / 20;
+                        e.setDamage(e.getDamage() + added);
+                    }
+                }
+                else if(level > 1)
+                {
+                    if(RandomUtil.chance(10))
+                    {
+                        double added = e.getDamage() / 10;
+                        e.setDamage(e.getDamage() + added);
+                    }
+                }
+            }
+        }
+
         //Angels wont get damage in invincibility mode.
-        if(e.getEntity() instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
+        if(e.getEntity() instanceof Player && Races.getRace((Player) e.getEntity()) == RaceType.ANGEL)
         {
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
@@ -106,11 +152,17 @@ public class AngelListener implements Listener
     {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntity()instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
+        if(e.getEntity()instanceof Player && Races.getRace((Player) e.getEntity()) == RaceType.ANGEL)
         {
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
                 e.setDamage(0.0);
+            }
+            //Angels do not get poison damage with the right perks.
+            else if(e.getCause() == EntityDamageEvent.DamageCause.POISON && Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.NYCTOPHOBIA) > 3)
+            {
+                e.setCancelled(true);
+                e.setDamage(0);
             }
         }
     }
@@ -120,7 +172,7 @@ public class AngelListener implements Listener
     {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntity()instanceof Player && Races.getRace((Player)e.getEntity()) == RaceType.ANGEL)
+        if(e.getEntity()instanceof Player && Races.getRace((Player) e.getEntity()) == RaceType.ANGEL)
         {
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
@@ -148,6 +200,10 @@ public class AngelListener implements Listener
 
         if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && isAngel(p))
         {
+            if(p.getItemInHand().getType() == Material.BOOK && Races.getMGPlayer(p).hasAbility(AbilityType.PRAYER))
+            {
+                AbilityType.PRAYER.run(p);
+            }
             if(ItemUtil.isSword(p.getItemInHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.HOLYRAIN))
             {
                 AbilityType.HOLYRAIN.run(p);

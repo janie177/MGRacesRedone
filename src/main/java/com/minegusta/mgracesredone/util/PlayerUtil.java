@@ -1,14 +1,32 @@
 package com.minegusta.mgracesredone.util;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Main;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.races.RaceType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class PlayerUtil
 {
+
+    private static final List<RaceType> unholy = Lists.newArrayList(RaceType.DEMON, RaceType.ENDERBORN, RaceType.WEREWOLF);
+
+    public static boolean isHoly(Player p)
+    {
+        return !isUnholy(p);
+    }
+
+    public static boolean isUnholy(Player p)
+    {
+        return unholy.contains(Races.getRace(p));
+    }
+
     public static boolean isInOpenAir(Player p)
     {
         return BlockUtil.getHighestBlockYAt(p.getLocation()) <= p.getEyeLocation().getY();

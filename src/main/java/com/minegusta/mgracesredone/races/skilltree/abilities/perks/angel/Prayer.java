@@ -1,12 +1,23 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.angel;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.Cooldown;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.event.Event;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
@@ -17,8 +28,44 @@ public class Prayer implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public void run(Player player)
+    {
+        MGPlayer mgp = Races.getMGPlayer(player);
+        String name = "pray";
+        int level = mgp.getAbilityLevel(getType());
+        String uuid = mgp.getUniqueIdAsString();
 
+        if(Cooldown.isCooledDown(name, uuid))
+        {
+            //The cooldown + message
+            Cooldown.newCoolDown(name, uuid, getCooldown(level));
+            ChatUtil.sendString(player, "You pray and your requests are answered!");
+
+            //The bunny
+            Location l = player.getLocation();
+            int amount = 2;
+            if(level > 1)amount++;
+
+            for(int i = 0; i < amount; i++)
+            {
+                Rabbit rabbit = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
+                if(level > 2)
+                {
+                    PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 1, 600);
+                    PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 0, 600);
+                    PotionUtil.updatePotion(rabbit, PotionEffectType.REGENERATION, 0, 60);
+                }
+                rabbit.setAdult();
+                rabbit.setCustomName(ChatColor.RED + "Judas");
+                rabbit.setCustomNameVisible(true);
+                rabbit.setRabbitType(Rabbit.Type.THE_KILLER_BUNNY);
+            }
+
+        }
+        else
+        {
+            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Prayer.");
+        }
     }
 
     @Override
