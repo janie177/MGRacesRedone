@@ -39,17 +39,9 @@ public class Elf extends Race {
         return new String[]
                 {
                         "Elves are closely related to nature.",
-                        "They gain regeneration from eating vegetarian food.",
-                        "Elves regenerate in water and are skilled with bows.",
-                        "All bow damage is thus increased.",
-                        "When low on health, nearby animals will sacrifice their life for the perks.",
-                        "Fire is one of the weaknesses to elves, though the sun empowers them.",
-                        "Elves are most active during the day.",
-                        "When shooting a bow, there's a 25% two arrows are shot at once.",
-                        "Elves may have less health than other races, but they are also fast.",
-                        "They can avoid face-to-face combat by running and using a bow.",
-                        "Other than that they feel at home in neutral temperature biomes.",
-                        "Elves are capable of sitting on any animal."
+                        "The elf skills tree focuses on bow skills.",
+                        "Elves are agile and fast.",
+                        "Most perks are affected by nature."
                 };
     }
 

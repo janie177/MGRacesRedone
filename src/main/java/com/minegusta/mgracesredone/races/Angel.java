@@ -41,20 +41,9 @@ public class Angel extends Race {
         return new String[]
                 {
                         "Angels are holy mysterious creatures.",
-                        "They live in the sky and are peaceful.",
-                        "Angels and unholy creatures do not go together well.",
-                        "Angels prefer to live in light areas at great heights.",
-                        "Angels can float through the sky using feathers.",
-                        "When an Angel is low on health, they gain boosts to flee.",
-                        "Right clicking with a sword while crouching will activate",
-                        "holy rain. This will damage unholy creatures and heal others.",
-                        "In dark areas and on lower grounds, Angels are weakened.",
-                        "Another downside is that angels can only do damage when",
-                        "holding a sword or bow.",
-                        "Falling does not do any damage to Angels.",
-                        "RightClick + Shift when holding a feather activates",
-                        "Invincibility for 8 seconds. Nothing can harm you.",
-                        "When these 8 seconds end, you will be set to 1 health."
+                        "They prefer to live in the sky.",
+                        "Though mostly passive and defensive, angels have some strong perks.",
+                        "Most of them related to light and height."
                 };
     }
 
