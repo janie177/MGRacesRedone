@@ -8,13 +8,12 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
+import com.minegusta.mgracesredone.util.PlayerUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Rabbit;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -43,7 +42,7 @@ public class Prayer implements IAbility {
 
             //The bunny
             Location l = player.getLocation();
-            int amount = 2;
+            int amount = 1;
             if(level > 1)amount++;
 
             for(int i = 0; i < amount; i++)
@@ -59,6 +58,17 @@ public class Prayer implements IAbility {
                 rabbit.setCustomName(ChatColor.RED + "Judas");
                 rabbit.setCustomNameVisible(true);
                 rabbit.setRabbitType(Rabbit.Type.THE_KILLER_BUNNY);
+
+                for(Entity ent : rabbit.getNearbyEntities(8,8,8))
+                {
+                    if(ent instanceof LivingEntity && !(ent instanceof Animals))
+                    {
+                        if(!(ent instanceof Player && Races.getRace((Player) ent) == RaceType.ANGEL))
+                        {
+                            ((Creature)rabbit).setTarget((LivingEntity) ent);
+                        }
+                    }
+                }
             }
 
         }
