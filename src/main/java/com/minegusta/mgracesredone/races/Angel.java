@@ -94,7 +94,7 @@ public class Angel extends Race {
         //Heal in light areas with the holiness perk.
         if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && mgp.hasAbility(AbilityType.HOLYNESS) && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 1)
         {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 3, 0, false));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 3, 0, false, false));
         }
 
     }
