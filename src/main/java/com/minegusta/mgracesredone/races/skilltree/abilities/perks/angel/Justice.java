@@ -8,6 +8,8 @@ import com.minegusta.mgracesredone.races.Race;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.Cooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,12 +30,26 @@ public class Justice implements IAbility {
     @Override
     public void run(Player player)
     {
+        String name = "justic";
+        String id = player.getUniqueId().toString();
+
+        if(!Cooldown.isCooledDown(name, id))
+        {
+            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, id) + " seconds to use Justice.");
+            return;
+        }
+
+
+
         //level
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
 
+        //Start cooldown
+        Cooldown.newCoolDown(name, id, getCooldown(level));
+
         //Getting the launch speed
-        double speed = 2.5 + level / 3;
+        double speed = 1.5 + level / 3;
         boolean explode,push;
 
         explode = level > 3;
@@ -115,7 +131,7 @@ public class Justice implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        return 90;
+        return 70;
     }
 
     @Override
@@ -140,7 +156,7 @@ public class Justice implements IAbility {
                 desc = new String[]{"When activating justice, you push back enemies."};
                 break;
             case 3:
-                desc = new String[]{"Justice launches you 50% faster."};
+                desc = new String[]{"Justice launches you 40% faster."};
                 break;
             case 4:
                 desc = new String[]{"An explosion is caused when activating Justice."};

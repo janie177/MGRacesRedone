@@ -35,7 +35,7 @@ public class SteelSkin implements IAbility {
 
             int endHealth = 4 - level;
 
-            Cooldown.newCoolDown(name, uuid, 360);
+            Cooldown.newCoolDown(name, uuid, getCooldown(level));
             player.sendMessage(ChatColor.GOLD + "You are invincible for 8 seconds!");
             AngelInvincibility.startInvincibility(player, duration, endHealth);
         } else {
@@ -75,7 +75,7 @@ public class SteelSkin implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        return 120;
+        return 160;
     }
 
     @Override
