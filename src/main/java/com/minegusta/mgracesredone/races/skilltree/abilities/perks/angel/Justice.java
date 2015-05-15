@@ -48,6 +48,9 @@ public class Justice implements IAbility {
         //Start cooldown
         Cooldown.newCoolDown(name, id, getCooldown(level));
 
+        //Message
+        ChatUtil.sendString(player, "You activate Justice!");
+
         //Getting the launch speed
         double speed = 1.5 + level / 3;
         boolean explode,push;
@@ -65,10 +68,9 @@ public class Justice implements IAbility {
                 if(ent instanceof LivingEntity)
                 {
                     double x = ent.getLocation().getX() - l.getX();
-                    double y = ent.getLocation().getY() - l.getY();
                     double z = ent.getLocation().getZ() - l.getZ();
 
-                    Vector v = new Vector(x, y, z);
+                    Vector v = new Vector(x, 0.3, z);
                     v.normalize();
 
                     ent.setVelocity(ent.getVelocity().add(v.multiply(-1.6)));
@@ -150,7 +152,7 @@ public class Justice implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"To activate justice, hit the ground under you.", "You will be launched into the air."};
+                desc = new String[]{"To activate justice, hit the ground under you while sneaking.", "You will be launched into the air."};
                 break;
             case 2:
                 desc = new String[]{"When activating justice, you push back enemies."};

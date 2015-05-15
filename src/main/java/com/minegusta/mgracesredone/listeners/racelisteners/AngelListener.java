@@ -192,7 +192,7 @@ public class AngelListener implements Listener
         //Activate justice
         if(e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.JUSTICE) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY())
         {
-            if(isAngel(p))
+            if(p.isSneaking() && isAngel(p))
             {
                 AbilityType.JUSTICE.run(p);
             }
