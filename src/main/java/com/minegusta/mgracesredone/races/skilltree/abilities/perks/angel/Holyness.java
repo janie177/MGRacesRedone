@@ -23,7 +23,7 @@ public class Holyness implements IAbility {
         {
             FoodLevelChangeEvent e = (FoodLevelChangeEvent) event;
             Player p = (Player) e.getEntity();
-            if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT)
+            if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && e.getFoodLevel() < ((Player) e.getEntity()).getFoodLevel())
             {
                 e.setCancelled(true);
             }
