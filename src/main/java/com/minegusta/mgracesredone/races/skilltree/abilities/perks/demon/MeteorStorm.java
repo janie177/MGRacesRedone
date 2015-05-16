@@ -12,6 +12,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.RandomUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -41,6 +42,13 @@ public class MeteorStorm implements IAbility {
 
         if(Cooldown.isCooledDown(name, id))
         {
+
+            if(!WGUtil.canBuild(player))
+            {
+                ChatUtil.sendString(player, "You cannot use MeteorStorm here!");
+                return;
+            }
+
             Cooldown.newCoolDown(name, id, cooldownTime);
             Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 30, 0);
 
