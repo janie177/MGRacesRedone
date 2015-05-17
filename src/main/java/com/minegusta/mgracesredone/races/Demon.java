@@ -111,7 +111,7 @@ public class Demon extends Race {
 
 
 
-        if((PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p)) && biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
+        if((PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p)))
         {
             int damage = 2;
             if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 3) damage = 1;
