@@ -196,7 +196,7 @@ public class UnholyRain implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{"Summon an unholy rain on your location for 9 seconds.", "This rain damages holy creatures."};
+            case 1: desc = new String[]{"Summon an unholy rain on your location for 9 seconds.","Activate using a blazerod.", "This rain damages holy creatures."};
                 break;
             case 2: desc = new String[]{"Your holy rain will heal unholy creatures."};
                 break;

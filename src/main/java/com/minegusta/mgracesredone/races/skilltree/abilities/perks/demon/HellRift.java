@@ -200,7 +200,7 @@ public class HellRift implements IAbility {
 
         switch (level)
         {
-            case 1: desc = new String[]{"Open a rift that sucks in loose entities.", "The rift stays open for 6 seconds.","Demons are immune."};
+            case 1: desc = new String[]{"Open a rift that sucks in loose entities.","Activate using a blazerod.", "The rift stays open for 6 seconds.","Demons are immune."};
                 break;
             case 2: desc = new String[]{"Your rift will now stay twice as long."};
                 break;

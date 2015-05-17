@@ -147,7 +147,7 @@ public class MeteorStorm implements IAbility {
 
         switch (level)
         {
-            case 1: desc = new String[]{"Call a Meteor storm on your location.", "Duration: 6 seconds."};
+            case 1: desc = new String[]{"Call a Meteor storm on your location.", "Activate using a blazerod.", "Duration: 6 seconds."};
                 break;
             case 2: desc = new String[]{"The amount of meteors in your storm is doubled."};
                 break;
