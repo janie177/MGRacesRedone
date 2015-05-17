@@ -13,6 +13,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
@@ -55,6 +56,18 @@ public class DemonListener implements Listener
             }
 
         }
+    }
+
+    @EventHandler
+    public void onDemonCombust(EntityCombustEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Player && isDemon((Player) e.getEntity()) && (Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.FIREPROOF) > 1))
+        {
+            e.setCancelled(true);
+        }
+
     }
 
     @EventHandler

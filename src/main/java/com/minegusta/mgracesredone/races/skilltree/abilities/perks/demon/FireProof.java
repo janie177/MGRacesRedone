@@ -26,6 +26,7 @@ public class FireProof implements IAbility {
         if(mgp.getAbilityLevel(getType()) > 1 || RandomUtil.fiftyfifty())
         {
             e.setDamage(0);
+            e.getEntity().setFireTicks(0);
             e.setCancelled(true);
         }
     }
