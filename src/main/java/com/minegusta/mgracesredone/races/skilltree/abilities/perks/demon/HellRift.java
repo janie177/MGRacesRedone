@@ -181,7 +181,7 @@ public class HellRift implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        return 30;
+        return 60;
     }
 
     @Override
