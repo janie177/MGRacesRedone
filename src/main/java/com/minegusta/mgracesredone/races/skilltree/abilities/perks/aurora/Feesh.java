@@ -66,7 +66,7 @@ public class Feesh implements IAbility
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 4;
     }
 
     @Override
@@ -75,15 +75,15 @@ public class Feesh implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{"In the nether, you will no longer take fall damage."};
+            case 1: desc = new String[]{"Underwater, you will have a clear vision."};
                 break;
-            case 2: desc = new String[]{"When standing on obsidian, you will gain a defence boost."};
+            case 2: desc = new String[]{"You will be able to breathe underwater."};
                 break;
-            case 3: desc = new String[]{"In the nether, you will gain a strength boost."};
+            case 3: desc = new String[]{"In water, you will have a protecting effect."};
                 break;
-            case 4: desc = new String[]{"In the nether, you will gain a massive speed boost."};
+            case 4: desc = new String[]{"In water, you will do more damage."};
                 break;
-            case 5: desc = new String[]{"In the nether, you will gain a massive jump and defence boost."};
+            case 5: desc = new String[]{"During a full moon, you gain a speed and defence boost anywhere."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;

@@ -52,22 +52,31 @@ public class Aurora extends Race {
     {
         MGPlayer mgp = Races.getMGPlayer(p);
 
+        int feeshLevel = mgp.getAbilityLevel(AbilityType.FEESH);
 
-        if(PlayerUtil.isInWater(p))
+        if(PlayerUtil.isInWater(p) && feeshLevel > 1)
         {
             PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 5);
         }
 
-        if(WeatherUtil.isFullMoon(p.getWorld()))
+        if(PlayerUtil.isInWater(p) && feeshLevel > 0)
+        {
+            PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 20);
+        }
+
+        if(feeshLevel > 4 && WeatherUtil.isFullMoon(p.getWorld()))
         {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
         }
 
-        if(PlayerUtil.isInRain(p))
+        if(feeshLevel > 2 && (PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p)))
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            if(feeshLevel > 3)
+            {
+                PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+            }
         }
 
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(p.getLocation());
