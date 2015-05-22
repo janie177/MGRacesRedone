@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.Angel;
 import com.minegusta.mgracesredone.races.Race;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
@@ -27,8 +28,6 @@ public class AngelListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(Races.getRace(e.getPlayer()) != RaceType.ANGEL)return;
-
         if(e.getFrom().getY() <= e.getTo().getY())return;
 
         Player p = e.getPlayer();
@@ -49,8 +48,6 @@ public class AngelListener implements Listener
         if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             Player p = (Player) e.getEntity();
 
-            if (!isAngel(p)) return;
-
             if (!Races.getMGPlayer(p).hasAbility(AbilityType.HOLYNESS)) return;
 
             //Do not run this in the holyness class because YOLO ;D
@@ -63,7 +60,7 @@ public class AngelListener implements Listener
     public void onAngelTargetEntity(EntityTargetLivingEntityEvent e) {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if (e.getTarget() instanceof Player && isAngel((Player) e.getTarget()) && e.getEntity() instanceof Rabbit) {
+        if (e.getTarget() instanceof Player && Races.getRace((Player) e.getTarget()) == RaceType.ANGEL && e.getEntity() instanceof Rabbit) {
             e.setCancelled(true);
         }
     }
@@ -73,7 +70,7 @@ public class AngelListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(e.getEntity() instanceof Player && isAngel((Player) e.getEntity()))
+        if(e.getEntity() instanceof Player)
         {
             MGPlayer mgp = Races.getMGPlayer((Player) e.getEntity());
             if(mgp.getAbilityLevel(AbilityType.HOLYNESS) < 3)return;
@@ -98,7 +95,7 @@ public class AngelListener implements Listener
             }
         }
 
-        if(e.getDamager() instanceof Player && isAngel((Player) e.getDamager()) && e.getEntity() instanceof LivingEntity)
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player p = (Player) e.getDamager();
             int level = Races.getMGPlayer(p).getAbilityLevel(AbilityType.PURGE);
@@ -138,7 +135,7 @@ public class AngelListener implements Listener
         }
 
         //Angels wont get damage in invincibility mode.
-        if(e.getEntity() instanceof Player && Races.getRace((Player) e.getEntity()) == RaceType.ANGEL)
+        if(e.getEntity() instanceof Player)
         {
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
@@ -152,7 +149,7 @@ public class AngelListener implements Listener
     {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntity()instanceof Player && Races.getRace((Player) e.getEntity()) == RaceType.ANGEL)
+        if(e.getEntity()instanceof Player)
         {
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
@@ -172,7 +169,7 @@ public class AngelListener implements Listener
     {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntity()instanceof Player && Races.getRace((Player) e.getEntity()) == RaceType.ANGEL)
+        if(e.getEntity()instanceof Player)
         {
             if(AngelInvincibility.contains(e.getEntity().getUniqueId().toString()))
             {
@@ -192,13 +189,13 @@ public class AngelListener implements Listener
         //Activate justice
         if(e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.JUSTICE) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY())
         {
-            if(p.isSneaking() && isAngel(p))
+            if(p.isSneaking())
             {
                 AbilityType.JUSTICE.run(p);
             }
         }
 
-        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && isAngel(p))
+        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR))
         {
             if(p.getItemInHand().getType() == Material.BOOK && Races.getMGPlayer(p).hasAbility(AbilityType.PRAYER))
             {
@@ -223,10 +220,5 @@ public class AngelListener implements Listener
                 }
             }
         }
-    }
-
-    private boolean isAngel(Player p)
-    {
-        return Races.getRace(p) == RaceType.ANGEL;
     }
 }

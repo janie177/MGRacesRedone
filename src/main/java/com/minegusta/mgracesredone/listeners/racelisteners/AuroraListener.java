@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -118,12 +119,9 @@ public class AuroraListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(!isAurora(e.getPlayer()))return;
-
-        if(PlayerUtil.isInWater(e.getPlayer()))
+        if(PlayerUtil.isInWater(e.getPlayer()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.AQUAMAN))
         {
-            Player p = e.getPlayer();
-            p.setVelocity(p.getLocation().getDirection().normalize().multiply(2.0D));
+            AbilityType.AQUAMAN.run(e.getPlayer());
         }
     }
 

@@ -33,8 +33,6 @@ public class DemonListener implements Listener
         if(e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
-            if(!isDemon(p)) return;
-
 
             //Demon falls in hell
             if(e.getCause() == EntityDamageEvent.DamageCause.FALL && WeatherUtil.isHell(p.getLocation()))
@@ -63,7 +61,7 @@ public class DemonListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(e.getEntity() instanceof Player && isDemon((Player) e.getEntity()) && (Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.FIREPROOF) > 1))
+        if(e.getEntity() instanceof Player && (Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.FIREPROOF) > 1))
         {
             e.setCancelled(true);
         }
@@ -75,7 +73,6 @@ public class DemonListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(!isDemon(e.getPlayer()))return;
         Player p = e.getPlayer();
         Material hand = p.getItemInHand().getType();
         if(hand != Material.BLAZE_ROD)return;
@@ -122,7 +119,6 @@ public class DemonListener implements Listener
         if(e.getTarget() instanceof Player)
         {
             Player p = (Player) e.getTarget();
-            if(!isDemon(p))return;
 
             if(Races.getMGPlayer(p).hasAbility(AbilityType.HELLISHTRUCE))
             {
@@ -135,8 +131,6 @@ public class DemonListener implements Listener
     public void onDemonSneak(PlayerToggleSneakEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
-
-        if(!isDemon(e.getPlayer()))return;
 
         Player p = e.getPlayer();
 
@@ -155,7 +149,6 @@ public class DemonListener implements Listener
         if(e.getEntity() instanceof LivingEntity && e.getDamager() instanceof Player)
         {
             Player p = (Player) e.getDamager();
-            if(!isDemon(p))return;
 
             if(!e.isCancelled() && Races.getMGPlayer(p).hasAbility(AbilityType.HELLISHTRUCE))
             {
@@ -167,7 +160,6 @@ public class DemonListener implements Listener
         if(e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
-            if(!isDemon(p))return;
 
             if(!(e.getDamager() instanceof LivingEntity) || !(p.getHealth() < 6))return;
 
@@ -177,10 +169,5 @@ public class DemonListener implements Listener
             }
 
         }
-    }
-
-    private static boolean isDemon(Player p)
-    {
-        return Races.getRace(p) == RaceType.DEMON;
     }
 }

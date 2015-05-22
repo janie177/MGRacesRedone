@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.races.skilltree.abilities;
 
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.angel.*;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf.*;
 import org.bukkit.entity.Player;
@@ -11,6 +12,14 @@ import java.util.List;
 
 public enum AbilityType
 {
+    AQUAMAN(new AquaMan()),
+    DROWNINGPOOL(new DrowningPool()),
+    FEESH(new Feesh()),
+    FROST(new Frost()),
+    GLACIOUS(new Glacious()),
+    HEATTOLLERANCE(new HeatTollerance()),
+    ICEBARRAGE(new IceBarrage()),
+    TIDALWAVE(new TidalWave()),
     GLIDE(new Glide()),
     HOLYNESS(new Holyness()),
     HOLYRAIN(new HolyRain()),

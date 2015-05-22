@@ -1,5 +1,8 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -45,7 +48,10 @@ public class Aurora extends Race {
     }
 
     @Override
-    public void passiveBoost(Player p) {
+    public void passiveBoost(Player p)
+    {
+        MGPlayer mgp = Races.getMGPlayer(p);
+
 
         if(PlayerUtil.isInWater(p))
         {
@@ -81,11 +87,25 @@ public class Aurora extends Race {
         }
         else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW, 2, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 1, 5);
+            int heatresistLevel = mgp.getAbilityLevel(AbilityType.HEATTOLLERANCE);
+
+            int slow = 2;
+            int weakness = 2;
+            int digging = 1;
+            boolean confusion = heatresistLevel < 1;
+
+            if(!confusion)
+            {
+                if (heatresistLevel > 2) weakness = 1;
+                if (heatresistLevel > 1) slow = 1;
+                if (heatresistLevel > 3) digging = 0;
+            }
+
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW, slow, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, weakness, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, digging, 5);
             EffectUtil.playParticle(p, Effect.WATERDRIP);
-            if(biome == WeatherUtil.BiomeType.HOT)
+            if(biome == WeatherUtil.BiomeType.HOT && confusion)
             {
                 PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 10);
             }
