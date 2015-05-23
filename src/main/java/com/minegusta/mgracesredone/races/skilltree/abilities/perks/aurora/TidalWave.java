@@ -71,7 +71,7 @@ public class TidalWave implements IAbility
     private void start(int radius, final boolean damage, Player p)
     {
         //Add all blocks for the wave in a row here.
-        final Block center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 4);
+        final Block center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 7);
 
         for(int i = 0; i <= radius; i++)
         {
@@ -103,7 +103,7 @@ public class TidalWave implements IAbility
                     {
                         if(b.getType() == Material.AIR)
                         {
-                            b.setType(Material.STATIONARY_WATER);
+                            b.setType(Material.EMERALD_BLOCK);
                         }
                     }
                     //Apply the effects
@@ -133,7 +133,7 @@ public class TidalWave implements IAbility
                         {
                             for(Block b : blocks)
                             {
-                                if(b.getType() == Material.WATER || b.getType() == Material.STATIONARY_WATER)
+                                if(b.getType() == Material.EMERALD_BLOCK)
                                 {
                                     b.setType(Material.AIR);
                                 }

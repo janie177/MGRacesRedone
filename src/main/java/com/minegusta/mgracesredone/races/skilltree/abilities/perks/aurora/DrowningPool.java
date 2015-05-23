@@ -20,6 +20,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class DrowningPool implements IAbility
                         {
                             if(ent instanceof LivingEntity && EntityUtil.isInWater(ent) && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.AURORA))
                             {
-                                ent.getVelocity().setY(-0.6);
+                                ent.setVelocity(new Vector(ent.getVelocity().getX(), -0.5, ent.getVelocity().getZ()));
                                 if(ent instanceof Player)
                                 {
                                     ((Player)ent).sendMessage(ChatColor.RED + "You are pulled underwater!");

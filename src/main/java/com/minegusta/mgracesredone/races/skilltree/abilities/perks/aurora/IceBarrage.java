@@ -162,7 +162,7 @@ public class IceBarrage implements IAbility
 
     @Override
     public int getCooldown(int level) {
-        return 16;
+        return 35;
     }
 
     @Override
