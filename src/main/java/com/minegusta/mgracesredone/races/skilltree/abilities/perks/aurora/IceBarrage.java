@@ -60,18 +60,18 @@ public class IceBarrage implements IAbility
                 callRain(l, poison);
             }
 
-            for(Entity ent : ball.getNearbyEntities(8, 8, 8))
+            for(Entity ent : ball.getNearbyEntities(5, 5, 5))
             {
                 if(ent instanceof LivingEntity)
                 {
                     //Do not apply to Aurora.
                     if(ent instanceof Player && Races.getRace((Player) ent) == RaceType.AURORA)continue;
 
-                    PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 1, 7);
-                    PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.BLINDNESS, 1, 4);
+                    PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 1, 8);
+                    PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.BLINDNESS, 1, 5);
                     if(level > 1)
                     {
-                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.WEAKNESS, 1, 5);
+                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.WEAKNESS, 1, 8);
                     }
                 }
             }
@@ -100,25 +100,8 @@ public class IceBarrage implements IAbility
 
                         final Snowball rain = (Snowball) spot.getWorld().spawnEntity(spot, EntityType.SNOWBALL);
                         rain.setVelocity(new Vector(0, -1, 0));
-                        rain.setShooter(new IceBarrageThrower());
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                            @Override
-                            public void run()
-                            {
-                                if(!rain.isDead())
-                                {
-                                   for(Entity ent : rain.getNearbyEntities( 2, 2, 2))
-                                    {
-                                       if(ent instanceof LivingEntity && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.AURORA))
-                                       {
-                                           LivingEntity le = (LivingEntity) ent;
-                                           PotionUtil.updatePotion(le, PotionEffectType.SLOW, 5, 6);
-                                           if(poison)PotionUtil.updatePotion(le, PotionEffectType.POISON, 1, 3);
-                                       }
-                                    }
-                                }
-                            }
-                        }, 20);
+                        if(poison) rain.setShooter(new IceBarragePoisonThrower());
+                        else rain.setShooter(new IceBarrageThrower());
                     }
                 }, i);
             }

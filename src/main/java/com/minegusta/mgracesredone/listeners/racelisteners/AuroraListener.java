@@ -10,6 +10,8 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -20,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
@@ -88,6 +91,28 @@ public class AuroraListener implements Listener
         }
         if(e.getEntity().getShooter() instanceof IceBarrageThrower)
         {
+            for(Entity ent : e.getEntity().getNearbyEntities(2, 2, 2))
+            {
+                if(ent instanceof LivingEntity && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.AURORA))
+                {
+                    LivingEntity le = (LivingEntity) ent;
+                    PotionUtil.updatePotion(le, PotionEffectType.SLOW, 5, 8);
+                }
+            }
+            EffectUtil.playSound(e.getEntity().getLocation(), Sound.DIG_SNOW);
+            EffectUtil.playParticle(e.getEntity().getLocation(), Effect.SNOW_SHOVEL, 1, 1, 1, 14, 25);
+        }
+        else if(e.getEntity().getShooter() instanceof IceBarragePoisonThrower)
+        {
+            for(Entity ent : e.getEntity().getNearbyEntities(2, 2, 2))
+            {
+                if(ent instanceof LivingEntity && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.AURORA))
+                {
+                    LivingEntity le = (LivingEntity) ent;
+                    PotionUtil.updatePotion(le, PotionEffectType.SLOW, 5, 8);
+                    PotionUtil.updatePotion(le, PotionEffectType.POISON, 1, 3);
+                }
+            }
             EffectUtil.playSound(e.getEntity().getLocation(), Sound.DIG_SNOW);
             EffectUtil.playParticle(e.getEntity().getLocation(), Effect.SNOW_SHOVEL, 1, 1, 1, 14, 25);
         }
