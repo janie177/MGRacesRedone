@@ -4,6 +4,8 @@ import com.minegusta.mgracesredone.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -26,4 +28,11 @@ public class EntityUtil
             }, i * 20);
         }
     }
+
+    public static boolean isInWater(Entity ent)
+    {
+        Material mat = ent.getLocation().getBlock().getType();
+        return mat == Material.WATER || mat == Material.STATIONARY_WATER;
+    }
+
 }

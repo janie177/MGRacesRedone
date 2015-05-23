@@ -78,6 +78,10 @@ public class AuroraListener implements Listener
         {
             AbilityType.FROST.run(e.getPlayer());
         }
+        if(e.getAction() == Action.RIGHT_CLICK_AIR && PlayerUtil.isInWater(e.getPlayer()) && ItemUtil.isSword(e.getPlayer().getItemInHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.DROWNINGPOOL))
+        {
+            AbilityType.DROWNINGPOOL.run(e.getPlayer());
+        }
     }
 
     @EventHandler
