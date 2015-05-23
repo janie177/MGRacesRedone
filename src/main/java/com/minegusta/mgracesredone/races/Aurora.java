@@ -117,7 +117,7 @@ public class Aurora extends Race {
 
             PotionUtil.updatePotion(p, PotionEffectType.SLOW, slow, 5);
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, weakness, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, digging, 5);
+            if(digging > 0) PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, digging, 5);
             EffectUtil.playParticle(p, Effect.WATERDRIP);
             if(biome == WeatherUtil.BiomeType.HOT && confusion)
             {
