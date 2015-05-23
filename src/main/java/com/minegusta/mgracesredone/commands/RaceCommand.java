@@ -183,12 +183,12 @@ public class RaceCommand implements CommandExecutor {
                 if(gray)
                 {
                     gray = false;
-                    perks.add(ChatColor.GRAY + type.getName() + ",");
+                    perks.add(ChatColor.GRAY + type.getName() + ChatColor.LIGHT_PURPLE + ",");
                 }
                 else
                 {
                     gray = true;
-                    perks.add(ChatColor.DARK_GRAY + type.getName());
+                    perks.add(ChatColor.DARK_GRAY + type.getName() + ChatColor.LIGHT_PURPLE + ",");
                 }
             }
         }
