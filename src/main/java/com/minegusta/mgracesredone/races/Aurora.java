@@ -81,15 +81,20 @@ public class Aurora extends Race {
 
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(p.getLocation());
 
-        if(biome == WeatherUtil.BiomeType.ICE)
+        int glaceLevel = mgp.getAbilityLevel(AbilityType.GLACIOUS);
+
+        if(biome == WeatherUtil.BiomeType.ICE && glaceLevel > 0)
         {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+            if(glaceLevel > 4)
+            {
+                PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
+                PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
+            }
+            if(glaceLevel > 2)PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            if(glaceLevel > 3)PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
         }
-        else if(biome == WeatherUtil.BiomeType.COLD)
+        else if(glaceLevel > 0 && biome == WeatherUtil.BiomeType.COLD)
         {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);

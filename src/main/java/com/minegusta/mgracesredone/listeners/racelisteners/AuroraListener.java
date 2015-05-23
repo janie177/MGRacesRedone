@@ -35,7 +35,7 @@ public class AuroraListener implements Listener
         {
             if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
             Player p = (Player) e.getEntity();
-            if(isAurora(p))
+            if(Races.getMGPlayer(p).getAbilityLevel(AbilityType.FEESH) > 1)
             {
                 e.setCancelled(true);
             }
@@ -44,7 +44,7 @@ public class AuroraListener implements Listener
         else if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
         {
             Player p = (Player) e.getEntity();
-            if(isAurora(p))
+            if(Races.getMGPlayer(p).getAbilityLevel(AbilityType.GLACIOUS) > 2)
             {
                 Material mat = p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
                 Material mat2 = p.getLocation().getBlock().getType();
@@ -56,13 +56,6 @@ public class AuroraListener implements Listener
                 }
             }
         }
-    }
-
-    @EventHandler
-    public void onSnowFallDamage(EntityDamageEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
-
     }
 
     private static final double[] directions = {0.04, -0.04, 0.06, -0.06};
