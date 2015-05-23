@@ -52,8 +52,8 @@ public class DrowningPool implements IAbility
             Cooldown.newCoolDown(cooldownName, uuid, getCooldown(level));
             int radius = 8;
             boolean air = level > 2;
-            int duration = 10;
-            if(level > 1)duration = 16;
+            int duration = 6;
+            if(level > 1)duration = 10;
             if(level > 3)radius = 12;
 
             start(l, radius, duration, air);
@@ -80,7 +80,7 @@ public class DrowningPool implements IAbility
                         {
                             if(ent instanceof LivingEntity && EntityUtil.isInWater(ent) && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.AURORA))
                             {
-                                ent.setVelocity(new Vector(ent.getVelocity().getX(), -0.5, ent.getVelocity().getZ()));
+                                ent.setVelocity(new Vector(ent.getVelocity().getX(), -0.12, ent.getVelocity().getZ()));
                                 if(ent instanceof Player)
                                 {
                                     ((Player)ent).sendMessage(ChatColor.RED + "You are pulled underwater!");
@@ -149,9 +149,9 @@ public class DrowningPool implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{"When in water, entities around you will be pulled down.", "Activate by right clicking with a sword in water.", "Will last for 8 seconds.", "The radius is 8."};
+            case 1: desc = new String[]{"When in water, entities around you will be pulled down.", "Activate by right clicking with a sword in water.", "Will last for 6 seconds.", "The radius is 8."};
                 break;
-            case 2: desc = new String[]{"The duration is increased to 16 seconds."};
+            case 2: desc = new String[]{"The duration is increased to 10 seconds."};
                 break;
             case 3: desc = new String[]{"Entities air is set to 3 when they are pulled down."};
                 break;
