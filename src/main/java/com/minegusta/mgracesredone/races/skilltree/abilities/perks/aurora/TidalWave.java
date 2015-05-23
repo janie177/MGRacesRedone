@@ -60,7 +60,7 @@ public class TidalWave implements IAbility
             boolean damage = level > 1;
             if(level > 2)radius = 14;
 
-            start(l, radius, damage, uuid, player);
+            start(radius, damage, player);
         }
         else
         {
@@ -68,21 +68,19 @@ public class TidalWave implements IAbility
         }
     }
 
-    private void start(Location l, int radius, final boolean damage, final String uuid, Player p)
+    private void start(int radius, final boolean damage, Player p)
     {
-        //The list of blocks
-        List<Block> blocks = Lists.newArrayList();
-
         //Add all blocks for the wave in a row here.
         final Block center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 4);
 
         for(int i = 0; i <= radius; i++)
         {
+            final int k = i;
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                 @Override
                 public void run()
                 {
-                    List<Block> blocks = Lists.newArrayList();
+                    final List<Block> blocks = Lists.newArrayList();
                     //Do the wave stuff
                     for(int x = 0; x < 6; x ++)
                     {
@@ -128,9 +126,20 @@ public class TidalWave implements IAbility
                     }
                     dummy.remove();
 
-
-
                     //Return to normal after 2/3 second.
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            for(Block b : blocks)
+                            {
+                                if(b.getType() == Material.WATER || b.getType() == Material.STATIONARY_WATER)
+                                {
+                                    b.setType(Material.AIR);
+                                }
+                            }
+                        }
+                    }, 16 * k);
 
                 }
             }, 16 * i);

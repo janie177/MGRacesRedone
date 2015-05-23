@@ -74,13 +74,18 @@ public class AuroraListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK && ItemUtil.isSword(e.getPlayer().getItemInHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.FROST))
+        if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY() && ItemUtil.isSword(e.getPlayer().getItemInHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.FROST))
         {
             AbilityType.FROST.run(e.getPlayer());
         }
         if(e.getAction() == Action.RIGHT_CLICK_AIR && PlayerUtil.isInWater(e.getPlayer()) && ItemUtil.isSword(e.getPlayer().getItemInHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.DROWNINGPOOL))
         {
             AbilityType.DROWNINGPOOL.run(e.getPlayer());
+        }
+
+        if(e.getAction() == Action.LEFT_CLICK_AIR && e.getPlayer().getItemInHand().getType() == Material.SNOW_BALL && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.TIDALWAVE))
+        {
+            AbilityType.TIDALWAVE.run(e.getPlayer());
         }
     }
 
