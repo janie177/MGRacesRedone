@@ -32,6 +32,7 @@ public class IceBarrage implements IAbility
         if(!WGUtil.canBuild(p, p.getLocation()))
         {
             ChatUtil.sendString(p, "You cannot use Ice Barrage here!");
+            return;
         }
 
         Snowball ball = (Snowball) e.getEntity();

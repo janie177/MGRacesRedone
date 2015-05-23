@@ -45,6 +45,7 @@ public class TidalWave implements IAbility
         if(!WGUtil.canBuild(player))
         {
             ChatUtil.sendString(player, "You cannot use TidalWave here!");
+            return;
         }
 
         MGPlayer mgp = Races.getMGPlayer(player);

@@ -43,6 +43,7 @@ public class Frost implements IAbility
         if(!WGUtil.canBuild(player))
         {
             ChatUtil.sendString(player, "You cannot use Frost here!");
+            return;
         }
 
         MGPlayer mgp = Races.getMGPlayer(player);
