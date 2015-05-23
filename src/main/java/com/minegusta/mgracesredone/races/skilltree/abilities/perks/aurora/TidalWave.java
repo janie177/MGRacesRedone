@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
@@ -11,16 +12,19 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.PotionUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
@@ -33,11 +37,14 @@ public class TidalWave implements IAbility
 
     }
 
-    private static ConcurrentMap<String, List<Block>> waveMap = Maps.newConcurrentMap();
-
     @Override
     public void run(Player player)
     {
+        if(!WGUtil.canBuild(player))
+        {
+            ChatUtil.sendString(player, "You cannot use TidalWave here!");
+        }
+
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
         Location l = player.getLocation();
@@ -61,35 +68,73 @@ public class TidalWave implements IAbility
         }
     }
 
-    private void start(Location l, int radius, boolean damage, final String uuid, Player p)
+    private void start(Location l, int radius, final boolean damage, final String uuid, Player p)
     {
+        //The list of blocks
         List<Block> blocks = Lists.newArrayList();
 
-        for(int x = -radius; x <= radius; x++)
+        //Add all blocks for the wave in a row here.
+        final Block center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 4);
+
+        for(int i = 0; i <= radius; i++)
         {
-            for(int y = -radius; y <= radius; y++)
-            {
-
-            }
-        }
-
-        frozenMap.put(uuid, blocks);
-
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                for(Block block : frozenMap.get(uuid))
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+                @Override
+                public void run()
                 {
-                    if(block.getType() == Material.SNOW)
+                    List<Block> blocks = Lists.newArrayList();
+                    //Do the wave stuff
+                    for(int x = 0; x < 6; x ++)
                     {
-                        block.setType(Material.AIR);
+                        for(int y = 0; y < 6; y ++)
+                        {
+                            for(int z = 0; z < 6; z ++)
+                            {
+                                Block target = center.getWorld().getBlockAt((int)center.getX() + x, (int)center.getY() + y, (int) center.getZ() + z);
+
+                                if(target.getLocation().distance(center.getLocation()) <= 5 && target.getType()== Material.AIR)
+                                {
+                                    blocks.add(target);
+                                }
+                            }
+                        }
                     }
+
+                    //Set to water and then task to make it air again
+                    for(Block b : blocks)
+                    {
+                        if(b.getType() == Material.AIR)
+                        {
+                            b.setType(Material.STATIONARY_WATER);
+                        }
+                    }
+                    //Apply the effects
+                    Entity dummy = center.getWorld().spawnEntity(center.getLocation(), EntityType.SNOWBALL);
+                    for(Entity ent : dummy.getNearbyEntities(5, 5, 5))
+                    {
+                        if(!(ent instanceof LivingEntity))continue;
+                        double x = ent.getLocation().getX() - center.getX();
+                        double y = ent.getLocation().getY() - center.getY();
+                        double z = ent.getLocation().getZ() - center.getZ();
+                        Vector v = new Vector(x, y, z);
+                        v.normalize();
+                        ent.setVelocity(ent.getVelocity().add(v.multiply(-2)));
+
+                        if(damage && WGUtil.canGetDamage(ent))
+                        {
+                            ((LivingEntity) ent).damage(1);
+                        }
+
+                    }
+                    dummy.remove();
+
+
+
+                    //Return to normal after 2/3 second.
+
                 }
-                frozenMap.remove(uuid);
-            }
-        }, time * 20);
+            }, 16 * i);
+        }
     }
 
     @Override

@@ -28,6 +28,12 @@ public class IceBarrage implements IAbility
     {
         ProjectileHitEvent e = (ProjectileHitEvent) event;
         Player p = (Player) e.getEntity().getShooter();
+
+        if(!WGUtil.canBuild(p, p.getLocation()))
+        {
+            ChatUtil.sendString(p, "You cannot use Ice Barrage here!");
+        }
+
         Snowball ball = (Snowball) e.getEntity();
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());

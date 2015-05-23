@@ -10,6 +10,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EntityUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -33,6 +34,11 @@ public class DrowningPool implements IAbility
     @Override
     public void run(Player player)
     {
+        if(!WGUtil.canBuild(player))
+        {
+            ChatUtil.sendString(player, "You cannot use Drowning Pool here!");
+        }
+
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
         Location l = player.getLocation();

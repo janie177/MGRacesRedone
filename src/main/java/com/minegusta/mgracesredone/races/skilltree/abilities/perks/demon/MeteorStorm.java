@@ -43,19 +43,19 @@ public class MeteorStorm implements IAbility {
         if(Cooldown.isCooledDown(name, id))
         {
 
-            if(!WGUtil.canBuild(player))
+            MGPlayer mgp = Races.getMGPlayer(player);
+            int level = mgp.getAbilityLevel(getType());
+            Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 30, 0);
+
+            if(!WGUtil.canBuild(player, target.getLocation()))
             {
                 ChatUtil.sendString(player, "You cannot use MeteorStorm here!");
                 return;
             }
 
-            Cooldown.newCoolDown(name, id, cooldownTime);
-            Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 30, 0);
-
-            MGPlayer mgp = Races.getMGPlayer(player);
-            int level = mgp.getAbilityLevel(getType());
-
             ChatUtil.sendString(player, "You call a Meteor Storm on your enemies!");
+
+            Cooldown.newCoolDown(name, id, cooldownTime);
 
             int interval = 16;
             int duration = 6;
