@@ -113,7 +113,6 @@ public class TidalWave implements IAbility
                         if(b.getType() == Material.AIR)
                         {
                             b.setType(Material.STATIONARY_WATER);
-                            b.setData((byte)0);
                         }
                     }
                     //Apply the effects
@@ -126,7 +125,7 @@ public class TidalWave implements IAbility
                         double z = ent.getLocation().getZ() - start.getZ();
                         Vector v = new Vector(x, y, z);
                         v.normalize();
-                        ent.setVelocity(ent.getVelocity().add(v.multiply(-2)));
+                        ent.setVelocity(ent.getVelocity().add(v.multiply(1.4)));
 
                         if(damage && WGUtil.canGetDamage(ent))
                         {
@@ -150,7 +149,7 @@ public class TidalWave implements IAbility
                                 }
                             }
                         }
-                    }, 6 * k);
+                    }, 10);
 
                 }
             }, 6 * k);
@@ -159,7 +158,7 @@ public class TidalWave implements IAbility
 
     @Override
     public String getName() {
-        return "TidalWave";
+        return "Tidal Wave";
     }
 
     @Override
