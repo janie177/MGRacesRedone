@@ -58,9 +58,6 @@ public class AuroraListener implements Listener
         }
     }
 
-    private static final double[] directions = {0.04, -0.04, 0.06, -0.06};
-    private static final Effect[] effects = {Effect.SNOW_SHOVEL, Effect.WATERDRIP, Effect.SNOWBALL_BREAK};
-
     @EventHandler
     public void onAuroraSnowball(ProjectileHitEvent e)
     {
@@ -71,39 +68,9 @@ public class AuroraListener implements Listener
             Snowball ball = (Snowball) e.getEntity();
             Player p = (Player) ball.getShooter();
 
-            if(!isAurora(p))return;
+            if(!Races.getMGPlayer(p).hasAbility(AbilityType.ICEBARRAGE))return;
 
-            String name = "snowball";
-            String uuid = p.getUniqueId().toString();
-            final Location l = ball.getLocation();
-
-            if(Cooldown.isCooledDown(name, uuid))
-            {
-                p.sendMessage(ChatColor.DARK_AQUA + "You send a blizzard at your enemies!");
-                Cooldown.newCoolDown(name, uuid, 15);
-                for(double x : directions)
-                {
-                    for(double z : directions)
-                    {
-                        Missile.createMissile(l, x, 0.06, z, effects, 60);
-                    }
-                }
-
-                for(Entity ent : ball.getNearbyEntities(8, 8, 8))
-                {
-                    if(ent instanceof LivingEntity)
-                    {
-                        if((ent instanceof Player && isAurora((Player) ent)))return;
-                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 2, 6);
-                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.WEAKNESS, 2, 3);
-                        PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.BLINDNESS, 1, 5);
-                    }
-                }
-            }
-            else
-            {
-                p.sendMessage(ChatColor.AQUA + "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use that.");
-            }
+            AbilityType.ICEBARRAGE.run(e);
         }
     }
 
