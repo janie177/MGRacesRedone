@@ -164,7 +164,7 @@ public class Frost implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{"Freeze the floor around you, freezing enemies.", "Activate by blocking with a sword."};
+            case 1: desc = new String[]{"Freeze the floor around you, freezing enemies.", "Activate by right clicking a block."};
                 break;
             case 2: desc = new String[]{"Enemies stay frozen twice as long."};
                 break;
