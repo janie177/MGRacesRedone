@@ -100,6 +100,7 @@ public class IceBarrage implements IAbility
 
                         final Snowball rain = (Snowball) spot.getWorld().spawnEntity(spot, EntityType.SNOWBALL);
                         rain.setVelocity(new Vector(0, -1, 0));
+                        rain.setShooter(new IceBarrageThrower());
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                             @Override
                             public void run()

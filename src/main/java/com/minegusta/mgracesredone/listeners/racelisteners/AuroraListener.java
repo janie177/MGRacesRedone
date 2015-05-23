@@ -5,7 +5,9 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -66,6 +68,11 @@ public class AuroraListener implements Listener
             if(!Races.getMGPlayer(p).hasAbility(AbilityType.ICEBARRAGE))return;
 
             AbilityType.ICEBARRAGE.run(e);
+        }
+        if(e.getEntity().getShooter() instanceof IceBarrageThrower)
+        {
+            EffectUtil.playSound(e.getEntity().getLocation(), Sound.DIG_SNOW);
+            EffectUtil.playParticle(e.getEntity().getLocation(), Effect.SNOW_SHOVEL, 1, 1, 1, 14, 25);
         }
     }
 

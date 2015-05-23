@@ -71,26 +71,32 @@ public class TidalWave implements IAbility
     private void start(int radius, final boolean damage, Player p)
     {
         //Add all blocks for the wave in a row here.
-        final Block center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 7);
+        final Location center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 7).getLocation();
+        final Vector v = p.getLocation().getDirection();
+        v.normalize();
+        v.multiply(1.6);
 
         for(int i = 0; i <= radius; i++)
         {
+            final Location start = new Location(center.getWorld(), center.getX() + i * v.getX(), center.getY() + i * v.getY(), center.getZ() + i * v.getZ());
+
             final int k = i;
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                 @Override
                 public void run()
                 {
                     final List<Block> blocks = Lists.newArrayList();
-                    //Do the wave stuff
-                    for(int x = 0; x < 6; x ++)
-                    {
-                        for(int y = 0; y < 6; y ++)
-                        {
-                            for(int z = 0; z < 6; z ++)
-                            {
-                                Block target = center.getWorld().getBlockAt((int)center.getX() + x, (int)center.getY() + y, (int) center.getZ() + z);
 
-                                if(target.getLocation().distance(center.getLocation()) <= 5 && target.getType()== Material.AIR)
+                    //Do the wave stuff
+                    for(int x = -5; x < 6; x ++)
+                    {
+                        for(int y = -5; y < 6; y ++)
+                        {
+                            for(int z = -5; z < 6; z ++)
+                            {
+                                Block target = start.getWorld().getBlockAt((int)start.getX() + x, (int)start.getY() + y, (int) start.getZ() + z);
+
+                                if(target.getLocation().distance(start) < 3 && target.getType()== Material.AIR)
                                 {
                                     blocks.add(target);
                                 }
@@ -107,13 +113,13 @@ public class TidalWave implements IAbility
                         }
                     }
                     //Apply the effects
-                    Entity dummy = center.getWorld().spawnEntity(center.getLocation(), EntityType.SNOWBALL);
-                    for(Entity ent : dummy.getNearbyEntities(5, 5, 5))
+                    Entity dummy = start.getWorld().spawnEntity(start, EntityType.SNOWBALL);
+                    for(Entity ent : dummy.getNearbyEntities(4, 4, 4))
                     {
                         if(!(ent instanceof LivingEntity))continue;
-                        double x = ent.getLocation().getX() - center.getX();
-                        double y = ent.getLocation().getY() - center.getY();
-                        double z = ent.getLocation().getZ() - center.getZ();
+                        double x = ent.getLocation().getX() - start.getX();
+                        double y = ent.getLocation().getY() - start.getY();
+                        double z = ent.getLocation().getZ() - start.getZ();
                         Vector v = new Vector(x, y, z);
                         v.normalize();
                         ent.setVelocity(ent.getVelocity().add(v.multiply(-2)));
@@ -139,10 +145,10 @@ public class TidalWave implements IAbility
                                 }
                             }
                         }
-                    }, 16 * k);
+                    }, 6 * k);
 
                 }
-            }, 16 * i);
+            }, 5 * k);
         }
     }
 
