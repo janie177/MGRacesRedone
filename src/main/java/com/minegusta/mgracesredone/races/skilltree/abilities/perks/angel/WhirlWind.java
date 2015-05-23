@@ -59,8 +59,8 @@ public class WhirlWind implements IAbility{
 
         boolean launch = level > 3;
 
-        double startingStrength = 0.12;
-        if(level > 1) startingStrength = 0.25;
+        double startingStrength = 0.09;
+        if(level > 1) startingStrength = 0.19;
 
         ChatUtil.sendString(player, "You summon a Whirlwind!");
 

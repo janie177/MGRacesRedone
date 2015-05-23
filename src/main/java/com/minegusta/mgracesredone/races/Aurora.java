@@ -111,7 +111,7 @@ public class Aurora extends Race {
             if(!confusion)
             {
                 if (heatresistLevel > 2) weakness = 1;
-                if (heatresistLevel > 1) slow = 1;
+                if (heatresistLevel > 1) slow = 0;
                 if (heatresistLevel > 3) digging = 0;
             }
 
