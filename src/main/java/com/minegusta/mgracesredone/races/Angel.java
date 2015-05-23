@@ -43,7 +43,7 @@ public class Angel extends Race {
                         "Angels are holy mysterious creatures.",
                         "They prefer to live in the sky.",
                         "Though mostly passive and defensive, angels have some strong perks.",
-                        "Most of them related to light and height."
+                        "Most of them related to light and height.",
                 };
     }
 

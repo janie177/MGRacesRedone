@@ -1,6 +1,8 @@
 package com.minegusta.mgracesredone.commands;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.MGItem;
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.util.ChatUtil;
@@ -10,6 +12,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class RaceCommand implements CommandExecutor {
     private Player p;
@@ -168,6 +172,29 @@ public class RaceCommand implements CommandExecutor {
         for(String s : race.getInfo())
         {
             p.sendMessage(ChatColor.LIGHT_PURPLE + s);
+        }
+        p.sendMessage(ChatColor.LIGHT_PURPLE + "Perks you can unlock: ");
+        List<String> perks = Lists.newArrayList();
+        boolean gray = true;
+        for(AbilityType type : AbilityType.values())
+        {
+            if(type.getRaces().contains(race))
+            {
+                if(gray)
+                {
+                    gray = false;
+                    perks.add(ChatColor.GRAY + type.getName() + ",");
+                }
+                else
+                {
+                    gray = true;
+                    perks.add(ChatColor.DARK_GRAY + type.getName());
+                }
+            }
+        }
+        for(String s : perks)
+        {
+            p.sendMessage(ChatColor.LIGHT_PURPLE + "- " + s);
         }
         ChatUtil.sendFooter(p);
     }

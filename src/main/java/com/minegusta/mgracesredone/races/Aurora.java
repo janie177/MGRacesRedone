@@ -37,13 +37,8 @@ public class Aurora extends Race {
         return new String[]{
                 "Aurora's are the race of ice and water.",
                 "Their body temperature is to be kept low, or they will weaken.",
-                "They are natural swimmers and can breathe underwater.",
-                "They are at their strongest in ice environments.",
-                "Aurora do not get fall damage on frozen blocks and snow.",
-                "Snowballs can be used to slow and weaken enemies for a short period of time.",
-                "Heat weakens them, so you wont find them near a desert or savannah.",
-                "The moon empowers the Aurora. It will grant them more power.",
-                "Aurora's can rely on the power of ice and traps."
+                "Aurora perks are split between ice biome and water benefits.",
+                "They have a few strong abilities that involve mostly freezing."
         };
     }
 
