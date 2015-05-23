@@ -173,7 +173,7 @@ public class RaceCommand implements CommandExecutor {
         {
             p.sendMessage(ChatColor.LIGHT_PURPLE + s);
         }
-        p.sendMessage(ChatColor.LIGHT_PURPLE + "Perks you can unlock: ");
+        p.sendMessage(ChatColor.YELLOW + "Perks you can unlock: ");
         List<String> perks = Lists.newArrayList();
         boolean gray = true;
         for(AbilityType type : AbilityType.values())
