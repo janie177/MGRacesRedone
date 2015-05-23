@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora.TidalWave;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -51,6 +53,21 @@ public class AuroraListener implements Listener
                     e.setDamage(0.0);
                     e.setCancelled(true);
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onWaterFlow(BlockFromToEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getBlock().getWorld()))return;
+
+        Material m = e.getBlock().getType();
+        if(m == Material.WATER || m == Material.STATIONARY_WATER)
+        {
+            if(TidalWave.blockMap.containsKey(e.getBlock().getLocation()))
+            {
+                e.setCancelled(true);
             }
         }
     }

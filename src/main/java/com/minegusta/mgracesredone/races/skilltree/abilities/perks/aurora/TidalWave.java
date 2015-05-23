@@ -32,6 +32,8 @@ import java.util.concurrent.ConcurrentMap;
 public class TidalWave implements IAbility
 {
 
+    public static ConcurrentMap<Location, Boolean> blockMap = Maps.newConcurrentMap();
+
     @Override
     public void run(Event event) {
 
@@ -74,7 +76,7 @@ public class TidalWave implements IAbility
         final Location center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 7).getLocation();
         final Vector v = p.getLocation().getDirection();
         v.normalize();
-        v.multiply(1.6);
+        v.multiply(1.25);
 
         for(int i = 0; i <= radius; i++)
         {
@@ -98,6 +100,7 @@ public class TidalWave implements IAbility
 
                                 if(target.getLocation().distance(start) < 3 && target.getType()== Material.AIR)
                                 {
+                                    blockMap.put(target.getLocation(), true);
                                     blocks.add(target);
                                 }
                             }
@@ -109,7 +112,8 @@ public class TidalWave implements IAbility
                     {
                         if(b.getType() == Material.AIR)
                         {
-                            b.setType(Material.EMERALD_BLOCK);
+                            b.setType(Material.STATIONARY_WATER);
+                            b.setData((byte)0);
                         }
                     }
                     //Apply the effects
@@ -139,16 +143,17 @@ public class TidalWave implements IAbility
                         {
                             for(Block b : blocks)
                             {
-                                if(b.getType() == Material.EMERALD_BLOCK)
+                                if(b.getType() == Material.STATIONARY_WATER || b.getType() == Material.WATER)
                                 {
                                     b.setType(Material.AIR);
+                                    blockMap.remove(b.getLocation());
                                 }
                             }
                         }
                     }, 6 * k);
 
                 }
-            }, 5 * k);
+            }, 6 * k);
         }
     }
 
