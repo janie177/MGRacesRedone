@@ -54,6 +54,15 @@ public class AngelListener implements Listener
             e.setDamage(0);
             e.setCancelled(true);
         }
+
+        //Nyctophobia level 3 prevents poison damage.
+        if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.POISON)
+        {
+            if(Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.NYCTOPHOBIA) > 2)
+            {
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
