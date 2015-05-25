@@ -33,9 +33,9 @@ public class DwarfListener implements Listener
         if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player p = (Player) e.getDamager();
-            if(isDwarf(p) && ItemUtil.isAxe(p.getItemInHand().getType()) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled())
+            if(ItemUtil.isAxe(p.getItemInHand().getType()) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled() && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLEAXE))
             {
-                e.setDamage(e.getDamage() + 2.0);
+                AbilityType.BATTLEAXE.run(e);
             }
         }
 

@@ -2,12 +2,19 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf;
 
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.RandomUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.List;
 
@@ -15,7 +22,39 @@ public class BattleAxe implements IAbility
 {
 
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+        EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
+        Player p = (Player) e.getDamager();
+        MGPlayer mgp = Races.getMGPlayer(p);
+        int level = mgp.getAbilityLevel(getType());
+        Entity victim = e.getEntity();
+
+        int added = 1;
+        if(level > 2) {
+            added = 2;
+        }
+
+        e.setDamage(e.getDamage() + added);
+
+        if(level > 1 && RandomUtil.chance(10))
+        {
+            int add = 5;
+            if(level > 3)add = 10;
+
+            e.setDamage(e.getDamage() + (e.getDamage() / 100 * add));
+        }
+
+        if(level > 4)
+        {
+            for(Entity ent : victim.getNearbyEntities(2,2,2))
+            {
+                if(ent instanceof LivingEntity && !(ent instanceof Player) && WGUtil.canFightEachother(p, ent))
+                {
+                    ((LivingEntity) ent).damage(1);
+                }
+            }
+        }
 
     }
 
@@ -31,7 +70,7 @@ public class BattleAxe implements IAbility
 
     @Override
     public AbilityType getType() {
-        return AbilityType.BATTLLEAXE;
+        return AbilityType.BATTLEAXE;
     }
 
     @Override
@@ -81,7 +120,7 @@ public class BattleAxe implements IAbility
                 break;
             case 3: desc = new String[]{"You do an additional 1 damage with axes."};
                 break;
-            case 4: desc = new String[]{"There's a 10% chane you will do a critical hit, adding 10% damage."};
+            case 4: desc = new String[]{"There's a 10% chance you will do a critical hit, adding 10% damage."};
                 break;
             case 5: desc = new String[]{"You will now hit multiple mobs at once when using an axe."};
                 break;

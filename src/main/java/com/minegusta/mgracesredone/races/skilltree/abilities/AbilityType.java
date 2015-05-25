@@ -13,7 +13,7 @@ import java.util.List;
 
 public enum AbilityType
 {
-    BATTLLEAXE(new BattleAxe()),
+    BATTLEAXE(new BattleAxe()),
     BATTLECRY(new BattleCry()),
     COMBATANT(new Combatant()),
     EARTQUAKE(new Earthquake()),
