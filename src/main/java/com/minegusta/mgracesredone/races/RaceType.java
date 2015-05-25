@@ -2,7 +2,6 @@ package com.minegusta.mgracesredone.races;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.util.EulerAngle;
 
 public enum RaceType
 {

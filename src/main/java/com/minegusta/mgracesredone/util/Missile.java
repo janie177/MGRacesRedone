@@ -1,12 +1,10 @@
 package com.minegusta.mgracesredone.util;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 public class Missile

@@ -1,10 +1,13 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -22,10 +25,11 @@ import org.bukkit.potion.PotionEffectType;
 public class DwarfListener implements Listener
 {
     @EventHandler
-    public void onDwarfAxeHit(EntityDamageByEntityEvent e)
+    public void onDwarfDamage(EntityDamageByEntityEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
+        //Axe boost in damage
         if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player p = (Player) e.getDamager();
@@ -36,13 +40,16 @@ public class DwarfListener implements Listener
         }
 
         //Arrow weakness
-
         if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
             if(isDwarf(p) && !e.isCancelled() && WGUtil.canGetDamage(p))
             {
-                e.setDamage(e.getDamage() + 1.0);
+                e.setDamage(e.getDamage() + 3.0);
+            }
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.PROJECTILEPROTECTION))
+            {
+                AbilityType.PROJECTILEPROTECTION.run(e);
             }
         }
     }
@@ -55,11 +62,9 @@ public class DwarfListener implements Listener
         if(e.getEntity().getKiller() != null)
         {
             Player p = e.getEntity().getKiller();
-            if(isDwarf(p))
+            if(Races.getMGPlayer(p).hasAbility(AbilityType.COMBATANT))
             {
-                PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 8);
-                EffectUtil.playParticle(p, Effect.VILLAGER_THUNDERCLOUD);
-                EffectUtil.playSound(p, Sound.ANVIL_USE);
+                AbilityType.COMBATANT.run(p);
             }
         }
     }
@@ -71,6 +76,13 @@ public class DwarfListener implements Listener
 
         Player p = e.getPlayer();
 
+        //Gold block hit
+        if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.GOLD_BLOCK && Races.getMGPlayer(p).getAbilityLevel(AbilityType.TUNNLER) > 4)
+        {
+            AbilityType.TUNNLER.run(p);
+        }
+
+        //Battle Cry
         if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && isDwarf(p) && ItemUtil.isAxe(p.getItemInHand().getType()))
         {
             String uuid = p.getUniqueId().toString();
@@ -109,10 +121,20 @@ public class DwarfListener implements Listener
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
         Player p = e.getPlayer();
+        MGPlayer mgp = Races.getMGPlayer(p);
+        int level = mgp.getAbilityLevel(AbilityType.MINER);
 
-        if(isDwarf(p) && ItemUtil.isOre(e.getBlock().getType()) && !e.isCancelled())
+        if(level < 2)return;
+
+        if(e.isCancelled())return;
+
+        if(ItemUtil.isOre(e.getBlock().getType()))
         {
-            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 7);
+            PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 12);
+        }
+        else if(e.getBlock().getType() == Material.STONE && e.getBlock().getLightLevel() < 5 && RandomUtil.chance(10) && p.getLocation().getBlock().getType() == Material.AIR)
+        {
+            p.getLocation().getBlock().setType(Material.TORCH);
         }
     }
 

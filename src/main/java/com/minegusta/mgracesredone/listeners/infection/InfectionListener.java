@@ -6,7 +6,6 @@ import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.Demon;
 import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.recipes.AngelFeatherRecipe;
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;

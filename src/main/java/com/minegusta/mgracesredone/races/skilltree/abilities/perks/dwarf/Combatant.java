@@ -2,12 +2,19 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf;
 
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
@@ -20,7 +27,30 @@ public class Combatant implements IAbility
     }
 
     @Override
-    public void run(Player player) {
+    public void run(Player player)
+    {
+        EffectUtil.playSound(player, Sound.ANVIL_USE);
+
+        MGPlayer mgp = Races.getMGPlayer(player);
+        int level = mgp.getAbilityLevel(getType());
+
+
+        //The boosts
+
+        PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 0, 6);
+
+        if(level > 1)
+        {
+            PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 7);
+        }
+        if(level > 2)
+        {
+            PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 7);
+        }
+        if(level > 3)
+        {
+            PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 0, 5);
+        }
 
     }
 
@@ -31,7 +61,7 @@ public class Combatant implements IAbility
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.COMBATANT;
     }
 
     @Override

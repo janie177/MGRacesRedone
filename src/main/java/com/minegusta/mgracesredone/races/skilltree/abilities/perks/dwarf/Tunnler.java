@@ -5,9 +5,13 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
@@ -20,7 +24,13 @@ public class Tunnler implements IAbility
     }
 
     @Override
-    public void run(Player player) {
+    public void run(Player player)
+    {
+
+        //Give effects when the player hits a gold block.
+        PotionUtil.updatePotion(player, PotionEffectType.SPEED, 2, 5);
+        PotionUtil.updatePotion(player, PotionEffectType.JUMP, 1, 5);
+        EffectUtil.playParticle(player, Effect.FLAME);
 
     }
 
@@ -31,7 +41,7 @@ public class Tunnler implements IAbility
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.TUNNLER;
     }
 
     @Override

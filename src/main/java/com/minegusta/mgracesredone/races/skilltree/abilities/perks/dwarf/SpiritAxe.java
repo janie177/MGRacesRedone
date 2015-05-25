@@ -25,12 +25,12 @@ public class SpiritAxe implements IAbility
 
     @Override
     public String getName() {
-        return null;
+        return "Spirit Axe";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.SPIRITAXE;
     }
 
     @Override
@@ -40,22 +40,22 @@ public class SpiritAxe implements IAbility
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.GOLD_AXE;
     }
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
     }
 
     @Override
     public AbilityGroup getGroup() {
-        return null;
+        return AbilityGroup.ACTIVE;
     }
 
     @Override
     public int getCooldown(int level) {
-        return 0;
+        return 100;
     }
 
     @Override
@@ -74,15 +74,15 @@ public class SpiritAxe implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{":D"};
+            case 1: desc = new String[]{"Summon a flying iron axe that attacks your target.", "Activate by crouch hitting a target.", "Lasts for 6 seconds."};
                 break;
-            case 2: desc = new String[]{":D"};
+            case 2: desc = new String[]{"Your axe has a strength boost."};
                 break;
-            case 3: desc = new String[]{":D"};
+            case 3: desc = new String[]{"Your axe is now diamond instead of iron."};
                 break;
-            case 4: desc = new String[]{":D"};
+            case 4: desc = new String[]{"Two weaker iron axes will be summoned besides your main axe."};
                 break;
-            case 5: desc = new String[]{":D"};
+            case 5: desc = new String[]{"Your axe will not die as easily."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;

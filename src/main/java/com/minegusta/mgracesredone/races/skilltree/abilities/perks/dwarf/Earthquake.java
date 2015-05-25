@@ -30,7 +30,7 @@ public class Earthquake implements IAbility
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.EARTQUAKE;
     }
 
     @Override

@@ -1,15 +1,15 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.minegusta.mgracesredone.main.Main;
-import com.minegusta.mgracesredone.playerdata.MGPlayer;
-import com.minegusta.mgracesredone.races.RaceType;
-import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
-import com.minegusta.mgracesredone.util.*;
 import com.minegusta.mgracesredone.main.Races;
-import org.bukkit.*;
-import org.bukkit.entity.*;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.util.DemonPowers;
+import com.minegusta.mgracesredone.util.PlayerUtil;
+import com.minegusta.mgracesredone.util.WeatherUtil;
+import com.minegusta.mgracesredone.util.WorldCheck;
+import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -19,9 +19,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-
-import java.util.List;
-import java.util.concurrent.ConcurrentMap;
 
 public class DemonListener implements Listener
 {

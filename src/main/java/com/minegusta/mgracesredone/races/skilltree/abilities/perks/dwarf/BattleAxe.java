@@ -31,7 +31,7 @@ public class BattleAxe implements IAbility
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.BATTLLEAXE;
     }
 
     @Override

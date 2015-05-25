@@ -1,9 +1,7 @@
 package com.minegusta.mgracesredone.util;
 
 import com.google.common.collect.Lists;
-import com.minegusta.mgracesredone.races.RaceType;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 
 import java.util.List;
 

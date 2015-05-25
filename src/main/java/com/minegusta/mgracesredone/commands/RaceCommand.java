@@ -1,12 +1,12 @@
 package com.minegusta.mgracesredone.commands;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
-import com.minegusta.mgracesredone.util.MGItem;
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.util.MGItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

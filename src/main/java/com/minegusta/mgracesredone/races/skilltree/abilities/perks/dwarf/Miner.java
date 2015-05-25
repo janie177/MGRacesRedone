@@ -30,7 +30,7 @@ public class Miner implements IAbility
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.MINER;
     }
 
     @Override

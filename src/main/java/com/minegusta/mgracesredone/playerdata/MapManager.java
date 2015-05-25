@@ -1,7 +1,6 @@
 package com.minegusta.mgracesredone.playerdata;
 
 import com.minegusta.mgracesredone.data.Storage;
-import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.main.Races;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

@@ -1,12 +1,15 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.List;
 
@@ -14,8 +17,15 @@ public class ProjectileProtection implements IAbility
 {
 
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+        EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
 
+        Player p = (Player) e.getEntity();
+        MGPlayer mgp = Races.getMGPlayer(p);
+        int level = mgp.getAbilityLevel(getType());
+
+        e.setDamage(e.getDamage() - level);
     }
 
     @Override
@@ -25,12 +35,12 @@ public class ProjectileProtection implements IAbility
 
     @Override
     public String getName() {
-        return null;
+        return "Projectile Protection";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.PROJECTILEPROTECTION;
     }
 
     @Override
@@ -40,17 +50,17 @@ public class ProjectileProtection implements IAbility
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.ARROW;
     }
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
     }
 
     @Override
     public AbilityGroup getGroup() {
-        return null;
+        return AbilityGroup.PASSIVE;
     }
 
     @Override
@@ -65,7 +75,7 @@ public class ProjectileProtection implements IAbility
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 2;
     }
 
     @Override
@@ -74,15 +84,9 @@ public class ProjectileProtection implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{":D"};
+            case 1: desc = new String[]{"Projectiles do 1 less damage."};
                 break;
-            case 2: desc = new String[]{":D"};
-                break;
-            case 3: desc = new String[]{":D"};
-                break;
-            case 4: desc = new String[]{":D"};
-                break;
-            case 5: desc = new String[]{":D"};
+            case 2: desc = new String[]{"Projectiles do 1 less damage."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;

@@ -1,7 +1,6 @@
 package com.minegusta.mgracesredone.tasks;
 
 import com.minegusta.mgracesredone.data.Storage;
-import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import org.bukkit.Bukkit;

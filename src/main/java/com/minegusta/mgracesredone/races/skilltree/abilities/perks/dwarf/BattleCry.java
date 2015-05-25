@@ -8,7 +8,6 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.omg.PortableInterceptor.ACTIVE;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class BattleCry implements IAbility
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.BATTLECRY;
     }
 
     @Override

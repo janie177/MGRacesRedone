@@ -25,12 +25,12 @@ public class StoneShape implements IAbility
 
     @Override
     public String getName() {
-        return null;
+        return "StoneShape";
     }
 
     @Override
     public AbilityType getType() {
-        return null;
+        return AbilityType.STONESHAPE;
     }
 
     @Override
@@ -40,22 +40,22 @@ public class StoneShape implements IAbility
 
     @Override
     public Material getDisplayItem() {
-        return null;
+        return Material.STONE;
     }
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
     }
 
     @Override
     public AbilityGroup getGroup() {
-        return null;
+        return AbilityGroup.ACTIVE;
     }
 
     @Override
     public int getCooldown(int level) {
-        return 0;
+        return 100;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class StoneShape implements IAbility
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -74,15 +74,11 @@ public class StoneShape implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{":D"};
+            case 1: desc = new String[]{"Create a stone wall around you, effectively blocking out or trapping enemies.", "Activate by hitting the floor with an axe.", "Lasts for 6 seconds."};
                 break;
-            case 2: desc = new String[]{":D"};
+            case 2: desc = new String[]{"Your wall lasts for 10 seconds."};
                 break;
-            case 3: desc = new String[]{":D"};
-                break;
-            case 4: desc = new String[]{":D"};
-                break;
-            case 5: desc = new String[]{":D"};
+            case 3: desc = new String[]{"Breaking your wall will cause a small explosion."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;

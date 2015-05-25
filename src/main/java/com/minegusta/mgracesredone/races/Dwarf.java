@@ -1,11 +1,12 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.ItemUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.WeatherUtil;
 import org.bukkit.Effect;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -57,16 +58,32 @@ public class Dwarf extends Race {
     public void passiveBoost(Player p)
     {
         double height = p.getLocation().getY();
+        MGPlayer mgp = Races.getMGPlayer(p);
 
-        if(height < 50)
+        int tunnlerLevel = mgp.getAbilityLevel(AbilityType.TUNNLER);
+
+        if(height < 50 && tunnlerLevel > 0)
         {
+            if(height < 26)
+            {
+                if(tunnlerLevel > 3)
+                {
+                    PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 1, 5);
+                    PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 0, 5);
+                }
+                else if(tunnlerLevel > 2)
+                {
+                    PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 1, 5);
+                }
+            }
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+            if(tunnlerLevel > 1) PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         }
 
-        if(ItemUtil.isPickAxe(p.getItemInHand().getType()))
+        int minerLevel = mgp.getAbilityLevel(AbilityType.MINER);
+
+        if(minerLevel > 0 && ItemUtil.isPickAxe(p.getItemInHand().getType()))
         {
-            EffectUtil.playParticle(p, Effect.SMOKE);
             PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 2, 5);
         }
     }
