@@ -62,8 +62,12 @@ public class Earthquake implements IAbility
             return;
         }
 
+        //Message
+        ChatUtil.sendString(player, "You used earthquake on your location!");
+
         //Run the ability here\
         task(l, duration, radius, strength);
+        Cooldown.newCoolDown(name, uuid, getCooldown(level));
     }
 
     private void task(final Location l, int duration, final int radius, final double strength)
@@ -91,7 +95,7 @@ public class Earthquake implements IAbility
 
     private void shake(final Location l, int radius, double strength)
     {
-        Entity dummy = l.getWorld().spawnEntity(l, EntityType.UNKNOWN);
+        Entity dummy = l.getWorld().spawnEntity(l, EntityType.ARROW);
 
         for(Entity ent : dummy.getNearbyEntities(radius, 2, radius))
         {
