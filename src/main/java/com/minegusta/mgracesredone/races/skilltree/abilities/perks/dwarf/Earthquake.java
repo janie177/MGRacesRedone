@@ -102,10 +102,9 @@ public class Earthquake implements IAbility
                 double min = range / 2;
 
                 double x = RandomUtil.randomDouble(range, 0) - min;
-                double y = RandomUtil.randomDouble(range, 0) - min;
                 double z = RandomUtil.randomDouble(range, 0) - min;
 
-                ent.setVelocity(ent.getVelocity().add(new Vector(x,y,z)));
+                ent.setVelocity(ent.getVelocity().add(new Vector(x,ent.getVelocity().getY(),z)));
             }
         }
         dummy.remove();
