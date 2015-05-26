@@ -16,10 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
@@ -99,7 +96,7 @@ public class Earthquake implements IAbility
 
         for(Entity ent : dummy.getNearbyEntities(radius, 2, radius))
         {
-            if(!(ent instanceof Player && Races.getMGPlayer((Player) ent).getRaceType() == RaceType.DWARF) && (ent instanceof Player || ent instanceof Item))
+            if(!(ent instanceof Player && Races.getMGPlayer((Player) ent).getRaceType() == RaceType.DWARF) && (ent instanceof LivingEntity || ent instanceof Item))
             {
                 double range = strength * 0.6;
                 double min = radius / 2;
