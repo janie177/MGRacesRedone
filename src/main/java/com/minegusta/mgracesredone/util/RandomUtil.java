@@ -22,8 +22,8 @@ public class RandomUtil
         return rand.nextInt(max) + 1;
     }
 
-    public static double randomDouble(double max)
+    public static double randomDouble(double max, double min)
     {
-        return max * rand.nextDouble();
+        return min + (max - min) * rand.nextDouble();
     }
 }

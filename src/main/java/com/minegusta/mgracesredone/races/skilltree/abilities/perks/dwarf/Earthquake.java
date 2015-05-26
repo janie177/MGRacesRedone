@@ -99,11 +99,11 @@ public class Earthquake implements IAbility
             if(!(ent instanceof Player && Races.getMGPlayer((Player) ent).getRaceType() == RaceType.DWARF) && (ent instanceof LivingEntity || ent instanceof Item))
             {
                 double range = strength * 0.6;
-                double min = radius / 2;
+                double min = range / 2;
 
-                double x = RandomUtil.randomDouble(range) - min;
-                double y = RandomUtil.randomDouble(range) - min;
-                double z = RandomUtil.randomDouble(range) - min;
+                double x = RandomUtil.randomDouble(range, 0) - min;
+                double y = RandomUtil.randomDouble(range, 0) - min;
+                double z = RandomUtil.randomDouble(range, 0) - min;
 
                 ent.setVelocity(ent.getVelocity().add(new Vector(x,y,z)));
             }
