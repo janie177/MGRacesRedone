@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.main;
 import com.minegusta.mgracesredone.data.Storage;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

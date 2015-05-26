@@ -1,9 +1,14 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.Cooldown;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -19,7 +24,32 @@ public class StoneShape implements IAbility
     }
 
     @Override
-    public void run(Player player) {
+    public void run(Player player)
+    {
+        //Standard data needed.
+        MGPlayer mgp = Races.getMGPlayer(player);
+        int level = mgp.getAbilityLevel(getType());
+        String name = "";
+        String uuid = player.getUniqueId().toString();
+
+        //Cooldown?
+        if(!Cooldown.isCooledDown(name, uuid))
+        {
+            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
+            return;
+        }
+
+        //Worldguard?
+        if(!WGUtil.canBuild(player))
+        {
+            ChatUtil.sendString(player, "You cannot use " + getName() + " here.");
+            return;
+        }
+
+        //Run the ability here.
+
+
+
 
     }
 

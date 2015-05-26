@@ -80,6 +80,14 @@ public class DwarfListener implements Listener
         if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.GOLD_BLOCK && Races.getMGPlayer(p).getAbilityLevel(AbilityType.TUNNLER) > 4)
         {
             AbilityType.TUNNLER.run(p);
+            return;
+        }
+
+        //Earthquake
+        if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR && Races.getMGPlayer(p).hasAbility(AbilityType.EARTQUAKE) && ItemUtil.isPickAxe(p.getItemInHand().getType()))
+        {
+            AbilityType.EARTQUAKE.run(p);
+            return;
         }
 
         //Battle Cry
