@@ -81,7 +81,7 @@ public class Earthquake implements IAbility
                     public void run()
                     {
                         shake(l, radius, strength);
-                        if(RandomUtil.chance(20))
+                        if(RandomUtil.chance(10))
                         {
                             double x = RandomUtil.randomNumber(2 * radius) - radius;
                             double z = RandomUtil.randomNumber(2 * radius) - radius;
@@ -117,7 +117,7 @@ public class Earthquake implements IAbility
     private void column(final Location l)
     {
         final int duration = 6 * 20;
-        final int delay = 10;
+        final int delay = 6;
 
         final Block b = findAir(l);
 
