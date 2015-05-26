@@ -78,7 +78,7 @@ public class Earthquake implements IAbility
                     public void run()
                     {
                         shake(l, radius, strength);
-                        if(RandomUtil.chance(10))
+                        if(RandomUtil.chance(30))
                         {
                             double x = RandomUtil.randomNumber(2 * radius) - radius;
                             double z = RandomUtil.randomNumber(2 * radius) - radius;
