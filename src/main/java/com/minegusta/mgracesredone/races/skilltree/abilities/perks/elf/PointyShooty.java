@@ -14,6 +14,7 @@ import com.minegusta.mgracesredone.util.RandomUtil;
 import com.minegusta.mgracesredone.util.SpecialArrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -22,6 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -51,6 +54,10 @@ public class PointyShooty implements IAbility
             if (RandomUtil.chance(chance))
             {
                 final Arrow projectile = (Arrow) e.getProjectile();
+                final Vector v = projectile.getVelocity();
+                final ProjectileSource shooter = projectile.getShooter();
+                final Location l = projectile.getLocation();
+
                 final boolean enchantment = ((Player) e.getEntity()).getItemInHand().containsEnchantment(Enchantment.ARROW_INFINITE);
                 if (!enchantment)
                 {
@@ -61,13 +68,11 @@ public class PointyShooty implements IAbility
                     @Override
                     public void run() {
 
-                        Arrow arrow = (Arrow)projectile.getWorld().spawnEntity(projectile.getLocation().add(0, 0.3, 0), EntityType.ARROW);
-                        arrow.setVelocity(projectile.getVelocity());
-                        arrow.setShooter(projectile.getShooter());
-                        arrow.setKnockbackStrength(projectile.getKnockbackStrength());
-                        arrow.setCritical(projectile.isCritical());
-                        arrow.setBounce(projectile.doesBounce());
-                        Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 15);
+                        Arrow arrow = (Arrow)l.getWorld().spawnEntity(l.add(0, 0.3, 0), EntityType.ARROW);
+                        arrow.setVelocity(v);
+                        arrow.setShooter(shooter);
+
+                        Missile.createMissile(l, v, new Effect[]{Effect.HAPPY_VILLAGER}, 15);
                     }
                 }, 14);
             }
