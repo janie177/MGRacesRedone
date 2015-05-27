@@ -48,7 +48,8 @@ public class StoneShape implements IAbility
 
         //Run the ability here.
 
-
+        ChatUtil.sendString(player, "You used " + getName() + "!");
+        Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
 
     }

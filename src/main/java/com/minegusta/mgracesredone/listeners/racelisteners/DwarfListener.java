@@ -91,35 +91,9 @@ public class DwarfListener implements Listener
         }
 
         //Battle Cry
-        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && isDwarf(p) && ItemUtil.isAxe(p.getItemInHand().getType()))
+        if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && ItemUtil.isAxe(p.getItemInHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLECRY))
         {
-            String uuid = p.getUniqueId().toString();
-            String name = "bcry";
-            if(Cooldown.isCooledDown(name, uuid))
-            {
-                Cooldown.newCoolDown(name, uuid, 45);
-                EffectUtil.playParticle(p, Effect.VILLAGER_THUNDERCLOUD);
-                EffectUtil.playSound(p, Sound.ANVIL_USE);
-                p.sendMessage(ChatColor.DARK_GRAY + "You yell and knock back all your enemies while boosting strength!");
-                PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 6);
-                for(Entity ent : p.getNearbyEntities(5.0, 5.0, 5.0)) {
-                    if (!(ent instanceof LivingEntity)) continue;
-                    LivingEntity le = (LivingEntity) ent;
-                    if(!WGUtil.canFightEachother(p, ent))continue;
-                    if (le instanceof Player)
-                    {
-                        ((Player) le).sendMessage(ChatColor.RED + "You were knocked back by an angry dwarf!");
-                    }
-                    EffectUtil.playSound(le, Sound.ANVIL_USE);
-                    EffectUtil.playParticle(le, Effect.CRIT);
-                    le.teleport(le.getLocation().add(0,0.1,0));
-                    le.setVelocity(le.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(2.4));
-                }
-            }
-            else
-            {
-                ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use BattleCry.");
-            }
+            AbilityType.BATTLECRY.run(p);
         }
     }
 

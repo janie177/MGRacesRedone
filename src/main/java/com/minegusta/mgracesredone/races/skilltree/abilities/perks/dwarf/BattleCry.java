@@ -7,12 +7,17 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
-import com.minegusta.mgracesredone.util.WGUtil;
+import com.minegusta.mgracesredone.util.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
@@ -49,9 +54,46 @@ public class BattleCry implements IAbility
 
         //Run the ability here.
 
+        //Message + cooldown start.
+        ChatUtil.sendString(player, "You used " + getName() + "!");
+        Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
+        //Effects
+        EffectUtil.playParticle(player, Effect.VILLAGER_THUNDERCLOUD);
+        EffectUtil.playSound(player, Sound.ANVIL_USE);
 
+        //The variables
+        boolean strength = level > 3;
+        boolean weaken = level > 2;
+        boolean stun = level > 1;
+        double knockbackPower = 1.6;
+        if(level > 4) knockbackPower = 2.2;
 
+        //Run the ability
+        if(strength)PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 4);
+
+        for(Entity ent : player.getNearbyEntities(5.0, 5.0, 5.0)) {
+            if (!(ent instanceof LivingEntity)) continue;
+
+            LivingEntity le = (LivingEntity) ent;
+
+            if (!WGUtil.canFightEachother(player, ent)) continue;
+
+            if (le instanceof Player) {
+                ((Player) le).sendMessage(ChatColor.RED + "You were knocked back by an angry dwarf!");
+            }
+            EffectUtil.playSound(le, Sound.ANVIL_USE);
+            EffectUtil.playParticle(le, Effect.CRIT);
+
+            //Launch the entity
+            le.setVelocity(le.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(knockbackPower));
+
+            //weaken
+            if(weaken) PotionUtil.updatePotion(le, PotionEffectType.WEAKNESS, 1, 6);
+
+            //stun
+            if(stun) PotionUtil.updatePotion(le, PotionEffectType.SLOW, 10, 4);
+        }
     }
 
     @Override
@@ -111,11 +153,11 @@ public class BattleCry implements IAbility
                 break;
             case 2: desc = new String[]{"Affected enemies are now stunned for 4 seconds."};
                 break;
-            case 3: desc = new String[]{"Enemies are weakened for 4 seconds."};
+            case 3: desc = new String[]{"Enemies are weakened for 6 seconds."};
                 break;
-            case 4: desc = new String[]{"The knock-back effect is 50% stronger."};
+            case 4: desc = new String[]{"You gain a strength boost for 4 seconds."};
                 break;
-            case 5: desc = new String[]{"The cool-down is reduced to 50 seconds."};
+            case 5: desc = new String[]{"The knock-back effect is 50% stronger.."};
                 break;
             default: desc = new String[]{"This is an error!"};
                 break;
