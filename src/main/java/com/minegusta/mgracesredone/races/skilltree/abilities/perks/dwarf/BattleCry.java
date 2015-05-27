@@ -118,7 +118,7 @@ public class BattleCry implements IAbility
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
     }
 
     @Override
