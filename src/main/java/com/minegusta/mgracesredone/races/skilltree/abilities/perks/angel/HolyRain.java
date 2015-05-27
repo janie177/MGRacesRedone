@@ -116,7 +116,7 @@ public class HolyRain implements IAbility
     {
 
         PotionUtil.updatePotion(ent, PotionEffectType.HUNGER, 0, 5);
-        PotionUtil.updatePotion(ent, PotionEffectType.SLOW, 0, 5);
+        PotionUtil.updatePotion(ent, PotionEffectType.SLOW, 1, 5);
     }
 
     @Override
