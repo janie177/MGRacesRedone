@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf;
 
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -11,6 +12,7 @@ import com.minegusta.mgracesredone.util.ItemUtil;
 import com.minegusta.mgracesredone.util.Missile;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import com.minegusta.mgracesredone.util.SpecialArrows;
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -46,18 +48,28 @@ public class PointyShooty implements IAbility
             }
 
             //Double arrow
-            if (RandomUtil.chance(chance)) {
-                Arrow projectile = (Arrow) e.getProjectile();
-                Arrow arrow = (Arrow) e.getEntity().getWorld().spawnEntity(e.getProjectile().getLocation().add(0, 0.3, 0), EntityType.ARROW);
-                arrow.setVelocity(projectile.getVelocity());
-                arrow.setShooter(projectile.getShooter());
-                arrow.setKnockbackStrength(projectile.getKnockbackStrength());
-                arrow.setCritical(projectile.isCritical());
-                arrow.setBounce(projectile.doesBounce());
-                if (!((Player) e.getEntity()).getItemInHand().containsEnchantment(Enchantment.ARROW_INFINITE))
+            if (RandomUtil.chance(chance))
+            {
+                final Arrow projectile = (Arrow) e.getProjectile();
+                final boolean enchantment = ((Player) e.getEntity()).getItemInHand().containsEnchantment(Enchantment.ARROW_INFINITE);
+                if (!enchantment)
+                {
                     ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
+                }
 
-                Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 15);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Arrow arrow = (Arrow)projectile.getWorld().spawnEntity(projectile.getLocation().add(0, 0.3, 0), EntityType.ARROW);
+                        arrow.setVelocity(projectile.getVelocity());
+                        arrow.setShooter(projectile.getShooter());
+                        arrow.setKnockbackStrength(projectile.getKnockbackStrength());
+                        arrow.setCritical(projectile.isCritical());
+                        arrow.setBounce(projectile.doesBounce());
+                        Missile.createMissile(projectile.getLocation(), arrow.getVelocity(), new Effect[]{Effect.HAPPY_VILLAGER}, 15);
+                    }
+                }, 14);
             }
         }
         else if(event instanceof ProjectileHitEvent)
