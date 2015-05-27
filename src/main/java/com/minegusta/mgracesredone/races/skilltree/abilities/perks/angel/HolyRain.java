@@ -34,25 +34,25 @@ public class HolyRain implements IAbility
         final World w = l.getWorld();
         final Location location = l;
 
-        for(int i = 0; i < duration; i++)
+        for(int i = 0; i <= duration * 20; i++)
         {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                @Override
-                public void run()
-                {
-                    w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
-                }
-            }, 5 * i);
-
             if(i % 4 == 0)
             {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run()
                     {
+                        w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
+                    }
+                }, i);
+
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+                    @Override
+                    public void run()
+                    {
                         runRain(location, w, heal);
                     }
-                }, 20 * (i/4));
+                }, i);
             }
         }
     }
