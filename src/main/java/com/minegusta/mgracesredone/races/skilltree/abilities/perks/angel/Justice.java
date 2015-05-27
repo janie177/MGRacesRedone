@@ -91,8 +91,7 @@ public class Justice implements IAbility {
         }
 
         //Launch the player
-        player.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()));
-        player.setVelocity(new Vector(0, speed, 0));
+        player.setVelocity(new Vector(player.getVelocity().getX(), speed, player.getVelocity().getZ()));
     }
 
     @Override
