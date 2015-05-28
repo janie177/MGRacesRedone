@@ -67,6 +67,7 @@ public class SpiritAxe implements IAbility
         //Summon the axe
         final Zombie zombie = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
         PotionUtil.updatePotion(zombie, PotionEffectType.INVISIBILITY, 0, 3600);
+        PotionUtil.updatePotion(zombie, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
         zombie.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
         zombie.getEquipment().setItemInHandDropChance(0);
         if(diamond) zombie.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_AXE, 1));
@@ -97,6 +98,7 @@ public class SpiritAxe implements IAbility
             {
                 final Zombie z = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
                 PotionUtil.updatePotion(z, PotionEffectType.INVISIBILITY, 0, 3600);
+                PotionUtil.updatePotion(z, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
                 z.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
                 z.getEquipment().setItemInHandDropChance(0);
                 if(strengt) PotionUtil.updatePotion(z, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
