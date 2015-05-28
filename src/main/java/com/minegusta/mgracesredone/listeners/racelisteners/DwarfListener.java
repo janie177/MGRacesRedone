@@ -9,18 +9,12 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf.StoneSh
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -58,6 +52,21 @@ public class DwarfListener implements Listener
             if(Races.getMGPlayer(p).hasAbility(AbilityType.PROJECTILEPROTECTION))
             {
                 AbilityType.PROJECTILEPROTECTION.run(e);
+            }
+        }
+    }
+
+    //Axes cannot combust
+    @EventHandler
+    public void onAxeCombust(EntityCombustEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Skeleton)
+        {
+            if(SpiritAxe.axes.containsKey(e.getEntity().getUniqueId().toString()))
+            {
+                e.setCancelled(true);
             }
         }
     }
@@ -138,7 +147,7 @@ public class DwarfListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
-        if(!(e.getEntity() instanceof Zombie) || !(e.getTarget() instanceof Player)) return;
+        if(!(e.getEntity() instanceof Skeleton) || !(e.getTarget() instanceof Player)) return;
 
         String id = e.getEntity().getUniqueId().toString();
 
