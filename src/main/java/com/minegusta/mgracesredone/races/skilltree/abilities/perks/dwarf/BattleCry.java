@@ -66,8 +66,8 @@ public class BattleCry implements IAbility
         boolean strength = level > 3;
         boolean weaken = level > 2;
         boolean stun = level > 1;
-        double knockbackPower = 1.6;
-        if(level > 4) knockbackPower = 2.2;
+        double knockbackPower = 1.9;
+        if(level > 4) knockbackPower = 2.5;
 
         //Run the ability
         if(strength)PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 4);

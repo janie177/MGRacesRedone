@@ -73,7 +73,8 @@ public class StoneShape implements IAbility
                 for(int z = -5; z <= 5; z++)
                 {
                     Location loc = new Location(l.getWorld(), l.getX() + x, l.getY() + y, l.getZ() + z);
-                    if(loc.distance(l) <=5 && loc.getBlock().getType() == Material.AIR)
+                    double distance = loc.distance(l);
+                    if(distance > 4 && distance <=5 && loc.getBlock().getType() == Material.AIR)
                     {
                         locations.add(loc);
                         loc.getBlock().setType(Material.STONE);
