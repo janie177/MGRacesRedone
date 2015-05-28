@@ -56,6 +56,7 @@ public class Tunnler implements IAbility
 
     @Override
     public int getPrice(int level) {
+        if(level > 2) return 2;
         return 1;
     }
 
@@ -87,9 +88,9 @@ public class Tunnler implements IAbility
         {
             case 1: desc = new String[]{"When underground, you gain a defensive boost."};
                 break;
-            case 2: desc = new String[]{"When underground, you gain a strength boost."};
+            case 2: desc = new String[]{"When at extreme depths, you are immune to fire damage."};
                 break;
-            case 3: desc = new String[]{"When at extreme depths, you are immune to fire damage."};
+            case 3: desc = new String[]{"When underground, you gain a strength boost."};
                 break;
             case 4: desc = new String[]{"When hitting a gold block, you will gain a speed and jump boost."};
                 break;

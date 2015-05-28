@@ -66,13 +66,13 @@ public class Dwarf extends Race {
         {
             if(height < 26)
             {
-                if(tunnlerLevel > 2)
+                if(tunnlerLevel > 1)
                 {
                     PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 0, 5);
                 }
             }
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            if(tunnlerLevel > 1) PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+            if(tunnlerLevel > 2) PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         }
 
         int minerLevel = mgp.getAbilityLevel(AbilityType.MINER);
