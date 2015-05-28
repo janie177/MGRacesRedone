@@ -13,6 +13,7 @@ import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
@@ -70,6 +71,7 @@ public class SpiritAxe implements IAbility
         PotionUtil.updatePotion(zombie, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
         zombie.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
         zombie.getEquipment().setItemInHandDropChance(0);
+        zombie.setCustomName(ChatColor.AQUA + "Spirit Axe");
         if(diamond) zombie.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_AXE, 1));
         if(strengt) PotionUtil.updatePotion(zombie, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
         if(damageResist) PotionUtil.updatePotion(zombie, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
@@ -101,6 +103,7 @@ public class SpiritAxe implements IAbility
                 PotionUtil.updatePotion(z, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
                 z.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
                 z.getEquipment().setItemInHandDropChance(0);
+                z.setCustomName(ChatColor.AQUA + "Spirit Axe");
                 if(strengt) PotionUtil.updatePotion(z, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
                 if(damageResist) PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
                 ((Creature)z).setTarget(target);
