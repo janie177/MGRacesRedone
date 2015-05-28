@@ -66,14 +66,9 @@ public class Dwarf extends Race {
         {
             if(height < 26)
             {
-                if(tunnlerLevel > 3)
+                if(tunnlerLevel > 2)
                 {
-                    PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 1, 5);
                     PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 0, 5);
-                }
-                else if(tunnlerLevel > 2)
-                {
-                    PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 1, 5);
                 }
             }
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);

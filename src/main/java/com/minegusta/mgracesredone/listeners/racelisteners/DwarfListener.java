@@ -101,7 +101,7 @@ public class DwarfListener implements Listener
         Player p = e.getPlayer();
 
         //Gold block hit
-        if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.GOLD_BLOCK && Races.getMGPlayer(p).getAbilityLevel(AbilityType.TUNNLER) > 4)
+        if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.GOLD_BLOCK && Races.getMGPlayer(p).getAbilityLevel(AbilityType.TUNNLER) > 3)
         {
             AbilityType.TUNNLER.run(p);
             return;
