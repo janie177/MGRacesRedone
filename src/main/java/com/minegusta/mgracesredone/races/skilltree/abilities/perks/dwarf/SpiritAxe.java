@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class SpiritAxe implements IAbility
 {
-    private static ConcurrentMap<Integer, LivingEntity> axes = Maps.newConcurrentMap();
+    public static ConcurrentMap<String, String> axes = Maps.newConcurrentMap();
 
     @Override
     public void run(Event event)
@@ -38,7 +38,7 @@ public class SpiritAxe implements IAbility
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
         String name = "axespirit";
-        String uuid = player.getUniqueId().toString();
+        final String uuid = player.getUniqueId().toString();
 
         //Cooldown?
         if(!Cooldown.isCooledDown(name, uuid))
@@ -73,6 +73,8 @@ public class SpiritAxe implements IAbility
         if(strengt) PotionUtil.updatePotion(zombie, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
         if(damageResist) PotionUtil.updatePotion(zombie, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
 
+        axes.put(zombie.getUniqueId().toString(), uuid);
+
         //Task
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
             @Override
@@ -81,6 +83,7 @@ public class SpiritAxe implements IAbility
                 {
                     zombie.remove();
                 }
+                axes.remove(zombie.getUniqueId().toString());
             }
         }, 20 * 6);
 
@@ -92,7 +95,7 @@ public class SpiritAxe implements IAbility
         {
             for(int i = 0; i < 2; i++)
             {
-                Zombie z = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+                final Zombie z = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
                 PotionUtil.updatePotion(z, PotionEffectType.INVISIBILITY, 0, 3600);
                 z.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
                 z.getEquipment().setItemInHandDropChance(0);
@@ -100,18 +103,18 @@ public class SpiritAxe implements IAbility
                 if(damageResist) PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
                 ((Creature)z).setTarget(target);
 
-                final int id = axes.size() + 1;
+                final String id = z.getUniqueId().toString();
 
-                axes.put(id, z);
+                axes.put(id, uuid);
 
                 //Despawn task
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run()
                     {
-                        if(!axes.get(id).isDead())
+                        if(!z.isDead())
                         {
-                            axes.get(id).remove();
+                            z.remove();
                         }
                         axes.remove(id);
                     }

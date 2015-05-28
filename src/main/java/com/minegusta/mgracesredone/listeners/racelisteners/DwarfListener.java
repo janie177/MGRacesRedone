@@ -4,14 +4,15 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf.SpiritAxe;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf.StoneShape;
 import com.minegusta.mgracesredone.util.*;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -19,6 +20,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -39,6 +41,12 @@ public class DwarfListener implements Listener
             }
         }
 
+        //SpiritAxe activation
+        if(e.getDamager() instanceof  Player && e.getEntity() instanceof LivingEntity && !e.isCancelled() && ((Player) e.getDamager()).isSneaking() && Races.getMGPlayer((Player) e.getDamager()).hasAbility(AbilityType.SPIRITAXE))
+        {
+            AbilityType.SPIRITAXE.run(e);
+        }
+
         //Arrow weakness
         if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && e.getEntity() instanceof Player)
         {
@@ -51,6 +59,22 @@ public class DwarfListener implements Listener
             {
                 AbilityType.PROJECTILEPROTECTION.run(e);
             }
+        }
+    }
+
+    //Explode blocks in the wall from StoneShape
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getBlock().getWorld()))return;
+
+        Block b = e.getBlock();
+        Location l = b.getLocation();
+
+        if(StoneShape.wallBlocks.containsKey(l))
+        {
+            StoneShape.wallBlocks.remove(l);
+            b.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
         }
     }
 
@@ -83,6 +107,12 @@ public class DwarfListener implements Listener
             return;
         }
 
+        //StoneShape
+        if(e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.STONESHAPE) && ItemUtil.isAxe(e.getPlayer().getItemInHand().getType()) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY())
+        {
+            AbilityType.STONESHAPE.run(p);
+        }
+
         //Earthquake
         if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && Races.getMGPlayer(p).hasAbility(AbilityType.EARTQUAKE) && ItemUtil.isPickAxe(p.getItemInHand().getType()))
         {
@@ -94,7 +124,25 @@ public class DwarfListener implements Listener
         if((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && ItemUtil.isAxe(p.getItemInHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLECRY))
         {
             AbilityType.BATTLECRY.run(p);
+            return;
         }
+    }
+
+    //Spirit axes will not attack their caster.
+    @EventHandler
+    public void onDwarfMonsterTarget(EntityTargetLivingEntityEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+
+        if(!(e.getEntity() instanceof Zombie) || !(e.getTarget() instanceof Player)) return;
+
+        String id = e.getEntity().getUniqueId().toString();
+
+        if(SpiritAxe.axes.containsKey(id) && SpiritAxe.axes.get(id).equals(e.getTarget().getUniqueId().toString()))
+        {
+            e.setCancelled(true);
+        }
+
     }
 
     @EventHandler
