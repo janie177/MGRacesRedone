@@ -71,9 +71,13 @@ public class DwarfListener implements Listener
         Block b = e.getBlock();
         Location l = b.getLocation();
 
+        Bukkit.broadcastMessage("Block mined is a wallblock: " + StoneShape.wallBlocks.containsKey(l));
+        Bukkit.broadcastMessage("Total blocks in map: " + StoneShape.wallBlocks.size());
+
         if(StoneShape.wallBlocks.containsKey(l) && StoneShape.wallBlocks.get(l))
         {
             StoneShape.wallBlocks.remove(l);
+            Bukkit.broadcastMessage("Starting explosion now.");
             l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
         }
     }

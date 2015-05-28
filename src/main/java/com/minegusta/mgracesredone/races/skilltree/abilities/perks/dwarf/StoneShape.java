@@ -76,9 +76,9 @@ public class StoneShape implements IAbility
                     double distance = loc.distance(l);
                     if(distance > 4 && distance <=5 && loc.getBlock().getType() == Material.AIR)
                     {
-                        locations.add(loc);
+                        locations.add(loc.getBlock().getLocation());
                         loc.getBlock().setType(Material.STONE);
-                        wallBlocks.put(loc, explode);
+                        wallBlocks.put(loc.getBlock().getLocation(), explode);
                     }
                 }
             }

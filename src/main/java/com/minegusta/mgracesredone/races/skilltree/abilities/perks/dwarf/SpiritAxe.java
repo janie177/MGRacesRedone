@@ -66,7 +66,7 @@ public class SpiritAxe implements IAbility
         boolean strengt = level > 1;
 
         //Summon the axe
-        final Skeleton skeleton = (Skeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+        final Skeleton skeleton = (Skeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.SKELETON);
         PotionUtil.updatePotion(skeleton, PotionEffectType.INVISIBILITY, 0, 3600);
         PotionUtil.updatePotion(skeleton, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
         skeleton.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
@@ -98,7 +98,7 @@ public class SpiritAxe implements IAbility
         {
             for(int i = 0; i < 2; i++)
             {
-                final Skeleton s = (Skeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+                final Skeleton s = (Skeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.SKELETON);
                 PotionUtil.updatePotion(s, PotionEffectType.INVISIBILITY, 0, 3600);
                 PotionUtil.updatePotion(s, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
                 s.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));

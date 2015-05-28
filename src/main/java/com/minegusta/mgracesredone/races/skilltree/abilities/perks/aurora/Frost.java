@@ -59,7 +59,7 @@ public class Frost implements IAbility
             int radius = 5;
             boolean weaken = level > 2;
             int time = 6;
-            if(level > 1)time = 12;
+            if(level > 1)time = 15;
             if(level > 3)radius = 8;
 
             start(l, radius, time, weaken, uuid, player);
