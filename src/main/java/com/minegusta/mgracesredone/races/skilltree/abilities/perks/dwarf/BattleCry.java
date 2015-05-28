@@ -35,7 +35,7 @@ public class BattleCry implements IAbility
         //Standard data needed.
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-        String name = "";
+        String name = "bcry";
         String uuid = player.getUniqueId().toString();
 
         //Cooldown?

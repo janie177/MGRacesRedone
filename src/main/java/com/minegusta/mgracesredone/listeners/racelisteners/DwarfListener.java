@@ -114,7 +114,7 @@ public class DwarfListener implements Listener
         {
             PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 12);
         }
-        else if(e.getBlock().getType() == Material.STONE && e.getBlock().getLightLevel() < 5 && RandomUtil.chance(10) && p.getLocation().getBlock().getType() == Material.AIR)
+        else if(level > 2 && e.getBlock().getType() == Material.STONE && e.getBlock().getLightLevel() < 5 && RandomUtil.chance(10) && p.getLocation().getBlock().getType() == Material.AIR)
         {
             p.getLocation().getBlock().setType(Material.TORCH);
         }

@@ -42,7 +42,7 @@ public class Earthquake implements IAbility
         int duration = 10;
         if(level > 2)duration = 15;
         Location l = player.getLocation();
-        String name = "";
+        String name = "quake";
         String uuid = player.getUniqueId().toString();
 
         //Cooldown?

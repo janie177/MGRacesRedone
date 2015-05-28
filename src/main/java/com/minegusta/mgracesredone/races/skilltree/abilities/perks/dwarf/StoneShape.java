@@ -29,7 +29,7 @@ public class StoneShape implements IAbility
         //Standard data needed.
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-        String name = "";
+        String name = "stones";
         String uuid = player.getUniqueId().toString();
 
         //Cooldown?
