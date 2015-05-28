@@ -66,49 +66,49 @@ public class SpiritAxe implements IAbility
         boolean strengt = level > 1;
 
         //Summon the axe
-        final Zombie zombie = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
-        PotionUtil.updatePotion(zombie, PotionEffectType.INVISIBILITY, 0, 3600);
-        PotionUtil.updatePotion(zombie, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
-        zombie.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
-        zombie.getEquipment().setItemInHandDropChance(0);
-        zombie.setCustomName(ChatColor.AQUA + "Spirit Axe");
-        if(diamond) zombie.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_AXE, 1));
-        if(strengt) PotionUtil.updatePotion(zombie, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
-        if(damageResist) PotionUtil.updatePotion(zombie, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
+        final Skeleton skeleton = (Skeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+        PotionUtil.updatePotion(skeleton, PotionEffectType.INVISIBILITY, 0, 3600);
+        PotionUtil.updatePotion(skeleton, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
+        skeleton.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
+        skeleton.getEquipment().setItemInHandDropChance(0);
+        skeleton.setCustomName(ChatColor.AQUA + "Spirit Axe");
+        if(diamond) skeleton.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_AXE, 1));
+        if(strengt) PotionUtil.updatePotion(skeleton, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
+        if(damageResist) PotionUtil.updatePotion(skeleton, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
 
-        axes.put(zombie.getUniqueId().toString(), uuid);
+        axes.put(skeleton.getUniqueId().toString(), uuid);
 
         //Task
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
             @Override
             public void run() {
-                if(!zombie.isDead())
+                if(!skeleton.isDead())
                 {
-                    zombie.remove();
+                    skeleton.remove();
                 }
-                axes.remove(zombie.getUniqueId().toString());
+                axes.remove(skeleton.getUniqueId().toString());
             }
         }, 20 * 6);
 
 
-        ((Creature)zombie).setTarget(target);
+        ((Creature)skeleton).setTarget(target);
 
         //The two smaller axes
         if(sideAxes)
         {
             for(int i = 0; i < 2; i++)
             {
-                final Zombie z = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
-                PotionUtil.updatePotion(z, PotionEffectType.INVISIBILITY, 0, 3600);
-                PotionUtil.updatePotion(z, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
-                z.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
-                z.getEquipment().setItemInHandDropChance(0);
-                z.setCustomName(ChatColor.AQUA + "Spirit Axe");
-                if(strengt) PotionUtil.updatePotion(z, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
-                if(damageResist) PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
-                ((Creature)z).setTarget(target);
+                final Skeleton s = (Skeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
+                PotionUtil.updatePotion(s, PotionEffectType.INVISIBILITY, 0, 3600);
+                PotionUtil.updatePotion(s, PotionEffectType.FIRE_RESISTANCE, 0, 3600);
+                s.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
+                s.getEquipment().setItemInHandDropChance(0);
+                s.setCustomName(ChatColor.AQUA + "Spirit Axe");
+                if(strengt) PotionUtil.updatePotion(s, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
+                if(damageResist) PotionUtil.updatePotion(s, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
+                ((Creature)s).setTarget(target);
 
-                final String id = z.getUniqueId().toString();
+                final String id = s.getUniqueId().toString();
 
                 axes.put(id, uuid);
 
@@ -117,9 +117,9 @@ public class SpiritAxe implements IAbility
                     @Override
                     public void run()
                     {
-                        if(!z.isDead())
+                        if(!s.isDead())
                         {
-                            z.remove();
+                            s.remove();
                         }
                         axes.remove(id);
                     }

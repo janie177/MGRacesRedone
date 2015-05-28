@@ -71,10 +71,10 @@ public class DwarfListener implements Listener
         Block b = e.getBlock();
         Location l = b.getLocation();
 
-        if(StoneShape.wallBlocks.containsKey(l))
+        if(StoneShape.wallBlocks.containsKey(l) && StoneShape.wallBlocks.get(l))
         {
             StoneShape.wallBlocks.remove(l);
-            b.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
+            l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
         }
     }
 
