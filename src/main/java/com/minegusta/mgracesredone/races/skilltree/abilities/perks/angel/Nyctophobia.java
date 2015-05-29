@@ -75,7 +75,7 @@ public class Nyctophobia implements IAbility {
                 desc = new String[]{"Your weakness is halved in dark areas."};
                 break;
             case 2:
-                desc = new String[]{"When in the nether, you wont get nausea."};
+                desc = new String[]{"When in the nether or end, you wont get nausea."};
                 break;
             case 3:
                 desc = new String[]{"You are immune to poison."};

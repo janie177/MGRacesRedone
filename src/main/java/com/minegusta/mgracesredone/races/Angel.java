@@ -55,7 +55,11 @@ public class Angel extends Race {
         if(WeatherUtil.isHell(p.getLocation()) || WeatherUtil.isEnd(p.getLocation()))
         {
             PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 0, 5);
-            if(mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) < 2)PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
+            if(mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) < 2)
+            {
+                PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 10);
+            }
+            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
         }
 
 
