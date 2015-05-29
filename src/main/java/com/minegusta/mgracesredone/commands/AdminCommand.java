@@ -16,7 +16,7 @@ public class AdminCommand implements CommandExecutor
 {
     @Override
     public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
-        if(!s.isOp() || s instanceof ConsoleCommandSender)
+        if(!s.isOp())
         {
             s.sendMessage(ChatColor.RED + "You cannot use that :( Boohoo. -cri-");
             return true;
