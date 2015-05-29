@@ -97,7 +97,7 @@ public class AbilityMenu
                 meta.setDisplayName(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RESET PERKS");
 
                 lore.add(ChatColor.RED + "Use this to reset your perks.");
-                lore.add(ChatColor.RED + "Your spent perk-points will NOT be refunded.");
+                lore.add(ChatColor.RED + "You will only get 25% of your spent points back.");
                 lore.add(ChatColor.RED + "Use " + ChatColor.DARK_RED + "/perkreset" + ChatColor.RED + " to do this.");
 
                 meta.setLore(lore);

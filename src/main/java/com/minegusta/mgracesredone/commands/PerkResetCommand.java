@@ -2,6 +2,8 @@ package com.minegusta.mgracesredone.commands;
 
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -24,14 +26,14 @@ public class PerkResetCommand implements CommandExecutor
 
         if(!commandCount.containsKey(p.getUniqueId().toString()))
         {
-            ChatUtil.sendString(p, "Are you absolutely sure? You wont get your perk points back.");
+            ChatUtil.sendString(p, "Are you absolutely sure? You will lose alot of spent points.");
             p.sendMessage(ChatColor.RED + "Use the command again to confirm.");
             commandCount.put(p.getUniqueId().toString(), 1);
             return true;
         }
         if(commandCount.containsKey(p.getUniqueId().toString()) && commandCount.get(p.getUniqueId().toString()) == 1)
         {
-            ChatUtil.sendString(p, "There is no way you will get your perk points back.");
+            ChatUtil.sendString(p, "You will only get 25% of your spent points back.");
             p.sendMessage(ChatColor.RED + "Are you ENTIRELY sure?");
             p.sendMessage(ChatColor.RED + "Use the command one last time to reset all your perks.");
             commandCount.put(p.getUniqueId().toString(), 2);
@@ -40,8 +42,22 @@ public class PerkResetCommand implements CommandExecutor
         else if(commandCount.containsKey(p.getUniqueId().toString()) && commandCount.get(p.getUniqueId().toString()) == 2)
         {
             ChatUtil.sendString(p, "Your perks have been reset.");
-            Races.getMGPlayer(p).clearAbilities();
-            Races.getMGPlayer(p).saveFile();
+            ChatUtil.sendString(p, "You have been returned 25% of your spent points.");
+
+            MGPlayer mgp = Races.getMGPlayer(p);
+
+            int totalAbilities = 0;
+            for(AbilityType t : mgp.getAbilities().keySet())
+            {
+                for(int levels = 1; levels <= mgp.getAbilityLevel(t); levels++)
+                {
+                    totalAbilities = totalAbilities + t.getCost(levels);
+                }
+            }
+
+            mgp.addPerkPoints(totalAbilities / 4);
+            mgp.clearAbilities();
+            mgp.saveFile();
             commandCount.remove(p.getUniqueId().toString());
             return true;
         }
