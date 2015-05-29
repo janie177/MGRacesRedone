@@ -40,16 +40,9 @@ public class Dwarf extends Race {
         return new String[]
                 {
                         "Dwarves are the proud people of the mountain halls.",
-                        "They prefer to live underground, and mine alot.",
-                        "While deep underground, dwarves gain more strength.",
-                        "The Dwarf prefers axes above all other weapons, and is quite",
-                        "skilled in combat with them.",
-                        "Arrows and other projectiles are one of the few weaknesses of a Dwarf.",
-                        "Dwarves have the blood of a miner, and mine faster than other races.",
-                        "When a dwarf mines ore, they gain even more of a mining boost.",
-                        "Killstreaks are a dwarf's speciality. When they kill a foe using",
-                        "an axe, they gain more power.",
-                        "They also possess the power to knock back enemies using their axe."
+                        "They prefer to live underground, and mine a lot.",
+                        "Dwarves are weak to arrows.",
+                        "Most Dwarven perks focus on mining and axes."
 
                 };
     }
