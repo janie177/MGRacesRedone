@@ -83,7 +83,7 @@ public class DwarfListener implements Listener
         if(StoneShape.wallBlocks.containsKey(l) && StoneShape.wallBlocks.get(l))
         {
             StoneShape.wallBlocks.remove(l);
-            l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
+            l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 2, false, false);
         }
     }
 
@@ -171,7 +171,7 @@ public class DwarfListener implements Listener
         {
             PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 3, 12);
         }
-        else if(level > 2 && e.getBlock().getType() == Material.STONE && e.getBlock().getLightLevel() < 5 && RandomUtil.chance(10) && p.getLocation().getBlock().getType() == Material.AIR)
+        else if(level > 2 && e.getBlock().getType() == Material.STONE && e.getBlock().getLightLevel() < 3 && RandomUtil.chance(10) && p.getLocation().getBlock().getType() == Material.AIR)
         {
             p.getLocation().getBlock().setType(Material.TORCH);
         }
