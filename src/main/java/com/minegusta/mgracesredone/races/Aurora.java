@@ -82,6 +82,7 @@ public class Aurora extends Race {
 
         if(biome == WeatherUtil.BiomeType.ICE && glaceLevel > 0)
         {
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             if(glaceLevel > 4)
             {
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
