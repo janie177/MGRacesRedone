@@ -186,7 +186,7 @@ public class SpiritAxe implements IAbility
 
         switch (level)
         {
-            case 1: desc = new String[]{"Summon a flying iron axe that attacks your target.", "Activate by crouch hitting a target.", "Lasts for 6 seconds."};
+            case 1: desc = new String[]{"Summon a flying iron axe that attacks your (player) target.", "Activate by crouch hitting a target.", "Lasts for 6 seconds."};
                 break;
             case 2: desc = new String[]{"Your axe has a strength boost."};
                 break;
