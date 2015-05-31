@@ -6,6 +6,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf.*;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -13,6 +14,15 @@ import java.util.List;
 
 public enum AbilityType
 {
+    COLDBLOODED(new ColdBlooded()),
+    ENDERSHIELD(new EnderShield()),
+    ENDRIFT(new EndRift()),
+    PREDATOR(new Predator()),
+    OTHERWORLDLY(new OtherWorldly()),
+    PEARLPOWER(new PearlPower()),
+    SHADOW(new Shadow()),
+    TELEKINESIS(new Telekinesis()),
+    WATERRESISTANCE(new WaterResistance()),
     BATTLEAXE(new BattleAxe()),
     BATTLECRY(new BattleCry()),
     COMBATANT(new Combatant()),
