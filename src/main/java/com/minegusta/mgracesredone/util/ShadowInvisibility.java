@@ -23,6 +23,7 @@ public class ShadowInvisibility
         invisible.put(uuid, true);
         for(Player p : Bukkit.getOnlinePlayers())
         {
+            if(p.getUniqueId().equals(added.getUniqueId()))continue;
             p.hidePlayer(added);
         }
     }
@@ -36,6 +37,7 @@ public class ShadowInvisibility
         Player removed = Bukkit.getPlayer(uuid);
         for(Player p : Bukkit.getOnlinePlayers())
         {
+            if(p.getUniqueId().equals(removed.getUniqueId()))continue;
             p.showPlayer(removed);
         }
     }
