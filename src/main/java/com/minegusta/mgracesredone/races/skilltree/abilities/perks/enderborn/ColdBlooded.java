@@ -65,7 +65,7 @@ public class ColdBlooded implements IAbility
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -74,19 +74,13 @@ public class ColdBlooded implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{""};
+                desc = new String[]{"When in the shadow, you gain a defencive boost."};
                 break;
             case 2:
-                desc = new String[]{""};
+                desc = new String[]{"In dark areas, you obtain nightvision."};
                 break;
             case 3:
-                desc = new String[]{""};
-                break;
-            case 5:
-                desc = new String[]{""};
-                break;
-            case 4:
-                desc = new String[]{""};
+                desc = new String[]{"Your blood temperature is dropped.", "Endermen and mites will no longer be able to see or attack you."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

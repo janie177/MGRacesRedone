@@ -1,6 +1,9 @@
 package com.minegusta.mgracesredone.races;
 
 
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -56,24 +59,60 @@ public class EnderBorn extends Race {
     {
         Location loc = p.getLocation();
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
+        MGPlayer mgp = Races.getMGPlayer(p);
 
+        //End biome check
         if(WeatherUtil.isEnd(loc))
         {
-            EffectUtil.playParticle(p, Effect.PORTAL);
-            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
+            int level = mgp.getAbilityLevel(AbilityType.OTHERWORLDLY);
+            if(level > 0)
+            {
+                EffectUtil.playParticle(p, Effect.PORTAL);
+                PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
+                if(level > 1)
+                {
+                    PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+                    if(level > 2)
+                    {
+                        PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
+                        if(level > 3)
+                        {
+                            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
+                            if(level > 4)
+                            {
+                                PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        if((PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p)) && WGUtil.canGetDamage(p) &&  biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
+        //Water and rain damage checks. Stacks.
+        if(PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p) &&  biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
         {
-            p.damage(1);
+            int damage = 1;
+            if(mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 0) damage = 1;
+            p.damage(damage);
+        }
+        if(PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p))
+        {
+            int damage = 1;
+            if(mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 1) damage = 1;
+            p.damage(damage);
         }
 
-        if(BlockUtil.getLightLevel(loc) == BlockUtil.LightLevel.DARK)
+        //Darkness check
+        if(BlockUtil.getLightLevel(loc) == BlockUtil.LightLevel.DARK && mgp.hasAbility(AbilityType.COLDBLOODED))
         {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            if(mgp.getAbilityLevel(AbilityType.COLDBLOODED) > 1)
+            {
+                PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 5);
+            }
         }
 
+        //Invisibility check.
         if(p.isSneaking())
         {
             PotionUtil.updatePotion(p, PotionEffectType.INVISIBILITY, 0, 5);

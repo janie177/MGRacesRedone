@@ -80,10 +80,10 @@ public class Telekinesis implements IAbility
             case 3:
                 desc = new String[]{""};
                 break;
-            case 5:
+            case 4:
                 desc = new String[]{""};
                 break;
-            case 4:
+            case 5:
                 desc = new String[]{""};
                 break;
             default:

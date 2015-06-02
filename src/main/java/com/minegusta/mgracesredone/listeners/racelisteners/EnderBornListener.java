@@ -2,7 +2,9 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -10,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -34,17 +37,17 @@ public class EnderBornListener implements Listener
     {
         Player p = e.getPlayer();
         if(!WorldCheck.isEnabled(p.getWorld()))return;
+        MGPlayer mgp = Races.getMGPlayer(p);
 
-        if(isEnderBorn(p) && ItemUtil.isRawMeat(e.getItem().getType()))
+        if(ItemUtil.isRawMeat(e.getItem().getType()) && mgp.hasAbility(AbilityType.PREDATOR))
         {
-            PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 15);
-            PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 15);
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 15);
-            EffectUtil.playParticle(p, Effect.PORTAL, 1, 1, 1, 30);
+            AbilityType.PREDATOR.run(p);
         }
     }
 
-    @EventHandler
+    //Bleeding with the Predator perk.
+
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBleed(EntityDamageByEntityEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
@@ -52,12 +55,9 @@ public class EnderBornListener implements Listener
         if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player p = (Player) e.getDamager();
-            if(isEnderBorn(p) && WGUtil.canFightEachother(p, e.getEntity()))
+            if(!e.isCancelled() && Races.getMGPlayer(p).getAbilityLevel(AbilityType.PREDATOR) > 1 && WGUtil.canFightEachother(p, e.getEntity()))
             {
-                if(RandomUtil.chance(15))
-                {
-                    EntityUtil.bleed((LivingEntity) e.getEntity(), 4);
-                }
+                AbilityType.PREDATOR.run(e);
             }
         }
     }
@@ -164,7 +164,7 @@ public class EnderBornListener implements Listener
         if(e.getTarget() instanceof Player && (e.getEntity() instanceof Enderman || e.getEntity() instanceof Endermite))
         {
             Player p = (Player) e.getTarget();
-            if(!isEnderBorn(p))return;
+            if(Races.getMGPlayer(p).getAbilityLevel(AbilityType.COLDBLOODED) < 3)return;
 
             e.setCancelled(true);
         }
@@ -179,6 +179,7 @@ public class EnderBornListener implements Listener
 
         Player p = e.getPlayer();
         if(!isEnderBorn(p))return;
+
         if(!pearlMap.containsKey(p.getUniqueId().toString()))return;
         e.setCancelled(true);
         if(!pearlMap.get(p.getUniqueId().toString()))

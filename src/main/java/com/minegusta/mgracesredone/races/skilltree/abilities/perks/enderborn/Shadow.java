@@ -50,7 +50,7 @@ public class Shadow implements IAbility
 
     @Override
     public AbilityGroup getGroup() {
-        return AbilityGroup.ACTIVE;
+        return AbilityGroup.PASSIVE;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class Shadow implements IAbility
             case 3:
                 desc = new String[]{""};
                 break;
-            case 5:
+            case 4:
                 desc = new String[]{""};
                 break;
-            case 4:
+            case 5:
                 desc = new String[]{""};
                 break;
             default:

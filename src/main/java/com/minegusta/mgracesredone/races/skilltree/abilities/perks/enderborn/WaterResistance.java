@@ -64,7 +64,7 @@ public class WaterResistance implements IAbility
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 2;
     }
 
     @Override
@@ -73,19 +73,10 @@ public class WaterResistance implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{""};
+                desc = new String[]{"Rain does 1 less damage."};
                 break;
             case 2:
-                desc = new String[]{""};
-                break;
-            case 3:
-                desc = new String[]{""};
-                break;
-            case 5:
-                desc = new String[]{""};
-                break;
-            case 4:
-                desc = new String[]{""};
+                desc = new String[]{"Solid water does 1 less damage."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

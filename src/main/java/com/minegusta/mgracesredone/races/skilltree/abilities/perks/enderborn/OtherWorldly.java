@@ -73,19 +73,19 @@ public class OtherWorldly implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{""};
+                desc = new String[]{"Inside the end, you gain a speed boost."};
                 break;
             case 2:
-                desc = new String[]{""};
+                desc = new String[]{"When in the end, you have a strength 1 boost."};
                 break;
             case 3:
-                desc = new String[]{""};
-                break;
-            case 5:
-                desc = new String[]{""};
+                desc = new String[]{"You obtain a regeneration boost in the end."};
                 break;
             case 4:
-                desc = new String[]{""};
+                desc = new String[]{"You will gain a jump boost in end biomes."};
+                break;
+            case 5:
+                desc = new String[]{"In the end, it doesn't even matter.", "You will also obtain a defence boost."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};
