@@ -6,10 +6,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,9 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -48,7 +43,7 @@ public class EnderBornListener implements Listener
     //Bleeding with the Predator perk.
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onBleed(EntityDamageByEntityEvent e)
+    public void onCombat(EntityDamageByEntityEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
 
@@ -58,6 +53,15 @@ public class EnderBornListener implements Listener
             if(!e.isCancelled() && Races.getMGPlayer(p).getAbilityLevel(AbilityType.PREDATOR) > 1 && WGUtil.canFightEachother(p, e.getEntity()))
             {
                 AbilityType.PREDATOR.run(e);
+            }
+        }
+
+        if(e.getEntity() instanceof Player)
+        {
+            if(ShadowInvisibility.contains(e.getEntity().getUniqueId().toString()))
+            {
+                ShadowInvisibility.remove(e.getEntity().getUniqueId().toString());
+                ChatUtil.sendString(((Player)e.getEntity()), "You got hit and are no longer invisible!");
             }
         }
     }
@@ -185,6 +189,60 @@ public class EnderBornListener implements Listener
         if(!pearlMap.get(p.getUniqueId().toString()))
         {
             p.teleport(e.getTo());
+        }
+    }
+
+    //Listening to invisibility
+
+    @EventHandler
+    public void onLogin(PlayerJoinEvent e)
+    {
+        Player joined = e.getPlayer();
+
+        for(String s : ShadowInvisibility.values())
+        {
+            Player p = Bukkit.getPlayer(s);
+            joined.hidePlayer(p);
+        }
+    }
+
+    @EventHandler
+    public void onEvent(PlayerToggleSneakEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+
+        Player toggler = e.getPlayer();
+        MGPlayer mgp = Races.getMGPlayer(toggler);
+
+        if(mgp.hasAbility(AbilityType.SHADOW))
+        {
+            AbilityType.SHADOW.run(toggler);
+        }
+    }
+
+
+    @EventHandler
+    public void onLogout(PlayerQuitEvent e)
+    {
+        String uuid = e.getPlayer().getUniqueId().toString();
+
+        if(ShadowInvisibility.contains(uuid))
+        {
+            ShadowInvisibility.remove(uuid);
+        }
+    }
+
+    @EventHandler
+    public void onEvent(PlayerChangedWorldEvent e)
+    {
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+
+        Player changed = e.getPlayer();
+        String uuid = changed.getUniqueId().toString();
+
+        if(ShadowInvisibility.contains(uuid))
+        {
+            ShadowInvisibility.remove(uuid);
         }
     }
 

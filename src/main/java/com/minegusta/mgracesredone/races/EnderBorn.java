@@ -111,13 +111,5 @@ public class EnderBorn extends Race {
                 PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 5);
             }
         }
-
-        //Invisibility check.
-        if(p.isSneaking())
-        {
-            PotionUtil.updatePotion(p, PotionEffectType.INVISIBILITY, 0, 5);
-            EffectUtil.playParticle(p, Effect.LARGE_SMOKE, 1, 0, 1, 40);
-        }
-
     }
 }

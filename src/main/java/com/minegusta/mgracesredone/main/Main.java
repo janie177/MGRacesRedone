@@ -1,10 +1,7 @@
 package com.minegusta.mgracesredone.main;
 
 import com.minegusta.mgracesredone.recipes.Recipe;
-import com.minegusta.mgracesredone.tasks.BoostTask;
-import com.minegusta.mgracesredone.tasks.MissileTask;
-import com.minegusta.mgracesredone.tasks.RideTask;
-import com.minegusta.mgracesredone.tasks.SaveTask;
+import com.minegusta.mgracesredone.tasks.*;
 import com.minegusta.mgracesredone.util.OnReload;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -45,6 +42,7 @@ public class Main extends JavaPlugin
         BoostTask.start();
         RideTask.start();
         MissileTask.start();
+        InvisibleTask.start();
 
     }
 
@@ -56,6 +54,7 @@ public class Main extends JavaPlugin
         BoostTask.stop();
         MissileTask.stop();
         RideTask.stop();
+        InvisibleTask.stop();
 
         //Save
         SaveTask.save();

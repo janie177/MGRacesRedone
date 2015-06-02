@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.util;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class ChatUtil
@@ -40,4 +41,6 @@ public class ChatUtil
     {
         p.sendMessage(s2+s1+s2+s1+s2+s1+s2+s1+s2);
     }
+
+
 }
