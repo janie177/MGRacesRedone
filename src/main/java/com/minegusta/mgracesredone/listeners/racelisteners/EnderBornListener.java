@@ -207,14 +207,14 @@ public class EnderBornListener implements Listener
     }
 
     @EventHandler
-    public void onEvent(PlayerToggleSneakEvent e)
+    public void onEvent(PlayerInteractEvent e)
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
 
         Player toggler = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(toggler);
 
-        if(mgp.hasAbility(AbilityType.SHADOW))
+        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY() && e.getClickedBlock().getLocation().distance(e.getPlayer().getLocation()) < 2 && mgp.hasAbility(AbilityType.SHADOW))
         {
             AbilityType.SHADOW.run(toggler);
         }
