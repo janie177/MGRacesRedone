@@ -45,7 +45,8 @@ public class EndRift implements IAbility
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        if(level == 3)return 3;
+        return 2;
     }
 
     @Override
@@ -54,8 +55,10 @@ public class EndRift implements IAbility
     }
 
     @Override
-    public int getCooldown(int level) {
-        return 120;
+    public int getCooldown(int level)
+    {
+        if(level > 2) return 45;
+        return 60;
     }
 
     @Override
@@ -65,7 +68,7 @@ public class EndRift implements IAbility
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -74,19 +77,13 @@ public class EndRift implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{""};
+                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport players.", "Activate by ", "Will stay open for 5 seconds."};
                 break;
             case 2:
-                desc = new String[]{""};
+                desc = new String[]{"Your portal will transport mobs and itemstacks.", "The portals stay open for 9 seconds."};
                 break;
             case 3:
-                desc = new String[]{""};
-                break;
-            case 4:
-                desc = new String[]{""};
-                break;
-            case 5:
-                desc = new String[]{""};
+                desc = new String[]{"The cooldown is reduced to 45 seconds.", "The portals stay open for 15 seconds."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

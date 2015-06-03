@@ -57,6 +57,11 @@ public class EffectUtil
         l.getWorld().spigot().playEffect(l, effect, 1, 1, x, y, z, 1, amount, radius);
     }
 
+    public static void playParticle(Location l, Effect effect, int x, int y, int z, float speed, int amount, int radius)
+    {
+        l.getWorld().spigot().playEffect(l, effect, 1, 1, x, y, z, speed, amount, radius);
+    }
+
     public static void playSound(Entity ent, Sound sound)
     {
         ent.getWorld().playSound(ent.getLocation(), sound, 1, 1);
