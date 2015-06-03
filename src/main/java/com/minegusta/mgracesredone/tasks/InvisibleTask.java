@@ -8,6 +8,7 @@ import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.ShadowInvisibility;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -37,7 +38,8 @@ public class InvisibleTask
     {
         for(String s : ShadowInvisibility.values())
         {
-            EffectUtil.playParticle(Bukkit.getPlayer(UUID.fromString(s)).getLocation(), Effect.PARTICLE_SMOKE, 2,0,2, 30, 30);
+            Location l = Bukkit.getPlayer(UUID.fromString(s)).getLocation();
+            l.getWorld().spigot().playEffect(l, Effect.LARGE_SMOKE, 0, 0, 1,0,1, 1/5, 20, 30);
         }
 
         count++;
