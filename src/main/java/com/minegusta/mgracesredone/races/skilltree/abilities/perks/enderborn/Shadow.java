@@ -53,8 +53,8 @@ public class Shadow implements IAbility
         ChatUtil.sendString(player, "You are now invisible!");
         Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
-        int duration = 5;
-        if(level > 3)duration = 9;
+        int duration = 6;
+        if(level > 3)duration = 10;
 
         ShadowInvisibility.add(uuid, duration);
 
@@ -115,13 +115,13 @@ public class Shadow implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{"You can toggle invisibility in dark areas.", "Activate by right clicking the floor underneath you.", "You will leave a dark shadow on the floor.", "When hit or hitting, your invisibility ends.", "Will last for 5 seconds."};
+                desc = new String[]{"You can toggle invisibility in dark areas.", "Activate by right clicking the floor underneath you.", "You will leave a dark shadow on the floor.", "When hit or hitting, your invisibility ends.", "Will last for 6 seconds."};
                 break;
             case 2:
                 desc = new String[]{"You can now toggle invisibility in lighter areas."};
                 break;
             case 3:
-                desc = new String[]{"Your cooldown is reduced to 30 seconds.", "Your invisibility will last for 9 seconds."};
+                desc = new String[]{"Your cooldown is reduced to 30 seconds.", "Your invisibility will last for 10 seconds."};
                 break;
             case 4:
                 desc = new String[]{"When invisible, you gain a speed and jump boost."};

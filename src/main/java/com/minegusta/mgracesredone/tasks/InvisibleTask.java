@@ -4,6 +4,7 @@ import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.Shadow;
+import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.ShadowInvisibility;
@@ -53,6 +54,7 @@ public class InvisibleTask
                 if(ShadowInvisibility.getRaining(s) < 1)
                 {
                     ShadowInvisibility.remove(s);
+                    ChatUtil.sendString(Bukkit.getPlayer(UUID.fromString(s)), "Your invisibility has ran out!");
                 }
             }
         }
