@@ -2,20 +2,103 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn;
 
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.minegusta.mgracesredone.main.Races;
+import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.Cooldown;
+import com.minegusta.mgracesredone.util.EnderRiftPortal;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Set;
 
 public class EndRift implements IAbility
 {
     @Override
-    public void run(Event event) {
+    public void run(Event event)
+    {
+        PlayerInteractEvent e = (PlayerInteractEvent) event;
+        Player p = e.getPlayer();
+        MGPlayer mgp = Races.getMGPlayer(p);
+        int level = mgp.getAbilityLevel(getType());
+        String name = "endrift";
+        String uuid = p.getUniqueId().toString();
 
+        int duration = 5;
+        if(level > 1) duration = 9;
+        if(level > 2) duration = 15;
+
+        boolean altEntities = level > 1;
+
+        if(EnderRiftPortal.contains(uuid))
+        {
+            EnderRiftPortal.create(uuid, null, null, duration, altEntities);
+        }
+
+        Action a = e.getAction();
+
+        //Right portal
+        if(!p.isSneaking() && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK))
+        {
+            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(BlockFace.UP);
+            if(target.getType() != Material.AIR)
+            {
+                double distance = p.getLocation().distance(target.getLocation()) - 2;
+                target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
+            }
+
+            EnderRiftPortal.setLocation1(uuid, target.getLocation());
+            ChatUtil.sendString(p, "You placed your right-click portal!");
+            return;
+        }
+
+        //Left portal
+        if(!p.isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK))
+        {
+            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(BlockFace.UP);
+            if(target.getType() != Material.AIR)
+            {
+                double distance = p.getLocation().distance(target.getLocation()) - 2;
+                target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
+            }
+
+            EnderRiftPortal.setLocation1(uuid, target.getLocation());
+            ChatUtil.sendString(p, "You placed your left-click portal!");
+            return;
+        }
+
+        //Running the ability
+        if(p.isSneaking())
+        {
+            if(!EnderRiftPortal.portalsSet(uuid))
+            {
+                ChatUtil.sendString(p, "You do not have your portals set! Use a stick to set them.");
+                return;
+            }
+
+            if(!Cooldown.isCooledDown(name, uuid))
+            {
+                ChatUtil.sendString(p, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
+                return;
+            }
+
+            Cooldown.newCoolDown(name, uuid, getCooldown(level));
+
+            EnderRiftPortal.start(uuid);
+
+        }
     }
 
     @Override
@@ -77,7 +160,7 @@ public class EndRift implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport players.", "Activate by ", "Will stay open for 5 seconds."};
+                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport players.", "Place portals by right/left clicking a stick.", "Crouch click a stick to activate.", "Will stay open for 5 seconds."};
                 break;
             case 2:
                 desc = new String[]{"Your portal will transport mobs and itemstacks.", "The portals stay open for 9 seconds."};

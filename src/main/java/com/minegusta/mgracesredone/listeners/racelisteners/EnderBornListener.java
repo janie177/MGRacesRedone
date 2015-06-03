@@ -83,6 +83,8 @@ public class EnderBornListener implements Listener
     {
         if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
         Player p = e.getPlayer();
+        MGPlayer mgp = Races.getMGPlayer(p);
+
         if(isEnderBorn(p) && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK))
         {
             if(p.getItemInHand().getType() == Material.ENDER_PEARL)
@@ -101,8 +103,13 @@ public class EnderBornListener implements Listener
                 {
                     p.sendMessage(ChatColor.DARK_PURPLE + "Enderpearls will now teleport you again.");
                 }
-
             }
+        }
+
+        //Activate EndRift
+        if(p.getItemInHand().getType() == Material.STICK && mgp.hasAbility(AbilityType.ENDRIFT))
+        {
+            AbilityType.ENDRIFT.run(e);
         }
     }
 
