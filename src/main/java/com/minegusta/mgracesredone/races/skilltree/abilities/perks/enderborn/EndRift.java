@@ -11,6 +11,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EnderRiftPortal;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -44,7 +45,7 @@ public class EndRift implements IAbility
 
         if(EnderRiftPortal.contains(uuid))
         {
-            EnderRiftPortal.create(uuid, null, null, duration, altEntities);
+            EnderRiftPortal.create(uuid, p.getLocation(), p.getLocation(), duration, altEntities);
         }
 
         Action a = e.getAction();
@@ -64,6 +65,12 @@ public class EndRift implements IAbility
                 target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
             }
 
+            if(!WGUtil.canBuild(p, target.getLocation()))
+            {
+                ChatUtil.sendString(p, "You cannot place a portal there!");
+                return;
+            }
+
             EnderRiftPortal.setLocation1(uuid, target.getLocation());
             ChatUtil.sendString(p, "You placed your right-click portal!");
             return;
@@ -73,13 +80,24 @@ public class EndRift implements IAbility
         if(!p.isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK))
         {
             Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(BlockFace.UP);
+
+            if(target.getY() - p.getLocation().getY() > 2)
+            {
+                target = target.getRelative(BlockFace.DOWN, 2);
+            }
             if(target.getType() != Material.AIR)
             {
                 double distance = p.getLocation().distance(target.getLocation()) - 2;
                 target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
             }
 
-            EnderRiftPortal.setLocation1(uuid, target.getLocation());
+            if(!WGUtil.canBuild(p, target.getLocation()))
+            {
+                ChatUtil.sendString(p, "You cannot place a portal there!");
+                return;
+            }
+
+            EnderRiftPortal.setLocation2(uuid, target.getLocation());
             ChatUtil.sendString(p, "You placed your left-click portal!");
             return;
         }
@@ -96,6 +114,12 @@ public class EndRift implements IAbility
             if(!Cooldown.isCooledDown(name, uuid))
             {
                 ChatUtil.sendString(p, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
+                return;
+            }
+
+            if(!WGUtil.canBuild(p, EnderRiftPortal.getLocation2(uuid)) || !WGUtil.canBuild(p, EnderRiftPortal.getLocation1(uuid)))
+            {
+                ChatUtil.sendString(p, "You cannot run EndRift because at least one portal is in a safe zone!");
                 return;
             }
 
