@@ -37,7 +37,7 @@ public class InvisibleTask
     {
         for(String s : ShadowInvisibility.values())
         {
-            EffectUtil.playParticle(Bukkit.getPlayer(s).getLocation(), Effect.PARTICLE_SMOKE, 2,0,2, 30, 30);
+            EffectUtil.playParticle(Bukkit.getPlayer(UUID.fromString(s)).getLocation(), Effect.PARTICLE_SMOKE, 2,0,2, 30, 30);
         }
 
         count++;
