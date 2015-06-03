@@ -43,7 +43,7 @@ public class EndRift implements IAbility
 
         boolean altEntities = level > 1;
 
-        if(EnderRiftPortal.contains(uuid))
+        if(!EnderRiftPortal.contains(uuid))
         {
             EnderRiftPortal.create(uuid, p.getLocation(), p.getLocation(), duration, altEntities);
         }
