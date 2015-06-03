@@ -148,7 +148,7 @@ public class EnderRiftPortal {
     }
 
     private boolean getTeleportCooledDown(String uuid) {
-        return TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - teleported.get(uuid)) > 1;
+        return TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - teleported.get(uuid)) > 1.4;
     }
 
     private void start() {
@@ -186,17 +186,26 @@ public class EnderRiftPortal {
         
         for(Entity ent : dummy.getNearbyEntities(1,1,1))
         {
+            String id = ent.getUniqueId().toString();
+            if(getIfTeleported(id))
+            {
+                if(getTeleportCooledDown(id))teleported.remove(id);
+                else continue;
+            }
+
             if(ent instanceof Player)
             {
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
                 EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);
+                addTeleported(id);
             }
             else if(altEntities && (ent instanceof LivingEntity || ent instanceof Item))
             {
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
                 EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);
+                addTeleported(id);
             }
         }
         
