@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.tasks;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.Shadow;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.ShadowInvisibility;
@@ -39,13 +40,26 @@ public class InvisibleTask
         for(String s : ShadowInvisibility.values())
         {
             Location l = Bukkit.getPlayer(UUID.fromString(s)).getLocation();
-            l.getWorld().spigot().playEffect(l, Effect.LARGE_SMOKE, 0, 0, 1,0,1, 1/5, 20, 30);
+            l.getWorld().spigot().playEffect(l, Effect.LARGE_SMOKE, 0, 0, 1,0,1, 1/10, 20, 30);
         }
 
         count++;
 
+        if(count % 4 == 0)
+        {
+            for(String s : ShadowInvisibility.values())
+            {
+                ShadowInvisibility.add(s, ShadowInvisibility.getRaining(s) - 1);
+                if(ShadowInvisibility.getRaining(s) < 1)
+                {
+                    ShadowInvisibility.remove(s);
+                }
+            }
+        }
+
         if(count > 7)
         {
+
             count = 0;
 
             for(String s : ShadowInvisibility.values())
@@ -59,7 +73,6 @@ public class InvisibleTask
                     PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
                 }
             }
-
         }
     }
 }

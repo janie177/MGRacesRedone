@@ -19,6 +19,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
 public class EnderBornListener implements Listener
@@ -56,12 +57,23 @@ public class EnderBornListener implements Listener
             }
         }
 
+
+        //Invisibility
         if(e.getEntity() instanceof Player)
         {
             if(ShadowInvisibility.contains(e.getEntity().getUniqueId().toString()))
             {
                 ShadowInvisibility.remove(e.getEntity().getUniqueId().toString());
                 ChatUtil.sendString(((Player)e.getEntity()), "You got hit and are no longer invisible!");
+            }
+        }
+        if(e.getDamager() instanceof Player)
+        {
+            String uuid = e.getDamager().getUniqueId().toString();
+            if(ShadowInvisibility.contains(uuid))
+            {
+                ShadowInvisibility.remove(uuid);
+                ChatUtil.sendString((Player) e.getDamager(), "You attacked and are no longer invisible!");
             }
         }
     }
@@ -201,7 +213,7 @@ public class EnderBornListener implements Listener
 
         for(String s : ShadowInvisibility.values())
         {
-            Player p = Bukkit.getPlayer(s);
+            Player p = Bukkit.getPlayer(UUID.fromString(s));
             joined.hidePlayer(p);
         }
     }

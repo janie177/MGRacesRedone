@@ -11,21 +11,26 @@ import java.util.concurrent.ConcurrentMap;
 
 public class ShadowInvisibility
 {
-    public static ConcurrentMap<String, Boolean> invisible = Maps.newConcurrentMap();
+    public static ConcurrentMap<String, Integer> invisible = Maps.newConcurrentMap();
 
     public static boolean contains(String uuid)
     {
         return invisible.containsKey(uuid);
     }
 
-    public static void add(String uuid)
+    public static void add(String uuid, int duration)
     {
         Player added = Bukkit.getPlayer(UUID.fromString(uuid));
-        invisible.put(uuid, true);
+        invisible.put(uuid, duration);
         for(Player p : Bukkit.getOnlinePlayers())
         {
             p.hidePlayer(added);
         }
+    }
+
+    public static int getRaining(String uuid)
+    {
+        return invisible.get(uuid);
     }
 
     public static void remove(String uuid)
