@@ -48,6 +48,12 @@ public class EndRift implements IAbility
             EnderRiftPortal.create(uuid, p.getLocation(), p.getLocation(), duration, altEntities);
         }
 
+        if(!Cooldown.isCooledDown(name, uuid))
+        {
+            ChatUtil.sendString(p, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
+            return;
+        }
+
         Action a = e.getAction();
 
         //Right portal
@@ -108,12 +114,6 @@ public class EndRift implements IAbility
             if(!EnderRiftPortal.portalsSet(uuid))
             {
                 ChatUtil.sendString(p, "You do not have your portals set! Use a stick to set them.");
-                return;
-            }
-
-            if(!Cooldown.isCooledDown(name, uuid))
-            {
-                ChatUtil.sendString(p, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
                 return;
             }
 
