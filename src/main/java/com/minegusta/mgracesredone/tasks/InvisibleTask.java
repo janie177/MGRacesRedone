@@ -11,6 +11,8 @@ import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class InvisibleTask
 {
     private static int count = 0;
@@ -46,7 +48,7 @@ public class InvisibleTask
 
             for(String s : ShadowInvisibility.values())
             {
-                Player p = Bukkit.getPlayer(s);
+                Player p = Bukkit.getPlayer(UUID.fromString(s));
                 int level = Races.getMGPlayer(p).getAbilityLevel(AbilityType.SHADOW);
 
                 if(level > 3)
