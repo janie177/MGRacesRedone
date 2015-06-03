@@ -53,6 +53,11 @@ public class EndRift implements IAbility
         if(!p.isSneaking() && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK))
         {
             Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(BlockFace.UP);
+
+            if(target.getY() - p.getLocation().getY() > 2)
+            {
+                target = target.getRelative(BlockFace.DOWN, 2);
+            }
             if(target.getType() != Material.AIR)
             {
                 double distance = p.getLocation().distance(target.getLocation()) - 2;
