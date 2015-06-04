@@ -202,7 +202,7 @@ public class EnderRiftPortal {
                 EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);
                 addTeleported(id);
             }
-            else if(altEntities && (ent instanceof LivingEntity || ent instanceof Item))
+            else if(altEntities && (ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile))
             {
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
