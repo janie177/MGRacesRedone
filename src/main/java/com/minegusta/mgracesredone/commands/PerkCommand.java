@@ -40,7 +40,21 @@ public class PerkCommand implements CommandExecutor
             {
                 try
                 {
-                    AbilityType a = AbilityType.valueOf(args[1]);
+                    AbilityType a = null;
+
+                    for(AbilityType type : AbilityType.values())
+                    {
+                        if(type.getName().equalsIgnoreCase(args[1]))
+                        {
+                            a = type;
+                        }
+                    }
+
+                    if(a == null)
+                    {
+                        sendList(help, p);
+                        return true;
+                    }
 
                     sendInfo(a, p);
                 }
@@ -48,6 +62,7 @@ public class PerkCommand implements CommandExecutor
                 {
                     sendList(help, p);
                 }
+                return true;
             }
             else if(args[0].equalsIgnoreCase("list"))
             {
