@@ -112,7 +112,7 @@ public class PerkCommand implements CommandExecutor
                     p.sendMessage(ChatColor.YELLOW + " ");
                     p.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Perk Info <Perk> " + ChatColor.YELLOW + "for more info.");
 
-                    ChatUtil.sendFancyBanner(p);
+                    ChatUtil.sendFooter(p);
                 }
                 catch (Exception ignored)
                 {
