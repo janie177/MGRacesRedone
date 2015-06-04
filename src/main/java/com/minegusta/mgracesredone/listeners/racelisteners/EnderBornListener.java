@@ -111,6 +111,16 @@ public class EnderBornListener implements Listener
         {
             AbilityType.ENDRIFT.run(e);
         }
+        //Telekinesis.
+        else if(p.getItemInHand().getType() == Material.BLAZE_ROD && (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR ) && mgp.hasAbility(AbilityType.TELEKINESIS))
+        {
+            AbilityType.TELEKINESIS.run(p);
+        }
+        //Activate shadow
+        else if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY() && e.getClickedBlock().getLocation().distance(e.getPlayer().getLocation()) < 2 && mgp.hasAbility(AbilityType.SHADOW))
+        {
+            AbilityType.SHADOW.run(p);
+        }
     }
 
     private static final double[] directions = {0.5, -0.5, 1.0, -1.0};
@@ -204,7 +214,9 @@ public class EnderBornListener implements Listener
         if(!isEnderBorn(p))return;
 
         if(!pearlMap.containsKey(p.getUniqueId().toString()))return;
+
         e.setCancelled(true);
+
         if(!pearlMap.get(p.getUniqueId().toString()))
         {
             p.teleport(e.getTo());
@@ -222,20 +234,6 @@ public class EnderBornListener implements Listener
         {
             Player p = Bukkit.getPlayer(UUID.fromString(s));
             joined.hidePlayer(p);
-        }
-    }
-
-    @EventHandler
-    public void onEvent(PlayerInteractEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
-
-        Player toggler = e.getPlayer();
-        MGPlayer mgp = Races.getMGPlayer(toggler);
-
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY() && e.getClickedBlock().getLocation().distance(e.getPlayer().getLocation()) < 2 && mgp.hasAbility(AbilityType.SHADOW))
-        {
-            AbilityType.SHADOW.run(toggler);
         }
     }
 
