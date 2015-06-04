@@ -78,6 +78,7 @@ public class Telekinesis implements IAbility
         //Attracting time.
         for(Entity ent : entities)
         {
+            if(!WGUtil.canBuild(player, ent.getLocation()))continue;
 
             double x = ent.getLocation().getX() - player.getLocation().getX();
             double y = ent.getLocation().getY() - player.getLocation().getY();
