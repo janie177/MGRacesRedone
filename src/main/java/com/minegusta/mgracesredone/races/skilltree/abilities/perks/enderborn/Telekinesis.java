@@ -45,7 +45,7 @@ public class Telekinesis implements IAbility
         String uuid = player.getUniqueId().toString();
 
         //Cooldown
-        if(cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 400)
+        if(cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 260)
         {
             return;
         }
