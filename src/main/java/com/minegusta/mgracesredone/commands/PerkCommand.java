@@ -34,7 +34,7 @@ public class PerkCommand implements CommandExecutor
             return true;
         }
 
-        else if(args.length == 2)
+        else if(args.length > 1)
         {
             if(args[0].equalsIgnoreCase("info"))
             {
@@ -42,9 +42,20 @@ public class PerkCommand implements CommandExecutor
                 {
                     AbilityType a = null;
 
+                    String name = "";
+
+                    for(int i = 1; i < args.length; i++)
+                    {
+                        name = name + args[i];
+                        if(i < args.length - 1)
+                        {
+                            name = name + " ";
+                        }
+                    }
+
                     for(AbilityType type : AbilityType.values())
                     {
-                        if(type.getName().equalsIgnoreCase(args[1]))
+                        if(type.getName().equalsIgnoreCase(name))
                         {
                             a = type;
                             break;
@@ -53,7 +64,7 @@ public class PerkCommand implements CommandExecutor
 
                     if(a == null)
                     {
-                        sendList(help, p);
+                        ChatUtil.sendString(p, "That ability cannot be found. Did you spell it right?");
                         return true;
                     }
 
