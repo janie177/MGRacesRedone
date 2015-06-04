@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
@@ -16,6 +17,8 @@ import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 public class Telekinesis implements IAbility
 {
@@ -24,6 +27,8 @@ public class Telekinesis implements IAbility
     {
 
     }
+
+    public static ConcurrentMap<String, Long> cooldown = Maps.newConcurrentMap();
 
     @Override
     public void run(Player player)
@@ -34,6 +39,14 @@ public class Telekinesis implements IAbility
         if(!WGUtil.canBuild(player))
         {
             ChatUtil.sendString(player, "You cannot use Telekinesis in this protected zone.");
+            return;
+        }
+
+        String uuid = player.getUniqueId().toString();
+
+        //Cooldown
+        if(cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 400)
+        {
             return;
         }
 
@@ -91,6 +104,7 @@ public class Telekinesis implements IAbility
             ent.setVelocity(ent.getVelocity().add(v));
         }
 
+        cooldown.put(uuid, System.currentTimeMillis());
 
     }
 
