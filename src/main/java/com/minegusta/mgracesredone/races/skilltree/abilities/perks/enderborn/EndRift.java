@@ -12,7 +12,6 @@ import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EnderRiftPortal;
 import com.minegusta.mgracesredone.util.WGUtil;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -20,10 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.util.Vector;
 
 import java.util.List;
-import java.util.Set;
 
 public class EndRift implements IAbility
 {

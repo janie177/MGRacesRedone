@@ -18,7 +18,6 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
 
 public class Telekinesis implements IAbility
 {

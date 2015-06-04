@@ -3,10 +3,8 @@ package com.minegusta.mgracesredone.races;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
-import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.ItemUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
-import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 

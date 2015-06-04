@@ -1,12 +1,13 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
-import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.PearlPower;
 import com.minegusta.mgracesredone.util.*;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,18 +17,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
 
 public class EnderBornListener implements Listener
 {
-
-    private static ConcurrentMap<String, Boolean> pearlMap = Maps.newConcurrentMap();
-
-
     @EventHandler
     public void onEnderBornMeatEat(PlayerItemConsumeEvent e)
     {
@@ -85,27 +79,11 @@ public class EnderBornListener implements Listener
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
 
-        if(isEnderBorn(p) && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK))
+        //Switching pearl mode
+        if(p.getItemInHand().getType() == Material.ENDER_PEARL && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) && Races.getMGPlayer(p).hasAbility(AbilityType.PEARLPOWER))
         {
-            if(p.getItemInHand().getType() == Material.ENDER_PEARL)
-            {
-                boolean enabled = true;
-                String uuid = p.getUniqueId().toString();
-
-                if(pearlMap.containsKey(uuid)) enabled = !pearlMap.get(uuid);
-                pearlMap.put(uuid, enabled);
-
-                if(enabled)
-                {
-                    p.sendMessage(ChatColor.DARK_PURPLE + "Enderpearls now no longer teleport you, but summon minions.");
-                }
-                else
-                {
-                    p.sendMessage(ChatColor.DARK_PURPLE + "Enderpearls will now teleport you again.");
-                }
-            }
+            AbilityType.PEARLPOWER.run(p);
         }
-
         //Activate EndRift
         if(p.getItemInHand().getType() == Material.STICK && mgp.hasAbility(AbilityType.ENDRIFT))
         {
@@ -123,70 +101,13 @@ public class EnderBornListener implements Listener
         }
     }
 
-    private static final double[] directions = {0.5, -0.5, 1.0, -1.0};
-    private static final Effect[] effects = {Effect.PORTAL};
-
-
     @EventHandler
     public void onPearlThrow(ProjectileHitEvent e)
     {
         if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
-        if(e.getEntity() instanceof EnderPearl)
+        if(e.getEntity() instanceof EnderPearl && e.getEntity().getShooter() instanceof Player && Races.getMGPlayer((Player) e.getEntity().getShooter()).hasAbility(AbilityType.PEARLPOWER))
         {
-            EnderPearl pearl = (EnderPearl) e.getEntity();
-            if(pearl.getShooter() instanceof Player && isEnderBorn((Player) pearl.getShooter()))
-            {
-                boolean cancelled = false;
-                Player p = (Player) pearl.getShooter();
-                Location l = pearl.getLocation();
-                String uuid = p.getUniqueId().toString();
-                if(pearlMap.containsKey(uuid) && pearlMap.get(uuid))
-                {
-                    if(Cooldown.isCooledDown("pearl", uuid)) {
-
-                        for(double x : directions)
-                        {
-                            for(double z : directions)
-                            {
-                                Missile.createMissile(l, x, 0.01, z, effects, 60);
-                            }
-                        }
-
-                        Enderman man = (Enderman) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMAN);
-                        PotionUtil.updatePotion(man, PotionEffectType.INCREASE_DAMAGE, 2, 60);
-                        PotionUtil.updatePotion(man, PotionEffectType.DAMAGE_RESISTANCE, 1, 60);
-                        man.setCustomName(ChatColor.DARK_PURPLE + "END OF MAN");
-                        man.setCustomNameVisible(true);
-
-                        for (Entity ent : pearl.getNearbyEntities(7, 7, 7)) {
-                            if (ent instanceof LivingEntity)
-                            {
-                                ((Creature) man).setTarget((LivingEntity) ent);
-                                break;
-                            }
-                        }
-
-                        for (int i = 0; i < 2; i++) {
-                            Endermite mite = (Endermite) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMITE);
-                            mite.setCustomNameVisible(true);
-                            mite.setCustomName(ChatColor.LIGHT_PURPLE + "U wot mite?");
-                        }
-
-                        Cooldown.newCoolDown("pearl", uuid, 9);
-                    }
-                    else
-                    {
-                        p.sendMessage(ChatColor.DARK_PURPLE + "You have to wait another " + Cooldown.getRemaining("pearl", uuid) + " seconds to use minion pearls.");
-                        p.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
-                        cancelled = true;
-                    }
-                }
-
-                if(!cancelled && RandomUtil.fiftyfifty())
-                {
-                    ((Player)pearl.getShooter()).getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
-                }
-            }
+            AbilityType.PEARLPOWER.run(e);
         }
     }
 
@@ -204,6 +125,7 @@ public class EnderBornListener implements Listener
 
     }
 
+    //Teleporting players with te required pearlpower level will not take damage.
     @EventHandler
     public void onBlockTeleport(PlayerTeleportEvent e)
     {
@@ -211,15 +133,11 @@ public class EnderBornListener implements Listener
         if(!(e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL))return;
 
         Player p = e.getPlayer();
-        if(!isEnderBorn(p))return;
 
-        if(!pearlMap.containsKey(p.getUniqueId().toString()))return;
-
-        e.setCancelled(true);
-
-        if(!pearlMap.get(p.getUniqueId().toString()))
+        if(Races.getMGPlayer(p).getAbilityLevel(AbilityType.PEARLPOWER) > 1)
         {
-            p.teleport(e.getTo());
+            e.setCancelled(true);
+            if(PearlPower.getFromMap(p) == PearlPower.PearlAbility.NORMAL) p.teleport(e.getTo());
         }
     }
 

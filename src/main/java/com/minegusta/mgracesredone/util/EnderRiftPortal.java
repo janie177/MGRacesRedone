@@ -1,6 +1,5 @@
 package com.minegusta.mgracesredone.util;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Main;
 import org.bukkit.Bukkit;
@@ -8,9 +7,7 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
-import org.bukkit.util.Vector;
 
-import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
