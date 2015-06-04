@@ -94,7 +94,7 @@ public class SteelSkin implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Become invincible for 5 seconds.", "When time runs out, your health is set to 3."};
+                desc = new String[]{"Become invincible for 5 seconds.", "When time runs out, your health is set to 3.", "Activate by right-clicking an iron ingot."};
                 break;
             case 2:
                 desc = new String[]{"Your invincibility lasts for 8 seconds.", "When time runs out, your health is set to 2."};
