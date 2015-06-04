@@ -51,8 +51,8 @@ public class Telekinesis implements IAbility
 
         //Run the ability
 
-        Entity dummy = target.getWorld().spawnEntity(target.getLocation(), EntityType.WEATHER);
-        Entity dummy2 = target2.getWorld().spawnEntity(target2.getLocation(), EntityType.WEATHER);
+        Entity dummy = target.getWorld().spawnEntity(target.getLocation(), EntityType.EXPERIENCE_ORB);
+        Entity dummy2 = target2.getWorld().spawnEntity(target2.getLocation(), EntityType.EXPERIENCE_ORB);
 
         for(Entity ent : dummy.getNearbyEntities(12,3,12))
         {
@@ -136,7 +136,7 @@ public class Telekinesis implements IAbility
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 4;
     }
 
     @Override
