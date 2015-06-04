@@ -91,13 +91,13 @@ public class EnderBorn extends Race {
         //Water and rain damage checks. Stacks.
         if(PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p) &&  biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
         {
-            int damage = 1;
+            int damage = 2;
             if(mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 0) damage = 1;
             p.damage(damage);
         }
         if(PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p))
         {
-            int damage = 1;
+            int damage = 2;
             if(mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 1) damage = 1;
             p.damage(damage);
         }
