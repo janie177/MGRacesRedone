@@ -122,14 +122,15 @@ public class PearlPower implements IAbility
 
         boolean refund = level > 3;
 
-        if(!isCooledDown(name, uuid))
+        if(a != PearlAbility.NORMAL && !isCooledDown(name, uuid))
         {
             ChatUtil.sendString(p, "You have to wait another " + getRemainingCooldown(name, uuid) + " seconds to use " + name + " pearls." );
+            ((Player)e.getEntity().getShooter()).getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
             return;
         }
 
         //Start the cooldown
-        startCooldown(name, uuid);
+        if(a != PearlAbility.NORMAL) startCooldown(name, uuid);
 
         switch (a)
         {
@@ -163,7 +164,7 @@ public class PearlPower implements IAbility
 
     private void vacuum(Location l, Entity pearl)
     {
-        for(Entity ent : pearl.getNearbyEntities(5,5,5))
+        for(Entity ent : pearl.getNearbyEntities(7,7,7))
         {
             if(!WGUtil.canBuild(ent)) continue;
             if(ent instanceof LivingEntity || ent instanceof Projectile || ent instanceof Item)
@@ -174,11 +175,14 @@ public class PearlPower implements IAbility
 
                 Vector v = new Vector(x, y, z);
                 v.normalize();
-                v.multiply(-2.5);
+                v.multiply(-2.0);
 
                 ent.setVelocity(v);
             }
         }
+
+        EffectUtil.playParticle(l, Effect.CLOUD, 3, 3, 3, 1 / 20, 40, 30);
+
     }
 
     private static final double[] directions = {0.5, -0.5, 1.0, -1.0};
