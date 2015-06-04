@@ -34,6 +34,15 @@ public class InvisibleTask
     public static void stop()
     {
         if(TASK != -1)Bukkit.getScheduler().cancelTask(TASK);
+
+        //make everyone visible
+        for(String s : ShadowInvisibility.values())
+        {
+            for(Player p : Bukkit.getOnlinePlayers())
+            {
+                p.showPlayer(Bukkit.getPlayer(UUID.fromString(s)));
+            }
+        }
     }
 
     private static void boost()

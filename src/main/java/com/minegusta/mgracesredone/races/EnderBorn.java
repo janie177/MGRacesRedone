@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 public class EnderBorn extends Race {
     @Override
     public double getHealth() {
-        return 22;
+        return 20;
     }
 
     @Override

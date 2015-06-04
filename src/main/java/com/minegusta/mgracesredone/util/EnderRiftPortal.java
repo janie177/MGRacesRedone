@@ -8,6 +8,7 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
@@ -174,12 +175,17 @@ public class EnderRiftPortal {
         }
     }
 
+    private static final Effect[] effects = {Effect.PORTAL};
+
     private void effect(Location l) {
-        EffectUtil.playParticle(l, Effect.PORTAL, 1, 2, 1, 1/10, 25, 30);
-        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 0, 0, 0, 1 / 30, 10, 30);
-        EffectUtil.playParticle(l, Effect.SMALL_SMOKE, 1, 3, 1, 1 / 30, 15, 30);
-        EffectUtil.playParticle(l, Effect.CLOUD, 1, 3, 1, 1 / 30, 15, 30);
-        EffectUtil.playSound(l, Sound.ENDERMAN_TELEPORT);
+        EffectUtil.playParticle(l, Effect.CLOUD, 0, 0, 0, 1 / 30, 6, 30);
+        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 0, 0, 0, 1 / 10, 3, 30);
+        EffectUtil.playParticle(l, Effect.FIREWORKS_SPARK, 0, 1, 0, 1 / 10, 3, 30);
+        EffectUtil.playSound(l, Sound.PORTAL_TRAVEL, 3, 4);
+
+        Location newLocation = new Location(l.getWorld(), l.getX(), l.getY(), l.getZ());
+
+        Missile.createMissile(newLocation, 0, 0.01, 0, effects, 4);
     }
 
     private void teleport(Location l1, Location l2)

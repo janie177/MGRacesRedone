@@ -69,7 +69,12 @@ public class EffectUtil
 
     public static void playSound(Entity ent, Sound sound, float volume, float pitch)
     {
-        ent.getWorld().playSound(ent.getLocation(), sound, volume, pitch);
+        playSound(ent.getLocation(), sound, volume, pitch);
+    }
+
+    public static void playSound(Location l, Sound sound, float volume, float pitch)
+    {
+        l.getWorld().playSound(l, sound, volume, pitch);
     }
 
     public static void playSound(Location l, Sound sound)

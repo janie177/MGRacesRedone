@@ -59,7 +59,7 @@ public class EndRift implements IAbility
         //Right portal
         if(!p.isSneaking() && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK))
         {
-            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(BlockFace.UP);
+            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 28).getRelative(BlockFace.UP);
 
             if(target.getY() - p.getLocation().getY() > 2)
             {
@@ -85,7 +85,7 @@ public class EndRift implements IAbility
         //Left portal
         if(!p.isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK))
         {
-            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(BlockFace.UP);
+            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 28).getRelative(BlockFace.UP);
 
             if(target.getY() - p.getLocation().getY() > 2)
             {
