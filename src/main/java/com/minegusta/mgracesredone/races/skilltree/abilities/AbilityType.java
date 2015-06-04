@@ -75,6 +75,11 @@ public enum AbilityType
         this.ability = ability;
     }
 
+    public String[] getDescriontion(int level)
+    {
+        return ability.getDescription(level);
+    }
+
     public IAbility getAbility()
     {
         return ability;

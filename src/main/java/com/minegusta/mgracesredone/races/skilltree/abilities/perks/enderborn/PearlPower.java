@@ -170,10 +170,9 @@ public class PearlPower implements IAbility
             if(ent instanceof LivingEntity || ent instanceof Projectile || ent instanceof Item)
             {
                 double x = ent.getLocation().getX() - l.getX();
-                double y = ent.getLocation().getY() - l.getY();
                 double z = ent.getLocation().getZ() - l.getZ();
 
-                Vector v = new Vector(x, y, z);
+                Vector v = new Vector(x, 0.14, z);
                 v.normalize();
                 v.multiply(-2.0);
 
