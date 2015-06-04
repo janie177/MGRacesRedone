@@ -47,6 +47,7 @@ public class PerkCommand implements CommandExecutor
                         if(type.getName().equalsIgnoreCase(args[1]))
                         {
                             a = type;
+                            break;
                         }
                     }
 
