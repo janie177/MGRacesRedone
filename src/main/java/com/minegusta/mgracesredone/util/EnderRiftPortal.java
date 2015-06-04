@@ -176,15 +176,15 @@ public class EnderRiftPortal {
 
     private void effect(Location l) {
         EffectUtil.playParticle(l, Effect.PORTAL, 1, 2, 1, 1/10, 25, 30);
-        EffectUtil.playParticle(l, Effect.ENDER_SIGNAL, 0, 0, 0, 1 / 20, 15, 30);
-        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 0, 0, 0, 1 / 20, 15, 30);
+        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 0, 0, 0, 1 / 30, 10, 30);
         EffectUtil.playParticle(l, Effect.SMALL_SMOKE, 1, 3, 1, 1 / 30, 15, 30);
+        EffectUtil.playParticle(l, Effect.CLOUD, 1, 3, 1, 1 / 30, 15, 30);
         EffectUtil.playSound(l, Sound.ENDERMAN_TELEPORT);
     }
 
     private void teleport(Location l1, Location l2)
     {
-        Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_PEARL);
+        Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_SIGNAL);
         
         for(Entity ent : dummy.getNearbyEntities(1,1,1))
         {
