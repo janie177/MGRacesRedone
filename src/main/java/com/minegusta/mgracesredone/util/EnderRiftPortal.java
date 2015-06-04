@@ -62,6 +62,7 @@ public class EnderRiftPortal {
 
     public static void setLocation1(String uuid, Location location) {
         portals.get(uuid).setLocation1(location);
+        EffectUtil.playParticle(location, Effect.ENDER_SIGNAL, 0,0,0,1,1,40);
     }
 
     public static void setAltEntities(String uuid, Boolean altEntities)
@@ -76,6 +77,7 @@ public class EnderRiftPortal {
 
     public static void setLocation2(String uuid, Location location) {
         portals.get(uuid).setLocation2(location);
+        EffectUtil.playParticle(location, Effect.ENDER_SIGNAL, 0, 0, 0, 1, 1, 40);
     }
 
     public static boolean portalsSet(String uuid) {
@@ -173,16 +175,16 @@ public class EnderRiftPortal {
     }
 
     private void effect(Location l) {
-        EffectUtil.playParticle(l, Effect.PORTAL, 1, 2, 1, 1, 15, 30);
-        EffectUtil.playParticle(l, Effect.ENDER_SIGNAL, 1, 1, 1, 1 / 10, 15, 30);
-        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 1, 0, 1, 1 / 20, 15, 30);
+        EffectUtil.playParticle(l, Effect.PORTAL, 1, 2, 1, 1/10, 25, 30);
+        EffectUtil.playParticle(l, Effect.ENDER_SIGNAL, 0, 0, 0, 1 / 20, 15, 30);
+        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 0, 0, 0, 1 / 20, 15, 30);
         EffectUtil.playParticle(l, Effect.SMALL_SMOKE, 1, 3, 1, 1 / 30, 15, 30);
         EffectUtil.playSound(l, Sound.ENDERMAN_TELEPORT);
     }
 
     private void teleport(Location l1, Location l2)
     {
-        Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_CRYSTAL);
+        Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_PEARL);
         
         for(Entity ent : dummy.getNearbyEntities(1,1,1))
         {
