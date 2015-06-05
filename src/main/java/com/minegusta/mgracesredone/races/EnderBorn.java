@@ -38,18 +38,8 @@ public class EnderBorn extends Race {
         return new String[]
         {
                 "Enderborn are a sneaky race from The End.",
-                "They pray on weak animals and gain strength from",
-                "eating raw meat.",
-                "Enderborn can turn to shadow by crouching to stay unseen.",
-                "Endermen are allied and will never harm the Enderborn.",
-                "Enderpearls have a 50% chance not to break on usage.",
-                "Enderborn can also switch between teleportation and minion mode",
-                "on enderpearls. Minion mode will summon an enderman to aid the Enderborn.",
-                "The sharp claws of the enderborn will cause bleeding to opponents.",
-                "In the end, Enderborn have permanent boosts.",
-                "When in dark areas, enderborn gain more strength.",
-                "Though strong, they also have a weakness. Like all creatures from The End,",
-                "they fear water most. Rain and water burn through the Enderborn like lava."
+                "They are stealth assassins that eat raw flesh.",
+                "Most perks are End and stealth related."
 
         };
     }
