@@ -100,7 +100,7 @@ public class EndRift implements IAbility
 
             double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
 
-            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && highestY < 0 || highestY > target.getY()))
+            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && (highestY < 0 || highestY > target.getY())))
             {
                 ChatUtil.sendString(p, "You cannot place a portal there!");
                 return;
