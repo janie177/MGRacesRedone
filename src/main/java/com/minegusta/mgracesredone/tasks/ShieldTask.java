@@ -57,7 +57,7 @@ public class ShieldTask
 
     private static void playEffect(Location l)
     {
-        l.getWorld().spigot().playEffect(l, Effect.PORTAL, 0, 0, 0, 0, 0, 20,3, 25);
+        l.getWorld().spigot().playEffect(l, Effect.WITCH_MAGIC, 0, 0, 0, 0, 0, 1/20,1, 25);
     }
 
     private static Location calculateCircle(Location l, int angle)
