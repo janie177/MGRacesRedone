@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.util;
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Main;
 import org.bukkit.*;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 
 import java.util.concurrent.ConcurrentMap;
@@ -184,7 +185,7 @@ public class EnderRiftPortal {
 
     private void teleport(Location l1, Location l2)
     {
-        if(l2.getBlock().getType() != Material.AIR)
+        if(l2.getBlock().getType() != Material.AIR || l2.getBlock().getRelative(BlockFace.UP).getType() != Material.AIR)
         {
             //Obsctructed teleport location.
             return;
