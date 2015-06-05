@@ -43,8 +43,11 @@ public class EnderShield implements IAbility
 
     private void remove(String uuid)
     {
-        if(get(uuid) > 0) shields.put(uuid, get(uuid) - 1);
-        if(contains(uuid))remove(uuid);
+        if(get(uuid) > 1)
+        {
+            shields.put(uuid, get(uuid) - 1);
+        }
+        else if(contains(uuid))shields.remove(uuid);
     }
 
     private boolean contains(String uuid)
