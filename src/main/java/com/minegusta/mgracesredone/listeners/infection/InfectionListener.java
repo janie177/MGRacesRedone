@@ -58,11 +58,12 @@ public class InfectionListener implements Listener
     public void onDemonInfect(AsyncPlayerChatEvent e)
     {
         final Player p = e.getPlayer();
+        if(!WorldCheck.isEnabled(p.getWorld()))return;
+
         String message = e.getMessage();
         final Block center = p.getLocation().getBlock();
         boolean hasSheep = false;
 
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
         if(Races.getRace(p) != RaceType.HUMAN)return;
         if(message.equalsIgnoreCase(Demon.getChant()))
         {
