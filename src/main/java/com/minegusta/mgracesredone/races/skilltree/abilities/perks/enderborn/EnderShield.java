@@ -132,8 +132,9 @@ public class EnderShield implements IAbility
                     p.sendMessage(ChatColor.GREEN + "Your Ender Shield damaged your opponent!");
                     if(damager instanceof Player) damager.sendMessage(ChatColor.RED + "Your opponent's Ender Shield reflects some damage back!");
                 }
+                return;
             }
-            else if(attacker instanceof Projectile && ((Projectile)attacker).getShooter() instanceof LivingEntity)
+            if(attacker instanceof Projectile && ((Projectile)attacker).getShooter() instanceof LivingEntity)
             {
                 LivingEntity damager = (LivingEntity) ((Projectile)attacker).getShooter();
                 EntityDamageByEntityEvent hit = new EntityDamageByEntityEvent(p, damager, EntityDamageEvent.DamageCause.CUSTOM, e.getDamage() * reflected / 100);
