@@ -37,13 +37,13 @@ public class ShieldTask
     private static void effects()
     {
         rotationAngle = rotationAngle + 6;
-        if(rotationAngle >= 360) rotationAngle = 0;
+        if(rotationAngle >= 360) rotationAngle = 6;
 
         for(String s : EnderShield.shields.keySet())
         {
             int amount = EnderShield.shields.get(s);
             Player p = Bukkit.getPlayer(UUID.fromString(s));
-            if(!p.isOnline())
+            if(p == null || !p.isOnline())
             {
                 EnderShield.shields.remove(s);
                 continue;
