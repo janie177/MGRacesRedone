@@ -8,11 +8,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class EntityUtil
 {
 
-    public static void bleed(final LivingEntity ent, int duration)
+    public static void bleed(final LivingEntity ent, final Entity damager, int duration)
     {
         for(int i = 0; i < duration; i++)
         {
@@ -21,7 +23,16 @@ public class EntityUtil
                 public void run()
                 {
                     if(ent instanceof Player) ((Player)ent).sendMessage(ChatColor.RED + "You are bleeding! *ouch*");
-                    if(WGUtil.canGetDamage(ent)) ent.damage(1.0);
+
+                    EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(damager, ent, EntityDamageEvent.DamageCause.CUSTOM, 1);
+
+                    Bukkit.getPluginManager().callEvent(e);
+
+                    if(WGUtil.canGetDamage(ent) && !e.isCancelled())
+                    {
+                        ent.damage(1.0);
+                        ent.setLastDamageCause(e);
+                    }
                     EffectUtil.playParticle(ent, Effect.COLOURED_DUST);
 
                 }
