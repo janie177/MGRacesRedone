@@ -68,7 +68,9 @@ public class EndRift implements IAbility
                 target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
             }
 
-            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && target.getWorld().getHighestBlockAt(target.getLocation()).getY() > target.getY()))
+            double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
+
+            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && highestY > 0 && highestY > target.getY()))
             {
                 ChatUtil.sendString(p, "You cannot place a portal there!");
                 return;
@@ -94,7 +96,9 @@ public class EndRift implements IAbility
                 target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
             }
 
-            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && target.getWorld().getHighestBlockAt(target.getLocation()).getY() > target.getY()))
+            double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
+
+            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && highestY > 0 && highestY > target.getY()))
             {
                 ChatUtil.sendString(p, "You cannot place a portal there!");
                 return;
