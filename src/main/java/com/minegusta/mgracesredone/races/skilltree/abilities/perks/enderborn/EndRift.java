@@ -57,58 +57,13 @@ public class EndRift implements IAbility
         //Right portal
         if(!p.isSneaking() && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK))
         {
-            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 28).getRelative(BlockFace.UP);
-
-            if(target.getY() - p.getLocation().getY() > 2)
-            {
-                target = target.getRelative(BlockFace.DOWN, 2);
-            }
-            if(target.getType() != Material.AIR)
-            {
-                double distance = p.getLocation().distance(target.getLocation()) - 2;
-                target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
-            }
-
-            double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
-            Bukkit.broadcastMessage(highestY + " Highest y");
-
-            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && (highestY < 1 || highestY > target.getY())))
-            {
-                ChatUtil.sendString(p, "You cannot place a portal there!");
-                return;
-            }
-
-            EnderRiftPortal.setLocation1(uuid, target.getLocation());
-            ChatUtil.sendString(p, "You placed your right-click portal!");
-            return;
+            setPortal(p, 2);
         }
 
         //Left portal
         if(!p.isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK))
         {
-            Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 28).getRelative(BlockFace.UP);
-
-            if(target.getY() - p.getLocation().getY() > 2)
-            {
-                target = target.getRelative(BlockFace.DOWN, 2);
-            }
-            if(target.getType() != Material.AIR)
-            {
-                double distance = p.getLocation().distance(target.getLocation()) - 2;
-                target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
-            }
-
-            double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
-
-            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && (highestY < 0 || highestY > target.getY())))
-            {
-                ChatUtil.sendString(p, "You cannot place a portal there!");
-                return;
-            }
-
-            EnderRiftPortal.setLocation2(uuid, target.getLocation());
-            ChatUtil.sendString(p, "You placed your left-click portal!");
-            return;
+            setPortal(p, 1);
         }
 
         //Running the ability
@@ -131,6 +86,34 @@ public class EndRift implements IAbility
             EnderRiftPortal.start(uuid);
 
         }
+    }
+
+    private void setPortal(Player p, int portal)
+    {
+        String uuid = p.getUniqueId().toString();
+        Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 28).getRelative(BlockFace.UP);
+
+        if(target.getY() - p.getLocation().getY() > 2)
+        {
+            target = target.getRelative(BlockFace.DOWN, 2);
+        }
+        if(target.getType() != Material.AIR)
+        {
+            double distance = p.getLocation().distance(target.getLocation()) - 2;
+            target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
+        }
+
+        double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
+
+        if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && (highestY == 0.0 || highestY > target.getY())))
+        {
+            ChatUtil.sendString(p, "You cannot place a portal there!");
+            return;
+        }
+
+        if(portal == 1)EnderRiftPortal.setLocation1(uuid, target.getLocation());
+        if(portal == 2)EnderRiftPortal.setLocation1(uuid, target.getLocation());
+        ChatUtil.sendString(p, "You set a location as portal!");
     }
 
     @Override
