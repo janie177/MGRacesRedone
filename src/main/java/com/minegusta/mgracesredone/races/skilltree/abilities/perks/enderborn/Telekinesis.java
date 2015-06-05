@@ -50,7 +50,7 @@ public class Telekinesis implements IAbility
         }
 
         //Setting the attraction strength.
-        double strength = 0.10;
+        double strength = 0.15;
         if(level > 2) strength = 2*strength;
 
         boolean players = level > 3;
