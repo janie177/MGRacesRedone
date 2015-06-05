@@ -51,6 +51,11 @@ public class EnderBornListener implements Listener
             }
         }
 
+        if(e.getEntity() instanceof Player && Races.getMGPlayer((Player) e.getEntity()).hasAbility(AbilityType.ENDERSHIELD))
+        {
+            AbilityType.ENDERSHIELD.run(e);
+        }
+
 
         //Invisibility
         if(e.getEntity() instanceof Player)
@@ -69,6 +74,17 @@ public class EnderBornListener implements Listener
                 ShadowInvisibility.remove(uuid);
                 ChatUtil.sendString((Player) e.getDamager(), "You attacked and are no longer invisible!");
             }
+        }
+    }
+
+    @EventHandler
+    public void onPearlDrop(PlayerDropItemEvent e)
+    {
+        if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+
+        if(e.getItemDrop().getItemStack().getType() == Material.ENDER_PEARL && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.ENDERSHIELD))
+        {
+            AbilityType.ENDERSHIELD.run(e);
         }
     }
 

@@ -43,6 +43,7 @@ public class Main extends JavaPlugin
         RideTask.start();
         MissileTask.start();
         InvisibleTask.start();
+        ShieldTask.start();
 
     }
 
@@ -55,6 +56,7 @@ public class Main extends JavaPlugin
         MissileTask.stop();
         RideTask.stop();
         InvisibleTask.stop();
+        ShieldTask.stop();
 
         //Save
         SaveTask.save();
