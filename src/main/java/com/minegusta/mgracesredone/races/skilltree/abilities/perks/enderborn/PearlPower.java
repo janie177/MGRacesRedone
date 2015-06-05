@@ -164,7 +164,7 @@ public class PearlPower implements IAbility
 
     private void vacuum(Location l, Entity pearl)
     {
-        for(Entity ent : pearl.getNearbyEntities(7,7,7))
+        for(Entity ent : pearl.getNearbyEntities(5,5,5))
         {
             if(!WGUtil.canBuild(ent)) continue;
             if(ent instanceof LivingEntity || ent instanceof Projectile || ent instanceof Item)
@@ -174,7 +174,7 @@ public class PearlPower implements IAbility
 
                 Vector v = new Vector(x, 0.14, z);
                 v.normalize();
-                v.multiply(-2.0);
+                v.multiply(-1.7);
 
                 ent.setVelocity(v);
             }
