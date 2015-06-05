@@ -196,7 +196,8 @@ public class RaceCommand implements CommandExecutor {
         {
             p.sendMessage(ChatColor.LIGHT_PURPLE + "- " + s);
         }
-        ChatUtil.sendFooter(p);
+        p.sendMessage(ChatColor.LIGHT_PURPLE + "Use " + ChatColor.YELLOW + " /Perk Info <Perk> " + ChatColor.LIGHT_PURPLE + "for more info on a perk.");
+                ChatUtil.sendFooter(p);
     }
 
     private void sendOwnInfo()
