@@ -51,7 +51,7 @@ public class ShieldTask
 
             Location l = p.getLocation();
             playEffect(calculateCircle(l, rotationAngle));
-            if(amount > 1)playEffect(calculateCircle(l, rotationAngle - 180));
+            if(amount > 1)playEffect(calculateCircle(l, rotationAngle + 180));
         }
     }
 
