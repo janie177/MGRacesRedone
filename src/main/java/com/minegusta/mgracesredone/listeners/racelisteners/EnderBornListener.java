@@ -80,7 +80,7 @@ public class EnderBornListener implements Listener
     @EventHandler
     public void onPearlDrop(PlayerDropItemEvent e)
     {
-        if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if(!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
 
         if(e.getItemDrop().getItemStack().getType() == Material.ENDER_PEARL && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.ENDERSHIELD))
         {

@@ -82,6 +82,7 @@ public class EnderShield implements IAbility
 
             //Add the shield.
             add(uuid);
+            ChatUtil.sendString(p, "You added a charge to your Ender Shield!");
         }
 
         //Listening for the damage
