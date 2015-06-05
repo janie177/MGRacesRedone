@@ -32,15 +32,12 @@ public class Predator implements IAbility
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());
 
-        int chance = 8;
-        if(level > 3) chance = 16;
+        int chance = 12;
+        if(level > 3) chance = 25;
 
         if(RandomUtil.chance(chance))
         {
-            if(RandomUtil.chance(15))
-            {
-                EntityUtil.bleed(target, 4);
-            }
+            EntityUtil.bleed(target, 4);
         }
 
     }
@@ -117,13 +114,13 @@ public class Predator implements IAbility
                 desc = new String[]{"When eating raw food you gain a regeneration effect."};
                 break;
             case 2:
-                desc = new String[]{"When hitting enemies they have a 8% chance to start bleeding.", "Bleeding lasts 4 seconds."};
+                desc = new String[]{"When hitting enemies they have a 12% chance to start bleeding.", "Bleeding lasts 4 seconds."};
                 break;
             case 3:
                 desc = new String[]{"Your raw food generation lasts twice as long.", "You also get a nightvision, strength and speed boost."};
                 break;
             case 4:
-                desc = new String[]{"Your chance to make enemies bleed is now 16%."};
+                desc = new String[]{"Your chance to make enemies bleed is now 25%."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};
