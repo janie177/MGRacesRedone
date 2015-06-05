@@ -30,10 +30,10 @@ public class EntityUtil
 
                     if(WGUtil.canGetDamage(ent) && !e.isCancelled())
                     {
-                        ent.damage(1.0);
+                        ent.damage(e.getDamage());
                         ent.setLastDamageCause(e);
                     }
-                    EffectUtil.playParticle(ent, Effect.COLOURED_DUST);
+                    EffectUtil.playParticle(ent, Effect.CRIT);
 
                 }
             }, i * 20);
