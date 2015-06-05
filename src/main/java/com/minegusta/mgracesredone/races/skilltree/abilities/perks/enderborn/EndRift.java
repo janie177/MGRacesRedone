@@ -12,6 +12,7 @@ import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EnderRiftPortal;
 import com.minegusta.mgracesredone.util.WGUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -69,8 +70,9 @@ public class EndRift implements IAbility
             }
 
             double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
+            Bukkit.broadcastMessage(highestY + " Highest y");
 
-            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && highestY > 0 && highestY > target.getY()))
+            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && (highestY < 1 || highestY > target.getY())))
             {
                 ChatUtil.sendString(p, "You cannot place a portal there!");
                 return;
@@ -98,7 +100,7 @@ public class EndRift implements IAbility
 
             double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
 
-            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && highestY > 0 && highestY > target.getY()))
+            if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && highestY < 0 || highestY > target.getY()))
             {
                 ChatUtil.sendString(p, "You cannot place a portal there!");
                 return;
