@@ -37,7 +37,7 @@ public class Predator implements IAbility
 
         if(RandomUtil.chance(chance))
         {
-            EntityUtil.bleed(target, 4);
+            EntityUtil.bleed(target, e.getDamager(), 4);
         }
 
     }
