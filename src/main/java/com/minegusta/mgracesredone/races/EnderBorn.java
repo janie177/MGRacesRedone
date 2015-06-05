@@ -108,7 +108,7 @@ public class EnderBorn extends Race {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             if(mgp.getAbilityLevel(AbilityType.COLDBLOODED) > 1)
             {
-                PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 5);
+                PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 18);
             }
         }
     }

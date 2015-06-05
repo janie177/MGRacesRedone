@@ -127,7 +127,7 @@ public class EnderShield implements IAbility
 
                 if(!hit.isCancelled())
                 {
-                    damager.damage(e.getDamage() * reflected / 100);
+                    damager.damage(e.getDamage());
                     damager.setLastDamageCause(hit);
                     p.sendMessage(ChatColor.GREEN + "Your Ender Shield damaged your opponent!");
                     if(damager instanceof Player) damager.sendMessage(ChatColor.RED + "Your opponent's Ender Shield reflects some damage back!");
@@ -142,7 +142,7 @@ public class EnderShield implements IAbility
 
                 if(!hit.isCancelled())
                 {
-                    damager.damage(e.getDamage() * reflected / 100);
+                    damager.damage(e.getDamage());
                     damager.setLastDamageCause(hit);
                     p.sendMessage(ChatColor.GREEN + "Your Ender Shield damaged your opponent!");
                     if(damager instanceof Player) damager.sendMessage(ChatColor.RED + "Your opponent's Ender Shield reflects some damage back!");
