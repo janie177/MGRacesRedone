@@ -2,10 +2,7 @@ package com.minegusta.mgracesredone.util;
 
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 
 import java.util.concurrent.ConcurrentMap;
@@ -187,6 +184,12 @@ public class EnderRiftPortal {
 
     private void teleport(Location l1, Location l2)
     {
+        if(l2.getBlock().getType() != Material.AIR)
+        {
+            //Obsctructed teleport location.
+            return;
+        }
+
         Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_SIGNAL);
         
         for(Entity ent : dummy.getNearbyEntities(1,1,1))

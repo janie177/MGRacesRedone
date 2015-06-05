@@ -68,7 +68,7 @@ public class EndRift implements IAbility
                 target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
             }
 
-            if(!WGUtil.canBuild(p, target.getLocation()))
+            if(!WGUtil.canBuild(p, target.getLocation()) || target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR)
             {
                 ChatUtil.sendString(p, "You cannot place a portal there!");
                 return;
@@ -94,7 +94,7 @@ public class EndRift implements IAbility
                 target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
             }
 
-            if(!WGUtil.canBuild(p, target.getLocation()))
+            if(!WGUtil.canBuild(p, target.getLocation()) || target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR)
             {
                 ChatUtil.sendString(p, "You cannot place a portal there!");
                 return;
@@ -186,7 +186,7 @@ public class EndRift implements IAbility
 
         switch (level) {
             case 1:
-                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport players.", "Place portals by right/left clicking a stick.", "Crouch click a stick to activate.", "Will stay open for 5 seconds."};
+                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport players.", "Place portals by right/left clicking a stick.", "Crouch click a stick to activate.", "Will stay open for 5 seconds.", "Portals cannot be placed above the void or in solid blocks."};
                 break;
             case 2:
                 desc = new String[]{"Your portal will transport mobs and itemstacks.", "The portals stay open for 9 seconds."};
