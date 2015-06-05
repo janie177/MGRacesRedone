@@ -20,7 +20,7 @@ public class ShieldTask
             public void run() {
                 effects();
             }
-        }, 5, 5);
+        }, 5, 3);
     }
 
     public static void stop()
@@ -57,7 +57,7 @@ public class ShieldTask
 
     private static void playEffect(Location l)
     {
-        l.getWorld().spigot().playEffect(l, Effect.PORTAL, 0, 0, 0, 0, 0, 1/40,1, 25);
+        l.getWorld().spigot().playEffect(l, Effect.PORTAL, 0, 0, 0, 0, 0, 1/40,3, 25);
     }
 
     private static Location calculateCircle(Location l, int angle)
