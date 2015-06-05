@@ -1,7 +1,9 @@
 package com.minegusta.mgracesredone.data;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.playerdata.MapManager;
 import com.minegusta.mgracesredone.races.RaceType;
 import org.bukkit.entity.Player;
 
@@ -14,6 +16,10 @@ public class Storage
 
     public static MGPlayer getPlayer(String uuid)
     {
+        if(!racesMap.containsKey(uuid))
+        {
+            MapManager.add(uuid, FileManager.getFile(uuid));
+        }
         return racesMap.get(uuid);
     }
 
