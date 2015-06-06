@@ -10,9 +10,25 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class ShinyGemRecipe implements IRecipe {
+    private final MGItem[] INGREDIENTS;
+    private final ItemStack RESULT;
+
+    public ShinyGemRecipe() {
+        INGREDIENTS = new MGItem[]{new MGItem(Material.NETHER_STAR, 1), new MGItem(Material.GOLD_BLOCK, 4), new MGItem(Material.GOLD_INGOT, 4)};
+        ;
+
+        RESULT = new ItemStack(Material.NETHER_STAR, 1);
+        List<String> lore = Lists.newArrayList();
+        lore.add(ChatColor.WHITE + "The Arkenstone... Heart of the mountain...");
+        ItemMeta meta = RESULT.getItemMeta();
+        meta.setDisplayName(ChatColor.YELLOW + getName());
+        meta.setLore(lore);
+        RESULT.setItemMeta(meta);
+    }
+
     @Override
-    public MGItem[] getIngriedients() {
-        return new MGItem[]{new MGItem(Material.NETHER_STAR, 1), new MGItem(Material.GOLD_BLOCK, 4), new MGItem(Material.GOLD_INGOT, 4)};
+    public MGItem[] getIngredients() {
+        return INGREDIENTS;
     }
 
     @Override
@@ -22,16 +38,6 @@ public class ShinyGemRecipe implements IRecipe {
 
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.NETHER_STAR, 1)
-        {
-            {
-                List<String> lore = Lists.newArrayList();
-                lore.add(ChatColor.WHITE + "The Arkenstone... Heart of the mountain...");
-                ItemMeta meta = getItemMeta();
-                meta.setDisplayName(ChatColor.YELLOW + getName());
-                meta.setLore(lore);
-                setItemMeta(meta);
-            }
-        };
+        return RESULT.clone();
     }
 }

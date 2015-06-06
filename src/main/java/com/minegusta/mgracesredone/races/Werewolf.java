@@ -8,8 +8,7 @@ import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-public class Werewolf extends Race
-{
+public class Werewolf implements Race {
     @Override
     public double getHealth() {
         return 22;
@@ -58,37 +57,28 @@ public class Werewolf extends Race
     }
 
     @Override
-    public void passiveBoost(Player p)
-    {
+    public void passiveBoost(Player p) {
         WeatherUtil.MoonPhase phase = WeatherUtil.getMoonPhase(p.getWorld());
 
-        if(phase == WeatherUtil.MoonPhase.FULL && WeatherUtil.isNight(p.getWorld()))
-        {
+        if (phase == WeatherUtil.MoonPhase.FULL && WeatherUtil.isNight(p.getWorld())) {
             EffectUtil.playParticle(p, Effect.WITCH_MAGIC);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 5);
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 2, 5);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
 
             int armour = PlayerUtil.getArmorAmounr(p);
-            if(armour != 0)
-            {
+            if (armour != 0) {
                 PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, (armour * 2) + 2, 5);
-            }
-            else
-            {
+            } else {
                 PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 2, 5);
             }
-        }
-        else if(phase == WeatherUtil.MoonPhase.NEW)
-        {
+        } else if (phase == WeatherUtil.MoonPhase.NEW) {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
-        }
-        else if(WeatherUtil.isNight(p.getWorld()))
-        {
+        } else if (WeatherUtil.isNight(p.getWorld())) {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0 , 5);
+            PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0 ,20);
+            PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 20);
         }
     }
 }

@@ -15,14 +15,12 @@ import java.util.List;
 
 public class LavaLover implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
 
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
 
         int level = mgp.getAbilityLevel(getType());
@@ -30,8 +28,7 @@ public class LavaLover implements IAbility {
 
         player.setVelocity(player.getLocation().getDirection().normalize().multiply(boost));
 
-        if(player.getVelocity().getY() > 1.2)
-        {
+        if (player.getVelocity().getY() > 1.2) {
             FallDamageManager.addToFallMap(player.getUniqueId().toString());
         }
     }
@@ -85,15 +82,18 @@ public class LavaLover implements IAbility {
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When toggling crouch in lava, you will be launched forward."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When toggling crouch in lava, you will be launched forward."};
                 break;
-            case 2: desc = new String[]{"The launch boost is 50% faster."};
+            case 2:
+                desc = new String[]{"The launch boost is 50% faster."};
                 break;
-            case 3: desc = new String[]{"The launch boost is now 100% faster."};
+            case 3:
+                desc = new String[]{"The launch boost is now 100% faster."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

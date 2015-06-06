@@ -5,22 +5,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.UUID;
 
-public class LoadPlayerData
-{
-    public static void load(String uuid)
-    {
+public class LoadPlayerData {
+    public static void load(String uuid) {
         FileConfiguration conf = FileManager.getFile(uuid);
-
         MapManager.add(uuid, conf);
     }
 
-    public static void unload(String uuid)
-    {
+    public static void unload(String uuid) {
         MapManager.remove(uuid);
     }
 
-    public static void unload(UUID uuid)
-    {
+    public static void unload(UUID uuid) {
         unload(uuid.toString());
     }
 

@@ -15,62 +15,58 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-public class FruitFanatic implements IAbility
-{
+public class FruitFanatic implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         PlayerItemConsumeEvent e = (PlayerItemConsumeEvent) event;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());
 
-        int duration1,duration2,amp1,amp2;
+        int duration1, duration2, amp1, amp2;
 
-        switch (level)
-        {
+        switch (level) {
             case 1: {
                 amp1 = 0;
                 amp2 = 0;
                 duration1 = 2;
                 duration2 = 0;
             }
-                break;
+            break;
             case 2: {
                 amp1 = 0;
                 amp2 = 0;
                 duration1 = 4;
                 duration2 = 0;
             }
-                break;
+            break;
             case 3: {
                 amp1 = 0;
                 amp2 = 1;
                 duration1 = 6;
                 duration2 = 4;
             }
-                break;
+            break;
             case 4: {
                 amp1 = 0;
                 amp2 = 1;
                 duration1 = 6;
                 duration2 = 6;
             }
-                break;
+            break;
             case 5: {
                 amp1 = 0;
                 amp2 = 1;
                 duration1 = 6;
                 duration2 = 8;
             }
-                break;
+            break;
             default: {
                 amp1 = 0;
                 amp2 = 0;
                 duration1 = 2;
                 duration2 = 2;
             }
-                break;
         }
 
         PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, amp1, duration1);
@@ -84,32 +80,27 @@ public class FruitFanatic implements IAbility
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "FruitFanatic";
     }
 
     @Override
-    public AbilityType getType()
-    {
+    public AbilityType getType() {
         return AbilityType.FRUITFANATIC;
     }
 
     @Override
-    public int getID()
-    {
+    public int getID() {
         return 0;
     }
 
     @Override
-    public Material getDisplayItem()
-    {
+    public Material getDisplayItem() {
         return Material.MELON;
     }
 
     @Override
-    public int getPrice(int level)
-    {
+    public int getPrice(int level) {
         return 1;
     }
 
@@ -124,35 +115,37 @@ public class FruitFanatic implements IAbility
     }
 
     @Override
-    public List<RaceType> getRaces()
-    {
+    public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ELF);
     }
 
     @Override
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return 5;
     }
 
     @Override
-    public String[] getDescription(int level)
-    {
+    public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When eating fruit, you gain 2 seconds of regeneration."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When eating fruit, you gain 2 seconds of regeneration."};
                 break;
-            case 2: desc = new String[]{"When eating fruit, you gain 4 seconds of regeneration."};
+            case 2:
+                desc = new String[]{"When eating fruit, you gain 4 seconds of regeneration."};
                 break;
-            case 3: desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 4 seconds of speed II."};
+            case 3:
+                desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 4 seconds of speed II."};
                 break;
-            case 4: desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 6 seconds of speed II."};
+            case 4:
+                desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 6 seconds of speed II."};
                 break;
-            case 5: desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 8 seconds of speed II."};
+            case 5:
+                desc = new String[]{"When eating fruit, you gain 6 seconds of regeneration.", "You will also gain 8 seconds of speed II."};
                 break;
-            default: desc = new String[]{"This is an error.", "Report it to Jan!"};
+            default:
+                desc = new String[]{"This is an error.", "Report it to Jan!"};
                 break;
 
         }

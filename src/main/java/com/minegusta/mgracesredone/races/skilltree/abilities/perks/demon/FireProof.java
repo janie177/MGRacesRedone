@@ -16,15 +16,13 @@ import java.util.List;
 
 public class FireProof implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         EntityDamageEvent e = (EntityDamageEvent) event;
         Player p = (Player) e.getEntity();
 
         MGPlayer mgp = Races.getMGPlayer(p);
 
-        if(mgp.getAbilityLevel(getType()) > 1 || RandomUtil.fiftyfifty())
-        {
+        if (mgp.getAbilityLevel(getType()) > 1 || RandomUtil.fiftyfifty()) {
             e.setDamage(0);
             e.getEntity().setFireTicks(0);
             e.setCancelled(true);
@@ -85,13 +83,15 @@ public class FireProof implements IAbility {
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"There's a 50% chance you take no fire and lava damage."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"There's a 50% chance you take no fire and lava damage."};
                 break;
-            case 2: desc = new String[]{"You never take fire or lava damage."};
+            case 2:
+                desc = new String[]{"You never take fire or lava damage."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

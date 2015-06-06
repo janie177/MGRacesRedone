@@ -9,11 +9,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class AngelFeatherRecipe implements IRecipe
-{
+public class AngelFeatherRecipe implements IRecipe {
+    private final MGItem[] INGREDIENTS;
+    private final ItemStack RESULT;
+
+    public AngelFeatherRecipe() {
+        INGREDIENTS = new MGItem[]{new MGItem(Material.FEATHER, 8), new MGItem(Material.DIAMOND_CHESTPLATE, 1)};
+
+        RESULT = new ItemStack(Material.FEATHER, 1);
+        List<String> lore = Lists.newArrayList(ChatColor.AQUA + "Angle.");
+        ItemMeta meta = RESULT.getItemMeta();
+        meta.setDisplayName(getName());
+        meta.setLore(lore);
+        RESULT.setItemMeta(meta);
+    }
+
     @Override
-    public MGItem[] getIngriedients() {
-        return new MGItem[]{new MGItem(Material.FEATHER, 8), new MGItem(Material.DIAMOND_CHESTPLATE, 1)};
+    public MGItem[] getIngredients() {
+        return INGREDIENTS;
     }
 
     @Override
@@ -23,15 +36,6 @@ public class AngelFeatherRecipe implements IRecipe
 
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.FEATHER, 1)
-        {
-            {
-                List<String> lore = Lists.newArrayList(ChatColor.AQUA + "Angle.");
-                ItemMeta meta = getItemMeta();
-                meta.setDisplayName(getName());
-                meta.setLore(lore);
-                setItemMeta(meta);
-            }
-        };
+        return RESULT.clone();
     }
 }

@@ -12,7 +12,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-public class Demon extends Race {
+public class Demon implements Race {
     @Override
     public double getHealth() {
         return 22;
@@ -47,22 +47,19 @@ public class Demon extends Race {
     }
 
     @Override
-    public void passiveBoost(Player p)
-    {
+    public void passiveBoost(Player p) {
         Location loc = p.getLocation();
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
 
         MGPlayer mgp = Races.getMGPlayer(p);
 
         //Check for obsidian
-        if(p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN && mgp.hasAbility(AbilityType.HELLSPAWN) && mgp.getAbilityLevel(AbilityType.HELLSPAWN) > 1)
-        {
+        if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN && mgp.hasAbility(AbilityType.HELLSPAWN) && mgp.getAbilityLevel(AbilityType.HELLSPAWN) > 1) {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
         }
 
-        if(WeatherUtil.isHell(loc))
-        {
-            if(mgp.hasAbility(AbilityType.HELLSPAWN)) {
+        if (WeatherUtil.isHell(loc)) {
+            if (mgp.hasAbility(AbilityType.HELLSPAWN)) {
                 int level = mgp.getAbilityLevel(AbilityType.HELLSPAWN);
                 EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
 
@@ -78,54 +75,43 @@ public class Demon extends Race {
                 }
             }
 
-        }
-        else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
-        {
-            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 4)
-            {
+        } else if (biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM) {
+            if (mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 4) {
                 EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             }
-        }
-        else if(biome == WeatherUtil.BiomeType.COLD || biome == WeatherUtil.BiomeType.ICE)
-        {
+        } else if (biome == WeatherUtil.BiomeType.COLD || biome == WeatherUtil.BiomeType.ICE) {
             int slowAmp = 1;
-            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST))
-            {
+            if (mgp.hasAbility(AbilityType.ENVIRONMENTALIST)) {
                 int level = mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST);
                 slowAmp = 0;
-                if(level < 2)
-                {
+                if (level < 2) {
                     PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 5);
                 }
             }
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SLOW, slowAmp, 5);
             EffectUtil.playParticle(p, Effect.LAVADRIP);
-        }
-        else
-        {
+        } else {
             EffectUtil.playParticle(p, Effect.LAVADRIP);
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 5);
         }
 
 
-
-        if((PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p)))
-        {
+        if ((PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p))) {
             int damage = 2;
-            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 3) damage = 1;
+            if (mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 3)
+                damage = 1;
             p.damage(damage);
-        }
-        else if(PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p) && biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
-        {
+        } else if (PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p) && biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM) {
             int damage = 2;
-            if(mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 2) damage = 1;
+            if (mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 2)
+                damage = 1;
             p.damage(damage);
         }
     }
-    public static String getChant()
-    {
+
+    public static String getChant() {
         return "Flames shall consume the last light, in fire I bind my soul.";
     }
 }

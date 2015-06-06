@@ -11,8 +11,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class ColdBlooded implements IAbility
-{
+public class ColdBlooded implements IAbility {
     @Override
     public void run(Event event) {
 

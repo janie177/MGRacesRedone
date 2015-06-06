@@ -12,8 +12,7 @@ import java.util.List;
 
 public class Environmentalist implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
 
     }
 
@@ -71,19 +70,24 @@ public class Environmentalist implements IAbility {
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Slowness in cold biomes is only half as bad."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Slowness in cold biomes is only half as bad."};
                 break;
-            case 2: desc = new String[]{"You will no longer get nausea when in ice biomes."};
+            case 2:
+                desc = new String[]{"You will no longer get nausea when in ice biomes."};
                 break;
-            case 3: desc = new String[]{"You only take half as much rain damage."};
+            case 3:
+                desc = new String[]{"You only take half as much rain damage."};
                 break;
-            case 4: desc = new String[]{"You only take half as much water damage."};
+            case 4:
+                desc = new String[]{"You only take half as much water damage."};
                 break;
-            case 5: desc = new String[]{"In hot biomes, you will gain a speed boost."};
+            case 5:
+                desc = new String[]{"In hot biomes, you will gain a speed boost."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

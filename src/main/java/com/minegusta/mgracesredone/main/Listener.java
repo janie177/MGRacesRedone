@@ -9,8 +9,7 @@ import com.minegusta.mgracesredone.listeners.perkpoints.PerkPointListener;
 import com.minegusta.mgracesredone.listeners.racelisteners.*;
 import com.minegusta.mgracesredone.races.skilltree.racemenu.MenuListener;
 
-public enum Listener
-{
+public enum Listener {
     FALL_DAMAGE_MANAGER(new FallDamageManager()),
     GENERAL_LISTENER(new GeneralListener()),
     PERKPOINT_LISTENER(new PerkPointListener()),
@@ -27,13 +26,11 @@ public enum Listener
 
     private org.bukkit.event.Listener listener;
 
-    private Listener(org.bukkit.event.Listener listener)
-    {
+    private Listener(org.bukkit.event.Listener listener) {
         this.listener = listener;
     }
 
-    public org.bukkit.event.Listener get()
-    {
+    public org.bukkit.event.Listener get() {
         return listener;
     }
 

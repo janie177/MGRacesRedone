@@ -10,8 +10,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class HeatTollerance implements IAbility
-{
+public class HeatTollerance implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -72,17 +71,21 @@ public class HeatTollerance implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When in hot biomes, you will not gain nausea."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When in hot biomes, you will not gain nausea."};
                 break;
-            case 2: desc = new String[]{"When in hot biomes, you will only be half as slow."};
+            case 2:
+                desc = new String[]{"When in hot biomes, you will only be half as slow."};
                 break;
-            case 3: desc = new String[]{"Weakness in hot areas is less."};
+            case 3:
+                desc = new String[]{"Weakness in hot areas is less."};
                 break;
-            case 4: desc = new String[]{"Digging will not be affected in hot biomes."};
+            case 4:
+                desc = new String[]{"Digging will not be affected in hot biomes."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

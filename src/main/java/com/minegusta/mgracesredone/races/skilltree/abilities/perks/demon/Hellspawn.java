@@ -11,16 +11,13 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.List;
 
-public class HellSpawn implements IAbility{
+public class Hellspawn implements IAbility {
     @Override
-    public void run(Event event)
-    {
-        if(event instanceof EntityDamageEvent)
-        {
+    public void run(Event event) {
+        if (event instanceof EntityDamageEvent) {
             EntityDamageEvent e = (EntityDamageEvent) event;
             e.setCancelled(true);
         }
-
     }
 
     @Override
@@ -77,19 +74,24 @@ public class HellSpawn implements IAbility{
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"In the nether, you will no longer take fall damage."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"In the nether, you will no longer take fall damage."};
                 break;
-            case 2: desc = new String[]{"When standing on obsidian, you will gain a defence boost."};
+            case 2:
+                desc = new String[]{"When standing on obsidian, you will gain a defence boost."};
                 break;
-            case 3: desc = new String[]{"In the nether, you will gain a strength boost."};
+            case 3:
+                desc = new String[]{"In the nether, you will gain a strength boost."};
                 break;
-            case 4: desc = new String[]{"In the nether, you will gain a massive speed boost."};
+            case 4:
+                desc = new String[]{"In the nether, you will gain a massive speed boost."};
                 break;
-            case 5: desc = new String[]{"In the nether, you will gain a massive jump and defence boost."};
+            case 5:
+                desc = new String[]{"In the nether, you will gain a massive jump and defence boost."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

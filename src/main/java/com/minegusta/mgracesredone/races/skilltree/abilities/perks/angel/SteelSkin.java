@@ -22,16 +22,14 @@ public class SteelSkin implements IAbility {
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         String uuid = player.getUniqueId().toString();
-        String name = "invince";
-        if (Cooldown.isCooledDown(name, uuid))
-        {
+        String name = "invincible";
+        if (Cooldown.isCooledDown(name, uuid)) {
             int duration = 5;
             int level = Races.getMGPlayer(player).getAbilityLevel(getType());
-            if(level > 1) duration = 8;
-            if(level > 2) duration = 10;
+            if (level > 1) duration = 8;
+            if (level > 2) duration = 10;
 
             int endHealth = 4 - level;
 

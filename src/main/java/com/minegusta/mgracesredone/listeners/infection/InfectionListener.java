@@ -26,23 +26,19 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.ConcurrentMap;
 
-public class InfectionListener implements Listener
-{
+public class InfectionListener implements Listener {
     /**
      * It is important to update changes in the documentation by hand!
      */
     //Aurora
     @EventHandler
-    public void onAuroraInfect(PlayerDeathEvent e)
-    {
+    public void onAuroraInfect(PlayerDeathEvent e) {
         Player p = e.getEntity();
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
-        if(Races.getRace(p) != RaceType.HUMAN)return;
-        if(WeatherUtil.getBiomeType(p.getLocation()) != WeatherUtil.BiomeType.ICE)return;
-        if(e.getEntity().getLastDamageCause() != null && e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.DROWNING)
-        {
-            if(p.getInventory().containsAtLeast(Recipe.ICECRYSTAL.getResult(), 1))
-            {
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
+        if (Races.getRace(p) != RaceType.HUMAN) return;
+        if (WeatherUtil.getBiomeType(p.getLocation()) != WeatherUtil.BiomeType.ICE) return;
+        if (e.getEntity().getLastDamageCause() != null && e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.DROWNING) {
+            if (p.getInventory().containsAtLeast(Recipe.ICECRYSTAL.getResult(), 1)) {
                 Races.setRace(p, RaceType.AURORA);
                 ChatUtil.sendString(p, "You feel all heat leave your body and are now an Aurora!");
                 EffectUtil.playParticle(p, Effect.SNOW_SHOVEL, 1, 1, 1, 15);
@@ -55,59 +51,43 @@ public class InfectionListener implements Listener
 
     //DEMON
     @EventHandler
-    public void onDemonInfect(AsyncPlayerChatEvent e)
-    {
+    public void onDemonInfect(AsyncPlayerChatEvent e) {
         final Player p = e.getPlayer();
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
 
         String message = e.getMessage();
         final Block center = p.getLocation().getBlock();
         boolean hasSheep = false;
 
-        if(Races.getRace(p) != RaceType.HUMAN)return;
-        if(message.equalsIgnoreCase(Demon.getChant()))
-        {
-            for(Entity entity : p.getNearbyEntities(15,15,15))
-            {
-                if(entity instanceof Sheep && !((Sheep)entity).isAdult())
-                {
+        if (Races.getRace(p) != RaceType.HUMAN) return;
+        if (message.equalsIgnoreCase(Demon.getChant())) {
+            for (Entity entity : p.getNearbyEntities(15, 15, 15)) {
+                if (entity instanceof Sheep && !((Sheep) entity).isAdult()) {
                     hasSheep = true;
                     break;
                 }
             }
 
-            if(!hasSheep)return;
-            if(BlockUtil.radiusCheck(center, 12, Material.OBSIDIAN, 55))
-            {
+            if (!hasSheep) return;
+            if (BlockUtil.radiusCheck(center, 12, Material.OBSIDIAN, 55)) {
                 Races.setRace(p, RaceType.DEMON);
                 EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
                 ChatUtil.sendString(p, "You are now a Demon!");
 
-                for(int i = 0; i < 20 * 20; i++)
-                {
+                for (int i = 0; i < 20 * 20; i++) {
                     final int k = i;
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            p.getWorld().spigot().playEffect(center.getLocation(), Effect.LAVADRIP, 1, 1, k/80, 1 + k/250, k/80, 1, 30 + k/2, 30);
-                            if(k % 20 == 0)
-                            {
-                                center.getWorld().playSound(center.getLocation(), Sound.GHAST_MOAN, 5, 5);
-                            }
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                        p.getWorld().spigot().playEffect(center.getLocation(), Effect.LAVADRIP, 1, 1, k / 80, 1 + k / 250, k / 80, 1, 30 + k / 2, 30);
+                        if (k % 20 == 0) {
+                            center.getWorld().playSound(center.getLocation(), Sound.GHAST_MOAN, 5, 5);
                         }
                     }, i);
                 }
 
-                for(int le = -5; le < 5; le++)
-                {
-                    for(int le2 = -5; le2 < 5; le2++)
-                    {
-                        if(Math.abs(le2) + Math.abs(le) > 3 && Math.abs(le2) + Math.abs(le) < 5)
-                        {
-                            if(p.getLocation().getBlock().getRelative(le, 0, le2).getType().equals(Material.AIR))
-                            {
+                for (int le = -5; le < 5; le++) {
+                    for (int le2 = -5; le2 < 5; le2++) {
+                        if (Math.abs(le2) + Math.abs(le) > 3 && Math.abs(le2) + Math.abs(le) < 5) {
+                            if (p.getLocation().getBlock().getRelative(le, 0, le2).getType().equals(Material.AIR)) {
                                 final int loc1 = le2;
                                 final int loc2 = le;
                                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
@@ -126,18 +106,15 @@ public class InfectionListener implements Listener
 
     //Dwarf
     @EventHandler
-    public void onDwarfInfect(PlayerInteractEvent e)
-    {
+    public void onDwarfInfect(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
 
-        if(Races.getRace(p) != RaceType.HUMAN)return;
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.SHINYGEM.getResult()))
-        {
+        if (Races.getRace(p) != RaceType.HUMAN) return;
+        if (e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.SHINYGEM.getResult())) {
             Block b = e.getClickedBlock();
-            if(b.getType() != Material.DIAMOND_ORE)return;
-            if(BlockUtil.radiusCheck(b, 8, Material.DIAMOND_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.EMERALD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.GOLD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.LAPIS_ORE, 2))
-            {
+            if (b.getType() != Material.DIAMOND_ORE) return;
+            if (BlockUtil.radiusCheck(b, 8, Material.DIAMOND_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.EMERALD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.GOLD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.LAPIS_ORE, 2)) {
                 BlockUtil.poofBlocks(b, 8, Lists.newArrayList(Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE), Material.AIR, Effect.CLOUD);
                 Races.setRace(p, RaceType.DWARF);
                 ChatUtil.sendString(p, "Diggy diggy hole, you are now a Dwarf!");
@@ -149,42 +126,32 @@ public class InfectionListener implements Listener
 
     //EnderBorn
     @EventHandler
-    public void onEnderBornInfect(final PlayerInteractEntityEvent e)
-    {
+    public void onEnderBornInfect(final PlayerInteractEntityEvent e) {
         final Player p = e.getPlayer();
 
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
 
-        if(!(e.getRightClicked() instanceof Enderman) || Races.getRace(p) != RaceType.HUMAN)return;
+        if (!(e.getRightClicked() instanceof Enderman) || Races.getRace(p) != RaceType.HUMAN) return;
 
-        if(ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.ENDEREYE.getResult()))
-        {
+        if (ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.ENDEREYE.getResult())) {
             e.setCancelled(true);
             for (int i = 0; i < 20 * 10; i++) {
                 final int k = i;
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-
-                    @Override
-                    public void run()
-                    {
-                        if(k % 20 == 0)
-                        {
-                            ChatUtil.sendString(p, (10 - (k/20)) + " Seconds remaining till soul-transfusion is completed.");
-                        }
-                        EffectUtil.playParticle(p, Effect.PORTAL, k/80,k/80,k/80, k/2);
-                        EffectUtil.playParticle(e.getRightClicked().getLocation(), Effect.PORTAL, k/80,k/80,k/80, k/2);
-                        if(k == 199)
-                        {
-                            p.getWorld().createExplosion(e.getRightClicked().getLocation(), 0, false);
-                            p.getWorld().strikeLightning(e.getRightClicked().getLocation());
-                            e.getRightClicked().remove();
-
-                            Races.setRace(p, RaceType.ENDERBORN);
-                            ChatUtil.sendString(p, "You are now Enderborn!");
-                            ItemUtil.removeOne(p, Recipe.ENDEREYE.getResult());
-                        }
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                    if (k % 20 == 0) {
+                        ChatUtil.sendString(p, (10 - (k / 20)) + " Seconds remaining till soul-transfusion is completed.");
                     }
+                    EffectUtil.playParticle(p, Effect.PORTAL, k / 80, k / 80, k / 80, k / 2);
+                    EffectUtil.playParticle(e.getRightClicked().getLocation(), Effect.PORTAL, k / 80, k / 80, k / 80, k / 2);
+                    if (k == 199) {
+                        p.getWorld().createExplosion(e.getRightClicked().getLocation(), 0, false);
+                        p.getWorld().strikeLightning(e.getRightClicked().getLocation());
+                        e.getRightClicked().remove();
 
+                        Races.setRace(p, RaceType.ENDERBORN);
+                        ChatUtil.sendString(p, "You are now Enderborn!");
+                        ItemUtil.removeOne(p, Recipe.ENDEREYE.getResult());
+                    }
                 }, i);
             }
         }
@@ -194,24 +161,21 @@ public class InfectionListener implements Listener
 
     //Elf
     @EventHandler
-    public void onElfInfect(PlayerItemConsumeEvent e)
-    {
+    public void onElfInfect(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
         String uuid = p.getUniqueId().toString();
         ItemStack item = e.getItem();
 
-        if(!WorldCheck.isEnabled(p.getWorld()))return;
-        if(Races.getRace(p) != RaceType.HUMAN)return;
-        if(!item.equals(Recipe.ELFSTEW.getResult()))return;
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
+        if (Races.getRace(p) != RaceType.HUMAN) return;
+        if (!item.equals(Recipe.ELFSTEW.getResult())) return;
 
         int kills = 0;
-        if(elfKills.containsKey(uuid))
-        {
+        if (elfKills.containsKey(uuid)) {
             kills = elfKills.get(uuid);
         }
 
-        if(kills > 99)
-        {
+        if (kills > 99) {
             ChatUtil.sendString(p, "You are now an Elf!");
             EffectUtil.playParticle(p, Effect.HEART, 1, 1, 1, 40);
             EffectUtil.playSound(p, Sound.ARROW_HIT);
@@ -224,16 +188,15 @@ public class InfectionListener implements Listener
 
     //Angel
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onAngelPowers(PlayerDeathEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+    public void onAngelPowers(PlayerDeathEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
         Player p = e.getEntity();
-        if(Races.getRace(p) != RaceType.HUMAN) return;
+        if (Races.getRace(p) != RaceType.HUMAN) return;
 
-        if(p.getLastDamageCause().getCause() == null || p.getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.FALL)return;
+        if (p.getLastDamageCause().getCause() == null || p.getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.FALL)
+            return;
 
-        if(p.getInventory().containsAtLeast(Recipe.ANGELRECIPE.getResult(), 1))
-        {
+        if (p.getInventory().containsAtLeast(Recipe.ANGELRECIPE.getResult(), 1)) {
             ItemUtil.removeOne(p, Recipe.ANGELRECIPE.getResult());
             ChatUtil.sendString(p, "You are now an Angel!");
             Races.setRace(p, RaceType.ANGEL);
@@ -242,27 +205,26 @@ public class InfectionListener implements Listener
 
     //Elf
     @EventHandler
-    public void onElfBowKill(EntityDeathEvent e)
-    {
+    public void onElfBowKill(EntityDeathEvent e) {
         LivingEntity victim = e.getEntity();
 
-        if(!WorldCheck.isEnabled(victim.getWorld()))return;
+        if (!WorldCheck.isEnabled(victim.getWorld())) return;
 
-        if(victim.getLastDamageCause() == null || !(victim.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.PROJECTILE) || e.getEntity().getKiller() == null)return;
+        if (victim.getLastDamageCause() == null || !(victim.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.PROJECTILE) || e.getEntity().getKiller() == null)
+            return;
 
         Player killer = victim.getKiller();
 
-        if(Races.getRace(killer) != RaceType.HUMAN)return;
+        if (Races.getRace(killer) != RaceType.HUMAN) return;
 
         String uuid = killer.getUniqueId().toString();
 
         int amount = 0;
 
-        if(elfKills.containsKey(uuid))amount = elfKills.get(uuid);
+        if (elfKills.containsKey(uuid)) amount = elfKills.get(uuid);
 
         elfKills.put(uuid, amount + 1);
-        if(elfKills.get(uuid) % 5 == 0)
-        {
+        if (elfKills.get(uuid) % 5 == 0) {
             ChatUtil.sendString(killer, "You now have " + elfKills.get(uuid) + " bow kills.");
         }
     }
@@ -273,10 +235,8 @@ public class InfectionListener implements Listener
         Player p = e.getPlayer();
         if (!WorldCheck.isEnabled(p.getWorld())) return;
 
-        if (e.getRightClicked() instanceof Wolf && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.WOLFBONE.getResult()))
-        {
-            if(!WeatherUtil.isFullMoon(e.getPlayer().getWorld()))
-            {
+        if (e.getRightClicked() instanceof Wolf && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.WOLFBONE.getResult())) {
+            if (!WeatherUtil.isFullMoon(e.getPlayer().getWorld())) {
                 p.sendMessage(ChatColor.RED + "It is not a full moon.");
                 return;
             }

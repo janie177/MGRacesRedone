@@ -10,8 +10,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class OtherWorldly implements IAbility
-{
+public class OtherWorldly implements IAbility {
     @Override
     public void run(Event event) {
 

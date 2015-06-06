@@ -12,8 +12,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public enum AbilityType
-{
+public enum AbilityType {
     COLDBLOODED(new ColdBlooded()),
     ENDERSHIELD(new EnderShield()),
     ENDRIFT(new EndRift()),
@@ -52,7 +51,7 @@ public enum AbilityType
     FIREPROOF(new FireProof()),
     HELLRIFT(new HellRift()),
     HELLISHTRUCE(new HellishTruce()),
-    HELLSPAWN(new HellSpawn()),
+    HELLSPAWN(new Hellspawn()),
     LAVALOVER(new LavaLover()),
     METEORSTORM(new MeteorStorm()),
     MINIONMASTER(new MinionMaster()),
@@ -70,63 +69,51 @@ public enum AbilityType
 
     private IAbility ability;
 
-    private AbilityType(IAbility ability)
-    {
+    AbilityType(IAbility ability) {
         this.ability = ability;
     }
 
-    public String[] getDescriontion(int level)
-    {
+    public String[] getDescriontion(int level) {
         return ability.getDescription(level);
     }
 
-    public IAbility getAbility()
-    {
+    public IAbility getAbility() {
         return ability;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return ability.getName();
     }
 
-    public List<RaceType> getRaces()
-    {
+    public List<RaceType> getRaces() {
         return ability.getRaces();
     }
 
-    public int getCost(int level)
-    {
+    public int getCost(int level) {
         return ability.getPrice(level);
     }
 
-    public int getID()
-    {
+    public int getID() {
         return ability.getID();
     }
 
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return ability.getMaxLevel();
     }
 
-    public int getCooldown(int level)
-    {
+    public int getCooldown(int level) {
         return ability.getCooldown(level);
     }
 
-    public IAbility.AbilityGroup getGroup()
-    {
+    public IAbility.AbilityGroup getGroup() {
         return ability.getGroup();
     }
 
-    public void run(Player player)
-    {
+    public void run(Player player) {
         ability.run(player);
     }
 
-    public void run(Event event)
-    {
+    public void run(Event event) {
         ability.run(event);
     }
 }

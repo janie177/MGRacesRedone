@@ -24,8 +24,7 @@ import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.concurrent.ConcurrentMap;
 
-public class ElfListener implements Listener
-{
+public class ElfListener implements Listener {
 
     @EventHandler
     public void onElfFruitEat(PlayerItemConsumeEvent e) {
@@ -40,102 +39,83 @@ public class ElfListener implements Listener
     }
 
     @EventHandler
-    public void onElfShoot(EntityShootBowEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+    public void onElfShoot(EntityShootBowEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntity() instanceof Player)
-        {
+        if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
-            if(Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
-            {
+            if (Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY)) {
                 AbilityType.POINTYSHOOTY.run(e);
             }
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onBowDamage(EntityDamageByEntityEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+    public void onBowDamage(EntityDamageByEntityEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
         //Arrows do more damage.
-        if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
-        {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
             Player p = (Player) e.getDamager();
-            if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && Races.getMGPlayer(p).hasAbility(AbilityType.RANGER) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled())
-            {
+            if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && Races.getMGPlayer(p).hasAbility(AbilityType.RANGER) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled()) {
                 AbilityType.RANGER.run(e);
             }
         }
 
-        if(e.getEntity() instanceof Animals && e.getDamager() instanceof Player)
-        {
+        if (e.getEntity() instanceof Animals && e.getDamager() instanceof Player) {
             MGPlayer mgp = Races.getMGPlayer((Player) e.getDamager());
 
-            if(mgp.hasAbility(AbilityType.FORESTFRIEND))
-            {
+            if (mgp.hasAbility(AbilityType.FORESTFRIEND)) {
                 AbilityType.FORESTFRIEND.run(e);
             }
         }
 
         //Animals saving the elf.
-        if(e.getEntity() instanceof Player && e.getDamager() instanceof LivingEntity)
-        {
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof LivingEntity) {
             Player p = (Player) e.getEntity();
             MGPlayer mgp = Races.getMGPlayer(p);
-            if(mgp.hasAbility(AbilityType.NATURALIST))
-            {
+            if (mgp.hasAbility(AbilityType.NATURALIST)) {
                 AbilityType.NATURALIST.run(e);
             }
         }
     }
 
     @EventHandler
-    public void onElfInteract(PlayerInteractEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+    public void onElfInteract(PlayerInteractEvent e) {
+        if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
 
         Player p = e.getPlayer();
 
         Material hand = p.getItemInHand().getType();
 
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK && p.getItemInHand().getType() == Material.AIR && e.getClickedBlock().getType() == Material.GRASS && Races.getMGPlayer(p).hasAbility(AbilityType.NATURALIST))
-        {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && p.getItemInHand().getType() == Material.AIR && e.getClickedBlock().getType() == Material.GRASS && Races.getMGPlayer(p).hasAbility(AbilityType.NATURALIST)) {
             AbilityType.NATURALIST.run(e);
             return;
         }
 
-        if(hand == Material.BOW && e.getAction() == Action.LEFT_CLICK_AIR && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
-        {
+        if (hand == Material.BOW && e.getAction() == Action.LEFT_CLICK_AIR && Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY)) {
             SpecialArrows.nextArrow(p);
             return;
         }
 
         //Elves can shoot hearts pew pew
-        if(hand == Material.RED_ROSE && e.getAction() == Action.RIGHT_CLICK_AIR && p.isSneaking() && Races.getRace(p) == RaceType.ELF)
-        {
+        if (hand == Material.RED_ROSE && e.getAction() == Action.RIGHT_CLICK_AIR && p.isSneaking() && Races.getRace(p) == RaceType.ELF) {
             Missile.createMissile(p.getLocation(), p.getLocation().getDirection().multiply(1.4), new Effect[]{Effect.HEART}, 30);
-            return;
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onFireDamage(EntityDamageEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+    public void onFireDamage(EntityDamageEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) && WGUtil.canGetDamage(e.getEntity()))
-        {
+        if (e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) && WGUtil.canGetDamage(e.getEntity())) {
             Player p = (Player) e.getEntity();
 
             //Elves have fire weakness
-            if(Races.getRace(p) == RaceType.ELF)
-            {
+            if (Races.getRace(p) == RaceType.ELF) {
                 e.setDamage(e.getDamage() + 4.0);
             }
-            if(Races.getMGPlayer(p).hasAbility(AbilityType.FLAMERESISTANCE))
-            {
+            if (Races.getMGPlayer(p).hasAbility(AbilityType.FLAMERESISTANCE)) {
                 AbilityType.FLAMERESISTANCE.run(e);
             }
         }
@@ -144,62 +124,50 @@ public class ElfListener implements Listener
     public static ConcurrentMap<String, LivingEntity> riders = Maps.newConcurrentMap();
 
     @EventHandler
-    public void onDisMount(EntityDismountEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+    public void onDisMount(EntityDismountEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntity() instanceof Player)
-        {
-            if(riders.containsKey(e.getEntity().getUniqueId().toString()))
-            {
+        if (e.getEntity() instanceof Player) {
+            if (riders.containsKey(e.getEntity().getUniqueId().toString())) {
                 riders.remove(e.getEntity().getUniqueId().toString());
             }
         }
     }
 
     @EventHandler
-    public void onElfRide(PlayerInteractEntityEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getPlayer().getWorld()))return;
+    public void onElfRide(PlayerInteractEntityEvent e) {
+        if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
 
-        if(e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player || e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Horse))
-        {
+        if (e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player || e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Horse)) {
             MGPlayer mgp = Races.getMGPlayer(e.getPlayer());
 
-            if(!mgp.hasAbility(AbilityType.ANIMALRIDER))return;
+            if (!mgp.hasAbility(AbilityType.ANIMALRIDER)) return;
 
             if (e.getPlayer().getItemInHand().getType() == null || e.getPlayer().getItemInHand().getType() == Material.AIR) {
                 AbilityType.ANIMALRIDER.run(e);
-            } else
-            {
+            } else {
                 ChatUtil.sendString(e.getPlayer(), "Elves can only ride animals with an empty hand.");
             }
         }
     }
 
     @EventHandler
-    public void onProjectileHit(ProjectileHitEvent e)
-    {
-        if(!WorldCheck.isEnabled(e.getEntity().getWorld()))return;
+    public void onProjectileHit(ProjectileHitEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if(e.getEntityType() == EntityType.ARROW && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
-        {
+        if (e.getEntityType() == EntityType.ARROW && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
-            if(Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY))
-            {
+            if (Races.getMGPlayer(p).hasAbility(AbilityType.POINTYSHOOTY)) {
                 AbilityType.POINTYSHOOTY.run(e);
             }
-            if(p.isSneaking() && Races.getMGPlayer(p).hasAbility(AbilityType.ARROWRAIN))
-            {
+            if (p.isSneaking() && Races.getMGPlayer(p).hasAbility(AbilityType.ARROWRAIN)) {
                 AbilityType.ARROWRAIN.run(e);
             }
         }
 
-        if(e.getEntityType() == EntityType.EGG && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
-        {
+        if (e.getEntityType() == EntityType.EGG && e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
-            if(Races.getRace(p) == RaceType.ELF && Races.getMGPlayer(p).hasAbility(AbilityType.FORESTFRIEND))
-            {
+            if (Races.getRace(p) == RaceType.ELF && Races.getMGPlayer(p).hasAbility(AbilityType.FORESTFRIEND)) {
                 AbilityType.FORESTFRIEND.run(e);
             }
         }

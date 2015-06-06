@@ -15,8 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-public class Tunnler implements IAbility
-{
+public class Tunnler implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -24,14 +23,11 @@ public class Tunnler implements IAbility
     }
 
     @Override
-    public void run(Player player)
-    {
-
+    public void run(Player player) {
         //Give effects when the player hits a gold block.
         PotionUtil.updatePotion(player, PotionEffectType.SPEED, 2, 5);
         PotionUtil.updatePotion(player, PotionEffectType.JUMP, 1, 5);
         EffectUtil.playParticle(player, Effect.FLAME);
-
     }
 
     @Override
@@ -56,7 +52,7 @@ public class Tunnler implements IAbility
 
     @Override
     public int getPrice(int level) {
-        if(level > 2) return 2;
+        if (level > 2) return 2;
         return 1;
     }
 
@@ -84,17 +80,21 @@ public class Tunnler implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When underground, you gain a defensive boost."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When underground, you gain a defensive boost."};
                 break;
-            case 2: desc = new String[]{"When at extreme depths, you are immune to fire damage."};
+            case 2:
+                desc = new String[]{"When at extreme depths, you are immune to fire damage."};
                 break;
-            case 3: desc = new String[]{"When underground, you gain a strength boost."};
+            case 3:
+                desc = new String[]{"When underground, you gain a strength boost."};
                 break;
-            case 4: desc = new String[]{"When hitting a gold block, you will gain a speed and jump boost."};
+            case 4:
+                desc = new String[]{"When hitting a gold block, you will gain a speed and jump boost."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

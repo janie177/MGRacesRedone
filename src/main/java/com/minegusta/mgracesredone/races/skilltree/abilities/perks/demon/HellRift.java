@@ -22,20 +22,18 @@ import java.util.List;
 
 public class HellRift implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
 
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
 
         String name = "hrift";
         String id = player.getUniqueId().toString();
 
-        if(!Cooldown.isCooledDown(name, id)) {
+        if (!Cooldown.isCooledDown(name, id)) {
             ChatUtil.sendString(player, ChatColor.RED + "Hell Rift will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
             return;
         }
@@ -44,8 +42,7 @@ public class HellRift implements IAbility {
         Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 20).getRelative(0, 2, 0);
 
         //Only in non-building areas.
-        if(!WGUtil.canBuild(player, target.getLocation()))
-        {
+        if (!WGUtil.canBuild(player, target.getLocation())) {
             ChatUtil.sendString(player, "You cannot use this here!");
             return;
         }
@@ -59,7 +56,7 @@ public class HellRift implements IAbility {
 
         int duration = level * 6;
 
-        if(level > 2)duration = 12;
+        if (level > 2) duration = 12;
 
         boolean explode = level > 2;
 
@@ -68,19 +65,15 @@ public class HellRift implements IAbility {
         runHellRift(target, duration, explode);
     }
 
-    private void runHellRift(final Block target, int duration, boolean explode)
-    {
+    private void runHellRift(final Block target, int duration, boolean explode) {
 
         final Location l = target.getLocation();
-        for(int i = 0; i <= 20 * duration; i++)
-        {
-            if(i%4 == 0)
-            {
+        for (int i = 0; i <= 20 * duration; i++) {
+            if (i % 4 == 0) {
                 final int k = i;
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         //Effects lol
                         EffectUtil.playParticle(l, Effect.PORTAL, 30);
                         EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
@@ -89,27 +82,23 @@ public class HellRift implements IAbility {
                         EffectUtil.playParticle(l, Effect.FLYING_GLYPH, 30);
                         EffectUtil.playParticle(l, Effect.LAVADRIP, 30);
 
-                        if(k % 20 == 0)
-                        {
+                        if (k % 20 == 0) {
                             EffectUtil.playSound(l, Sound.PORTAL);
                         }
 
                         //The sucking people in effect
                         Entity dummy = l.getWorld().spawnEntity(l, EntityType.SMALL_FIREBALL);
 
-                        for(Entity ent : dummy.getNearbyEntities(15,15,15))
-                        {
-                            if(ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)
-                            {
+                        for (Entity ent : dummy.getNearbyEntities(15, 15, 15)) {
+                            if (ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile) {
                                 //Demons are immune
-                                if(ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON)
-                                {
+                                if (ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON) {
                                     continue;
                                 }
 
                                 //The closer to the center, the stronger the force.
-                                double amplifier = 0.05 + 1/ent.getLocation().distance(l);
-                                if(amplifier > 1.05) amplifier = 1.05;
+                                double amplifier = 0.05 + 1 / ent.getLocation().distance(l);
+                                if (amplifier > 1.05) amplifier = 1.05;
 
                                 double x = ent.getLocation().getX() - l.getX();
                                 double y = ent.getLocation().getY() - l.getY();
@@ -127,12 +116,10 @@ public class HellRift implements IAbility {
                 }, i);
             }
         }
-        if(explode)
-        {
+        if (explode) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 4, false, false);
                 }
             }, 20 * duration);
@@ -162,13 +149,15 @@ public class HellRift implements IAbility {
     @Override
     public int getPrice(int level) {
         int price = 1;
-        switch (level)
-        {
-            case 1: price = 2;
+        switch (level) {
+            case 1:
+                price = 2;
                 break;
-            case 2: price = 1;
+            case 2:
+                price = 1;
                 break;
-            case 3: price = 1;
+            case 3:
+                price = 1;
                 break;
         }
         return price;
@@ -198,15 +187,18 @@ public class HellRift implements IAbility {
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Open a rift that sucks in loose entities.","Activate using a blazerod.", "The rift stays open for 6 seconds.","Demons are immune."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Open a rift that sucks in loose entities.", "Activate using a blazerod.", "The rift stays open for 6 seconds.", "Demons are immune."};
                 break;
-            case 2: desc = new String[]{"Your rift will now stay twice as long."};
+            case 2:
+                desc = new String[]{"Your rift will now stay twice as long."};
                 break;
-            case 3: desc = new String[]{"Your rift will explode when closing."};
+            case 3:
+                desc = new String[]{"Your rift will explode when closing."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

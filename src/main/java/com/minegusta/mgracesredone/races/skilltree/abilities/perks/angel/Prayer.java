@@ -25,15 +25,13 @@ public class Prayer implements IAbility {
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
         String name = "pray";
         int level = mgp.getAbilityLevel(getType());
         String uuid = mgp.getUniqueIdAsString();
 
-        if(Cooldown.isCooledDown(name, uuid))
-        {
+        if (Cooldown.isCooledDown(name, uuid)) {
             //The cooldown + message
             Cooldown.newCoolDown(name, uuid, getCooldown(level));
             ChatUtil.sendString(player, "You pray and your requests are answered!");
@@ -41,13 +39,11 @@ public class Prayer implements IAbility {
             //The bunny
             Location l = player.getLocation();
             int amount = 1;
-            if(level > 1)amount++;
+            if (level > 1) amount++;
 
-            for(int i = 0; i < amount; i++)
-            {
+            for (int i = 0; i < amount; i++) {
                 Rabbit rabbit = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
-                if(level > 2)
-                {
+                if (level > 2) {
                     PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 1, 600);
                     PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 0, 600);
                     PotionUtil.updatePotion(rabbit, PotionEffectType.REGENERATION, 0, 60);
@@ -57,21 +53,13 @@ public class Prayer implements IAbility {
                 rabbit.setCustomNameVisible(true);
                 rabbit.setRabbitType(Rabbit.Type.THE_KILLER_BUNNY);
 
-                for(Entity ent : rabbit.getNearbyEntities(8,8,8))
-                {
-                    if(ent instanceof LivingEntity && !(ent instanceof Animals))
-                    {
-                        if(!(ent instanceof Player && Races.getRace((Player) ent) == RaceType.ANGEL))
-                        {
-                            ((Creature)rabbit).setTarget((LivingEntity) ent);
-                        }
-                    }
-                }
+                rabbit.getWorld().getEntitiesByClass(LivingEntity.class).stream().filter(le -> le.getLocation().
+                        distance(rabbit.getLocation()) <= 8).filter(le -> !(le instanceof Animals) &&
+                        !(le instanceof Player && Races.getRace((Player) le).equals(RaceType.ANGEL))).
+                        forEach(rabbit::setTarget);
             }
 
-        }
-        else
-        {
+        } else {
             ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Prayer.");
         }
     }

@@ -58,16 +58,14 @@ public class EnderRiftPortal {
 
     public static void setLocation1(String uuid, Location location) {
         portals.get(uuid).setLocation1(location);
-        EffectUtil.playParticle(location, Effect.ENDER_SIGNAL, 0,0,0,1,1,40);
+        EffectUtil.playParticle(location, Effect.ENDER_SIGNAL, 0, 0, 0, 1, 1, 40);
     }
 
-    public static void setAltEntities(String uuid, Boolean altEntities)
-    {
+    public static void setAltEntities(String uuid, Boolean altEntities) {
         portals.get(uuid).setAltEntities(altEntities);
     }
 
-    public static boolean getAltEntities(String uuid)
-    {
+    public static boolean getAltEntities(String uuid) {
         return portals.get(uuid).getAltEntities();
     }
 
@@ -114,18 +112,16 @@ public class EnderRiftPortal {
     private int getDuration() {
         return duration;
     }
-    
-    private void setAltEntities(boolean b)
-    {
+
+    private void setAltEntities(boolean b) {
         this.altEntities = b;
     }
 
     private void setLocation2(Location l) {
         this.location2 = l;
     }
-    
-    private boolean getAltEntities()
-    {
+
+    private boolean getAltEntities() {
         return altEntities;
     }
 
@@ -157,8 +153,7 @@ public class EnderRiftPortal {
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         effect(location1);
                         effect(location2);
                         teleport(location1, location2);
@@ -183,41 +178,34 @@ public class EnderRiftPortal {
         Missile.createMissile(newLocation, 0, 0.01, 0, effects, 4);
     }
 
-    private void teleport(Location l1, Location l2)
-    {
-        if(l2.getBlock().getType() != Material.AIR || l2.getBlock().getRelative(BlockFace.UP).getType() != Material.AIR)
-        {
+    private void teleport(Location l1, Location l2) {
+        if (l2.getBlock().getType() != Material.AIR || l2.getBlock().getRelative(BlockFace.UP).getType() != Material.AIR) {
             //Obsctructed teleport location.
             return;
         }
 
         Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_SIGNAL);
-        
-        for(Entity ent : dummy.getNearbyEntities(1,1,1))
-        {
+
+        for (Entity ent : dummy.getNearbyEntities(1, 1, 1)) {
             String id = ent.getUniqueId().toString();
-            if(getIfTeleported(id))
-            {
-                if(getTeleportCooledDown(id))teleported.remove(id);
+            if (getIfTeleported(id)) {
+                if (getTeleportCooledDown(id)) teleported.remove(id);
                 else continue;
             }
 
-            if(ent instanceof Player)
-            {
+            if (ent instanceof Player) {
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
                 EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);
                 addTeleported(id);
-            }
-            else if(altEntities && (ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile))
-            {
+            } else if (altEntities && (ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)) {
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
                 EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);
                 addTeleported(id);
             }
         }
-        
+
         dummy.remove();
     }
 }

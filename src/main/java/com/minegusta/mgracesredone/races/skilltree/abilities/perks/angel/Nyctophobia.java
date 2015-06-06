@@ -13,12 +13,12 @@ import java.util.List;
 public class Nyctophobia implements IAbility {
     @Override
     public void run(Event event) {
-
+        // Do nothing
     }
 
     @Override
     public void run(Player player) {
-
+        // Do nothing
     }
 
     @Override

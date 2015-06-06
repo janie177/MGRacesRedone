@@ -11,8 +11,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class AquaMan implements IAbility
-{
+public class AquaMan implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -20,11 +19,10 @@ public class AquaMan implements IAbility
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         double speed = 1.25;
         int level = Races.getMGPlayer(player).getAbilityLevel(getType());
-        if(level > 1) speed = 1.8;
+        if (level > 1) speed = 1.8;
 
         //Launch the player forward
         player.setVelocity(player.getLocation().getDirection().normalize().multiply(speed));
@@ -79,13 +77,15 @@ public class AquaMan implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Crouching in water will now launch you forward."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Crouching in water will now launch you forward."};
                 break;
-            case 2: desc = new String[]{"You will be launched 50% faster."};
+            case 2:
+                desc = new String[]{"You will be launched 50% faster."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

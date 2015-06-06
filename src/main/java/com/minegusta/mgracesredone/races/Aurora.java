@@ -11,7 +11,7 @@ import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-public class Aurora extends Race {
+public class Aurora implements Race {
     @Override
     public double getHealth() {
         return 22;
@@ -23,15 +23,14 @@ public class Aurora extends Race {
     }
 
     @Override
-    public String[] getInfectionInfo()
-    {
+    public String[] getInfectionInfo() {
         return new String[]
                 {
-                "To become an Aurora, you have to follow these steps:",
-                "Craft an ice crystal (/Race Recipes).",
-                "Drown in an ice biome with the crystal on you.",
-                "You are now an Aurora!."
-        };
+                        "To become an Aurora, you have to follow these steps:",
+                        "Craft an ice crystal (/Race Recipes).",
+                        "Drown in an ice biome with the crystal on you.",
+                        "You are now an Aurora!."
+                };
     }
 
     @Override
@@ -45,33 +44,27 @@ public class Aurora extends Race {
     }
 
     @Override
-    public void passiveBoost(Player p)
-    {
+    public void passiveBoost(Player p) {
         MGPlayer mgp = Races.getMGPlayer(p);
 
         int feeshLevel = mgp.getAbilityLevel(AbilityType.FEESH);
 
-        if(PlayerUtil.isInWater(p) && feeshLevel > 1)
-        {
+        if (PlayerUtil.isInWater(p) && feeshLevel > 1) {
             PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 5);
         }
 
-        if(PlayerUtil.isInWater(p) && feeshLevel > 0)
-        {
+        if (PlayerUtil.isInWater(p) && feeshLevel > 0) {
             PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 20);
         }
 
-        if(feeshLevel > 4 && WeatherUtil.isFullMoon(p.getWorld()))
-        {
+        if (feeshLevel > 4 && WeatherUtil.isFullMoon(p.getWorld())) {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
         }
 
-        if(feeshLevel > 2 && (PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p)))
-        {
+        if (feeshLevel > 2 && (PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))) {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            if(feeshLevel > 3)
-            {
+            if (feeshLevel > 3) {
                 PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
             }
         }
@@ -80,25 +73,19 @@ public class Aurora extends Race {
 
         int glaceLevel = mgp.getAbilityLevel(AbilityType.GLACIOUS);
 
-        if(biome == WeatherUtil.BiomeType.ICE && glaceLevel > 0)
-        {
+        if (biome == WeatherUtil.BiomeType.ICE && glaceLevel > 0) {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
-            if(glaceLevel > 4)
-            {
+            if (glaceLevel > 4) {
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
                 PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
             }
-            if(glaceLevel > 2)PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            if(glaceLevel > 3)PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+            if (glaceLevel > 2) PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            if (glaceLevel > 3) PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
-        }
-        else if(glaceLevel > 0 && biome == WeatherUtil.BiomeType.COLD)
-        {
+        } else if (glaceLevel > 0 && biome == WeatherUtil.BiomeType.COLD) {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
-        }
-        else if(biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM)
-        {
+        } else if (biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM) {
             int heatresistLevel = mgp.getAbilityLevel(AbilityType.HEATTOLLERANCE);
 
             int slow = 2;
@@ -106,8 +93,7 @@ public class Aurora extends Race {
             int digging = 1;
             boolean confusion = heatresistLevel < 1;
 
-            if(!confusion)
-            {
+            if (!confusion) {
                 if (heatresistLevel > 2) weakness = 1;
                 if (heatresistLevel > 1) slow = 0;
                 if (heatresistLevel > 3) digging = 0;
@@ -115,10 +101,9 @@ public class Aurora extends Race {
 
             PotionUtil.updatePotion(p, PotionEffectType.SLOW, slow, 5);
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, weakness, 5);
-            if(digging > 0) PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, digging, 5);
+            if (digging > 0) PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, digging, 5);
             EffectUtil.playParticle(p, Effect.WATERDRIP);
-            if(biome == WeatherUtil.BiomeType.HOT && confusion)
-            {
+            if (biome == WeatherUtil.BiomeType.HOT && confusion) {
                 PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 10);
             }
         }

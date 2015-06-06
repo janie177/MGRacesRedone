@@ -10,9 +10,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class EnderCrystalRecipe implements IRecipe {
+    private final MGItem[] INGREDIENTS;
+    private final ItemStack RESULT;
+
+    public EnderCrystalRecipe() {
+        INGREDIENTS = new MGItem[]{new MGItem(Material.EYE_OF_ENDER, 1), new MGItem(Material.DIAMOND, 4), new MGItem(Material.ENDER_PEARL, 4)};
+
+        RESULT = new ItemStack(Material.EYE_OF_ENDER, 1);
+        List<String> lore = Lists.newArrayList();
+        lore.add(ChatColor.BLUE + "A strange force is locked in this crystal...");
+        ItemMeta meta = RESULT.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_PURPLE + getName());
+        meta.setLore(lore);
+        RESULT.setItemMeta(meta);
+    }
+
     @Override
-    public MGItem[] getIngriedients() {
-        return new MGItem[]{new MGItem(Material.EYE_OF_ENDER, 1), new MGItem(Material.DIAMOND, 4), new MGItem(Material.ENDER_PEARL, 4)};
+    public MGItem[] getIngredients() {
+        return INGREDIENTS;
     }
 
     @Override
@@ -22,16 +37,6 @@ public class EnderCrystalRecipe implements IRecipe {
 
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.EYE_OF_ENDER, 1)
-        {
-            {
-                List<String> lore = Lists.newArrayList();
-                lore.add(ChatColor.BLUE + "A strange force is locked in this crystal...");
-                ItemMeta meta = getItemMeta();
-                meta.setDisplayName(ChatColor.DARK_PURPLE + getName());
-                meta.setLore(lore);
-                setItemMeta(meta);
-            }
-        };
+        return RESULT.clone();
     }
 }

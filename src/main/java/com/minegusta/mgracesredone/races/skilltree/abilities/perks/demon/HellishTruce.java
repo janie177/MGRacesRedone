@@ -8,7 +8,10 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
@@ -20,41 +23,30 @@ public class HellishTruce implements IAbility {
     private final static List<EntityType> hellMobs = Lists.newArrayList(EntityType.MAGMA_CUBE, EntityType.GHAST, EntityType.PIG_ZOMBIE, EntityType.BLAZE);
 
     @Override
-    public void run(Event event)
-    {
-        if(event instanceof EntityTargetLivingEntityEvent)
-        {
+    public void run(Event event) {
+        if (event instanceof EntityTargetLivingEntityEvent) {
             EntityTargetLivingEntityEvent e = (EntityTargetLivingEntityEvent) event;
-            if(hellMobs.contains(e.getEntityType()))
-            {
+            if (hellMobs.contains(e.getEntityType())) {
                 e.setCancelled(true);
             }
         }
 
-        if(event instanceof EntityDamageByEntityEvent)
-        {
+        if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
             Player p = (Player) e.getDamager();
             MGPlayer mgp = Races.getMGPlayer(p);
 
             int level = mgp.getAbilityLevel(getType());
 
-            if(level < 2)return;
+            if (level < 2) return;
 
-            if(RandomUtil.chance(10 * (level - 1)))
-            {
-                for(Entity ent : p.getNearbyEntities(10, 10, 10))
-                {
-                    if(hellMobs.contains(ent.getType()))
-                    {
-                        ((Creature)ent).setTarget((LivingEntity) e.getEntity());
-                    }
-                }
+            if (RandomUtil.chance(10 * (level - 1))) {
+                p.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(p.getLocation()) <= 10).
+                        filter(ent -> hellMobs.contains(ent.getType())).forEach(ent -> {
+                    ((Creature) ent).setTarget((LivingEntity) e.getEntity());
+                });
             }
-
-
         }
-
     }
 
     @Override
@@ -111,15 +103,18 @@ public class HellishTruce implements IAbility {
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Hell mobs will no longer target you."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Hell mobs will no longer target you."};
                 break;
-            case 2: desc = new String[]{"When attacking an enemy, there's a 10% chance nearby hell-mobs will help you fight."};
+            case 2:
+                desc = new String[]{"When attacking an enemy, there's a 10% chance nearby hell-mobs will help you fight."};
                 break;
-            case 3: desc = new String[]{"When attacking an enemy, there's a 20% chance nearby hell-mobs will help you fight."};
+            case 3:
+                desc = new String[]{"When attacking an enemy, there's a 20% chance nearby hell-mobs will help you fight."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

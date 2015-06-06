@@ -15,8 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -24,8 +22,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class DrowningPool implements IAbility
-{
+public class DrowningPool implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -33,10 +30,8 @@ public class DrowningPool implements IAbility
     }
 
     @Override
-    public void run(Player player)
-    {
-        if(!WGUtil.canBuild(player))
-        {
+    public void run(Player player) {
+        if (!WGUtil.canBuild(player)) {
             ChatUtil.sendString(player, "You cannot use Drowning Pool here!");
             return;
         }
@@ -47,53 +42,37 @@ public class DrowningPool implements IAbility
         String uuid = player.getUniqueId().toString();
         String cooldownName = "drown";
 
-        if(Cooldown.isCooledDown(cooldownName, uuid))
-        {
+        if (Cooldown.isCooledDown(cooldownName, uuid)) {
             ChatUtil.sendString(player, "You use drowning pool on your location!");
             Cooldown.newCoolDown(cooldownName, uuid, getCooldown(level));
             int radius = 8;
             boolean air = level > 2;
             int duration = 6;
-            if(level > 1)duration = 10;
-            if(level > 3)radius = 12;
+            if (level > 1) duration = 10;
+            if (level > 3) radius = 12;
 
             start(l, radius, duration, air);
-        }
-        else
-        {
+        } else {
             ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(cooldownName, uuid) + " seconds to use Drowning Pool.");
         }
     }
 
-    private void start(final Location l, final int radius,final int duration,final boolean air)
-    {
-        for(int i = 0; i < 20 * duration; i++)
-        {
-            if(i % 5 == 0)
-            {
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        Entity dummy = l.getWorld().spawnEntity(l, EntityType.SNOWBALL);
-
-                        for(Entity ent : dummy.getNearbyEntities(radius, radius, radius))
-                        {
-                            if(ent instanceof LivingEntity && EntityUtil.isInWater(ent) && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.AURORA))
-                            {
-                                ent.setVelocity(new Vector(ent.getVelocity().getX(), -0.12, ent.getVelocity().getZ()));
-                                if(ent instanceof Player)
-                                {
-                                    ((Player)ent).sendMessage(ChatColor.RED + "You are pulled underwater!");
-                                }
-                                if(air && ((LivingEntity)ent).getRemainingAir() > 3)
-                                {
-                                    ((LivingEntity)ent).setRemainingAir(3);
-                                }
-                            }
+    private void start(final Location l, final int radius, final int duration, final boolean air) {
+        for (int i = 0; i < 20 * duration; i++) {
+            if (i % 5 == 0) {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                    l.getWorld().getEntitiesByClass(LivingEntity.class).stream().filter(le ->
+                            le.getLocation().distance(l) <= radius).filter(EntityUtil::isInWater).
+                            filter(le -> !(le instanceof Player && Races.getRace((Player) le).equals(RaceType.AURORA))).
+                            forEach(le -> {
+                                le.setVelocity(new Vector(le.getVelocity().getX(), -0.12, le.getVelocity().getZ()));
+                                if (le instanceof Player) {
+                                    le.sendMessage(ChatColor.RED + "You are pulled underwater!");
                         }
-                        dummy.remove();
-                    }
+                                if (air && le.getRemainingAir() > 3) {
+                                    le.setRemainingAir(3);
+                                }
+                            });
                 }, i);
             }
         }
@@ -148,17 +127,21 @@ public class DrowningPool implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When in water, entities around you will be pulled down.", "Activate by right clicking with a sword in water.", "Will last for 6 seconds.", "The radius is 8."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When in water, entities around you will be pulled down.", "Activate by right clicking with a sword in water.", "Will last for 6 seconds.", "The radius is 8."};
                 break;
-            case 2: desc = new String[]{"The duration is increased to 10 seconds."};
+            case 2:
+                desc = new String[]{"The duration is increased to 10 seconds."};
                 break;
-            case 3: desc = new String[]{"Entities air is set to 3 when they are pulled down."};
+            case 3:
+                desc = new String[]{"Entities air is set to 3 when they are pulled down."};
                 break;
-            case 4: desc = new String[]{"The radius is 50% larger."};
+            case 4:
+                desc = new String[]{"The radius is 50% larger."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

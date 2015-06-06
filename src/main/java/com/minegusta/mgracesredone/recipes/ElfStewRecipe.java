@@ -10,9 +10,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class ElfStewRecipe implements IRecipe {
+    private final MGItem[] INGREDIENTS;
+    private final ItemStack RESULT;
+
+    public ElfStewRecipe() {
+        INGREDIENTS = new MGItem[]{new MGItem(Material.LEAVES, 2), new MGItem(Material.CARROT_ITEM, 2), new MGItem(Material.POTATO_ITEM, 2), new MGItem(Material.GLOWSTONE, 3)};
+
+        RESULT = new ItemStack(Material.MUSHROOM_SOUP, 1);
+        ItemMeta meta = RESULT.getItemMeta();
+        List<String> lore = Lists.newArrayList();
+        lore.add(ChatColor.GREEN + "Vegan stew, loved by elves..");
+        meta.setDisplayName(ChatColor.DARK_GREEN + getName());
+        meta.setLore(lore);
+        RESULT.setItemMeta(meta);
+    }
+
     @Override
-    public MGItem[] getIngriedients() {
-        return new MGItem[]{new MGItem(Material.LEAVES, 2), new MGItem(Material.CARROT_ITEM, 2), new MGItem(Material.POTATO_ITEM, 2), new MGItem(Material.GLOWSTONE, 3)};
+    public MGItem[] getIngredients() {
+        return INGREDIENTS;
     }
 
     @Override
@@ -22,16 +37,6 @@ public class ElfStewRecipe implements IRecipe {
 
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.MUSHROOM_SOUP, 1)
-        {
-            {
-                ItemMeta meta = getItemMeta();
-                List<String> lore = Lists.newArrayList();
-                lore.add(ChatColor.GREEN + "Vegan stew, loved by elves..");
-                meta.setDisplayName(ChatColor.DARK_GREEN + getName());
-                meta.setLore(lore);
-                setItemMeta(meta);
-            }
-        };
+        return RESULT.clone();
     }
 }

@@ -8,7 +8,7 @@ import com.minegusta.mgracesredone.util.PotionUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-public class Dwarf extends Race {
+public class Dwarf implements Race {
     @Override
     public double getHealth() {
         return 24;
@@ -46,30 +46,25 @@ public class Dwarf extends Race {
     }
 
     @Override
-    public void passiveBoost(Player p)
-    {
+    public void passiveBoost(Player p) {
         double height = p.getLocation().getY();
         MGPlayer mgp = Races.getMGPlayer(p);
 
         int tunnlerLevel = mgp.getAbilityLevel(AbilityType.TUNNLER);
 
-        if(height < 50 && tunnlerLevel > 0)
-        {
-            if(height < 26)
-            {
-                if(tunnlerLevel > 1)
-                {
+        if (height < 50 && tunnlerLevel > 0) {
+            if (height < 26) {
+                if (tunnlerLevel > 1) {
                     PotionUtil.updatePotion(p, PotionEffectType.FIRE_RESISTANCE, 0, 5);
                 }
             }
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            if(tunnlerLevel > 2) PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+            if (tunnlerLevel > 2) PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
         }
 
         int minerLevel = mgp.getAbilityLevel(AbilityType.MINER);
 
-        if(minerLevel > 0 && ItemUtil.isPickAxe(p.getItemInHand().getType()))
-        {
+        if (minerLevel > 0 && ItemUtil.isPickAxe(p.getItemInHand().getType())) {
             PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 2, 5);
         }
     }

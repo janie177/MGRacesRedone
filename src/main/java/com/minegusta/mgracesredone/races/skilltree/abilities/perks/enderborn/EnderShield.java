@@ -20,47 +20,37 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-public class EnderShield implements IAbility
-{
+public class EnderShield implements IAbility {
     public static ConcurrentMap<String, Integer> shields = Maps.newConcurrentMap();
 
-    private void add(String uuid)
-    {
+    private void add(String uuid) {
         shields.put(uuid, get(uuid) + 1);
     }
 
-    private int get(String uuid)
-    {
-        if(!contains(uuid)) return 0;
+    private int get(String uuid) {
+        if (!contains(uuid)) return 0;
         return shields.get(uuid);
     }
 
-    private void remove(String uuid)
-    {
-        if(get(uuid) > 1)
-        {
+    private void remove(String uuid) {
+        if (get(uuid) > 1) {
             shields.put(uuid, get(uuid) - 1);
-        }
-        else if(contains(uuid))shields.remove(uuid);
+        } else if (contains(uuid)) shields.remove(uuid);
     }
 
-    private boolean contains(String uuid)
-    {
+    private boolean contains(String uuid) {
         return shields.containsKey(uuid);
     }
 
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         //The dropping of the item and adding to the map
-        if(event instanceof PlayerDropItemEvent)
-        {
+        if (event instanceof PlayerDropItemEvent) {
             PlayerDropItemEvent e = (PlayerDropItemEvent) event;
             Player p = e.getPlayer();
 
@@ -68,14 +58,12 @@ public class EnderShield implements IAbility
             int level = mgp.getAbilityLevel(getType());
             String uuid = p.getUniqueId().toString();
             String name = "pshield";
-            if(!Cooldown.isCooledDown(name, uuid))
-            {
+            if (!Cooldown.isCooledDown(name, uuid)) {
                 ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
                 return;
             }
 
-            if((level < 2 && get(uuid) > 0)||(level > 2 && get(uuid) > 1))
-            {
+            if ((level < 2 && get(uuid) > 0) || (level > 2 && get(uuid) > 1)) {
                 ChatUtil.sendString(p, "You already have your maximum of active pearls.");
                 return;
             }
@@ -89,8 +77,7 @@ public class EnderShield implements IAbility
         }
 
         //Listening for the damage
-        else if(event instanceof EntityDamageByEntityEvent)
-        {
+        else if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
             Player p = (Player) e.getEntity();
             Entity attacker = e.getDamager();
@@ -98,54 +85,53 @@ public class EnderShield implements IAbility
             int level = mgp.getAbilityLevel(getType());
             String uuid = p.getUniqueId().toString();
 
-            if(!WGUtil.canFightEachother(p, attacker) || e.isCancelled() || get(uuid) < 1)
-            {
+            if (!WGUtil.canFightEachother(p, attacker) || e.isCancelled() || get(uuid) < 1) {
                 return;
             }
 
             remove(uuid);
 
             int reflected = 0;
-            if(level > 3) reflected = 20;
-            if(level > 4) reflected = 40;
+            if (level > 3) reflected = 20;
+            if (level > 4) reflected = 40;
             int absorbed = 50;
-            if(level > 1) absorbed = 75;
+            if (level > 1) absorbed = 75;
 
             //Absorbing damage
             e.setDamage(e.getDamage() * absorbed / 100);
             p.sendMessage(ChatColor.GREEN + "Your Ender Shield aborbed some damage!");
 
 
-            if(reflected == 0) return;
+            if (reflected == 0) return;
 
             //Reflecting damage
-            if(attacker instanceof LivingEntity)
-            {
+            if (attacker instanceof LivingEntity) {
                 LivingEntity damager = (LivingEntity) e.getDamager();
                 EntityDamageByEntityEvent hit = new EntityDamageByEntityEvent(p, damager, EntityDamageEvent.DamageCause.CUSTOM, e.getDamage() * reflected / 100);
                 Bukkit.getPluginManager().callEvent(hit);
 
-                if(!hit.isCancelled())
-                {
+                if (!hit.isCancelled()) {
                     damager.damage(e.getDamage());
                     damager.setLastDamageCause(hit);
                     p.sendMessage(ChatColor.GREEN + "Your Ender Shield damaged your opponent!");
-                    if(damager instanceof Player) damager.sendMessage(ChatColor.RED + "Your opponent's Ender Shield reflects some damage back!");
+                    if (damager instanceof Player) {
+                        damager.sendMessage(ChatColor.RED + "Your opponent's Ender Shield reflects some damage back!");
+                    }
                 }
                 return;
             }
-            if(attacker instanceof Projectile && ((Projectile)attacker).getShooter() instanceof LivingEntity)
-            {
-                LivingEntity damager = (LivingEntity) ((Projectile)attacker).getShooter();
+            if (attacker instanceof Projectile && ((Projectile) attacker).getShooter() instanceof LivingEntity) {
+                LivingEntity damager = (LivingEntity) ((Projectile) attacker).getShooter();
                 EntityDamageByEntityEvent hit = new EntityDamageByEntityEvent(p, damager, EntityDamageEvent.DamageCause.CUSTOM, e.getDamage() * reflected / 100);
                 Bukkit.getPluginManager().callEvent(hit);
 
-                if(!hit.isCancelled())
-                {
+                if (!hit.isCancelled()) {
                     damager.damage(e.getDamage());
                     damager.setLastDamageCause(hit);
                     p.sendMessage(ChatColor.GREEN + "Your Ender Shield damaged your opponent!");
-                    if(damager instanceof Player) damager.sendMessage(ChatColor.RED + "Your opponent's Ender Shield reflects some damage back!");
+                    if (damager instanceof Player) {
+                        damager.sendMessage(ChatColor.RED + "Your opponent's Ender Shield reflects some damage back!");
+                    }
                 }
             }
         }
@@ -154,8 +140,7 @@ public class EnderShield implements IAbility
 
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
 
     }
 

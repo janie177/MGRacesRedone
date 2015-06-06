@@ -5,17 +5,14 @@ import org.bukkit.World;
 
 import java.util.List;
 
-public class WorldCheck
-{
+public class WorldCheck {
     private static List<String> enabledWorlds = Lists.newArrayList("world", "world_nether", "world_the_end", "donor");
 
-    public static boolean isEnabled(String world)
-    {
+    public static boolean isEnabled(String world) {
         return enabledWorlds.contains(world);
     }
 
-    public static boolean isEnabled(World world)
-    {
+    public static boolean isEnabled(World world) {
         return enabledWorlds.contains(world.getName());
     }
 }

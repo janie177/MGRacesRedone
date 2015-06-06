@@ -28,12 +28,10 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class PointyShooty implements IAbility
-{
+public class PointyShooty implements IAbility {
     @Override
-    public void run(Event event)
-    {
-        if(event instanceof EntityShootBowEvent) {
+    public void run(Event event) {
+        if (event instanceof EntityShootBowEvent) {
             EntityShootBowEvent e = (EntityShootBowEvent) event;
             Player p = (Player) e.getEntity();
             MGPlayer mgp = Races.getMGPlayer(p);
@@ -41,49 +39,36 @@ public class PointyShooty implements IAbility
             int chance = 10;
 
             //Setting the double arrow chance
-            if(level > 4)
-            {
+            if (level > 4) {
                 chance = 30;
-            }
-            else if(level > 2)
-            {
+            } else if (level > 2) {
                 chance = 20;
             }
 
             //Double arrow
-            if (RandomUtil.chance(chance))
-            {
+            if (RandomUtil.chance(chance)) {
                 final Arrow projectile = (Arrow) e.getProjectile();
                 final Vector v = projectile.getVelocity();
                 final ProjectileSource shooter = projectile.getShooter();
                 final Location l = projectile.getLocation();
 
                 final boolean enchantment = ((Player) e.getEntity()).getItemInHand().containsEnchantment(Enchantment.ARROW_INFINITE);
-                if (!enchantment)
-                {
+                if (!enchantment) {
                     ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
                 }
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                    @Override
-                    public void run() {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                    Arrow arrow = (Arrow) l.getWorld().spawnEntity(l.add(0, 0.3, 0), EntityType.ARROW);
+                    arrow.setVelocity(v);
+                    arrow.setShooter(shooter);
 
-                        Arrow arrow = (Arrow)l.getWorld().spawnEntity(l.add(0, 0.3, 0), EntityType.ARROW);
-                        arrow.setVelocity(v);
-                        arrow.setShooter(shooter);
-
-                        Missile.createMissile(l, v, new Effect[]{Effect.HAPPY_VILLAGER}, 15);
-                    }
+                    Missile.createMissile(l, v, new Effect[]{Effect.HAPPY_VILLAGER}, 15);
                 }, 14);
             }
-        }
-        else if(event instanceof ProjectileHitEvent)
-        {
+        } else if (event instanceof ProjectileHitEvent) {
             ProjectileHitEvent e = (ProjectileHitEvent) event;
             SpecialArrows.runEffect(e.getEntity().getLocation(), (Player) e.getEntity().getShooter());
         }
-
-
     }
 
     @Override
@@ -92,46 +77,46 @@ public class PointyShooty implements IAbility
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Pointy Shooty";
     }
 
     @Override
-    public AbilityType getType()
-    {
+    public AbilityType getType() {
         return AbilityType.POINTYSHOOTY;
     }
 
     @Override
-    public int getID()
-    {
+    public int getID() {
         return 0;
     }
 
     @Override
-    public Material getDisplayItem()
-    {
+    public Material getDisplayItem() {
         return Material.ARROW;
     }
 
     @Override
-    public int getPrice(int level)
-    {
+    public int getPrice(int level) {
         int price = 1;
-        switch (level)
-        {
-            case 1: price = 2;
+        switch (level) {
+            case 1:
+                price = 2;
                 break;
-            case 2: price = 2;
+            case 2:
+                price = 2;
                 break;
-            case 3: price = 2;
+            case 3:
+                price = 2;
                 break;
-            case 4: price = 3;
+            case 4:
+                price = 3;
                 break;
-            case 5: price = 2;
+            case 5:
+                price = 2;
                 break;
-            default: price = 1;
+            default:
+                price = 1;
                 break;
         }
         return price;
@@ -148,35 +133,37 @@ public class PointyShooty implements IAbility
     }
 
     @Override
-    public List<RaceType> getRaces()
-    {
+    public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ELF);
     }
 
     @Override
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return 5;
     }
 
     @Override
-    public String[] getDescription(int level)
-    {
+    public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When shooting a bow, there's a 10% chance to shoot two arrows at once."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When shooting a bow, there's a 10% chance to shoot two arrows at once."};
                 break;
-            case 2: desc = new String[]{"Hit the air with your bow to switch between normal and frozen arrows."};
+            case 2:
+                desc = new String[]{"Hit the air with your bow to switch between normal and frozen arrows."};
                 break;
-            case 3: desc = new String[]{"When shooting a bow, there's a 20% chance to shoot two arrows at once."};
+            case 3:
+                desc = new String[]{"When shooting a bow, there's a 20% chance to shoot two arrows at once."};
                 break;
-            case 4: desc = new String[]{"Unlock grappling hook and exploding arrows. Exploding arrows have a 20% explode chance."};
+            case 4:
+                desc = new String[]{"Unlock grappling hook and exploding arrows. Exploding arrows have a 20% explode chance."};
                 break;
-            case 5: desc = new String[]{"When shooting a bow, there's a 30% chance to shoot two arrows at once."};
+            case 5:
+                desc = new String[]{"When shooting a bow, there's a 30% chance to shoot two arrows at once."};
                 break;
-            default: desc = new String[]{"This is an error.", "Report it to Jan!"};
+            default:
+                desc = new String[]{"This is an error.", "Report it to Jan!"};
                 break;
 
         }

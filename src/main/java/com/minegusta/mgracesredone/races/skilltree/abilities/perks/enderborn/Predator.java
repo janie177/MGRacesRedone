@@ -20,12 +20,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-public class Predator implements IAbility
-{
+public class Predator implements IAbility {
     //Bleeding for the predator ability
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
         Player p = (Player) e.getDamager();
         LivingEntity target = (LivingEntity) e.getEntity();
@@ -33,10 +31,9 @@ public class Predator implements IAbility
         int level = mgp.getAbilityLevel(getType());
 
         int chance = 12;
-        if(level > 3) chance = 25;
+        if (level > 3) chance = 25;
 
-        if(RandomUtil.chance(chance))
-        {
+        if (RandomUtil.chance(chance)) {
             EntityUtil.bleed(target, e.getDamager(), 4);
         }
 
@@ -44,14 +41,12 @@ public class Predator implements IAbility
 
     //The food boosts
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
 
         PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 0, 4);
-        if(level > 2)
-        {
+        if (level > 2) {
             PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 0, 8);
             PotionUtil.updatePotion(player, PotionEffectType.NIGHT_VISION, 0, 15);
             PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 0, 15);

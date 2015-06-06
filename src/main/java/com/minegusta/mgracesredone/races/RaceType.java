@@ -3,8 +3,7 @@ package com.minegusta.mgracesredone.races;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public enum RaceType
-{
+public enum RaceType {
     HUMAN(new Human(), ChatColor.GRAY + "[Hu]"),
     ELF(new Elf(), ChatColor.GREEN + "[El]"),
     DWARF(new Dwarf(), ChatColor.DARK_GRAY + "[Dw]"),
@@ -17,44 +16,36 @@ public enum RaceType
     private Race race;
     private String tag;
 
-    private RaceType(Race race, String tag)
-    {
+    RaceType(Race race, String tag) {
         this.tag = tag;
         this.race = race;
     }
 
-    public double getHealth()
-    {
+    public double getHealth() {
         return race.getHealth();
     }
 
-    public String getName()
-    {
+    public String getName() {
         return race.getName();
     }
 
-    public String[] getInfo()
-    {
+    public String[] getInfo() {
         return race.getInfo();
     }
 
-    public String getTag()
-    {
+    public String getTag() {
         return tag;
     }
 
-    public String[] getInfectionInfo()
-    {
+    public String[] getInfectionInfo() {
         return race.getInfectionInfo();
     }
 
-    public void passiveBoost(Player p)
-    {
+    public void passiveBoost(Player p) {
         race.passiveBoost(p);
     }
 
-    public void setHealth(Player p)
-    {
+    public void setHealth(Player p) {
         race.setHealth(p);
     }
 }

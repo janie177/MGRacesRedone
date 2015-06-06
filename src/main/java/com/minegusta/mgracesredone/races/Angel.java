@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 
-public class Angel extends Race {
+public class Angel implements Race {
     @Override
     public double getHealth() {
         return 20;
@@ -45,18 +45,15 @@ public class Angel extends Race {
     }
 
     @Override
-    public void passiveBoost(Player p)
-    {
+    public void passiveBoost(Player p) {
         int height = (int) p.getLocation().getY();
 
         MGPlayer mgp = Races.getMGPlayer(p);
 
         //Weakness in the nether and end
-        if(WeatherUtil.isHell(p.getLocation()) || WeatherUtil.isEnd(p.getLocation()))
-        {
+        if (WeatherUtil.isHell(p.getLocation()) || WeatherUtil.isEnd(p.getLocation())) {
             PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, 0, 5);
-            if(mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) < 2)
-            {
+            if (mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) < 2) {
                 PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 10);
             }
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
@@ -64,39 +61,31 @@ public class Angel extends Race {
 
 
         //String at high areas
-        if(height > 100 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 3)
-        {
+        if (height > 100 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 3) {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
         }
         //Weak in low areas and dark ones
-        else if(height < 50)
-        {
+        else if (height < 50) {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
-        }
-        else if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.DARK)
-        {
+        } else if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.DARK) {
             int strength = 1;
-            if(mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) > 0)
-            {
+            if (mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) > 0) {
                 strength = 0;
             }
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, strength, 5);
         }
 
         //At low health they will be able to escape
-        if(p.getHealth() < 6 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 4)
-        {
+        if (p.getHealth() < 6 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 4) {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
         }
 
         //Heal in light areas with the holiness perk.
-        if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && mgp.hasAbility(AbilityType.HOLYNESS) && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 1)
-        {
+        if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && mgp.hasAbility(AbilityType.HOLYNESS) && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 1) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 3, 0, false, false));
         }
-
     }
 }

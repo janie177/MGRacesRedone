@@ -7,8 +7,7 @@ import org.bukkit.util.Vector;
 
 import java.util.concurrent.ConcurrentMap;
 
-public class Missile
-{
+public class Missile {
     private static ConcurrentMap<Integer, Missile> missiles = Maps.newConcurrentMap();
 
     private Location location;
@@ -21,8 +20,7 @@ public class Missile
     private int lifeTime = 0;
 
 
-    private Missile(Location location, double xSpeed, double ySpeed, double zSpeed, Effect[] effects, int duration)
-    {
+    private Missile(Location location, double xSpeed, double ySpeed, double zSpeed, Effect[] effects, int duration) {
         this.location = location;
         this.xSpeed = xSpeed;
         this.yspeed = ySpeed;
@@ -30,73 +28,60 @@ public class Missile
         this.effects = effects;
         this.duration = duration;
         this.id = RandomUtil.randomNumber(9999999);
-        if(missiles.containsKey(id))id = RandomUtil.randomNumber(99999999);
+        if (missiles.containsKey(id)) id = RandomUtil.randomNumber(99999999);
         missiles.put(id, this);
     }
 
-    public static Missile createMissile(Location location, double xSpeed, double ySpeed, double zSpeed, Effect[] effects, int duration)
-    {
+    public static Missile createMissile(Location location, double xSpeed, double ySpeed, double zSpeed, Effect[] effects, int duration) {
         return new Missile(location, xSpeed, ySpeed, zSpeed, effects, duration);
     }
 
-    public static Missile createMissile(Location location, Vector velocity, Effect[] effects, int duration)
-    {
+    public static Missile createMissile(Location location, Vector velocity, Effect[] effects, int duration) {
         return new Missile(location, velocity.getX(), velocity.getY(), velocity.getZ(), effects, duration);
     }
 
-    public static void update()
-    {
-        if(missiles.size() == 0)return;
-        for(Missile m : missiles.values())
-        {
+    public static void update() {
+        if (missiles.size() == 0) return;
+        for (Missile m : missiles.values()) {
             m.updateLocation();
-            for(Effect effect : m.getEffects())
-            {
+            for (Effect effect : m.getEffects()) {
                 EffectUtil.playParticle(m.getLocation(), effect);
             }
             m.updateLifeTime();
-            if(m.outlived()) m.stop();
+            if (m.outlived()) m.stop();
         }
     }
 
-    public void stop()
-    {
+    public void stop() {
         missiles.remove(id);
     }
 
-    public void updateLifeTime()
-    {
+    public void updateLifeTime() {
         lifeTime++;
     }
 
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
-    public boolean outlived()
-    {
+    public boolean outlived() {
         return lifeTime >= duration;
     }
 
-    public void updateLocation()
-    {
+    public void updateLocation() {
         Location newLocation = getLocation().add(xSpeed, yspeed, zspeed);
         setLocation(newLocation);
     }
 
-    public void setLocation(Location location)
-    {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
-    public Effect[] getEffects()
-    {
+    public Effect[] getEffects() {
         return effects;
     }
 
-    public Location getLocation()
-    {
+    public Location getLocation() {
         return location;
     }
 }

@@ -15,15 +15,12 @@ import java.util.List;
 
 public class Holyness implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
 
-        if(event instanceof FoodLevelChangeEvent)
-        {
+        if (event instanceof FoodLevelChangeEvent) {
             FoodLevelChangeEvent e = (FoodLevelChangeEvent) event;
             Player p = (Player) e.getEntity();
-            if(BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && e.getFoodLevel() < ((Player) e.getEntity()).getFoodLevel())
-            {
+            if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && e.getFoodLevel() < ((Player) e.getEntity()).getFoodLevel()) {
                 e.setCancelled(true);
             }
         }

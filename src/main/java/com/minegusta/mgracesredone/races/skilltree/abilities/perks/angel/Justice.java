@@ -12,7 +12,6 @@ import com.minegusta.mgracesredone.util.Cooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -27,17 +26,14 @@ public class Justice implements IAbility {
     }
 
     @Override
-    public void run(Player player)
-    {
-        String name = "justic";
+    public void run(Player player) {
+        String name = "justice";
         String id = player.getUniqueId().toString();
 
-        if(!Cooldown.isCooledDown(name, id))
-        {
+        if (!Cooldown.isCooledDown(name, id)) {
             ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, id) + " seconds to use Justice.");
             return;
         }
-
 
 
         //level
@@ -52,42 +48,32 @@ public class Justice implements IAbility {
 
         //Getting the launch speed
         double speed = 1.5 + level / 3;
-        boolean explode,push;
+        boolean explode, push;
 
         explode = level > 3;
         push = level > 1;
 
 
         //Push
-        if(push)
-        {
+        if (push) {
             final Location l = player.getLocation();
-            for(Entity ent : player.getNearbyEntities(7, 2, 7))
-            {
-                if(ent instanceof LivingEntity)
-                {
-                    double x = ent.getLocation().getX() - l.getX();
-                    double z = ent.getLocation().getZ() - l.getZ();
+            l.getWorld().getEntitiesByClass(LivingEntity.class).stream().
+                    filter(le -> le.getLocation().distance(l) <= 7).forEach(le -> {
+                double x = le.getLocation().getX() - l.getX();
+                double z = le.getLocation().getZ() - l.getZ();
 
-                    Vector v = new Vector(x, 0.3, z);
-                    v.normalize();
+                Vector v = new Vector(x, 0.3, z);
+                v.normalize();
 
-                    ent.setVelocity(ent.getVelocity().add(v.multiply(-1.6)));
-                }
-            }
+                le.setVelocity(le.getVelocity().add(v.multiply(-1.6)));
+            });
         }
 
         //Explode
-        if(explode)
-        {
+        if (explode) {
             final Location l = player.getLocation();
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                @Override
-                public void run()
-                {
-                    l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 4, false, false);
-                }
-            }, 15);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+                    l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 4, false, false), 15);
         }
 
         //Launch the player
@@ -116,16 +102,14 @@ public class Justice implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        if(level == 1)
-        {
+        if (level == 1) {
             return 2;
         }
         return 1;
     }
 
     @Override
-    public AbilityGroup getGroup()
-    {
+    public AbilityGroup getGroup() {
         return AbilityGroup.ACTIVE;
     }
 
