@@ -10,9 +10,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class WolfBoneRecipe implements IRecipe {
+    private final MGItem[] INGREDIENTS;
+    private final ItemStack RESULT;
+
+    public WolfBoneRecipe() {
+        INGREDIENTS = new MGItem[]{new MGItem(Material.BONE, 1), new MGItem(Material.GLOWSTONE, 4), new MGItem(Material.GOLD_INGOT, 4)};
+
+        RESULT = new ItemStack(Material.BONE, 1);
+        List<String> lore = Lists.newArrayList();
+        lore.add(ChatColor.GRAY + "This bone seems drawn to the moon...");
+        ItemMeta meta = RESULT.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_GRAY + getName());
+        meta.setLore(lore);
+        RESULT.setItemMeta(meta);
+    }
+
     @Override
-    public MGItem[] getIngriedients() {
-        return new MGItem[]{new MGItem(Material.BONE, 1), new MGItem(Material.GLOWSTONE, 4), new MGItem(Material.GOLD_INGOT, 4)};
+    public MGItem[] getIngredients() {
+        return INGREDIENTS;
     }
 
     @Override
@@ -22,16 +37,6 @@ public class WolfBoneRecipe implements IRecipe {
 
     @Override
     public ItemStack getResult() {
-        return new ItemStack(Material.BONE, 1)
-        {
-            {
-                ItemMeta meta = getItemMeta();
-                List<String> lore = Lists.newArrayList();
-                meta.setDisplayName(ChatColor.DARK_GRAY + getName());
-                lore.add(ChatColor.GRAY + "This bone seems drawn to the moon...");
-                meta.setLore(lore);
-                setItemMeta(meta);
-            }
-        };
+        return RESULT.clone();
     }
 }

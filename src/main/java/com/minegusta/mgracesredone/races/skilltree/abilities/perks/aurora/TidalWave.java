@@ -16,8 +16,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -26,131 +24,107 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-public class TidalWave implements IAbility
-{
+// TODO Check for lag issues...
+
+public class TidalWave implements IAbility {
 
     public static ConcurrentMap<Location, Boolean> blockMap = Maps.newConcurrentMap();
 
     @Override
     public void run(Event event) {
-
+        // Do nothing
     }
 
     @Override
-    public void run(Player player)
-    {
-        if(!WGUtil.canBuild(player))
-        {
+    public void run(Player player) {
+        if (!WGUtil.canBuild(player)) {
             ChatUtil.sendString(player, "You cannot use TidalWave here!");
             return;
         }
 
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-        Location l = player.getLocation();
         String uuid = player.getUniqueId().toString();
         String cooldownName = "wave";
 
-        if(Cooldown.isCooledDown(cooldownName, uuid))
-        {
+        if (Cooldown.isCooledDown(cooldownName, uuid)) {
             ChatUtil.sendString(player, "You use tidal wave on your location!");
             Cooldown.newCoolDown(cooldownName, uuid, getCooldown(level));
 
             int radius = 7;
             boolean damage = level > 1;
-            if(level > 2)radius = 14;
+            if (level > 2) radius = 14;
 
             start(radius, damage, player);
-        }
-        else
-        {
+        } else {
             ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(cooldownName, uuid) + " seconds to use TidalWave.");
         }
     }
 
-    private void start(int radius, final boolean damage, Player p)
-    {
+    private void start(int radius, final boolean damage, Player p) {
         //Add all blocks for the wave in a row here.
         final Location center = p.getTargetBlock(Sets.newHashSet(Material.AIR), 7).getLocation();
         final Vector v = p.getLocation().getDirection();
         v.normalize();
         v.multiply(1.25);
 
-        for(int i = 0; i <= radius; i++)
-        {
+        for (int i = 0; i <= radius; i++) {
             final Location start = new Location(center.getWorld(), center.getX() + i * v.getX(), center.getY() + i * v.getY(), center.getZ() + i * v.getZ());
 
-            final int k = i;
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                @Override
-                public void run()
-                {
-                    final List<Block> blocks = Lists.newArrayList();
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                final List<Block> blocks = Lists.newArrayList();
 
-                    //Do the wave stuff
-                    for(int x = -5; x < 6; x ++)
-                    {
-                        for(int y = -5; y < 6; y ++)
-                        {
-                            for(int z = -5; z < 6; z ++)
-                            {
-                                Block target = start.getWorld().getBlockAt((int)start.getX() + x, (int)start.getY() + y, (int) start.getZ() + z);
-
-                                if(target.getLocation().distance(start) < 3 && target.getType()== Material.AIR)
-                                {
-                                    blockMap.put(target.getLocation(), true);
-                                    blocks.add(target);
-                                }
+                //Do the wave stuff
+                for (int x = -5; x < 6; x++) {
+                    for (int y = -5; y < 6; y++) {
+                        for (int z = -5; z < 6; z++) {
+                            Block target = start.getWorld().getBlockAt((int) start.getX() + x, (int) start.getY() + y, (int) start.getZ() + z);
+                            if (target.getLocation().distance(start) < 3 && target.getType() == Material.AIR) {
+                                blockMap.put(target.getLocation(), true);
+                                blocks.add(target);
                             }
                         }
                     }
-
-                    //Set to water and then task to make it air again
-                    for(Block b : blocks)
-                    {
-                        if(b.getType() == Material.AIR)
-                        {
-                            b.setType(Material.STATIONARY_WATER);
-                        }
-                    }
-                    //Apply the effects
-                    Entity dummy = start.getWorld().spawnEntity(start, EntityType.SNOWBALL);
-                    for(Entity ent : dummy.getNearbyEntities(4, 4, 4))
-                    {
-                        if(!(ent instanceof LivingEntity))continue;
-                        double x = ent.getLocation().getX() - start.getX();
-                        double y = ent.getLocation().getY() - start.getY();
-                        double z = ent.getLocation().getZ() - start.getZ();
-                        Vector v = new Vector(x, y, z);
-                        v.normalize();
-                        ent.setVelocity(ent.getVelocity().add(v.multiply(1.4)));
-
-                        if(damage && WGUtil.canGetDamage(ent))
-                        {
-                            ((LivingEntity) ent).damage(1);
-                        }
-
-                    }
-                    dummy.remove();
-
-                    //Return to normal after 2/3 second.
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                        @Override
-                        public void run()
-                        {
-                            for(Block b : blocks)
-                            {
-                                if(b.getType() == Material.STATIONARY_WATER || b.getType() == Material.WATER)
-                                {
-                                    b.setType(Material.AIR);
-                                    blockMap.remove(b.getLocation());
-                                }
-                            }
-                        }
-                    }, 10);
-
                 }
-            }, 6 * k);
+
+                //Set to water and then task to make it air again
+
+                start.getWorld().getEntitiesByClass(Player.class).stream().filter(player -> player.getLocation().distance(start) <= 100).forEach(player -> {
+                    blocks.stream().filter(b -> b.getType() == Material.AIR).forEach(b -> {
+                        player.sendBlockChange(b.getLocation(), Material.STATIONARY_WATER, (byte) 0);
+                        // b.setType(Material.STATIONARY_WATER);
+
+                        //Return to normal after 2/3 second.
+                        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getPlugin(), () -> {
+                            player.sendBlockChange(b.getLocation(), Material.AIR, (byte) 0);
+                            blockMap.remove(b.getLocation());
+                        }, 10);
+                    });
+                });
+
+                //Apply the effects
+                start.getWorld().getEntitiesByClass(LivingEntity.class).stream().
+                        filter(le -> le.getLocation().distance(start) <= 4).forEach(le -> {
+                    double x = le.getLocation().getX() - start.getX();
+                    double y = le.getLocation().getY() - start.getY();
+                    double z = le.getLocation().getZ() - start.getZ();
+                    Vector v1 = new Vector(x, y, z);
+                    v1.normalize();
+                    le.setVelocity(le.getVelocity().add(v1.multiply(1.4)));
+
+                    if (damage && WGUtil.canGetDamage(le)) {
+                        le.damage(1);
+                    }
+                });
+
+                /*Return to normal after 2/3 second.
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                    blocks.stream().forEach(b -> {
+                        b.setType(Material.AIR);
+                        blockMap.remove(b.getLocation());
+                    });
+                }, 10);*/
+            }, 6 * i);
         }
     }
 
@@ -203,15 +177,18 @@ public class TidalWave implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Cast a wall of water in any of four directions.", "Activate by left-clicking a snowball."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Cast a wall of water in any of four directions.", "Activate by left-clicking a snowball."};
                 break;
-            case 2: desc = new String[]{"Your wave will cause drown damage to anyone in it."};
+            case 2:
+                desc = new String[]{"Your wave will cause drown damage to anyone in it."};
                 break;
-            case 3: desc = new String[]{"Your wave will reach twice as far."};
+            case 3:
+                desc = new String[]{"Your wave will reach twice as far."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

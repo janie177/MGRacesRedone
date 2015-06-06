@@ -18,12 +18,10 @@ public class Glide implements IAbility {
     }
 
     @Override
-    public void run(Player player) 
-    {
+    public void run(Player player) {
         int level = Races.getMGPlayer(player).getAbilityLevel(getType());
         double speedY = -0.18;
-        if(level > 1)
-        {
+        if (level > 1) {
             speedY = -0.12;
         }
 

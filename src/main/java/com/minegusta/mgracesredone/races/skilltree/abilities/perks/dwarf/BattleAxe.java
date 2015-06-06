@@ -18,12 +18,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.List;
 
-public class BattleAxe implements IAbility
-{
+public class BattleAxe implements IAbility {
 
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
         Player p = (Player) e.getDamager();
         MGPlayer mgp = Races.getMGPlayer(p);
@@ -31,29 +29,25 @@ public class BattleAxe implements IAbility
         Entity victim = e.getEntity();
 
         int added = 1;
-        if(level > 2) {
+        if (level > 2) {
             added = 2;
         }
 
         e.setDamage(e.getDamage() + added);
 
-        if(level > 1 && RandomUtil.chance(10))
-        {
+        if (level > 1 && RandomUtil.chance(10)) {
             int add = 5;
-            if(level > 3)add = 10;
+            if (level > 3) add = 10;
 
             e.setDamage(e.getDamage() + (e.getDamage() / 100 * add));
         }
 
-        if(level > 4)
-        {
-            for(Entity ent : victim.getNearbyEntities(2,2,2))
-            {
-                if(ent instanceof LivingEntity && !(ent instanceof Player) && WGUtil.canFightEachother(p, ent))
-                {
-                    ((LivingEntity) ent).damage(1);
-                }
-            }
+        if (level > 4) {
+            // Acceptable use of Entity::getNearbyEntities according to Spigot
+            victim.getNearbyEntities(2, 2, 2).stream().filter(ent -> ent instanceof LivingEntity &&
+                    !(ent instanceof Player) && WGUtil.canFightEachother(p, ent)).forEach(ent -> {
+                ((LivingEntity) ent).damage(1);
+            });
         }
 
     }
@@ -112,19 +106,24 @@ public class BattleAxe implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"You do an additional 1 damage with axes."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"You do an additional 1 damage with axes."};
                 break;
-            case 2: desc = new String[]{"There's a 10% chance you will do a critical hit, adding 5% damage."};
+            case 2:
+                desc = new String[]{"There's a 10% chance you will do a critical hit, adding 5% damage."};
                 break;
-            case 3: desc = new String[]{"You do an additional 1 damage with axes."};
+            case 3:
+                desc = new String[]{"You do an additional 1 damage with axes."};
                 break;
-            case 4: desc = new String[]{"There's a 10% chance you will do a critical hit, adding 10% damage."};
+            case 4:
+                desc = new String[]{"There's a 10% chance you will do a critical hit, adding 10% damage."};
                 break;
-            case 5: desc = new String[]{"You will now hit multiple mobs at once when using an axe."};
+            case 5:
+                desc = new String[]{"You will now hit multiple mobs at once when using an axe."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

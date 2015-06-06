@@ -19,33 +19,25 @@ import java.util.List;
 
 public class ForestFriend implements IAbility {
     @Override
-    public void run(Event event)
-    {
-        if(event instanceof EntityDamageByEntityEvent)
-        {
+    public void run(Event event) {
+        if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
             Player p = (Player) e.getDamager();
-            MGPlayer mgp = Races.getMGPlayer(p);
 
             Animals animal = (Animals) e.getEntity();
-            if(p.isSneaking())
-            {
-                if(animal.isAdult()) animal.setBaby();
+            if (p.isSneaking()) {
+                if (animal.isAdult()) animal.setBaby();
                 else animal.setAdult();
                 e.setCancelled(true);
             }
-            if(animal instanceof Rabbit)
-            {
+            if (animal instanceof Rabbit) {
                 PotionUtil.updatePotion(p, PotionEffectType.JUMP, 3, 10);
             }
-        }
-        else if(event instanceof ProjectileHitEvent)
-        {
+        } else if (event instanceof ProjectileHitEvent) {
             ProjectileHitEvent e = (ProjectileHitEvent) event;
             MGPlayer mgp = Races.getMGPlayer((Player) e.getEntity().getShooter());
 
-            if(mgp.getAbilityLevel(getType()) > 1 && RandomUtil.fiftyfifty())
-            {
+            if (mgp.getAbilityLevel(getType()) > 1 && RandomUtil.fiftyfifty()) {
                 Chicken chicken = (Chicken) e.getEntity().getWorld().spawnEntity(e.getEntity().getLocation(), EntityType.CHICKEN);
                 chicken.setBaby();
             }
@@ -104,8 +96,7 @@ public class ForestFriend implements IAbility {
     }
 
     @Override
-    public String[] getDescription(int level)
-    {
+    public String[] getDescription(int level) {
         String[] desc;
 
         switch (level) {

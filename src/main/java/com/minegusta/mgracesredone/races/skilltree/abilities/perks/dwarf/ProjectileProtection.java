@@ -13,12 +13,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.List;
 
-public class ProjectileProtection implements IAbility
-{
+public class ProjectileProtection implements IAbility {
 
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
 
         Player p = (Player) e.getEntity();
@@ -82,13 +80,15 @@ public class ProjectileProtection implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Projectiles do 1 less damage."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Projectiles do 1 less damage."};
                 break;
-            case 2: desc = new String[]{"Projectiles do 1 less damage."};
+            case 2:
+                desc = new String[]{"Projectiles do 1 less damage."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

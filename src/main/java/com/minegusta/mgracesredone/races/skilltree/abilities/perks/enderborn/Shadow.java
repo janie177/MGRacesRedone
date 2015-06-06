@@ -16,36 +16,31 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class Shadow implements IAbility
-{
+public class Shadow implements IAbility {
     @Override
     public void run(Event event) {
 
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         String uuid = player.getUniqueId().toString();
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
         String name = "shadow";
 
-        if(ShadowInvisibility.contains(uuid))
-        {
+        if (ShadowInvisibility.contains(uuid)) {
             ShadowInvisibility.remove(uuid);
             ChatUtil.sendString(player, "You are no longer invisible!");
             return;
         }
 
-        if(!Cooldown.isCooledDown(name, uuid))
-        {
+        if (!Cooldown.isCooledDown(name, uuid)) {
             ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
             return;
         }
 
-        if(level < 2 && player.getLocation().getBlock().getLightLevel() > 6)
-        {
+        if (level < 2 && player.getLocation().getBlock().getLightLevel() > 6) {
             ChatUtil.sendString(player, "You cannot use invisibility in light areas.");
             return;
         }
@@ -54,11 +49,9 @@ public class Shadow implements IAbility
         Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
         int duration = 6;
-        if(level > 3)duration = 10;
+        if (level > 3) duration = 10;
 
         ShadowInvisibility.add(uuid, duration);
-
-
 
 
     }
@@ -95,7 +88,7 @@ public class Shadow implements IAbility
 
     @Override
     public int getCooldown(int level) {
-        if(level > 2) return 30;
+        if (level > 2) return 30;
         return 40;
     }
 

@@ -10,23 +10,19 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class GeneralListener implements Listener
-{
+public class GeneralListener implements Listener {
     @EventHandler
-    public void onJoin(PlayerJoinEvent e)
-    {
+    public void onJoin(PlayerJoinEvent e) {
         MapManager.add(e.getPlayer(), FileManager.getFile(e.getPlayer().getUniqueId()));
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent e)
-    {
+    public void onQuit(PlayerQuitEvent e) {
         MapManager.remove(e.getPlayer());
     }
 
     @EventHandler
-    public void onWorldSwitch(PlayerChangedWorldEvent e)
-    {
+    public void onWorldSwitch(PlayerChangedWorldEvent e) {
         MGPlayer mgp = Storage.getPlayer(e.getPlayer());
 
         mgp.updateHealth();
