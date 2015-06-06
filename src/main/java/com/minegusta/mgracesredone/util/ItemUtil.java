@@ -7,8 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class ItemUtil
-{
+public class ItemUtil {
 
     //Static lists
     private final static List<Material> axes = Lists.newArrayList(Material.DIAMOND_AXE, Material.GOLD_AXE, Material.IRON_AXE, Material.WOOD_AXE, Material.STONE_AXE);
@@ -23,19 +22,13 @@ public class ItemUtil
     //Methods
 
 
-    public static void removeOne(Player p, Material m)
-    {
+    public static void removeOne(Player p, Material m) {
         int slot = 0;
-        for(ItemStack i : p.getInventory().getContents())
-        {
-            if(i != null && i.getType() == m)
-            {
-                if(i.getAmount() > 1)
-                {
+        for (ItemStack i : p.getInventory().getContents()) {
+            if (i != null && i.getType() == m) {
+                if (i.getAmount() > 1) {
                     i.setAmount(i.getAmount() - 1);
-                }
-                else
-                {
+                } else {
                     p.getInventory().setItem(slot, new ItemStack(Material.AIR));
                 }
                 break;
@@ -45,44 +38,32 @@ public class ItemUtil
         p.updateInventory();
     }
 
-    public static void removeAmount(Player p, Material m, int amount)
-    {
+    public static void removeAmount(Player p, Material m, int amount) {
         int remaining = amount;
         int slot = 0;
-        for(ItemStack i : p.getInventory().getContents())
-        {
-            if(i != null && i.getType() == m)
-            {
-                if(i.getAmount() > remaining)
-                {
+        for (ItemStack i : p.getInventory().getContents()) {
+            if (i != null && i.getType() == m) {
+                if (i.getAmount() > remaining) {
                     i.setAmount(i.getAmount() - remaining);
                     break;
-                }
-                else
-                {
+                } else {
                     remaining = remaining - i.getAmount();
                     p.getInventory().setItem(slot, new ItemStack(Material.AIR));
                 }
-                if(remaining < 1) break;
+                if (remaining < 1) break;
             }
             slot++;
         }
         p.updateInventory();
     }
 
-    public static void removeOne(Player p, ItemStack is)
-    {
+    public static void removeOne(Player p, ItemStack is) {
         int slot = 0;
-        for(ItemStack i : p.getInventory().getContents())
-        {
-            if(i != null && areEqualIgnoreAmount(i, is))
-            {
-                if(i.getAmount() > 1)
-                {
+        for (ItemStack i : p.getInventory().getContents()) {
+            if (i != null && areEqualIgnoreAmount(i, is)) {
+                if (i.getAmount() > 1) {
                     i.setAmount(i.getAmount() - 1);
-                }
-                else
-                {
+                } else {
                     p.getInventory().setItem(slot, new ItemStack(Material.AIR));
                 }
                 break;
@@ -92,16 +73,12 @@ public class ItemUtil
         p.updateInventory();
     }
 
-    public static boolean areEqualIgnoreAmount(ItemStack is1, ItemStack is2)
-    {
-        if(is1 == null || is2 == null || is1.getType() == Material.AIR || is2.getType() == Material.AIR)return false;
+    public static boolean areEqualIgnoreAmount(ItemStack is1, ItemStack is2) {
+        if (is1 == null || is2 == null || is1.getType() == Material.AIR || is2.getType() == Material.AIR) return false;
 
-        if(is1.getType() == is2.getType())
-        {
-            if((!is1.hasItemMeta() && !is2.hasItemMeta()) || ((is1.hasItemMeta() && !is1.getItemMeta().hasLore()) && (is2.hasItemMeta() && !is2.getItemMeta().hasLore())) || is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore()))
-            {
-                if((!is1.getItemMeta().hasDisplayName() && !is2.getItemMeta().hasDisplayName()) || is1.getItemMeta().getDisplayName().equals(is2.getItemMeta().getDisplayName()))
-                {
+        if (is1.getType() == is2.getType()) {
+            if ((!is1.hasItemMeta() && !is2.hasItemMeta()) || ((is1.hasItemMeta() && !is1.getItemMeta().hasLore()) && (is2.hasItemMeta() && !is2.getItemMeta().hasLore())) || is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore())) {
+                if ((!is1.getItemMeta().hasDisplayName() && !is2.getItemMeta().hasDisplayName()) || is1.getItemMeta().getDisplayName().equals(is2.getItemMeta().getDisplayName())) {
                     return true;
                 }
             }
@@ -109,43 +86,35 @@ public class ItemUtil
         return false;
     }
 
-    public static boolean isRawMeat(Material m)
-    {
+    public static boolean isRawMeat(Material m) {
         return rawMeat.contains(m);
     }
 
-    public static boolean isAxe(Material m)
-    {
+    public static boolean isAxe(Material m) {
         return axes.contains(m);
     }
 
-    public static boolean isOre(Material m)
-    {
+    public static boolean isOre(Material m) {
         return ores.contains(m);
     }
 
-    public static boolean isGoldTool(Material m)
-    {
+    public static boolean isGoldTool(Material m) {
         return goldItems.contains(m);
     }
 
-    public static boolean isBow(Material m)
-    {
+    public static boolean isBow(Material m) {
         return bows.contains(m);
     }
 
-    public static boolean isPickAxe(Material m)
-    {
+    public static boolean isPickAxe(Material m) {
         return pickAxes.contains(m);
     }
 
-    public static boolean isSword(Material m)
-    {
+    public static boolean isSword(Material m) {
         return swords.contains(m);
     }
 
-    public static boolean isFruit(Material m)
-    {
+    public static boolean isFruit(Material m) {
         return fruits.contains(m);
     }
 }

@@ -5,8 +5,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
-public class IceBarrageThrower implements ProjectileSource
-{
+public class IceBarrageThrower implements ProjectileSource {
     /**
      * This class is here simply to assign to snowballs so they can play an effect in the aurora listener.
      */

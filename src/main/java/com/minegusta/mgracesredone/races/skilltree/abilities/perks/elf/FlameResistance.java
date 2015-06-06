@@ -17,15 +17,11 @@ import java.util.List;
 public class FlameResistance implements IAbility {
     @Override
     public void run(Event event) {
-
         EntityDamageEvent e = (EntityDamageEvent) event;
         Player p = (Player) e.getEntity();
         MGPlayer mgp = Races.getMGPlayer(p);
 
         e.setDamage(e.getDamage() - mgp.getAbilityLevel(getType()));
-
-
-
     }
 
     @Override
@@ -55,15 +51,16 @@ public class FlameResistance implements IAbility {
 
     @Override
     public int getPrice(int level) {
-
         int cost = 1;
-        switch (level)
-        {
-            case 1: cost = 1;
+        switch (level) {
+            case 1:
+                cost = 1;
                 break;
-            case 2: cost = 2;
+            case 2:
+                cost = 2;
                 break;
-            case 3: cost = 2;
+            case 3:
+                cost = 2;
                 break;
         }
 

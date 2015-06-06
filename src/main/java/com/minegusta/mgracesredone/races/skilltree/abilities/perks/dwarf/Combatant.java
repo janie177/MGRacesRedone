@@ -17,8 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-public class Combatant implements IAbility
-{
+public class Combatant implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -26,8 +25,7 @@ public class Combatant implements IAbility
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         EffectUtil.playSound(player, Sound.ANVIL_USE);
 
         MGPlayer mgp = Races.getMGPlayer(player);
@@ -38,16 +36,13 @@ public class Combatant implements IAbility
 
         PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 0, 6);
 
-        if(level > 1)
-        {
+        if (level > 1) {
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 7);
         }
-        if(level > 2)
-        {
+        if (level > 2) {
             PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 7);
         }
-        if(level > 3)
-        {
+        if (level > 3) {
             PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 0, 5);
         }
 
@@ -75,7 +70,7 @@ public class Combatant implements IAbility
 
     @Override
     public int getPrice(int level) {
-        if(level == 4)return 2;
+        if (level == 4) return 2;
         return 1;
     }
 
@@ -103,17 +98,21 @@ public class Combatant implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When killing something, you gain a short strength boost."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When killing something, you gain a short strength boost."};
                 break;
-            case 2: desc = new String[]{"Killing an enemy grants you a short speed boost."};
+            case 2:
+                desc = new String[]{"Killing an enemy grants you a short speed boost."};
                 break;
-            case 3: desc = new String[]{"When you kill an enemy, you gain a short speed 2 boost."};
+            case 3:
+                desc = new String[]{"When you kill an enemy, you gain a short speed 2 boost."};
                 break;
-            case 4: desc = new String[]{"You gain a short regeneration effect after killing an enemy."};
+            case 4:
+                desc = new String[]{"You gain a short regeneration effect after killing an enemy."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

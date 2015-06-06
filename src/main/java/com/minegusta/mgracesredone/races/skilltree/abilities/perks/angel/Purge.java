@@ -42,10 +42,8 @@ public class Purge implements IAbility {
     }
 
     @Override
-    public int getPrice(int level)
-    {
-        if(level == 4)
-        {
+    public int getPrice(int level) {
+        if (level == 4) {
             return 2;
         }
         return 1;

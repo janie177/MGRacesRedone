@@ -5,8 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 
-public enum Recipe
-{
+public enum Recipe {
     SHINYGEM(new ShinyGemRecipe()),
     ENDEREYE(new EnderCrystalRecipe()),
     ELFSTEW(new ElfStewRecipe()),
@@ -15,43 +14,32 @@ public enum Recipe
     ICECRYSTAL(new IceCrystalRecipe());
 
 
-
-
-
     private IRecipe recipe;
 
-    private Recipe(IRecipe recipe)
-    {
+    private Recipe(IRecipe recipe) {
         this.recipe = recipe;
     }
 
-    public String getRecipeName()
-    {
+    public String getRecipeName() {
         return recipe.getName();
     }
 
-    public IRecipe getRecipe()
-    {
+    public IRecipe getRecipe() {
         return recipe;
     }
 
-    public ItemStack getResult()
-    {
+    public ItemStack getResult() {
         return recipe.getResult();
     }
 
-    public MGItem[] getIngredients()
-    {
-        return recipe.getIngriedients();
+    public MGItem[] getIngredients() {
+        return recipe.getIngredients();
     }
 
-    public static void registerRecipes()
-    {
-        for(Recipe r : Recipe.values())
-        {
+    public static void registerRecipes() {
+        for (Recipe r : Recipe.values()) {
             ShapelessRecipe recipe = new ShapelessRecipe(r.getResult());
-            for(MGItem i : r.getIngredients())
-            {
+            for (MGItem i : r.getIngredients()) {
                 recipe.addIngredient(i.getAmount(), i.getMaterial());
             }
             Bukkit.addRecipe(recipe);

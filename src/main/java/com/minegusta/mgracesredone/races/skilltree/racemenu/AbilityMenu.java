@@ -15,59 +15,50 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class AbilityMenu
-{
-    public static List<AbilityType> getAbilities(RaceType type)
-    {
+public class AbilityMenu {
+    public static List<AbilityType> getAbilities(RaceType type) {
         List<AbilityType> abilities = Lists.newArrayList();
 
-        for(AbilityType a : AbilityType.values())
-        {
-            if(a.getRaces().contains(type))abilities.add(a);
+        for (AbilityType a : AbilityType.values()) {
+            if (a.getRaces().contains(type)) abilities.add(a);
         }
 
         return abilities;
     }
 
-    public static void buildInventory(Player p)
-    {
+    public static void buildInventory(Player p) {
         String name = ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Perk-Points: " + Races.getMGPlayer(p).getPerkPoints();
         Inventory inv = Bukkit.createInventory(null, 54, name);
         MGPlayer mgp = Races.getMGPlayer(p);
 
         int count = 0;
 
-        for(AbilityType type : getAbilities(mgp.getRaceType()))
-        {
-            for(int level = 1; level <= type.getMaxLevel(); level++)
-            {
+        for (AbilityType type : getAbilities(mgp.getRaceType())) {
+            for (int level = 1; level <= type.getMaxLevel(); level++) {
                 ItemStack is = new ItemStack(Material.BARRIER);
                 ItemMeta meta = is.getItemMeta();
                 List<String> lore = Lists.newArrayList();
 
-                if(mgp.hasAbility(type) && level <= mgp.getAbilityLevel(type))
-                {
+                if (mgp.hasAbility(type) && level <= mgp.getAbilityLevel(type)) {
                     is.setType(type.getAbility().getDisplayItem());
                     is.setAmount(level);
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "UNLOCKED");
                     lore.add(ChatColor.GRAY + "Level: " + level);
                     lore.add(ChatColor.YELLOW + "Type: " + ChatColor.DARK_PURPLE + type.getGroup().name());
-                    if(type.getCooldown(level) != 0) lore.add(ChatColor.YELLOW + "Cooldown Time: " + ChatColor.LIGHT_PURPLE + type.getCooldown(level) + " seconds.");
-                    for(String s : type.getAbility().getDescription(level))
-                    {
+                    if (type.getCooldown(level) != 0)
+                        lore.add(ChatColor.YELLOW + "Cooldown Time: " + ChatColor.LIGHT_PURPLE + type.getCooldown(level) + " seconds.");
+                    for (String s : type.getAbility().getDescription(level)) {
                         lore.add(ChatColor.DARK_GRAY + s);
                     }
-                }
-                else
-                {
+                } else {
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
                     lore.add(ChatColor.YELLOW + "Cost: " + ChatColor.LIGHT_PURPLE + type.getCost(level));
                     lore.add(ChatColor.YELLOW + "Level: " + ChatColor.LIGHT_PURPLE + level);
                     lore.add(ChatColor.YELLOW + "Type: " + ChatColor.DARK_PURPLE + type.getGroup().name());
-                    if(type.getCooldown(level) != 0) lore.add(ChatColor.YELLOW + "Cooldown Time: " + ChatColor.LIGHT_PURPLE + type.getCooldown(level) + " seconds.");
-                    for(String s : type.getAbility().getDescription(level))
-                    {
+                    if (type.getCooldown(level) != 0)
+                        lore.add(ChatColor.YELLOW + "Cooldown Time: " + ChatColor.LIGHT_PURPLE + type.getCooldown(level) + " seconds.");
+                    for (String s : type.getAbility().getDescription(level)) {
                         lore.add(ChatColor.GREEN + s);
                     }
                 }
@@ -86,10 +77,8 @@ public class AbilityMenu
         p.openInventory(inv);
     }
 
-    public static ItemStack getResetStack()
-    {
-        return new ItemStack(Material.SKULL_ITEM, 1)
-        {
+    public static ItemStack getResetStack() {
+        return new ItemStack(Material.SKULL_ITEM, 1) {
             {
                 ItemMeta meta = getItemMeta();
                 List<String> lore = Lists.newArrayList();
@@ -106,13 +95,10 @@ public class AbilityMenu
         };
     }
 
-    public static ItemStack getInfoStack(MGPlayer mgp)
-    {
+    public static ItemStack getInfoStack(MGPlayer mgp) {
         int totalAbilities = 0;
-        for(AbilityType t : mgp.getAbilities().keySet())
-        {
-            for(int levels = 1; levels <= mgp.getAbilityLevel(t); levels++)
-            {
+        for (AbilityType t : mgp.getAbilities().keySet()) {
+            for (int levels = 1; levels <= mgp.getAbilityLevel(t); levels++) {
                 totalAbilities = totalAbilities + t.getCost(levels);
             }
         }

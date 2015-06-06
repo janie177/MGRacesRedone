@@ -13,55 +13,42 @@ import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
-public class RideTask
-{
+public class RideTask {
     private static int ID = -1;
 
-    public static void start()
-    {
-        ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new Runnable() {
-            @Override
-            public void run()
-            {
-                loop();
-            }
-        }, 5, 5);
+    public static void start() {
+        ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), RideTask::loop, 5, 5);
     }
 
-    public static void stop()
-    {
-        if(ID != -1) Bukkit.getScheduler().cancelTask(ID);
+    public static void stop() {
+        if (ID != -1) {
+            Bukkit.getScheduler().cancelTask(ID);
+        }
     }
 
-    private static void remove(String s)
-    {
-        if(ElfListener.riders.containsKey(s))
-        {
+    private static void remove(String s) {
+        if (ElfListener.riders.containsKey(s)) {
             ElfListener.riders.remove(s);
         }
     }
 
-    private static void loop()
-    {
-        if(ElfListener.riders.isEmpty())
-        {
+    private static void loop() {
+        if (ElfListener.riders.isEmpty()) {
             return;
         }
-        for(String s : ElfListener.riders.keySet())
-        {
+
+        for (String s : ElfListener.riders.keySet()) {
             LivingEntity ent = ElfListener.riders.get(s);
             UUID uuid = UUID.fromString(s);
 
-            if(!Bukkit.getOfflinePlayer(uuid).isOnline())
-            {
+            if (!Bukkit.getOfflinePlayer(uuid).isOnline()) {
                 remove(s);
                 continue;
             }
 
             Player rider = Bukkit.getPlayer(uuid);
 
-            if(ent == null || ent.isDead() || ent.getPassenger() == null || !ent.getPassenger().getUniqueId().toString().equals(s))
-            {
+            if (ent == null || ent.isDead() || ent.getPassenger() == null || !ent.getPassenger().getUniqueId().toString().equals(s)) {
                 remove(s);
                 continue;
             }
@@ -69,18 +56,16 @@ public class RideTask
 
             double y = -0.5;
 
-            if(target.getType() != null && target.getType() != Material.AIR && ent.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid())
-            {
+            if (target.getType() != null && target.getType() != Material.AIR && ent.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()) {
                 y = 1.001;
             }
 
-            ent.setVelocity(new Vector(0,0,0));
+            ent.setVelocity(new Vector(0, 0, 0));
             ent.setVelocity(rider.getLocation().getDirection().multiply(0.6).setY(y));
 
             ent.setFallDistance(0);
 
-            if(y > 1)
-            {
+            if (y > 1) {
                 rider.setFallDistance(0);
             }
         }

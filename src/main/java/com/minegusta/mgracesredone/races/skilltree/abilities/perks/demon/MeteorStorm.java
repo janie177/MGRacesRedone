@@ -27,27 +27,23 @@ import java.util.List;
 
 public class MeteorStorm implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
 
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         String name = "mstorm";
         String id = player.getUniqueId().toString();
         int cooldownTime = 60;
 
-        if(Cooldown.isCooledDown(name, id))
-        {
+        if (Cooldown.isCooledDown(name, id)) {
 
             MGPlayer mgp = Races.getMGPlayer(player);
             int level = mgp.getAbilityLevel(getType());
             Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 30, 0);
 
-            if(!WGUtil.canBuild(player, target.getLocation()))
-            {
+            if (!WGUtil.canBuild(player, target.getLocation())) {
                 ChatUtil.sendString(player, "You cannot use MeteorStorm here!");
                 return;
             }
@@ -59,37 +55,27 @@ public class MeteorStorm implements IAbility {
             int interval = 16;
             int duration = 6;
 
-            if(level > 2) duration = 10;
-            if(level > 1) interval = 8;
+            if (level > 2) duration = 10;
+            if (level > 1) interval = 8;
 
             runStorm(target.getLocation(), duration, interval);
 
-        }
-        else
-        {
+        } else {
             ChatUtil.sendString(player, ChatColor.RED + "You need to wait another " + Cooldown.getRemaining(name, id) + " seconds to use Meteor Storm.");
         }
     }
 
-    private void runStorm(final Location location,final int duration,final int interval)
-    {
-        for(int i = 0; i <= duration * 20; i++)
-        {
-            if(i % interval == 0)
-            {
+    private void runStorm(final Location location, final int duration, final int interval) {
+        for (int i = 0; i <= duration * 20; i++) {
+            if (i % interval == 0) {
                 double offsetX = RandomUtil.randomNumber(16) - 8;
                 double offsetZ = RandomUtil.randomNumber(16) - 8;
                 final Location spawnLocation = new Location(location.getWorld(), location.getX() + offsetX, location.getY(), location.getZ() + offsetZ);
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        Fireball ball = (Fireball) location.getWorld().spawnEntity(spawnLocation, EntityType.FIREBALL);
-                        ball.setDirection(new Vector(0, -1, 0));
-                        ball.setYield(4);
-                    }
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                    Fireball ball = (Fireball) location.getWorld().spawnEntity(spawnLocation, EntityType.FIREBALL);
+                    ball.setDirection(new Vector(0, -1, 0));
+                    ball.setYield(4);
                 }, i);
             }
         }
@@ -144,15 +130,18 @@ public class MeteorStorm implements IAbility {
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Call a Meteor storm on your location.", "Activate using a blazerod.", "Duration: 6 seconds."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Call a Meteor storm on your location.", "Activate using a blazerod.", "Duration: 6 seconds."};
                 break;
-            case 2: desc = new String[]{"The amount of meteors in your storm is doubled."};
+            case 2:
+                desc = new String[]{"The amount of meteors in your storm is doubled."};
                 break;
-            case 3: desc = new String[]{"The storm now lasts 10 seconds."};
+            case 3:
+                desc = new String[]{"The storm now lasts 10 seconds."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

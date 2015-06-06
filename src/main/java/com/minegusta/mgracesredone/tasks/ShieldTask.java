@@ -5,28 +5,19 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.End
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
-public class ShieldTask
-{
+public class ShieldTask {
     private static int id = -1;
 
-    public static void start()
-    {
-        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new Runnable() {
-            @Override
-            public void run() {
-                effects();
-            }
-        }, 5, 3);
+    public static void start() {
+        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ShieldTask::effects, 5, 3);
     }
 
-    public static void stop()
-    {
-        if(id != -1)
-        {
+    public static void stop() {
+        if (id != -1) {
             Bukkit.getScheduler().cancelTask(id);
         }
     }
@@ -34,39 +25,30 @@ public class ShieldTask
 
     private static int rotationAngle = 0;
 
-    private static void effects()
-    {
+    private static void effects() {
         rotationAngle = rotationAngle + 6;
-        if(rotationAngle >= 360) rotationAngle = 6;
+        if (rotationAngle >= 360) rotationAngle = 6;
 
-        for(String s : EnderShield.shields.keySet())
-        {
-            int amount = EnderShield.shields.get(s);
-            Player p = Bukkit.getPlayer(UUID.fromString(s));
-            if(p == null || !p.isOnline())
-            {
-                EnderShield.shields.remove(s);
-                continue;
+        EnderShield.shields.keySet().forEach(id -> {
+            int amount = EnderShield.shields.get(id);
+            OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(id));
+            if (!p.isOnline()) {
+                EnderShield.shields.remove(id);
+            } else {
+                Location l = p.getPlayer().getLocation();
+                playEffect(calculateCircle(l, rotationAngle));
+                if (amount > 1) {
+                    playEffect(calculateCircle(l, rotationAngle + 180));
+                }
             }
-
-            Location l = p.getLocation();
-            playEffect(calculateCircle(l, rotationAngle));
-            if(amount > 1)playEffect(calculateCircle(l, rotationAngle + 180));
-        }
+        });
     }
 
-    private static void playEffect(Location l)
-    {
-        l.getWorld().spigot().playEffect(l, Effect.WITCH_MAGIC, 0, 0, 0, 0, 0, 1/20,1, 25);
+    private static void playEffect(Location l) {
+        l.getWorld().spigot().playEffect(l, Effect.WITCH_MAGIC, 0, 0, 0, 0, 0, 1 / 20, 1, 25);
     }
 
-    private static Location calculateCircle(Location l, int angle)
-    {
-        double x = l.getX();
-        double y = l.getY();
-        double z = l.getZ();
-        double radius = 1.4;
-
-        return new Location(l.getWorld(), x + radius * Math.sin(angle), y , z + radius * Math.cos(angle));
+    private static Location calculateCircle(Location l, int angle) {
+        return new Location(l.getWorld(), l.getX() + 1.4 * Math.sin(angle), l.getY(), l.getZ() + 1.4 * Math.cos(angle));
     }
 }

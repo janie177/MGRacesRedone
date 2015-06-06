@@ -12,7 +12,6 @@ import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EnderRiftPortal;
 import com.minegusta.mgracesredone.util.WGUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -23,11 +22,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.List;
 
-public class EndRift implements IAbility
-{
+public class EndRift implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         PlayerInteractEvent e = (PlayerInteractEvent) event;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
@@ -36,18 +33,16 @@ public class EndRift implements IAbility
         String uuid = p.getUniqueId().toString();
 
         int duration = 5;
-        if(level > 1) duration = 9;
-        if(level > 2) duration = 15;
+        if (level > 1) duration = 9;
+        if (level > 2) duration = 15;
 
         boolean altEntities = level > 1;
 
-        if(!EnderRiftPortal.contains(uuid))
-        {
+        if (!EnderRiftPortal.contains(uuid)) {
             EnderRiftPortal.create(uuid, p.getLocation(), p.getLocation(), duration, altEntities);
         }
 
-        if(!Cooldown.isCooledDown(name, uuid))
-        {
+        if (!Cooldown.isCooledDown(name, uuid)) {
             ChatUtil.sendString(p, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
             return;
         }
@@ -55,28 +50,23 @@ public class EndRift implements IAbility
         Action a = e.getAction();
 
         //Right portal
-        if(!p.isSneaking() && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK))
-        {
+        if (!p.isSneaking() && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK)) {
             setPortal(p, 2);
         }
 
         //Left portal
-        if(!p.isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK))
-        {
+        if (!p.isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK)) {
             setPortal(p, 1);
         }
 
         //Running the ability
-        if(p.isSneaking())
-        {
-            if(!EnderRiftPortal.portalsSet(uuid))
-            {
+        if (p.isSneaking()) {
+            if (!EnderRiftPortal.portalsSet(uuid)) {
                 ChatUtil.sendString(p, "You do not have your portals set! Use a stick to set them.");
                 return;
             }
 
-            if(!WGUtil.canBuild(p, EnderRiftPortal.getLocation2(uuid)) || !WGUtil.canBuild(p, EnderRiftPortal.getLocation1(uuid)))
-            {
+            if (!WGUtil.canBuild(p, EnderRiftPortal.getLocation2(uuid)) || !WGUtil.canBuild(p, EnderRiftPortal.getLocation1(uuid))) {
                 ChatUtil.sendString(p, "You cannot run EndRift because at least one portal is in a safe zone!");
                 return;
             }
@@ -88,31 +78,27 @@ public class EndRift implements IAbility
         }
     }
 
-    private void setPortal(Player p, int portal)
-    {
+    private void setPortal(Player p, int portal) {
         String uuid = p.getUniqueId().toString();
         Block target = p.getTargetBlock(Sets.newHashSet(Material.AIR), 28).getRelative(BlockFace.UP);
 
-        if(target.getY() - p.getLocation().getY() > 2)
-        {
+        if (target.getY() - p.getLocation().getY() > 2) {
             target = target.getRelative(BlockFace.DOWN, 2);
         }
-        if(target.getType() != Material.AIR)
-        {
+        if (target.getType() != Material.AIR) {
             double distance = p.getLocation().distance(target.getLocation()) - 2;
             target = p.getTargetBlock(Sets.newHashSet(Material.AIR), (int) distance);
         }
 
         double highestY = target.getWorld().getHighestBlockAt(target.getLocation()).getY();
 
-        if(!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && (highestY == 0.0 || highestY > target.getY())))
-        {
+        if (!WGUtil.canBuild(p, target.getLocation()) || (target.getWorld().getBlockAt(target.getX(), 0, target.getZ()).getType() == Material.AIR && (highestY == 0.0 || highestY > target.getY()))) {
             ChatUtil.sendString(p, "You cannot place a portal there!");
             return;
         }
 
-        if(portal == 1)EnderRiftPortal.setLocation1(uuid, target.getLocation());
-        if(portal == 2)EnderRiftPortal.setLocation1(uuid, target.getLocation());
+        if (portal == 1) EnderRiftPortal.setLocation1(uuid, target.getLocation());
+        if (portal == 2) EnderRiftPortal.setLocation2(uuid, target.getLocation());
         ChatUtil.sendString(p, "You set a location as portal!");
     }
 
@@ -143,7 +129,7 @@ public class EndRift implements IAbility
 
     @Override
     public int getPrice(int level) {
-        if(level == 3)return 3;
+        if (level == 3) return 3;
         return 2;
     }
 
@@ -153,9 +139,8 @@ public class EndRift implements IAbility
     }
 
     @Override
-    public int getCooldown(int level)
-    {
-        if(level > 2) return 45;
+    public int getCooldown(int level) {
+        if (level > 2) return 45;
         return 60;
     }
 

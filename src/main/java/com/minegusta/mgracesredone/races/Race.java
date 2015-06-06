@@ -2,23 +2,20 @@ package com.minegusta.mgracesredone.races;
 
 import org.bukkit.entity.Player;
 
-public abstract class Race
-{
-    public abstract double getHealth();
+public interface Race {
+    double getHealth();
 
-    public abstract String getName();
+    String getName();
 
-    public abstract String[] getInfectionInfo();
+    String[] getInfectionInfo();
 
-    public abstract String[] getInfo();
+    String[] getInfo();
 
-    public abstract void passiveBoost(Player p);
+    void passiveBoost(Player p);
 
-    public void setHealth(Player p)
-    {
+    default void setHealth(Player p) {
         p.setHealthScaled(true);
         p.setHealthScale(getHealth());
         p.setMaxHealth(getHealth());
     }
-
 }

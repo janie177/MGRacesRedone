@@ -8,8 +8,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class Human extends Race
-{
+public class Human implements Race {
     @Override
     public double getHealth() {
         return 26;
@@ -21,8 +20,7 @@ public class Human extends Race
     }
 
     @Override
-    public String[] getInfectionInfo()
-    {
+    public String[] getInfectionInfo() {
         List<String> list = Lists.newArrayList(
                 "To become a human once more, you have to build an altar.",
                 "The altar will need the following blocks:",
@@ -30,9 +28,8 @@ public class Human extends Race
                 " - " + ChatColor.GRAY + CureListener.getSecondaryBlockAmount() + " " + CureListener.getSecondaryBlock().name(),
                 "After you made the altar, right click it to be cured.",
                 "You will need the following items in your inventory:"
-                );
-        for(MGItem item : CureListener.getRequiredItems())
-        {
+        );
+        for (MGItem item : CureListener.getRequiredItems()) {
             list.add(" - " + ChatColor.GRAY + item.getAmount() + " " + item.getMaterial());
         }
 
@@ -51,11 +48,6 @@ public class Human extends Race
 
     @Override
     public void passiveBoost(Player p) {
-
         //You have no power here, Gandalf Greyhame!
-
     }
-
-
-
 }

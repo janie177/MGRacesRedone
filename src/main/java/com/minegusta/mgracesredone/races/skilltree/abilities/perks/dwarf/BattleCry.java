@@ -20,8 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-public class BattleCry implements IAbility
-{
+public class BattleCry implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -29,8 +28,7 @@ public class BattleCry implements IAbility
     }
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         //Standard data needed.
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
@@ -38,15 +36,13 @@ public class BattleCry implements IAbility
         String uuid = player.getUniqueId().toString();
 
         //Cooldown?
-        if(!Cooldown.isCooledDown(name, uuid))
-        {
+        if (!Cooldown.isCooledDown(name, uuid)) {
             ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
             return;
         }
 
         //Worldguard?
-        if(!WGUtil.canBuild(player))
-        {
+        if (!WGUtil.canBuild(player)) {
             ChatUtil.sendString(player, "You cannot use " + getName() + " here.");
             return;
         }
@@ -66,12 +62,12 @@ public class BattleCry implements IAbility
         boolean weaken = level > 2;
         boolean stun = level > 1;
         double knockbackPower = 1.9;
-        if(level > 4) knockbackPower = 2.5;
+        if (level > 4) knockbackPower = 2.5;
 
         //Run the ability
-        if(strength)PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 4);
+        if (strength) PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 4);
 
-        for(Entity ent : player.getNearbyEntities(5.0, 5.0, 5.0)) {
+        for (Entity ent : player.getNearbyEntities(5.0, 5.0, 5.0)) {
             if (!(ent instanceof LivingEntity)) continue;
 
             LivingEntity le = (LivingEntity) ent;
@@ -79,7 +75,7 @@ public class BattleCry implements IAbility
             if (!WGUtil.canFightEachother(player, ent)) continue;
 
             if (le instanceof Player) {
-                ((Player) le).sendMessage(ChatColor.RED + "You were knocked back by an angry dwarf!");
+                le.sendMessage(ChatColor.RED + "You were knocked back by an angry dwarf!");
             }
             EffectUtil.playSound(le, Sound.ANVIL_USE);
             EffectUtil.playParticle(le, Effect.CRIT);
@@ -88,10 +84,10 @@ public class BattleCry implements IAbility
             le.setVelocity(le.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(knockbackPower));
 
             //weaken
-            if(weaken) PotionUtil.updatePotion(le, PotionEffectType.WEAKNESS, 1, 6);
+            if (weaken) PotionUtil.updatePotion(le, PotionEffectType.WEAKNESS, 1, 6);
 
             //stun
-            if(stun) PotionUtil.updatePotion(le, PotionEffectType.SLOW, 10, 4);
+            if (stun) PotionUtil.updatePotion(le, PotionEffectType.SLOW, 10, 4);
         }
     }
 
@@ -126,9 +122,8 @@ public class BattleCry implements IAbility
     }
 
     @Override
-    public int getCooldown(int level)
-    {
-        if(level > 4)return 50;
+    public int getCooldown(int level) {
+        if (level > 4) return 50;
         return 80;
     }
 
@@ -146,19 +141,24 @@ public class BattleCry implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"Yell to intimidate enemies, knocking them back.", "Activate by right clicking an axe."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"Yell to intimidate enemies, knocking them back.", "Activate by right clicking an axe."};
                 break;
-            case 2: desc = new String[]{"Affected enemies are now stunned for 4 seconds."};
+            case 2:
+                desc = new String[]{"Affected enemies are now stunned for 4 seconds."};
                 break;
-            case 3: desc = new String[]{"Enemies are weakened for 6 seconds."};
+            case 3:
+                desc = new String[]{"Enemies are weakened for 6 seconds."};
                 break;
-            case 4: desc = new String[]{"You gain a strength boost for 4 seconds."};
+            case 4:
+                desc = new String[]{"You gain a strength boost for 4 seconds."};
                 break;
-            case 5: desc = new String[]{"The knock-back effect is 50% stronger.."};
+            case 5:
+                desc = new String[]{"The knock-back effect is 50% stronger.."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }

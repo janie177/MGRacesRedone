@@ -10,7 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-public class EnderBorn extends Race {
+public class EnderBorn implements Race {
     @Override
     public double getHealth() {
         return 20;
@@ -36,40 +36,33 @@ public class EnderBorn extends Race {
     @Override
     public String[] getInfo() {
         return new String[]
-        {
-                "Enderborn are a sneaky race from The End.",
-                "They are stealth assassins that eat raw flesh.",
-                "Most perks are End and stealth related."
+                {
+                        "Enderborn are a sneaky race from The End.",
+                        "They are stealth assassins that eat raw flesh.",
+                        "Most perks are End and stealth related."
 
-        };
+                };
     }
 
     @Override
-    public void passiveBoost(Player p)
-    {
+    public void passiveBoost(Player p) {
         Location loc = p.getLocation();
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
         MGPlayer mgp = Races.getMGPlayer(p);
 
         //End biome check
-        if(WeatherUtil.isEnd(loc))
-        {
+        if (WeatherUtil.isEnd(loc)) {
             int level = mgp.getAbilityLevel(AbilityType.OTHERWORLDLY);
-            if(level > 0)
-            {
+            if (level > 0) {
                 EffectUtil.playParticle(p, Effect.PORTAL);
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
-                if(level > 1)
-                {
+                if (level > 1) {
                     PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
-                    if(level > 2)
-                    {
+                    if (level > 2) {
                         PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
-                        if(level > 3)
-                        {
+                        if (level > 3) {
                             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
-                            if(level > 4)
-                            {
+                            if (level > 4) {
                                 PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
                             }
                         }
@@ -79,25 +72,21 @@ public class EnderBorn extends Race {
         }
 
         //Water and rain damage checks. Stacks.
-        if(PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p) &&  biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM)
-        {
+        if (PlayerUtil.isInRain(p) && WGUtil.canGetDamage(p) && biome != WeatherUtil.BiomeType.HOT && biome != WeatherUtil.BiomeType.WARM) {
             int damage = 2;
-            if(mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 0) damage = 1;
+            if (mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 0) damage = 1;
             p.damage(damage);
         }
-        if(PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p))
-        {
+        if (PlayerUtil.isInWater(p) && WGUtil.canGetDamage(p)) {
             int damage = 2;
-            if(mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 1) damage = 1;
+            if (mgp.getAbilityLevel(AbilityType.WATERRESISTANCE) > 1) damage = 1;
             p.damage(damage);
         }
 
         //Darkness check
-        if(BlockUtil.getLightLevel(loc) == BlockUtil.LightLevel.DARK && mgp.hasAbility(AbilityType.COLDBLOODED))
-        {
+        if (BlockUtil.getLightLevel(loc) == BlockUtil.LightLevel.DARK && mgp.hasAbility(AbilityType.COLDBLOODED)) {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-            if(mgp.getAbilityLevel(AbilityType.COLDBLOODED) > 1)
-            {
+            if (mgp.getAbilityLevel(AbilityType.COLDBLOODED) > 1) {
                 PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 18);
             }
         }

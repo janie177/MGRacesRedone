@@ -19,24 +19,20 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-public class Telekinesis implements IAbility
-{
+public class Telekinesis implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
 
     }
 
     public static ConcurrentMap<String, Long> cooldown = Maps.newConcurrentMap();
 
     @Override
-    public void run(Player player)
-    {
+    public void run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
 
-        if(!WGUtil.canBuild(player))
-        {
+        if (!WGUtil.canBuild(player)) {
             ChatUtil.sendString(player, "You cannot use Telekinesis in this protected zone.");
             return;
         }
@@ -44,14 +40,13 @@ public class Telekinesis implements IAbility
         String uuid = player.getUniqueId().toString();
 
         //Cooldown
-        if(cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 260)
-        {
+        if (cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 260) {
             return;
         }
 
         //Setting the attraction strength.
         double strength = 0.11;
-        if(level > 2) strength = 2*strength;
+        if (level > 2) strength = 2 * strength;
 
         boolean players = level > 3;
         boolean mobs = level > 1;
@@ -63,40 +58,23 @@ public class Telekinesis implements IAbility
 
         //Run the ability
 
-        Entity dummy = target.getWorld().spawnEntity(target.getLocation(), EntityType.EXPERIENCE_ORB);
-        Entity dummy2 = target2.getWorld().spawnEntity(target2.getLocation(), EntityType.EXPERIENCE_ORB);
+        target.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(target.getLocation()) <= 12).
+                filter(ent -> ent instanceof Item || ent instanceof Projectile || (mobs && ent instanceof LivingEntity
+                        && !(ent instanceof Player)) || (players && ent instanceof Player)).forEach(entities::add);
 
-        for(Entity ent : dummy.getNearbyEntities(12,3,12))
-        {
-            boolean add = ent instanceof Item || ent instanceof Projectile || (mobs && ent instanceof LivingEntity && !(ent instanceof Player)) || (players && ent instanceof Player);
-            if(add)
-            {
-                entities.add(ent);
-            }
-        }
-
-        for(Entity ent : dummy2.getNearbyEntities(6,3,6))
-        {
-            boolean add = ent instanceof Item || ent instanceof Projectile || (mobs && ent instanceof LivingEntity && !(ent instanceof Player)) || (players && ent instanceof Player);
-            if(add)
-            {
-                entities.add(ent);
-            }
-        }
-        dummy.remove();
-        dummy2.remove();
-
+        target2.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(target2.getLocation()) <= 6).
+                filter(ent -> ent instanceof Item || ent instanceof Projectile || (mobs && ent instanceof LivingEntity
+                        && !(ent instanceof Player)) || (players && ent instanceof Player)).forEach(entities::add);
 
         //Attracting time.
-        for(Entity ent : entities)
-        {
-            if(!WGUtil.canBuild(player, ent.getLocation()))continue;
+        for (Entity ent : entities) {
+            if (!WGUtil.canBuild(player, ent.getLocation())) continue;
 
             double x = ent.getLocation().getX() - player.getLocation().getX();
             double y = ent.getLocation().getY() - player.getLocation().getY();
             double z = ent.getLocation().getZ() - player.getLocation().getZ();
 
-            Vector v = new Vector(x,y,z);
+            Vector v = new Vector(x, y, z);
             v.normalize();
             v.multiply(-strength);
 

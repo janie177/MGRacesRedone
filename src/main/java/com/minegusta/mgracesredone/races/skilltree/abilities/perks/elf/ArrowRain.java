@@ -21,14 +21,12 @@ import java.util.List;
 
 public class ArrowRain implements IAbility {
     @Override
-    public void run(Event event)
-    {
+    public void run(Event event) {
         ProjectileHitEvent e = (ProjectileHitEvent) event;
         Player p = (Player) e.getEntity().getShooter();
         MGPlayer mgp = Races.getMGPlayer(p);
 
-        if(Cooldown.isCooledDown("arrowrain", p.getUniqueId().toString()))
-        {
+        if (Cooldown.isCooledDown("arrowrain", p.getUniqueId().toString())) {
             int duration = mgp.getAbilityLevel(getType()) * 5;
             Location l = e.getEntity().getLocation();
             startRain(duration, l);
@@ -36,19 +34,13 @@ public class ArrowRain implements IAbility {
         }
     }
 
-    private void startRain(int duration, final Location l)
-    {
-        for(int i = 0; i <= duration * 4; i++)
-        {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                @Override
-                public void run()
-                {
-                    int xAdded = -4 + RandomUtil.randomNumber(8);
-                    int zAdded = -4 + RandomUtil.randomNumber(8);
-                    Location dropLocation = new Location(l.getWorld(), l.getX(), l.getY(), l.getZ());
-                    l.getWorld().spawnEntity(dropLocation.add(xAdded,15,zAdded), EntityType.ARROW);
-                }
+    private void startRain(int duration, final Location l) {
+        for (int i = 0; i <= duration * 4; i++) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                int xAdded = -4 + RandomUtil.randomNumber(8);
+                int zAdded = -4 + RandomUtil.randomNumber(8);
+                Location dropLocation = new Location(l.getWorld(), l.getX(), l.getY(), l.getZ());
+                l.getWorld().spawnEntity(dropLocation.add(xAdded, 15, zAdded), EntityType.ARROW);
             }, 5 * i);
         }
     }

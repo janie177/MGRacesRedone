@@ -10,8 +10,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class Miner implements IAbility
-{
+public class Miner implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -46,7 +45,7 @@ public class Miner implements IAbility
     @Override
     public int getPrice(int level) {
 
-        if(level == 3)return 2;
+        if (level == 3) return 2;
         return 1;
     }
 
@@ -74,15 +73,18 @@ public class Miner implements IAbility
     public String[] getDescription(int level) {
         String[] desc;
 
-        switch (level)
-        {
-            case 1: desc = new String[]{"When holding a pickaxe, you gain a haste boost."};
+        switch (level) {
+            case 1:
+                desc = new String[]{"When holding a pickaxe, you gain a haste boost."};
                 break;
-            case 2: desc = new String[]{"When mining ores, you gain a stronger haste boost."};
+            case 2:
+                desc = new String[]{"When mining ores, you gain a stronger haste boost."};
                 break;
-            case 3: desc = new String[]{"When mining in the dark, torches randomly appear."};
+            case 3:
+                desc = new String[]{"When mining in the dark, torches randomly appear."};
                 break;
-            default: desc = new String[]{"This is an error!"};
+            default:
+                desc = new String[]{"This is an error!"};
                 break;
 
         }
