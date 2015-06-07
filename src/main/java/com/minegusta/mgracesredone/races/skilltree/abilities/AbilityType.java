@@ -22,7 +22,7 @@ public enum AbilityType {
     LUNA(new Luna()),
     NOCTURNAL(new Nocturnal()),
     POUNCE(new Pounce()),
-    SNARL(new Dig()),
+    DIG(new Dig()),
     COLDBLOODED(new ColdBlooded()),
     ENDERSHIELD(new EnderShield()),
     ENDRIFT(new EndRift()),
@@ -74,8 +74,7 @@ public enum AbilityType {
     ANIMALRIDER(new AnimalRider()),
     NATURALIST(new Naturalist()),
     FLAMERESISTANCE(new FlameResistance()),
-    FRUITFANATIC(new FruitFanatic()),
-    DIG(new Dig());
+    FRUITFANATIC(new FruitFanatic());
 
 
     private IAbility ability;
