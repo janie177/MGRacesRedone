@@ -8,10 +8,12 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
+import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -51,6 +53,7 @@ public class Howl implements IAbility {
         boolean strength = level > 1;
         boolean speed = level > 3;
 
+        EffectUtil.playSound(player, Sound.WOLF_HOWL);
 
         for (int i = 0; i < amount; i++) {
             Wolf w = (Wolf) player.getWorld().spawnEntity(player.getLocation(), EntityType.WOLF);
@@ -58,6 +61,7 @@ public class Howl implements IAbility {
             w.setCustomName(ChatColor.DARK_GRAY + "Pooch");
             w.setCustomNameVisible(true);
             w.setCollarColor(DyeColor.MAGENTA);
+            EffectUtil.playSound(player, Sound.WOLF_BARK);
 
             if (strength) PotionUtil.updatePotion(w, PotionEffectType.INCREASE_DAMAGE, 0, 6000);
             if (speed) PotionUtil.updatePotion(w, PotionEffectType.SPEED, 0, 6000);

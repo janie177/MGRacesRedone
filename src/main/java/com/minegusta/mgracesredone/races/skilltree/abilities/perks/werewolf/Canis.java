@@ -85,7 +85,7 @@ public class Canis implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 2;
+        return 1;
     }
 
     @Override
