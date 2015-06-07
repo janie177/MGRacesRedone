@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.werewolf;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.listeners.general.FallDamageManager;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -40,6 +41,8 @@ public class Pounce implements IAbility {
             EffectUtil.playParticle(p, Effect.FLAME);
 
             p.setVelocity(p.getLocation().getDirection().normalize().multiply(power));
+
+            FallDamageManager.addToFallMap(p);
 
             Cooldown.newCoolDown(name, uuid, getCooldown(level));
         } else {
