@@ -10,6 +10,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -29,9 +30,11 @@ public class Dig implements IAbility {
 
     public static ConcurrentMap<String, Long> breaking = Maps.newConcurrentMap();
     public static ConcurrentMap<String, Boolean> players = Maps.newConcurrentMap();
+    private Permission permission = Main.getPlugin().getPermissions();
 
     @Override
     public void run(Event event) {
+
         PlayerInteractEvent e = (PlayerInteractEvent) event;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
@@ -82,11 +85,15 @@ public class Dig implements IAbility {
         }
 
         players.put(p.getUniqueId().toString(), true);
+        permission.playerAddTransient(p, "nocheatplus.checks.blockbreak.fastbreak");
+        permission.playerAddTransient(p, "nocheatplus.checks.blockbreak.wrongblock");
 
         for (BlockFace face : BlockFace.values()) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
                 if (!p.isOnline()) {
                     players.remove(p.getUniqueId().toString());
+                    permission.playerRemoveTransient(p, "nocheatplus.checks.blockbreak.fastbreak");
+                    permission.playerRemoveTransient(p, "nocheatplus.checks.blockbreak.wrongblock");
                     return;
                 }
                 BlockBreakEvent event2 = getEvent(start.getRelative(face), p.getPlayer());
@@ -95,6 +102,9 @@ public class Dig implements IAbility {
                 }
                 if (face == BlockFace.SELF) {
                     players.remove(p.getUniqueId().toString());
+                    permission.playerRemoveTransient(p, "nocheatplus.checks.blockbreak.fastbreak");
+                    permission.playerRemoveTransient(p, "nocheatplus.checks.blockbreak.wrongblock");
+
                 }
             }, face.ordinal() * 5);
         }

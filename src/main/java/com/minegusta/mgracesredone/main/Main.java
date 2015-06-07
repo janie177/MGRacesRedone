@@ -1,15 +1,16 @@
 package com.minegusta.mgracesredone.main;
 
-import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.tasks.*;
 import com.minegusta.mgracesredone.util.OnReload;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
-    private static Plugin PLUGIN;
+    private static Main PLUGIN;
     private static boolean WG_ENABLED = false;
+    private Permission permission;
 
     @Override
     public void onEnable() {
@@ -31,7 +32,16 @@ public class Main extends JavaPlugin {
 
         WG_ENABLED = Bukkit.getPluginManager().isPluginEnabled("WorldGuard");
 
-        Recipe.registerRecipes();
+        if (!setupPermissions()) {
+            getLogger().severe("===========================================================");
+            getLogger().severe("==================        WUMBO        ====================");
+            getLogger().severe("===========================================================");
+            getLogger().severe("ERRRRORRR NO PERMISSIONS PLUGIN RUN WHILE YOU CAN YOU FOOL!");
+            getLogger().severe("ERRRRORRR NO PERMISSIONS PLUGIN RUN WHILE YOU CAN YOU FOOL!");
+            getLogger().severe("ERRRRORRR NO PERMISSIONS PLUGIN RUN WHILE YOU CAN YOU FOOL!");
+            getLogger().severe("ERRRRORRR NO PERMISSIONS PLUGIN RUN WHILE YOU CAN YOU FOOL!");
+            getLogger().severe("===========================================================");
+        }
 
         //Tasks
         SaveTask.start();
@@ -41,6 +51,18 @@ public class Main extends JavaPlugin {
         InvisibleTask.start();
         ShieldTask.start();
 
+    }
+
+    public Permission getPermissions() {
+        return permission;
+    }
+
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+        if (permissionProvider != null) {
+            permission = permissionProvider.getProvider();
+        }
+        return (permission != null);
     }
 
     @Override
@@ -62,7 +84,7 @@ public class Main extends JavaPlugin {
      *
      * @return The plugin.
      */
-    public static Plugin getPlugin() {
+    public static Main getPlugin() {
         return PLUGIN;
     }
 
