@@ -39,7 +39,7 @@ public class PlayerUtil {
         return mat == Material.LAVA || mat == Material.STATIONARY_LAVA;
     }
 
-    public static int getArmorAmounr(Player p) {
+    public static int getArmorAmount(Player p) {
         int amount = 0;
         for (ItemStack is : p.getInventory().getArmorContents()) {
             if (is != null && is.getType() != Material.AIR) amount++;

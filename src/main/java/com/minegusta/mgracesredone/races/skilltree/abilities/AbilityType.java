@@ -7,12 +7,22 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.*;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.werewolf.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
 import java.util.List;
 
 public enum AbilityType {
+    CANIS(new Canis()),
+    CLAWS(new Claws()),
+    CARNIVORE(new Carnivore()),
+    GOLDRESISTANCE(new GoldResistance()),
+    HOWL(new Howl()),
+    LUNA(new Luna()),
+    NOCTURNAL(new Nocturnal()),
+    POUNCE(new Pounce()),
+    SNARL(new Dig()),
     COLDBLOODED(new ColdBlooded()),
     ENDERSHIELD(new EnderShield()),
     ENDRIFT(new EndRift()),
@@ -64,7 +74,8 @@ public enum AbilityType {
     ANIMALRIDER(new AnimalRider()),
     NATURALIST(new Naturalist()),
     FLAMERESISTANCE(new FlameResistance()),
-    FRUITFANATIC(new FruitFanatic());
+    FRUITFANATIC(new FruitFanatic()),
+    DIG(new Dig());
 
 
     private IAbility ability;

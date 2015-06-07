@@ -1,4 +1,4 @@
-package com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn;
+package com.minegusta.mgracesredone.races.skilltree.abilities.perks.werewolf;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.main.Races;
@@ -20,7 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-public class Predator implements IAbility {
+public class Carnivore implements IAbility {
     //Bleeding for the predator ability
     @Override
     public void run(Event event) {
@@ -30,8 +30,10 @@ public class Predator implements IAbility {
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());
 
-        int chance = 10;
-        if (level > 3) chance = 20;
+        if (p.getItemInHand().getType() != Material.AIR) return;
+
+        int chance = 15;
+        if (level > 3) chance = 30;
 
         if (RandomUtil.chance(chance)) {
             EntityUtil.bleed(target, e.getDamager(), 4);
@@ -51,18 +53,18 @@ public class Predator implements IAbility {
             PotionUtil.updatePotion(player, PotionEffectType.NIGHT_VISION, 0, 15);
             PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 0, 15);
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 1, 15);
-            EffectUtil.playParticle(player, Effect.PORTAL, 1, 1, 1, 30);
+            EffectUtil.playParticle(player, Effect.CRIT, 1, 1, 1, 30);
         }
     }
 
     @Override
     public String getName() {
-        return "Predator";
+        return "Carnivore";
     }
 
     @Override
     public AbilityType getType() {
-        return AbilityType.PREDATOR;
+        return AbilityType.CARNIVORE;
     }
 
     @Override
@@ -92,7 +94,7 @@ public class Predator implements IAbility {
 
     @Override
     public List<RaceType> getRaces() {
-        return Lists.newArrayList(RaceType.ENDERBORN);
+        return Lists.newArrayList(RaceType.WEREWOLF);
     }
 
     @Override
@@ -109,13 +111,13 @@ public class Predator implements IAbility {
                 desc = new String[]{"When eating raw food you gain a regeneration effect."};
                 break;
             case 2:
-                desc = new String[]{"When hitting enemies they have a 10% chance to start bleeding.", "Bleeding lasts 4 seconds."};
+                desc = new String[]{"When hitting enemies with your fists, they have a 15% chance to start bleeding.", "Bleeding lasts 4 seconds."};
                 break;
             case 3:
                 desc = new String[]{"Your raw food generation lasts twice as long.", "You also get a nightvision, strength and speed boost."};
                 break;
             case 4:
-                desc = new String[]{"Your chance to make enemies bleed is now 20%."};
+                desc = new String[]{"Your chance to make enemies bleed with your fists is now 30%."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};
