@@ -58,7 +58,7 @@ public class Dig implements IAbility {
             }
 
             dig(start, p, materials);
-        } else if (a == Action.LEFT_CLICK_BLOCK) {
+        } else if (a == Action.RIGHT_CLICK_AIR) {
             if (Cooldown.isCooledDown(getName(), uuid)) {
                 Cooldown.newCoolDown(getName(), uuid, getCooldown(level));
                 breaking.put(uuid, System.currentTimeMillis());
