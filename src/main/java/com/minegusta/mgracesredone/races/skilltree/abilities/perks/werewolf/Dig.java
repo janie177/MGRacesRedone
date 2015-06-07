@@ -106,7 +106,7 @@ public class Dig implements IAbility {
                     permission.playerRemoveTransient(p, "nocheatplus.checks.blockbreak.wrongblock");
 
                 }
-            }, face.ordinal() * 5);
+            }, face.ordinal() + 3);
         }
     }
 
