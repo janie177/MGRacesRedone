@@ -78,6 +78,10 @@ public class WereWolfListener implements Listener {
                 if (mgp.hasAbility(AbilityType.CLAWS)) AbilityType.CLAWS.run(e);
                 if (mgp.hasAbility(AbilityType.CARNIVORE)) AbilityType.CARNIVORE.run(e);
             }
+
+            if (isWereWolf(damager) && damager.getItemInHand().getType() != Material.AIR && WeatherUtil.isNight(damager.getWorld()) && WeatherUtil.isFullMoon(damager.getWorld())) {
+                e.setDamage(e.getDamage() / 2);
+            }
         }
     }
 
