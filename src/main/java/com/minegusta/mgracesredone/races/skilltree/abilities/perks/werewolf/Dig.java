@@ -38,7 +38,7 @@ public class Dig implements IAbility {
 
         int level = mgp.getAbilityLevel(getType());
         int duration = 5;
-        List<Material> materials = Lists.newArrayList(Material.DIRT, Material.GRASS);
+        List<Material> materials = Lists.newArrayList(Material.DIRT, Material.SAND, Material.GRASS);
 
         if (level > 1) {
             duration = 7;
@@ -146,7 +146,7 @@ public class Dig implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"You can dig really fast by hitting the ground with your hands.", "Affects dirt and grass.", "Lasts for 5 seconds."};
+                desc = new String[]{"You can dig really fast by hitting the ground with your hands.", "Affects dirt, sand and grass.", "Lasts for 5 seconds."};
                 break;
             case 2:
                 desc = new String[]{"Your digging lasts for 7 seconds."};
