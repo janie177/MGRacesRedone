@@ -71,23 +71,31 @@ public class Dig implements IAbility {
 
     }
 
+
     private void dig(final Block start, Player p, List<Material> materials) {
-        if (canBreak(start, p) && materials.contains(start.getType())) {
-            start.setType(Material.AIR);
+        BlockBreakEvent event = getEvent(start, p);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (materials.contains(start.getType())) {
+            event.getBlock().setType(Material.AIR);
         }
 
         for (BlockFace face : BlockFace.values()) {
-            if (canBreak(start.getRelative(face), p) && materials.contains(start.getRelative(face).getType())) {
-                start.getRelative(face).setType(Material.AIR);
+            BlockBreakEvent event2 = getEvent(start.getRelative(face), p);
+            if (!event2.isCancelled() && materials.contains(start.getRelative(face).getType())) {
+                event2.getBlock().setType(Material.AIR);
             }
         }
     }
 
-    private boolean canBreak(Block b, Player p) {
+    private BlockBreakEvent getEvent(Block b, Player p) {
         BlockBreakEvent event = new BlockBreakEvent(b, p);
         Bukkit.getPluginManager().callEvent(event);
 
-        return !event.isCancelled();
+        return event;
     }
 
     @Override
