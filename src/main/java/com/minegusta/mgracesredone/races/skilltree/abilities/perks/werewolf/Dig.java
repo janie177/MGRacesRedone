@@ -12,6 +12,7 @@ import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class Dig implements IAbility {
 
     public static ConcurrentMap<String, Long> breaking = Maps.newConcurrentMap();
+    public static ConcurrentMap<String, Boolean> players = Maps.newConcurrentMap();
 
     @Override
     public void run(Event event) {
@@ -73,25 +75,26 @@ public class Dig implements IAbility {
     }
 
 
-    private void dig(final Block start, Player p, List<Material> materials) {
-        BlockBreakEvent event = getEvent(start, p);
+    private void dig(final Block start, final OfflinePlayer p, List<Material> materials) {
 
-        if (event.isCancelled()) {
+        if (players.containsKey(p.getUniqueId().toString())) {
             return;
         }
 
-        if (materials.contains(start.getType())) {
-            event.getBlock().setType(Material.AIR);
-        }
+        players.put(p.getUniqueId().toString(), true);
 
         for (BlockFace face : BlockFace.values()) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
-                if (p == null) {
+                if (!p.isOnline()) {
+                    players.remove(p.getUniqueId().toString());
                     return;
                 }
-                BlockBreakEvent event2 = getEvent(start.getRelative(face), p);
+                BlockBreakEvent event2 = getEvent(start.getRelative(face), p.getPlayer());
                 if (!event2.isCancelled() && materials.contains(start.getRelative(face).getType())) {
                     event2.getBlock().setType(Material.AIR);
+                }
+                if (face == BlockFace.SELF) {
+                    players.remove(p.getUniqueId().toString());
                 }
             }, face.ordinal() * 5);
         }
