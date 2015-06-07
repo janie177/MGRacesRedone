@@ -146,7 +146,7 @@ public class Dig implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"You can dig really fast by hitting the ground with your hands.", "Affects dirt, sand and grass.", "Lasts for 5 seconds."};
+                desc = new String[]{"You can dig really fast by hitting the ground with your hands.", "Activate by right clicking a block with your hands.", "Affects dirt, sand and grass.", "Lasts for 5 seconds."};
                 break;
             case 2:
                 desc = new String[]{"Your digging lasts for 7 seconds."};
