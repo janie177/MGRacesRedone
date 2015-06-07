@@ -43,9 +43,10 @@ public class Werewolf implements Race {
                         "They are closely related to wolves, and possess some of their powers.",
                         "Werewolves are weak to gold and have a disadvantage when there's no moon.",
                         "Most perks are related to the night and moon.",
-                        "During a full moon, werewolves should not wear armour.",
+                        "During a full moon, werewolves should not wear armour. It weakens them.",
                         "during a full moon, anything other than claws will do only half damage.",
-                        "It is strongly advised to use your claws during a full moon."
+                        "It is strongly advised to use your claws during a full moon.",
+                        "Not wearing armour during a full moon will give you strong defensive boosts."
                 };
     }
 
