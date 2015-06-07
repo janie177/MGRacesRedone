@@ -1,5 +1,6 @@
 package com.minegusta.mgracesredone.main;
 
+import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.tasks.*;
 import com.minegusta.mgracesredone.util.OnReload;
 import net.milkbowl.vault.permission.Permission;
@@ -29,6 +30,9 @@ public class Main extends JavaPlugin {
         for (Listener listener : Listener.values()) {
             Bukkit.getPluginManager().registerEvents(listener.get(), this);
         }
+
+        //Register recipes
+        Recipe.registerRecipes();
 
         WG_ENABLED = Bukkit.getPluginManager().isPluginEnabled("WorldGuard");
 
