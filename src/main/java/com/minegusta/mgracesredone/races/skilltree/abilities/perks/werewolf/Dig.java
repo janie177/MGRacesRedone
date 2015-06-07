@@ -86,6 +86,9 @@ public class Dig implements IAbility {
 
         for (BlockFace face : BlockFace.values()) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                if (p == null) {
+                    return;
+                }
                 BlockBreakEvent event2 = getEvent(start.getRelative(face), p);
                 if (!event2.isCancelled() && materials.contains(start.getRelative(face).getType())) {
                     event2.getBlock().setType(Material.AIR);
