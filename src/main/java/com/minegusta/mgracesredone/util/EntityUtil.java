@@ -15,9 +15,12 @@ public class EntityUtil {
 
     public static void bleed(final LivingEntity ent, final Entity damager, int duration) {
         for (int i = 0; i < duration; i++) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+            {
+                if (ent == null) return;
                 if (ent instanceof Player) ent.sendMessage(ChatColor.RED + "You are bleeding! *ouch*");
 
+                if (damager == null) return;
                 EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(damager, ent, EntityDamageEvent.DamageCause.CUSTOM, 1);
 
                 Bukkit.getPluginManager().callEvent(e);
