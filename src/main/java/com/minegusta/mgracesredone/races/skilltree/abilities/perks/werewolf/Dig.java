@@ -63,7 +63,6 @@ public class Dig implements IAbility {
                 Cooldown.newCoolDown(getName(), uuid, getCooldown(level));
                 breaking.put(uuid, System.currentTimeMillis());
                 ChatUtil.sendString(p, "You can now dig really fast by hitting blocks with your claws!");
-                dig(start, p, materials);
             } else {
                 ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(getName(), uuid) + " seconds to use " + getName() + ".");
             }

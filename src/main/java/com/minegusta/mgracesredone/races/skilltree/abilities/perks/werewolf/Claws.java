@@ -56,7 +56,7 @@ public class Claws implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.SKULL;
+        return Material.SKULL_ITEM;
     }
 
     @Override

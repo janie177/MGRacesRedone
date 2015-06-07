@@ -28,8 +28,8 @@ public class Pounce implements IAbility {
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());
 
-        double power = 1.8;
-        if (level > 1) power = 2.4;
+        double power = 2.6;
+        if (level > 1) power = 3.2;
 
         String name = "wolfjump";
         String uuid = p.getUniqueId().toString();
