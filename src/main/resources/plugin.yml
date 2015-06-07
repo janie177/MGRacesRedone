@@ -1,5 +1,5 @@
 main: com.minegusta.mgracesredone.main.Main
-author: janie177
+authors: [janie177, HQM]
 name: MGRacesRedone
 version: ${project.version}
 depend: [WorldGuard]

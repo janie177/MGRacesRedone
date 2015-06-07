@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.werewolf;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -84,10 +85,12 @@ public class Dig implements IAbility {
         }
 
         for (BlockFace face : BlockFace.values()) {
-            BlockBreakEvent event2 = getEvent(start.getRelative(face), p);
-            if (!event2.isCancelled() && materials.contains(start.getRelative(face).getType())) {
-                event2.getBlock().setType(Material.AIR);
-            }
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                BlockBreakEvent event2 = getEvent(start.getRelative(face), p);
+                if (!event2.isCancelled() && materials.contains(start.getRelative(face).getType())) {
+                    event2.getBlock().setType(Material.AIR);
+                }
+            }, face.ordinal() * 5);
         }
     }
 
