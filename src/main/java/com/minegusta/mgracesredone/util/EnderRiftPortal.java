@@ -191,6 +191,9 @@ public class EnderRiftPortal {
         if (l2.getWorld().getBlockAt((int) l2.getX(), 0, (int) l2.getZ()).getType() == Material.AIR && (highestY == 0.0 || highestY > l2.getY())) {
             return;
         }
+        if (l1.getWorld() != l2.getWorld() || l1.distance(l2) > 40) {
+            return;
+        }
 
         Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_SIGNAL);
 
@@ -202,6 +205,9 @@ public class EnderRiftPortal {
             }
 
             if (ent instanceof Player) {
+                if (!ent.getUniqueId().toString().equals(uuid)) {
+                    continue;
+                }
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
                 EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);

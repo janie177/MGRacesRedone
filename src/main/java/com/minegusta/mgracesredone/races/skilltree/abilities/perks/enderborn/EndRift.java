@@ -160,7 +160,7 @@ public class EndRift implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport players.", "Place portals by right/left clicking a stick.", "Crouch click a stick to activate.", "Will stay open for 5 seconds.", "Portals cannot be placed above the void or in solid blocks."};
+                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport yourself.", "Place portals by right/left clicking a stick.", "Crouch click a stick to activate.", "Will stay open for 5 seconds.", "Portals cannot be placed above the void or in solid blocks.", "Distance between portals may not be larger than 40 blocks.", "You cannot travel between different worlds."};
                 break;
             case 2:
                 desc = new String[]{"Your portal will transport mobs and itemstacks.", "The portals stay open for 9 seconds."};
