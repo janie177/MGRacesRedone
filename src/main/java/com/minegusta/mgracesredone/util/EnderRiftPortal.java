@@ -184,6 +184,14 @@ public class EnderRiftPortal {
             return;
         }
 
+
+        //Void
+        double highestY = l2.getWorld().getHighestBlockAt(l2).getY();
+
+        if (l2.getWorld().getBlockAt((int) l2.getX(), 0, (int) l2.getZ()).getType() == Material.AIR && (highestY == 0.0 || highestY > l2.getY())) {
+            return;
+        }
+
         Entity dummy = l1.getWorld().spawnEntity(l1, EntityType.ENDER_SIGNAL);
 
         for (Entity ent : dummy.getNearbyEntities(1, 1, 1)) {
