@@ -88,6 +88,7 @@ public class Nocturnal implements IAbility {
                 break;
             case 5:
                 desc = new String[]{"You no longer take fall damage at night"};
+                break;
             default:
                 desc = new String[]{"This is an error!"};
                 break;
