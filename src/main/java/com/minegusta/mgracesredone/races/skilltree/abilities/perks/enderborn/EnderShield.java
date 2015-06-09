@@ -111,7 +111,7 @@ public class EnderShield implements IAbility {
                 Bukkit.getPluginManager().callEvent(hit);
 
                 if (!hit.isCancelled()) {
-                    damager.damage(e.getDamage());
+                    damager.damage(hit.getDamage());
                     damager.setLastDamageCause(hit);
                     p.sendMessage(ChatColor.GREEN + "Your Ender Shield damaged your opponent!");
                     if (damager instanceof Player) {
@@ -126,7 +126,7 @@ public class EnderShield implements IAbility {
                 Bukkit.getPluginManager().callEvent(hit);
 
                 if (!hit.isCancelled()) {
-                    damager.damage(e.getDamage());
+                    damager.damage(hit.getDamage());
                     damager.setLastDamageCause(hit);
                     p.sendMessage(ChatColor.GREEN + "Your Ender Shield damaged your opponent!");
                     if (damager instanceof Player) {
