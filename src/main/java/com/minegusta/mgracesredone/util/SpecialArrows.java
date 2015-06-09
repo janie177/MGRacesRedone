@@ -78,7 +78,7 @@ public class SpecialArrows {
                 runGrapple(l, p);
                 break;
             case EXPLODE:
-                runExplode(l);
+                runExplode(l, p);
                 break;
         }
     }
@@ -100,8 +100,9 @@ public class SpecialArrows {
         p.setVelocity(p.getLocation().getDirection().multiply(2.5));
     }
 
-    private static void runExplode(Location l) {
+    private static void runExplode(Location l, Player p) {
         if (RandomUtil.chance(20)) {
+            if (!WGUtil.canGetDamage(p)) return;
             l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
         }
     }

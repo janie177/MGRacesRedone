@@ -125,7 +125,7 @@ public class PearlPower implements IAbility {
                 minion(l, e.getEntity());
                 break;
             case EXPLODE:
-                explode(l);
+                explode(l, p);
                 break;
             default:
                 refund = false;
@@ -140,7 +140,8 @@ public class PearlPower implements IAbility {
     }
 
     //The abilities to run
-    private void explode(Location l) {
+    private void explode(Location l, Player p) {
+        if (!WGUtil.canGetDamage(p)) return;
         l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
     }
 
