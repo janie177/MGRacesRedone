@@ -24,8 +24,6 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-// TODO Check for lag issues...
-
 public class TidalWave implements IAbility {
 
     public static ConcurrentMap<Location, Boolean> blockMap = Maps.newConcurrentMap();

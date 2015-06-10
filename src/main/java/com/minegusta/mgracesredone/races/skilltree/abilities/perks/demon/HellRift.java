@@ -14,7 +14,10 @@ import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
@@ -71,9 +74,7 @@ public class HellRift implements IAbility {
         for (int i = 0; i <= 20 * duration; i++) {
             if (i % 4 == 0) {
                 final int k = i;
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                    @Override
-                    public void run() {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
                         //Effects lol
                         EffectUtil.playParticle(l, Effect.PORTAL, 30);
                         EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
@@ -87,42 +88,25 @@ public class HellRift implements IAbility {
                         }
 
                         //The sucking people in effect
-                        Entity dummy = l.getWorld().spawnEntity(l, EntityType.SMALL_FIREBALL);
+                    l.getWorld().getEntities().stream().filter(ent -> !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON) && (ent instanceof Player || ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)).forEach(ent ->
+                    {
+                        double amplifier = 0.05 + 1 / ent.getLocation().distance(l);
+                        if (amplifier > 1.05) amplifier = 1.05;
 
-                        for (Entity ent : dummy.getNearbyEntities(15, 15, 15)) {
-                            if (ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile) {
-                                //Demons are immune
-                                if (ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON) {
-                                    continue;
-                                }
+                        double x = ent.getLocation().getX() - l.getX();
+                        double y = ent.getLocation().getY() - l.getY();
+                        double z = ent.getLocation().getZ() - l.getZ();
 
-                                //The closer to the center, the stronger the force.
-                                double amplifier = 0.05 + 1 / ent.getLocation().distance(l);
-                                if (amplifier > 1.05) amplifier = 1.05;
+                        Vector v = new Vector(x, y, z);
+                        v.normalize();
 
-                                double x = ent.getLocation().getX() - l.getX();
-                                double y = ent.getLocation().getY() - l.getY();
-                                double z = ent.getLocation().getZ() - l.getZ();
-
-                                Vector v = new Vector(x, y, z);
-                                v.normalize();
-
-                                ent.setVelocity(ent.getVelocity().add(v.multiply(-amplifier)));
-                            }
-                        }
-
-                        dummy.remove();
-                    }
+                        ent.setVelocity(ent.getVelocity().add(v.multiply(-amplifier)));
+                    });
                 }, i);
             }
         }
         if (explode) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                @Override
-                public void run() {
-                    l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 4, false, false);
-                }
-            }, 20 * duration);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 4, false, false), 20 * duration);
         }
     }
 

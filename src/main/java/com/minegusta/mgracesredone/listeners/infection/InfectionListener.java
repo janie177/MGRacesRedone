@@ -61,12 +61,7 @@ public class InfectionListener implements Listener {
 
         if (Races.getRace(p) != RaceType.HUMAN) return;
         if (message.equalsIgnoreCase(Demon.getChant())) {
-            for (Entity entity : p.getNearbyEntities(15, 15, 15)) {
-                if (entity instanceof Sheep && !((Sheep) entity).isAdult()) {
-                    hasSheep = true;
-                    break;
-                }
-            }
+            hasSheep = p.getWorld().getLivingEntities().stream().filter(le -> le instanceof Sheep && !((Sheep) le).isAdult()).anyMatch(le -> le.getLocation().distance(p.getLocation()) > 16);
 
             if (!hasSheep) return;
             if (BlockUtil.radiusCheck(center, 12, Material.OBSIDIAN, 55)) {
@@ -90,11 +85,9 @@ public class InfectionListener implements Listener {
                             if (p.getLocation().getBlock().getRelative(le, 0, le2).getType().equals(Material.AIR)) {
                                 final int loc1 = le2;
                                 final int loc2 = le;
-                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-                                    @Override
-                                    public void run() {
+                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+                                {
                                         p.getLocation().getBlock().getRelative(loc1, 0, loc2).setType(Material.FIRE);
-                                    }
                                 }, 0);
                             }
                         }
