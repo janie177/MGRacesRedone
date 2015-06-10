@@ -6,8 +6,8 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.tasks.BleedTask;
 import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.EntityUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Effect;
@@ -34,7 +34,7 @@ public class Predator implements IAbility {
         if (level > 3) chance = 20;
 
         if (RandomUtil.chance(chance)) {
-            EntityUtil.bleed(target, e.getDamager(), 4);
+            BleedTask.addBleed(target, e.getDamager(), 4);
         }
 
     }

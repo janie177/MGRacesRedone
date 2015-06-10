@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 
         //Tasks
         SaveTask.start();
+        BleedTask.start();
         BoostTask.start();
         RideTask.start();
         MissileTask.start();
@@ -75,6 +76,7 @@ public class Main extends JavaPlugin {
         SaveTask.stop();
         BoostTask.stop();
         MissileTask.stop();
+        BleedTask.stop();
         RideTask.stop();
         InvisibleTask.stop();
         ShieldTask.stop();
