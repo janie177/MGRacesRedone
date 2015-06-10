@@ -88,7 +88,7 @@ public class HellRift implements IAbility {
                         }
 
                         //The sucking people in effect
-                    l.getWorld().getEntities().stream().filter(ent -> !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON) && (ent instanceof Player || ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)).forEach(ent ->
+                    l.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(l) < 8 && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON) && (ent instanceof Player || ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)).forEach(ent ->
                     {
                         double amplifier = 0.05 + 1 / ent.getLocation().distance(l);
                         if (amplifier > 1.05) amplifier = 1.05;
