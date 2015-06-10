@@ -22,6 +22,9 @@ public class Bleed {
 
     public boolean bleed() {
         if (target == null || damager == null || target.isDead()) return false;
+        if (damager instanceof Player && !Bukkit.getOfflinePlayer(damager.getUniqueId()).isOnline()) {
+            return false;
+        }
 
         EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(damager, target, EntityDamageEvent.DamageCause.CUSTOM, 1);
 
