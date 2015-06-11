@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Elf implements Race {
     @Override
     public double getHealth() {
-        return 18;
+        return 20;
     }
 
     @Override
