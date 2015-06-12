@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -67,7 +68,7 @@ public class SpecialArrows {
         }
     }
 
-    public static void runEffect(Location l, Player p) {
+    public static void runEffect(Location l, Player p, Entity arrow) {
         ArrowType type = getArrowType(p);
 
         switch (type) {
@@ -75,7 +76,7 @@ public class SpecialArrows {
                 runIce(l);
                 break;
             case GRAPPLE:
-                runGrapple(l, p);
+                runGrapple(l, p, arrow);
                 break;
             case EXPLODE:
                 runExplode(l, p);
@@ -93,11 +94,12 @@ public class SpecialArrows {
                 });
     }
 
-    private static void runGrapple(Location l, Player p) {
+    private static void runGrapple(Location l, Player p, Entity arrow) {
         FallDamageManager.addToFallMap(p);
         p.getLocation().setY(p.getLocation().getY() + 0.05);
         p.getLocation().setDirection(l.getDirection());
         p.setVelocity(p.getLocation().getDirection().multiply(2.5));
+        arrow.remove();
     }
 
     private static void runExplode(Location l, Player p) {

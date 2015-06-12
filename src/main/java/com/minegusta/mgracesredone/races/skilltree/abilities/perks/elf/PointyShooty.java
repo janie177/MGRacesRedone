@@ -67,7 +67,7 @@ public class PointyShooty implements IAbility {
             }
         } else if (event instanceof ProjectileHitEvent) {
             ProjectileHitEvent e = (ProjectileHitEvent) event;
-            SpecialArrows.runEffect(e.getEntity().getLocation(), (Player) e.getEntity().getShooter());
+            SpecialArrows.runEffect(e.getEntity().getLocation(), (Player) e.getEntity().getShooter(), e.getEntity());
         }
     }
 
