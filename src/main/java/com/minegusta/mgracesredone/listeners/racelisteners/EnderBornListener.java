@@ -2,7 +2,6 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
-import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.PearlPower;
 import com.minegusta.mgracesredone.util.*;
@@ -167,10 +166,4 @@ public class EnderBornListener implements Listener {
             ShadowInvisibility.remove(uuid);
         }
     }
-
-    private static boolean isEnderBorn(Player p) {
-        return Races.getRace(p) == RaceType.ENDERBORN;
-    }
-
-
 }
