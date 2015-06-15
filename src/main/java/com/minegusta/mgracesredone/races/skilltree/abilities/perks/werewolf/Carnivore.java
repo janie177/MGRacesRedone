@@ -16,6 +16,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class Carnivore implements IAbility {
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());
 
-        if (p.getItemInHand().getType() != Material.AIR) return;
+        if (p.getItemInHand().getType() != Material.AIR || e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) return;
 
         int chance = 15;
         if (level > 3) chance = 30;

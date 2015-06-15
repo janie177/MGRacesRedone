@@ -21,7 +21,7 @@ public enum Listener {
     DEMON_LISTENER(new DemonListener()),
     WEREWOLF_LISTENER(new WereWolfListener()),
     ANGEL_LISTENER(new AngelListener()),
-    //ENDERBORNLISTENER(new EnderBornListener()),
+    ENDERBORNLISTENER(new EnderBornListener()),
     MENU_LISTENER(new MenuListener());
 
     private org.bukkit.event.Listener listener;

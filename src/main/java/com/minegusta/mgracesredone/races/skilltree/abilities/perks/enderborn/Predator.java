@@ -16,6 +16,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public class Predator implements IAbility {
         LivingEntity target = (LivingEntity) e.getEntity();
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());
+
+        if (e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) return;
 
         int chance = 10;
         if (level > 3) chance = 20;

@@ -102,7 +102,7 @@ public class EnderShield implements IAbility {
             p.sendMessage(ChatColor.GREEN + "Your Ender Shield aborbed some damage!");
 
 
-            if (reflected == 0) return;
+            if (reflected == 0 || e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) return;
 
             //Reflecting damage
             if (attacker instanceof LivingEntity) {

@@ -27,7 +27,7 @@ public class ShieldTask {
 
     private static void effects() {
         rotationAngle = rotationAngle + 6;
-        if (rotationAngle >= 360) rotationAngle = 6;
+        if (rotationAngle >= 360) rotationAngle = 0;
 
         EnderShield.shields.keySet().forEach(id -> {
             int amount = EnderShield.shields.get(id);
