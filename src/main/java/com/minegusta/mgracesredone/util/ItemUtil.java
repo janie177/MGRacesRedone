@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -76,14 +77,26 @@ public class ItemUtil {
     public static boolean areEqualIgnoreAmount(ItemStack is1, ItemStack is2) {
         if (is1 == null || is2 == null || is1.getType() == Material.AIR || is2.getType() == Material.AIR) return false;
 
-        if (is1.getType() == is2.getType()) {
-            if ((!is1.hasItemMeta() && !is2.hasItemMeta()) || ((is1.hasItemMeta() && !is1.getItemMeta().hasLore()) && (is2.hasItemMeta() && !is2.getItemMeta().hasLore())) || is1.getItemMeta().getLore().equals(is2.getItemMeta().getLore())) {
-                if ((!is1.getItemMeta().hasDisplayName() && !is2.getItemMeta().hasDisplayName()) || is1.getItemMeta().getDisplayName().equals(is2.getItemMeta().getDisplayName())) {
+        if (is1.getType().equals(is2.getType())) {
+            ItemMeta meta1 = is1.getItemMeta();
+            ItemMeta meta2 = is2.getItemMeta();
+
+            if (compareString(meta1.getDisplayName(), meta2.getDisplayName())) {
+                if (!meta1.hasLore() && !meta2.hasLore()) {
                     return true;
+                }
+                if (meta1.hasLore() && meta2.hasLore()) {
+                    if (compareString(meta1.getLore().toString(), meta2.getLore().toString())) {
+                        return true;
+                    }
                 }
             }
         }
         return false;
+    }
+
+    private static boolean compareString(String one, String two) {
+        return one.equals(two);
     }
 
     public static boolean isRawMeat(Material m) {
