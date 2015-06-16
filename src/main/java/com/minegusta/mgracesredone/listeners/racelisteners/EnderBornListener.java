@@ -42,11 +42,13 @@ public class EnderBornListener implements Listener {
             Player p = (Player) e.getDamager();
             if (!e.isCancelled() && Races.getMGPlayer(p).getAbilityLevel(AbilityType.PREDATOR) > 1 && WGUtil.canFightEachother(p, e.getEntity())) {
                 AbilityType.PREDATOR.run(e);
+                Bukkit.getLogger().info("Predator damage Ran.");
             }
         }
 
         if (e.getEntity() instanceof Player && Races.getMGPlayer((Player) e.getEntity()).hasAbility(AbilityType.ENDERSHIELD)) {
             AbilityType.ENDERSHIELD.run(e);
+            Bukkit.getLogger().info("Endershield damage reduction Ran.");
         }
 
 
@@ -55,6 +57,7 @@ public class EnderBornListener implements Listener {
             if (ShadowInvisibility.contains(e.getEntity().getUniqueId().toString())) {
                 ShadowInvisibility.remove(e.getEntity().getUniqueId().toString());
                 ChatUtil.sendString(((Player) e.getEntity()), "You got hit and are no longer invisible!");
+                Bukkit.getLogger().info("Invisibility ended by hit.");
             }
         }
         if (e.getDamager() instanceof Player) {
@@ -62,6 +65,7 @@ public class EnderBornListener implements Listener {
             if (ShadowInvisibility.contains(uuid)) {
                 ShadowInvisibility.remove(uuid);
                 ChatUtil.sendString((Player) e.getDamager(), "You attacked and are no longer invisible!");
+                Bukkit.getLogger().info("Invisibility ended by hitting.");
             }
         }
     }
@@ -72,6 +76,7 @@ public class EnderBornListener implements Listener {
 
         if (e.getItemDrop().getItemStack().getType() == Material.ENDER_PEARL && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.ENDERSHIELD)) {
             AbilityType.ENDERSHIELD.run(e);
+            Bukkit.getLogger().info("Endershield charge added.");
         }
     }
 
@@ -84,18 +89,22 @@ public class EnderBornListener implements Listener {
         //Switching pearl mode
         if (p.getItemInHand().getType() == Material.ENDER_PEARL && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) && Races.getMGPlayer(p).hasAbility(AbilityType.PEARLPOWER)) {
             AbilityType.PEARLPOWER.run(p);
+            Bukkit.getLogger().info("Pearlpower interact ran.");
         }
         //Activate EndRift
         if (p.getItemInHand().getType() == Material.STICK && mgp.hasAbility(AbilityType.ENDRIFT)) {
             AbilityType.ENDRIFT.run(e);
+            Bukkit.getLogger().info("Endrift activated.");
         }
         //Telekinesis.
         else if (p.getItemInHand().getType() == Material.BLAZE_ROD && (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && mgp.hasAbility(AbilityType.TELEKINESIS)) {
             AbilityType.TELEKINESIS.run(p);
+            Bukkit.getLogger().info("Telekinesis Ran.");
         }
         //Activate shadow
         else if (e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY() && e.getClickedBlock().getLocation().distance(e.getPlayer().getLocation()) < 2 && mgp.hasAbility(AbilityType.SHADOW)) {
             AbilityType.SHADOW.run(p);
+            Bukkit.getLogger().info("Shadow interact Ran.");
         }
     }
 
@@ -104,6 +113,7 @@ public class EnderBornListener implements Listener {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
         if (e.getEntity() instanceof EnderPearl && e.getEntity().getShooter() instanceof Player && Races.getMGPlayer((Player) e.getEntity().getShooter()).hasAbility(AbilityType.PEARLPOWER)) {
             AbilityType.PEARLPOWER.run(e);
+            Bukkit.getLogger().info("Pearlpower projectile impact Ran.");
         }
     }
 
@@ -113,13 +123,13 @@ public class EnderBornListener implements Listener {
         if (e.getTarget() instanceof Player && (e.getEntity() instanceof Enderman || e.getEntity() instanceof Endermite)) {
             Player p = (Player) e.getTarget();
             if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.COLDBLOODED) < 3) return;
-
+            Bukkit.getLogger().info("Coolblooded ender target cancelled Ran.");
             e.setCancelled(true);
         }
 
     }
 
-    //Teleporting players with te required pearlpower level will not take damage.
+    //Teleporting players with the required pearlpower level will not take damage.
     @EventHandler
     public void onBlockTeleport(PlayerTeleportEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
@@ -129,7 +139,10 @@ public class EnderBornListener implements Listener {
 
         if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.PEARLPOWER) > 1) {
             e.setCancelled(true);
-            if (PearlPower.getFromMap(p) == PearlPower.PearlAbility.NORMAL) p.teleport(e.getTo());
+            if (PearlPower.getFromMap(p) == PearlPower.PearlAbility.NORMAL) {
+                p.teleport(e.getTo());
+            }
+            Bukkit.getLogger().info("Enderpearl teleport ran.");
         }
     }
 
@@ -142,6 +155,7 @@ public class EnderBornListener implements Listener {
         for (String s : ShadowInvisibility.values()) {
             Player p = Bukkit.getPlayer(UUID.fromString(s));
             joined.hidePlayer(p);
+            Bukkit.getLogger().info("Hiding players for invisibility.");
         }
     }
 
@@ -152,6 +166,7 @@ public class EnderBornListener implements Listener {
 
         if (ShadowInvisibility.contains(uuid)) {
             ShadowInvisibility.remove(uuid);
+            Bukkit.getLogger().info("Removed player from invisibility on logout.");
         }
     }
 
@@ -164,6 +179,7 @@ public class EnderBornListener implements Listener {
 
         if (ShadowInvisibility.contains(uuid)) {
             ShadowInvisibility.remove(uuid);
+            Bukkit.getLogger().info("Invisibility world change.");
         }
     }
 }
