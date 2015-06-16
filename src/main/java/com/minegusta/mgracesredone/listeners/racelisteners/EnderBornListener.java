@@ -123,7 +123,7 @@ public class EnderBornListener implements Listener {
         if (e.getTarget() instanceof Player && (e.getEntity() instanceof Enderman || e.getEntity() instanceof Endermite)) {
             Player p = (Player) e.getTarget();
             if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.COLDBLOODED) < 3) return;
-            Bukkit.getLogger().info("Coolblooded ender target cancelled Ran.");
+            Bukkit.getLogger().info("Coolblooded ender target cancelled.");
             e.setCancelled(true);
         }
 

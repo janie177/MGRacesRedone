@@ -46,7 +46,8 @@ public class Werewolf implements Race {
                         "During a full moon, werewolves should not wear armour. It weakens them.",
                         "during a full moon, anything other than claws will do only half damage.",
                         "It is strongly advised to use your claws during a full moon.",
-                        "Not wearing armour during a full moon will give you strong defensive boosts."
+                        "Not wearing armour during a full moon will give you strong defensive boosts.",
+                        "The nether and end do not have nights, and thus do not give the night boosts."
                 };
     }
 
@@ -54,6 +55,8 @@ public class Werewolf implements Race {
     public void passiveBoost(Player p) {
         WeatherUtil.MoonPhase phase = WeatherUtil.getMoonPhase(p.getWorld());
         MGPlayer mgp = Races.getMGPlayer(p);
+
+        if (!WeatherUtil.isOverWorld(p.getLocation())) return;
 
         if (phase == WeatherUtil.MoonPhase.FULL && WeatherUtil.isNight(p.getWorld())) {
             if (mgp.hasAbility(AbilityType.LUNA)) {

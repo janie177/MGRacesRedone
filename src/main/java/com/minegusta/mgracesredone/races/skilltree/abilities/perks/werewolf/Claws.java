@@ -25,7 +25,7 @@ public class Claws implements IAbility {
         Player damager = (Player) e.getDamager();
         MGPlayer mgp = Races.getMGPlayer(damager);
 
-        if (!WeatherUtil.isNight(damager.getWorld())) return;
+        if (!WeatherUtil.isNight(damager.getWorld()) || !WeatherUtil.isOverWorld(e.getEntity().getLocation())) return;
 
         int level = mgp.getAbilityLevel(getType());
 
@@ -90,7 +90,7 @@ public class Claws implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"At night, your bare claws are stronger.", "Claw damage is increased by 2."};
+                desc = new String[]{"At night, your bare claws are stronger.", "This only works in the overworld.", "Claw damage is increased by 2."};
                 break;
             case 2:
                 desc = new String[]{"Claw damage is increased to 4."};
