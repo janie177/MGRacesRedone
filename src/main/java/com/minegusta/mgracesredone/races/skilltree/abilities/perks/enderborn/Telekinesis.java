@@ -64,7 +64,6 @@ public class Telekinesis implements IAbility {
         Block target2 = player.getTargetBlock((Set) null, 6);
 
         //Run the ability
-
         player.getWorld().getEntities().stream().filter(ent ->
                 (ent.getLocation().distance(target.getLocation()) <= 12 ||
                         ent.getLocation().distance(target2.getLocation()) <= 6) && (ent instanceof Item ||
