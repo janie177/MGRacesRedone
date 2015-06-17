@@ -64,10 +64,12 @@ public class Telekinesis implements IAbility {
 
         //Run the ability
 
-        player.getWorld().getEntities().stream().filter(ent -> (ent.getLocation().distance(target.getLocation()) <= 6 ||
-                ent.getLocation().distance(target2.getLocation()) <= 6) && ent instanceof Item ||
-                ent instanceof Projectile || (mobs && ent instanceof LivingEntity && !(ent instanceof Player)) ||
-                (players && ent instanceof Player) && WGUtil.canBuild(player, ent.getLocation())).forEach(ent -> {
+        player.getWorld().getEntities().stream().filter(ent ->
+                (ent.getLocation().distance(target.getLocation()) <= 6 ||
+                        ent.getLocation().distance(target2.getLocation()) <= 6) && (ent instanceof Item ||
+                        ent instanceof Projectile || (mobs && ent instanceof LivingEntity &&
+                        !(ent instanceof Player)) || (players && ent instanceof Player)) &&
+                        WGUtil.canBuild(player, ent.getLocation())).forEach(ent -> {
             double x = ent.getLocation().getX() - player.getLocation().getX();
             double y = ent.getLocation().getY() - player.getLocation().getY();
             double z = ent.getLocation().getZ() - player.getLocation().getZ();
