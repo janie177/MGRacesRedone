@@ -2,7 +2,6 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -12,11 +11,15 @@ import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 public class Telekinesis implements IAbility {
@@ -27,6 +30,7 @@ public class Telekinesis implements IAbility {
 
     public static ConcurrentMap<String, Long> cooldown = Maps.newConcurrentMap();
 
+    @SuppressWarnings("unchecked")
     @Override
     public void run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
@@ -46,43 +50,36 @@ public class Telekinesis implements IAbility {
 
         //Setting the attraction strength.
         double strength = 0.11;
-        if (level > 2) strength = 2 * strength;
+        if (level > 2) {
+            strength = 2 * strength;
+        }
+
+        final double finalStrength = strength;
 
         boolean players = level > 3;
         boolean mobs = level > 1;
 
-        Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 20);
-        Block target2 = player.getTargetBlock(Sets.newHashSet(Material.AIR), 6);
-
-        List<Entity> entities = Lists.newArrayList();
+        Block target = player.getTargetBlock((Set) null, 20);
+        Block target2 = player.getTargetBlock((Set) null, 6);
 
         //Run the ability
 
-        target.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(target.getLocation()) <= 12).
-                filter(ent -> ent instanceof Item || ent instanceof Projectile || (mobs && ent instanceof LivingEntity
-                        && !(ent instanceof Player)) || (players && ent instanceof Player)).forEach(entities::add);
-
-        target2.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(target2.getLocation()) <= 6).
-                filter(ent -> ent instanceof Item || ent instanceof Projectile || (mobs && ent instanceof LivingEntity
-                        && !(ent instanceof Player)) || (players && ent instanceof Player)).forEach(entities::add);
-
-        //Attracting time.
-        for (Entity ent : entities) {
-            if (!WGUtil.canBuild(player, ent.getLocation())) continue;
-
+        player.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(target.getLocation()) <= 6 ||
+                ent.getLocation().distance(target2.getLocation()) <= 6 && ent instanceof Item ||
+                ent instanceof Projectile || (mobs && ent instanceof LivingEntity && !(ent instanceof Player)) ||
+                (players && ent instanceof Player) && WGUtil.canBuild(player, ent.getLocation())).forEach(ent -> {
             double x = ent.getLocation().getX() - player.getLocation().getX();
             double y = ent.getLocation().getY() - player.getLocation().getY();
             double z = ent.getLocation().getZ() - player.getLocation().getZ();
 
             Vector v = new Vector(x, y, z);
             v.normalize();
-            v.multiply(-strength);
+            v.multiply(-finalStrength);
 
             ent.setVelocity(ent.getVelocity().add(v));
-        }
+        });
 
         cooldown.put(uuid, System.currentTimeMillis());
-
     }
 
     @Override
