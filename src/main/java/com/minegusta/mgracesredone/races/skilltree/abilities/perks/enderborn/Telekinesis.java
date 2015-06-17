@@ -2,7 +2,6 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
@@ -22,11 +21,8 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
-import java.util.logging.Logger;
 
 public class Telekinesis implements IAbility {
-
-    private static final Logger CONSOLE = Main.getPlugin().getLogger(); // FIXME DEBUG
 
     @Override
     public void run(Event event) {
@@ -41,16 +37,12 @@ public class Telekinesis implements IAbility {
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
 
-        CONSOLE.warning(player.getName() + " - Telekinesis - Stage 1"); // FIXME DEBUG
-
         if (!WGUtil.canBuild(player)) {
             ChatUtil.sendString(player, "You cannot use Telekinesis in this protected zone.");
             return;
         }
 
         String uuid = player.getUniqueId().toString();
-
-        CONSOLE.warning(player.getName() + " - Telekinesis - Stage 2"); // FIXME DEBUG
 
         //Cooldown
         if (cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 260) {
@@ -71,15 +63,13 @@ public class Telekinesis implements IAbility {
         Block target = player.getTargetBlock((Set) null, 20);
         Block target2 = player.getTargetBlock((Set) null, 6);
 
-        CONSOLE.warning(player.getName() + " - Telekinesis - Stage 3"); // FIXME DEBUG
-
         //Run the ability
 
         player.getWorld().getEntities().stream().filter(ent ->
                 (ent.getLocation().distance(target.getLocation()) <= 12 ||
                         ent.getLocation().distance(target2.getLocation()) <= 6) && (ent instanceof Item ||
                         ent instanceof Projectile || (mobs && ent instanceof LivingEntity &&
-                        !(ent instanceof Player)) || (players && ent instanceof Player)) &&
+                        !(ent instanceof Player)) || (players && ent instanceof Player && !((Player) ent).isFlying())) &&
                         WGUtil.canBuild(player, ent.getLocation())).forEach(ent -> {
             double x = ent.getLocation().getX() - player.getLocation().getX();
             double y = ent.getLocation().getY() - player.getLocation().getY();
@@ -92,11 +82,7 @@ public class Telekinesis implements IAbility {
             ent.setVelocity(ent.getVelocity().add(v));
         });
 
-        CONSOLE.warning(player.getName() + " - Telekinesis - Stage 4"); // FIXME DEBUG
-
         cooldown.put(uuid, System.currentTimeMillis());
-
-        CONSOLE.warning(player.getName() + " - Telekinesis - Stage 5"); // FIXME DEBUG
     }
 
     @Override
