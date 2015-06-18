@@ -62,9 +62,6 @@ public class EnderBorn implements Race {
                         PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
                         if (level > 3) {
                             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 0, 5);
-                            if (level > 4) {
-                                PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
-                            }
                         }
                     }
                 }

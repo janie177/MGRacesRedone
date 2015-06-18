@@ -13,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
@@ -143,6 +144,15 @@ public class EnderBornListener implements Listener {
                 p.teleport(e.getTo());
             }
             Bukkit.getLogger().info("Enderpearl teleport ran.");
+        }
+    }
+
+    @EventHandler
+    public void onJoin(EntityDamageEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
+
+        if (e.getEntity() instanceof Player && Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.COLDBLOODED) > 4 && WeatherUtil.isEnd(e.getEntity().getLocation())) {
+            e.setCancelled(true);
         }
     }
 
