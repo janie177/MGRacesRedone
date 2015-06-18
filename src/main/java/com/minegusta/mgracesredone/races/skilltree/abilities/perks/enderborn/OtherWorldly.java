@@ -84,7 +84,7 @@ public class OtherWorldly implements IAbility {
                 desc = new String[]{"You will gain a jump boost in end biomes."};
                 break;
             case 5:
-                desc = new String[]{"You do take fall damage in the end."};
+                desc = new String[]{"You no longer take fall damage in the end."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

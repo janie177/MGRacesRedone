@@ -154,7 +154,7 @@ public class EnderBornListener implements Listener {
     public void onJoin(EntityDamageEvent e) {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if (e.getEntity() instanceof Player && Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.COLDBLOODED) > 4 && WeatherUtil.isEnd(e.getEntity().getLocation())) {
+        if (e.getEntity() instanceof Player && Races.getMGPlayer((Player) e.getEntity()).getAbilityLevel(AbilityType.OTHERWORLDLY) > 4 && WeatherUtil.isEnd(e.getEntity().getLocation())) {
             e.setCancelled(true);
         }
     }
