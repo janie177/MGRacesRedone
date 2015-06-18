@@ -50,6 +50,11 @@ public class Telekinesis implements IAbility {
             return;
         }
 
+        if (player.isSneaking()) {
+            ChatUtil.sendString(player, "You cannot use this while crouching! Don't ask me why.");
+            return;
+        }
+
         //Setting the attraction strength.
         double strength = 0.11;
         if (level > 2) {
