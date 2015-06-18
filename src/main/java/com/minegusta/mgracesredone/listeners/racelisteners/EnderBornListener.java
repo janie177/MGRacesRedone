@@ -52,6 +52,7 @@ public class EnderBornListener implements Listener {
             Bukkit.getLogger().info("Endershield damage reduction Ran.");
         }
 
+        /*
 
         //Invisibility
         if (e.getEntity() instanceof Player) {
@@ -69,6 +70,8 @@ public class EnderBornListener implements Listener {
                 Bukkit.getLogger().info("Invisibility ended by hitting.");
             }
         }
+
+        */
     }
 
     @EventHandler

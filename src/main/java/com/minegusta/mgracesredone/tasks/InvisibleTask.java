@@ -57,7 +57,7 @@ public class InvisibleTask {
                     filter(Objects::nonNull).forEach(player -> {
                 int level = Races.getMGPlayer(player).getAbilityLevel(AbilityType.SHADOW);
                 if (level > 3) {
-                    PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 5);
+                    PotionUtil.updatePotion(player, PotionEffectType.SPEED, 1, 5);
                     PotionUtil.updatePotion(player, PotionEffectType.JUMP, 0, 5);
                 }
             });

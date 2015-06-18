@@ -108,7 +108,7 @@ public class Shadow implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"You can toggle invisibility in dark areas.", "Activate by right clicking the floor underneath you.", "You will leave a dark shadow on the floor.", "When hit or hitting, your invisibility ends.", "Will last for 6 seconds."};
+                desc = new String[]{"You can toggle invisibility in dark areas.", "Activate by right clicking the floor underneath you.", "You will leave a dark shadow on the floor.", "Will last for 6 seconds."};
                 break;
             case 2:
                 desc = new String[]{"You can now toggle invisibility in lighter areas."};
