@@ -46,6 +46,11 @@ public class Dwarf implements Race {
     }
 
     @Override
+    public int getPerkPointCap() {
+        return 26;
+    }
+
+    @Override
     public void passiveBoost(Player p) {
         double height = p.getLocation().getY();
         MGPlayer mgp = Races.getMGPlayer(p);

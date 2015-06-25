@@ -47,6 +47,11 @@ public class Demon implements Race {
     }
 
     @Override
+    public int getPerkPointCap() {
+        return 26;
+    }
+
+    @Override
     public void passiveBoost(Player p) {
         Location loc = p.getLocation();
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);

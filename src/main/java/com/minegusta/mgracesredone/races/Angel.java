@@ -34,6 +34,11 @@ public class Angel implements Race {
     }
 
     @Override
+    public int getPerkPointCap() {
+        return 26;
+    }
+
+    @Override
     public String[] getInfo() {
         return new String[]
                 {

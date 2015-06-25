@@ -9,6 +9,8 @@ public interface Race {
 
     String[] getInfectionInfo();
 
+    int getPerkPointCap();
+
     String[] getInfo();
 
     void passiveBoost(Player p);

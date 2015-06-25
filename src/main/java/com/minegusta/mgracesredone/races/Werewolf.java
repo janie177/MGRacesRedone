@@ -52,6 +52,11 @@ public class Werewolf implements Race {
     }
 
     @Override
+    public int getPerkPointCap() {
+        return 26;
+    }
+
+    @Override
     public void passiveBoost(Player p) {
         WeatherUtil.MoonPhase phase = WeatherUtil.getMoonPhase(p.getWorld());
         MGPlayer mgp = Races.getMGPlayer(p);

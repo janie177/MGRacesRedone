@@ -34,6 +34,11 @@ public class Aurora implements Race {
     }
 
     @Override
+    public int getPerkPointCap() {
+        return 26;
+    }
+
+    @Override
     public String[] getInfo() {
         return new String[]{
                 "Aurora's are the race of ice and water.",

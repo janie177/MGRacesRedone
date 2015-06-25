@@ -74,7 +74,7 @@ public class MenuListener implements Listener {
         }
 
         //The cap for perks
-        int cap = 26;
+        int cap = mgp.getRaceType().getPerkPointCap();
 
         if (totalAbilities >= cap || totalAbilities + bought.getCost(level) > cap) {
             int newAmountSpent = bought.getCost(level) + totalAbilities;

@@ -33,6 +33,11 @@ public enum RaceType {
         return race.getInfo();
     }
 
+    public int getPerkPointCap()
+    {
+        return race.getPerkPointCap();
+    }
+
     public String getTag() {
         return tag;
     }

@@ -111,7 +111,7 @@ public class AbilityMenu {
         meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "INFO");
 
         lore.add(ChatColor.LIGHT_PURPLE + "Perks are unlocked by killing different people.");
-        lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of 26 perk-points.");
+        lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of " + mgp.getRaceType().getPerkPointCap() + " perk-points.");
         lore.add(ChatColor.LIGHT_PURPLE + "You have currently spent: " + ChatColor.DARK_PURPLE + totalAbilities + ChatColor.LIGHT_PURPLE + " Perk-Points.");
         lore.add(ChatColor.LIGHT_PURPLE + "Click a perk to unlock it.");
         lore.add(ChatColor.LIGHT_PURPLE + "Choose wisely because you cannot un-buy perks.");

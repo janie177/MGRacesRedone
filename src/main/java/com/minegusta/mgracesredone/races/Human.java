@@ -47,6 +47,11 @@ public class Human implements Race {
     }
 
     @Override
+    public int getPerkPointCap() {
+        return 26;
+    }
+
+    @Override
     public void passiveBoost(Player p) {
         //You have no power here, Gandalf Greyhame!
     }
