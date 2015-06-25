@@ -61,9 +61,10 @@ public class InfectionListener implements Listener {
 
         if (Races.getRace(p) != RaceType.HUMAN) return;
         if (message.equalsIgnoreCase(Demon.getChant())) {
-            hasSheep = p.getWorld().getLivingEntities().stream().filter(le -> le instanceof Sheep && !((Sheep) le).isAdult()).anyMatch(le -> le.getLocation().distance(p.getLocation()) > 16);
+            hasSheep = p.getWorld().getLivingEntities().stream().filter(le -> le instanceof Sheep && !((Sheep) le).isAdult()).anyMatch(le -> le.getLocation().distance(p.getLocation()) < 16);
 
             if (!hasSheep) return;
+
             if (BlockUtil.radiusCheck(center, 12, Material.OBSIDIAN, 55)) {
                 Races.setRace(p, RaceType.DEMON);
                 EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
