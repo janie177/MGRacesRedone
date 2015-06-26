@@ -31,8 +31,8 @@ public class PerkPointListener implements Listener {
                 String uuid = damager.getUniqueId().toString();
                 String victimUUID = victim.getUniqueId().toString();
                 MGPlayer mgp = Races.getMGPlayer(damager);
-                if (damager == victim) 
-             	   ChatUtil.sendString(damager, "No PerkPoints for you :(");
+                if (damager == victim) { 
+                }
                 else
                 process(uuid, victimUUID, mgp, damager);
             } else if (attack.getDamager() instanceof Arrow && ((Arrow) attack.getDamager()).getShooter() instanceof Player) {
