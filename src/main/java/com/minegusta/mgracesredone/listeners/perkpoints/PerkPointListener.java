@@ -31,7 +31,9 @@ public class PerkPointListener implements Listener {
                 String uuid = damager.getUniqueId().toString();
                 String victimUUID = victim.getUniqueId().toString();
                 MGPlayer mgp = Races.getMGPlayer(damager);
-
+                if (damager == victim) { 
+                }
+                else
                 process(uuid, victimUUID, mgp, damager);
             } else if (attack.getDamager() instanceof Arrow && ((Arrow) attack.getDamager()).getShooter() instanceof Player) {
                 Player damager = (Player) ((Arrow) attack.getDamager()).getShooter();
