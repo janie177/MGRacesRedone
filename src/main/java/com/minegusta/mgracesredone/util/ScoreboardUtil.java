@@ -21,6 +21,7 @@ public class ScoreboardUtil {
             team.setPrefix(type.getTag() + " ");
             team.setDisplayName(type.getTag() + " ");
             team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+            team.setCanSeeFriendlyInvisibles(false);
         }
     }
 
