@@ -91,6 +91,12 @@ public class HolyRain implements IAbility {
     public void run(Player player) {
         String uuid = player.getUniqueId().toString();
         String name = "holyrain";
+
+        if (!WGUtil.canBuild(player)) {
+            ChatUtil.sendString(player, "You cannot use this here!");
+            return;
+        }
+
         if (Cooldown.isCooledDown(name, uuid)) {
             Missile.createMissile(player.getLocation(), player.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
             Cooldown.newCoolDown(name, uuid, getCooldown(Races.getMGPlayer(player).getAbilityLevel(getType())));
