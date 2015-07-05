@@ -50,7 +50,7 @@ public enum RaceType {
         race.passiveBoost(p);
     }
 
-    public void setHealth(Player p) {
-        race.setHealth(p);
+    public void setHealth(Player p, double health) {
+        race.setHealth(p, health);
     }
 }

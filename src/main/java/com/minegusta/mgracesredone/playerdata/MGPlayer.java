@@ -130,7 +130,7 @@ public class MGPlayer {
     }
 
     public void setHealth() {
-        getRaceType().setHealth(getPlayer());
+        getRaceType().setHealth(getPlayer(), health);
     }
 
     public void restoreHealth() {

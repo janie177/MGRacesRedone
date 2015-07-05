@@ -1,6 +1,5 @@
 package com.minegusta.mgracesredone.races;
 
-import com.minegusta.mgracesredone.main.Races;
 import org.bukkit.entity.Player;
 
 public interface Race {
@@ -16,12 +15,10 @@ public interface Race {
 
     void passiveBoost(Player p);
 
-    default void setHealth(Player p) {
+    default void setHealth(Player p, double health) {
         p.setHealthScaled(true);
         p.setHealthScale(getHealth());
         p.setMaxHealth(getHealth());
-
-        double health = Races.getMGPlayer(p).getStoredHealth();
 
         if (health > p.getMaxHealth() || health == 0) {
             p.setMaxHealth(p.getMaxHealth());
