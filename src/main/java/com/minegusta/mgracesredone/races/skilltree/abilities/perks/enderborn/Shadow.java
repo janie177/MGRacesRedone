@@ -117,7 +117,7 @@ public class Shadow implements IAbility {
                 desc = new String[]{"Your cooldown is reduced to 30 seconds.", "Your invisibility will last for 10 seconds."};
                 break;
             case 4:
-                desc = new String[]{"When invisible, you gain a speed and jump boost."};
+                desc = new String[]{"When invisible, you gain a speed 1 boost."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

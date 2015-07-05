@@ -95,6 +95,16 @@ public class SpecialArrows {
     }
 
     private static void runGrapple(Location l, Player p, Entity arrow) {
+        String name = "grapplearrow";
+        String uuid = p.getUniqueId().toString();
+
+        if (!Cooldown.isCooledDown(name, uuid)) {
+            ChatUtil.sendString(p, "Grappling arrow will be ready in " + Cooldown.getRemaining(name, uuid) + " seconds.");
+            return;
+        }
+
+        Cooldown.newCoolDown(name, uuid, 8);
+
         FallDamageManager.addToFallMap(p);
         p.getLocation().setY(p.getLocation().getY() + 0.05);
         p.getLocation().setDirection(l.getDirection());

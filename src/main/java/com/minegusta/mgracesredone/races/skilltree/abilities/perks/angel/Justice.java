@@ -9,6 +9,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -59,13 +60,14 @@ public class Justice implements IAbility {
             final Location l = player.getLocation();
             l.getWorld().getEntitiesByClass(LivingEntity.class).stream().
                     filter(le -> le.getLocation().distance(l) <= 7).forEach(le -> {
-                double x = le.getLocation().getX() - l.getX();
-                double z = le.getLocation().getZ() - l.getZ();
+                if (WGUtil.canGetDamage(le)) {
+                    double x = le.getLocation().getX() - l.getX();
+                    double z = le.getLocation().getZ() - l.getZ();
+                    Vector v = new Vector(x, 0.3, z);
+                    v.normalize();
 
-                Vector v = new Vector(x, 0.3, z);
-                v.normalize();
-
-                le.setVelocity(le.getVelocity().add(v.multiply(-1.6)));
+                    le.setVelocity(le.getVelocity().add(v.multiply(-1.6)));
+                }
             });
         }
 
