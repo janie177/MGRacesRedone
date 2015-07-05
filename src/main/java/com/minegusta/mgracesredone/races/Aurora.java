@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PlayerUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WeatherUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -46,6 +47,11 @@ public class Aurora implements Race {
                 "Aurora perks are split between ice biome and water benefits.",
                 "They have a few strong abilities that involve mostly freezing."
         };
+    }
+
+    @Override
+    public String getColoredName() {
+        return ChatColor.DARK_AQUA + getName();
     }
 
     @Override

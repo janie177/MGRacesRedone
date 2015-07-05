@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.ItemUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -43,6 +44,11 @@ public class Dwarf implements Race {
                         "Most Dwarven perks focus on mining and axes."
 
                 };
+    }
+
+    @Override
+    public String getColoredName() {
+        return ChatColor.DARK_GRAY + getName();
     }
 
     @Override

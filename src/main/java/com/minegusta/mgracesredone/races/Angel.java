@@ -6,6 +6,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.BlockUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WeatherUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -47,6 +48,11 @@ public class Angel implements Race {
                         "Though mostly passive and defensive, angels have some strong perks.",
                         "Most of them related to light and height.",
                 };
+    }
+
+    @Override
+    public String getColoredName() {
+        return ChatColor.YELLOW + getName();
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,6 +32,11 @@ public class EnderBorn implements Race {
                         "Maintain the spiritual connection. Don't wander too far!",
                         "After a wile, your souls will merge and you are Enderborn."
                 };
+    }
+
+    @Override
+    public String getColoredName() {
+        return ChatColor.DARK_PURPLE + getName();
     }
 
     @Override

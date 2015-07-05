@@ -47,6 +47,11 @@ public class Demon implements Race {
     }
 
     @Override
+    public String getColoredName() {
+        return ChatColor.DARK_RED + getName();
+    }
+
+    @Override
     public int getPerkPointCap() {
         return 26;
     }

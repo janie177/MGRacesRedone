@@ -4,6 +4,7 @@ import com.minegusta.mgracesredone.data.Storage;
 import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.playerdata.MapManager;
+import com.minegusta.mgracesredone.util.ScoreboardUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -19,6 +20,7 @@ public class GeneralListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         MapManager.remove(e.getPlayer());
+        ScoreboardUtil.removeScoreBoard(e.getPlayer());
     }
 
     @EventHandler
@@ -26,5 +28,6 @@ public class GeneralListener implements Listener {
         MGPlayer mgp = Storage.getPlayer(e.getPlayer());
 
         mgp.updateHealth();
+        mgp.updateScoreboard();
     }
 }

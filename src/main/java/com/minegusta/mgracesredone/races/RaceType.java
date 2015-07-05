@@ -53,4 +53,8 @@ public enum RaceType {
     public void setHealth(Player p, double health) {
         race.setHealth(p, health);
     }
+
+    public String getColoredName() {
+        return race.getColoredName();
+    }
 }

@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.manager.AbilityFileManager;
+import com.minegusta.mgracesredone.util.ScoreboardUtil;
 import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,8 +31,9 @@ public class MGPlayer {
         this.raceType = RaceType.valueOf(conf.getString("racetype", "HUMAN"));
         this.perkpoints = conf.getInt("perkpoints", 0);
         this.health = conf.getDouble("health", getHealth());
-        updateHealth();
         AbilityFileManager.loadAbilities(this);
+
+        updateAttributes();
     }
 
     public MGPlayer(Player p, FileConfiguration f) {
@@ -112,6 +114,7 @@ public class MGPlayer {
     public void setRaceType(RaceType raceType) {
         this.raceType = raceType;
         updateHealth();
+        updateScoreboard();
         perkpoints = 0;
         abilities.clear();
         saveFile();
@@ -175,5 +178,20 @@ public class MGPlayer {
 
     public boolean isRace(RaceType race) {
         return raceType == race;
+    }
+
+    public void updateAttributes() {
+        updateHealth();
+        updateScoreboard();
+    }
+
+    //Display above head
+
+    public void updateScoreboard() {
+        if (WorldCheck.isEnabled(getPlayer().getWorld())) {
+            ScoreboardUtil.addScoreBoard(getPlayer(), getRaceType());
+        } else {
+            ScoreboardUtil.removeScoreBoard(getPlayer());
+        }
     }
 }

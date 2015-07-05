@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PlayerUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WeatherUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -49,6 +50,11 @@ public class Werewolf implements Race {
                         "Not wearing armour during a full moon will give you strong defensive boosts.",
                         "The nether and end do not have nights, and thus do not give the night boosts."
                 };
+    }
+
+    @Override
+    public String getColoredName() {
+        return ChatColor.BLACK + getName();
     }
 
     @Override

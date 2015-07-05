@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PlayerUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WeatherUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -45,6 +46,11 @@ public class Elf implements Race {
                         "Elves are agile and fast.",
                         "Most perks are affected by nature."
                 };
+    }
+
+    @Override
+    public String getColoredName() {
+        return ChatColor.GREEN + getName();
     }
 
     @Override

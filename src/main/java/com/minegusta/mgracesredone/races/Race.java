@@ -24,4 +24,6 @@ public interface Race {
             p.setMaxHealth(p.getMaxHealth());
         } else p.setHealth(health);
     }
+
+    String getColoredName();
 }

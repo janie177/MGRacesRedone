@@ -37,6 +37,11 @@ public class Human implements Race {
     }
 
     @Override
+    public String getColoredName() {
+        return ChatColor.GRAY + getName();
+    }
+
+    @Override
     public String[] getInfo() {
         return new String[]
                 {
