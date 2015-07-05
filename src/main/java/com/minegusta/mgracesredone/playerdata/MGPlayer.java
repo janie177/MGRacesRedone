@@ -19,6 +19,7 @@ public class MGPlayer {
     private String name;
     private RaceType raceType;
     private FileConfiguration conf;
+    private double health;
     private int perkpoints;
     private ConcurrentMap<AbilityType, Integer> abilities = Maps.newConcurrentMap();
 
@@ -28,6 +29,7 @@ public class MGPlayer {
         this.conf = f;
         this.raceType = RaceType.valueOf(conf.getString("racetype", "HUMAN"));
         this.perkpoints = conf.getInt("perkpoints", 0);
+        this.health = conf.getDouble("health", getHealth());
         updateHealth();
         AbilityFileManager.loadAbilities(this);
     }
@@ -132,9 +134,14 @@ public class MGPlayer {
     }
 
     public void restoreHealth() {
+        health = getHealth();
         getPlayer().setHealthScaled(true);
         getPlayer().setHealthScale(20);
         getPlayer().setMaxHealth(20);
+    }
+
+    public double getStoredHealth() {
+        return health;
     }
 
     public double getHealth() {
@@ -145,6 +152,7 @@ public class MGPlayer {
     public void updateConfig() {
         conf.set("racetype", raceType.name());
         conf.set("perkpoints", perkpoints);
+        conf.set("health", getHealth());
         AbilityFileManager.saveAbilities(this);
     }
 
