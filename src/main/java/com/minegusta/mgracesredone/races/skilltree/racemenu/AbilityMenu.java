@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.List;
 
@@ -110,8 +111,23 @@ public class AbilityMenu {
 
         meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "INFO");
 
+        Player p = mgp.getPlayer();
+        int extraPerkPoints = 0;
+
+        for (PermissionAttachmentInfo i : p.getEffectivePermissions()) {
+            if (i.getPermission().toLowerCase().startsWith("mgraces.perks.")) {
+                try {
+                    int extra = Integer.parseInt(i.getPermission().toLowerCase().replace("mgraces.perks.", ""));
+                    if (extra > extraPerkPoints) extraPerkPoints = extra;
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        int spendable = mgp.getRaceType().getPerkPointCap() + extraPerkPoints;
+
         lore.add(ChatColor.LIGHT_PURPLE + "Perks are unlocked by killing different people.");
-        lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of " + mgp.getRaceType().getPerkPointCap() + " perk-points.");
+        lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of " + spendable + " perk-points.");
         lore.add(ChatColor.LIGHT_PURPLE + "You have currently spent: " + ChatColor.DARK_PURPLE + totalAbilities + ChatColor.LIGHT_PURPLE + " Perk-Points.");
         lore.add(ChatColor.LIGHT_PURPLE + "Click a perk to unlock it.");
         lore.add(ChatColor.LIGHT_PURPLE + "Choose wisely because you cannot un-buy perks.");

@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.List;
 
@@ -74,7 +75,20 @@ public class MenuListener implements Listener {
         }
 
         //The cap for perks
-        int cap = mgp.getRaceType().getPerkPointCap();
+
+        int extraPerkPoints = 0;
+
+        for (PermissionAttachmentInfo info : p.getEffectivePermissions()) {
+            if (info.getPermission().toLowerCase().startsWith("mgraces.perks.")) {
+                try {
+                    int extra = Integer.parseInt(info.getPermission().toLowerCase().replace("mgraces.perks.", ""));
+                    if (extra > extraPerkPoints) extraPerkPoints = extra;
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        int cap = mgp.getRaceType().getPerkPointCap() + extraPerkPoints;
 
         if (totalAbilities >= cap || totalAbilities + bought.getCost(level) > cap) {
             int newAmountSpent = bought.getCost(level) + totalAbilities;
