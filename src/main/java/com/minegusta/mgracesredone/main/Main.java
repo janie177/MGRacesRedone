@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.main;
 
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.tasks.*;
+import com.minegusta.mgracesredone.util.CountRaces;
 import com.minegusta.mgracesredone.util.OnReload;
 import com.minegusta.mgracesredone.util.ScoreboardUtil;
 import net.milkbowl.vault.permission.Permission;
@@ -50,6 +51,8 @@ public class Main extends JavaPlugin {
 
         //Static stuff
         ScoreboardUtil.setBoard();
+        CountRaces.count();
+
 
         //Tasks
         SaveTask.start();

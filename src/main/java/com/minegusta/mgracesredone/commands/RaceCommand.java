@@ -6,6 +6,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.CountRaces;
 import com.minegusta.mgracesredone.util.MGItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -19,7 +20,7 @@ public class RaceCommand implements CommandExecutor {
     private Player p;
 
     //Help list
-    private String[] help = {"/Race Help " + ChatColor.GRAY + "- Show this help menu.", "/Race List " + ChatColor.GRAY + "- Display a list of races.", "/Race Info <Race> " + ChatColor.GRAY + "- Info on the given race.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Reset-Perks " + ChatColor.GRAY + "- Reset all your perks.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Cure " + ChatColor.GRAY + "- Display cure info.", "/Race Infection <Race> " + ChatColor.GRAY + "- Show how to become a race.", "/Race Recipes " + ChatColor.GRAY + "- Show all recipes related to races.", "/Perk " + ChatColor.GRAY + "- Show your race's perk tree.", "/Perk Info <Perk> " + ChatColor.GRAY + "- Show info about a specific perk.", "/Perk List <Race> " + ChatColor.GRAY + "- Show all perks for a specific race."};
+    private String[] help = {"/Race Help " + ChatColor.GRAY + "- Show this help menu.", "/Race List " + ChatColor.GRAY + "- Display a list of races.", "/Race Info <Race> " + ChatColor.GRAY + "- Info on the given race.", "/Race Amount " + ChatColor.GRAY + "- Show how many players there are per race.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Reset-Perks " + ChatColor.GRAY + "- Reset all your perks.", "/Race Show " + ChatColor.GRAY + "- Show info about your race.", "/Race Cure " + ChatColor.GRAY + "- Display cure info.", "/Race Infection <Race> " + ChatColor.GRAY + "- Show how to become a race.", "/Race Recipes " + ChatColor.GRAY + "- Show all recipes related to races.", "/Perk " + ChatColor.GRAY + "- Show your race's perk tree.", "/Perk Info <Perk> " + ChatColor.GRAY + "- Show info about a specific perk.", "/Perk List <Race> " + ChatColor.GRAY + "- Show all perks for a specific race."};
 
     //Command
 
@@ -47,6 +48,10 @@ public class RaceCommand implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("show")) {
                 sendOwnInfo();
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("amount")) {
+                sendAmounts();
                 return true;
             }
             if (args[0].equalsIgnoreCase("perks")) {
@@ -95,6 +100,14 @@ public class RaceCommand implements CommandExecutor {
         ChatUtil.sendFancyBanner(p);
         for (String s : list) {
             p.sendMessage(ChatColor.LIGHT_PURPLE + s);
+        }
+        ChatUtil.sendFooter(p);
+    }
+
+    private void sendAmounts() {
+        ChatUtil.sendFancyBanner(p);
+        for (String s : CountRaces.getAmounts()) {
+            p.sendMessage(s);
         }
         ChatUtil.sendFooter(p);
     }
