@@ -18,8 +18,8 @@ public class ScoreboardUtil {
 
         for (RaceType type : RaceType.values()) {
             Team team = board.registerNewTeam(type.getName());
-            team.setPrefix(type.getTag() + " " + ChatColor.RESET);
-            team.setDisplayName(type.getTag() + ChatColor.RESET);
+            team.setPrefix(type.getTag() + " ");
+            team.setDisplayName(type.getTag() + " ");
             team.setNameTagVisibility(NameTagVisibility.ALWAYS);
         }
     }
