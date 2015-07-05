@@ -46,6 +46,10 @@ public class PerkPointListener implements Listener {
     }
 
     private void process(String uuid, String victimUUID, MGPlayer mgp, Player damager) {
+        if (uuid.equals(victimUUID)) {
+            ChatUtil.sendString(damager, "Killing yourself will not give you a perk-point!");
+            return;
+        }
         if (killTracker.containsKey(uuid)) {
             if (!hasKilled(uuid, victimUUID)) {
                 addKill(uuid, victimUUID);

@@ -94,30 +94,34 @@ public class WhirlWind implements IAbility {
                             filter(ent -> ent.getLocation().distance(center) <= 15).forEach(ent -> {
                         //Angels are immune
                         if (!(ent instanceof Player) || !Races.getRace((Player) ent).equals(RaceType.ANGEL)) {
-                            double angle = Math.toRadians(14);
-                            double radius = Math.abs(ent.getLocation().distance(center));
 
-                            double x = ent.getLocation().getX() - center.getX();
-                            double z = ent.getLocation().getZ() - center.getZ();
+                            //Worldguard check
+                            if (WGUtil.canGetDamage(ent)) {
+                                double angle = Math.toRadians(14);
+                                double radius = Math.abs(ent.getLocation().distance(center));
 
-                            double dx = x * Math.cos(angle) - z * Math.sin(angle);
-                            double dz = x * Math.sin(angle) + z * Math.cos(angle);
+                                double x = ent.getLocation().getX() - center.getX();
+                                double z = ent.getLocation().getZ() - center.getZ();
 
-                            Location target1 = new Location(ent.getWorld(), dx + center.getX(), ent.getLocation().getY(), dz + center.getZ());
+                                double dx = x * Math.cos(angle) - z * Math.sin(angle);
+                                double dz = x * Math.sin(angle) + z * Math.cos(angle);
 
-                            double ix = ent.getLocation().getX() - target1.getX();
-                            double iz = ent.getLocation().getZ() - target1.getZ();
+                                Location target1 = new Location(ent.getWorld(), dx + center.getX(), ent.getLocation().getY(), dz + center.getZ());
 
-                            Vector v = new Vector(ix, -0.2, iz);
-                            v.normalize();
+                                double ix = ent.getLocation().getX() - target1.getX();
+                                double iz = ent.getLocation().getZ() - target1.getZ();
 
-                            if (launch && radius < 2) {
-                                v.setY(-2.3);
+                                Vector v = new Vector(ix, -0.2, iz);
+                                v.normalize();
+
+                                if (launch && radius < 2) {
+                                    v.setY(-2.3);
+                                }
+
+                                //The closer to the center, the stronger the force.
+                                double amplifier = startingStrength + 2 / radius;
+                                ent.setVelocity(ent.getVelocity().add(v).multiply(-amplifier));
                             }
-
-                            //The closer to the center, the stronger the force.
-                            double amplifier = startingStrength + 2 / radius;
-                            ent.setVelocity(ent.getVelocity().add(v).multiply(-amplifier));
                         }
                     });
                 }, i);

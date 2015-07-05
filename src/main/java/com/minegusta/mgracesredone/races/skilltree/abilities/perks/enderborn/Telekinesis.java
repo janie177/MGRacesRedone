@@ -73,6 +73,7 @@ public class Telekinesis implements IAbility {
 
         //Run the ability
         player.getWorld().getEntities().stream().filter(ent ->
+                !ent.getUniqueId().equals(player.getUniqueId()) &&
                 (ent.getLocation().distance(target.getLocation()) <= 12 ||
                         ent.getLocation().distance(target2.getLocation()) < 6) && (ent instanceof Item ||
                         ent instanceof Projectile || (mobs && ent instanceof LivingEntity &&
