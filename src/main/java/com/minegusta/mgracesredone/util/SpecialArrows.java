@@ -103,7 +103,7 @@ public class SpecialArrows {
             return;
         }
 
-        Cooldown.newCoolDown(name, uuid, 5);
+        Cooldown.newCoolDown(name, uuid, 2);
 
         FallDamageManager.addToFallMap(p);
         p.getLocation().setY(p.getLocation().getY() + 0.05);
@@ -113,7 +113,7 @@ public class SpecialArrows {
     }
 
     private static void runExplode(Location l, Player p) {
-        if (RandomUtil.chance(20)) {
+        if (RandomUtil.chance(30)) {
             if (!WGUtil.canGetDamage(p)) return;
             l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
         }
