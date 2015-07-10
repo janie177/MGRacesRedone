@@ -50,8 +50,6 @@ public class EnderBornListener implements Listener {
             AbilityType.ENDERSHIELD.run(e);
         }
 
-        /*
-
         //Invisibility
         if (e.getEntity() instanceof Player) {
             if (ShadowInvisibility.contains(e.getEntity().getUniqueId().toString())) {
@@ -69,7 +67,6 @@ public class EnderBornListener implements Listener {
             }
         }
 
-        */
     }
 
     @EventHandler
