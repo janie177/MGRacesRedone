@@ -96,6 +96,10 @@ public class ItemUtil {
     }
 
     private static boolean compareString(String one, String two) {
+        if (one == null || two == null) {
+            if (one == null && two == null) return true;
+            return false;
+        }
         return one.equals(two);
     }
 
