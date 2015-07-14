@@ -60,6 +60,10 @@ public class RideTask {
                 y = 1.001;
             }
 
+            if (ent.getLocation().getBlock().getType() != Material.AIR) {
+                continue;
+            }
+
             ent.setVelocity(new Vector(0, 0, 0));
             ent.setVelocity(rider.getLocation().getDirection().multiply(0.6).setY(y));
 
