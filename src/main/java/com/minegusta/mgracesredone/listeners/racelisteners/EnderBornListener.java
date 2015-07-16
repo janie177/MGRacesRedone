@@ -55,7 +55,6 @@ public class EnderBornListener implements Listener {
             if (ShadowInvisibility.contains(e.getEntity().getUniqueId().toString())) {
                 ShadowInvisibility.remove(e.getEntity().getUniqueId().toString());
                 ChatUtil.sendString(((Player) e.getEntity()), "You got hit and are no longer invisible!");
-                Bukkit.getLogger().info("Invisibility ended by hit.");
             }
         }
         if (e.getDamager() instanceof Player) {
@@ -63,7 +62,6 @@ public class EnderBornListener implements Listener {
             if (ShadowInvisibility.contains(uuid)) {
                 ShadowInvisibility.remove(uuid);
                 ChatUtil.sendString((Player) e.getDamager(), "You attacked and are no longer invisible!");
-                Bukkit.getLogger().info("Invisibility ended by hitting.");
             }
         }
 
@@ -107,7 +105,6 @@ public class EnderBornListener implements Listener {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
         if (e.getEntity() instanceof EnderPearl && e.getEntity().getShooter() instanceof Player && Races.getMGPlayer((Player) e.getEntity().getShooter()).hasAbility(AbilityType.PEARLPOWER)) {
             AbilityType.PEARLPOWER.run(e);
-            Bukkit.getLogger().info("Pearlpower projectile impact Ran.");
         }
     }
 
@@ -117,7 +114,6 @@ public class EnderBornListener implements Listener {
         if (e.getTarget() instanceof Player && (e.getEntity() instanceof Enderman || e.getEntity() instanceof Endermite)) {
             Player p = (Player) e.getTarget();
             if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.COLDBLOODED) < 3) return;
-            Bukkit.getLogger().info("Coolblooded ender target cancelled.");
             e.setCancelled(true);
         }
 
@@ -132,11 +128,9 @@ public class EnderBornListener implements Listener {
         Player p = e.getPlayer();
 
         if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.PEARLPOWER) > 1) {
-            e.setCancelled(true);
-            if (PearlPower.getFromMap(p) == PearlPower.PearlAbility.NORMAL) {
-                p.teleport(e.getTo());
+            if (PearlPower.getFromMap(p) != PearlPower.PearlAbility.NORMAL) {
+                e.setCancelled(true);
             }
-            Bukkit.getLogger().info("Enderpearl teleport ran.");
         }
     }
 
@@ -158,7 +152,6 @@ public class EnderBornListener implements Listener {
         for (String s : ShadowInvisibility.values()) {
             Player p = Bukkit.getPlayer(UUID.fromString(s));
             joined.hidePlayer(p);
-            Bukkit.getLogger().info("Hiding players for invisibility.");
         }
     }
 
@@ -169,7 +162,6 @@ public class EnderBornListener implements Listener {
 
         if (ShadowInvisibility.contains(uuid)) {
             ShadowInvisibility.remove(uuid);
-            Bukkit.getLogger().info("Removed player from invisibility on logout.");
         }
     }
 
@@ -182,7 +174,6 @@ public class EnderBornListener implements Listener {
 
         if (ShadowInvisibility.contains(uuid)) {
             ShadowInvisibility.remove(uuid);
-            Bukkit.getLogger().info("Invisibility world change.");
         }
     }
 }

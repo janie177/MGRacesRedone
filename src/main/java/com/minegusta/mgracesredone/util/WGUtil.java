@@ -42,6 +42,19 @@ public class WGUtil {
         return true;
     }
 
+    public static boolean canPearl(Player p) {
+        Location loc = p.getLocation();
+        ApplicableRegionSet set = WorldGuardPlugin.inst().getRegionManager(p.getWorld()).getApplicableRegions(loc);
+        if (set.size() > 0) {
+            for (ProtectedRegion r : set.getRegions()) {
+                if (r.getFlags().containsKey(DefaultFlag.ENDERPEARL) && r.getFlag(DefaultFlag.ENDERPEARL) == StateFlag.State.DENY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public static boolean canBuild(Entity p) {
         return canBuild(p, p.getLocation());
     }
