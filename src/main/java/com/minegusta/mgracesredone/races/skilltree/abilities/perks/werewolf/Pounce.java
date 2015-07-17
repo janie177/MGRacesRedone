@@ -10,6 +10,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -34,6 +35,11 @@ public class Pounce implements IAbility {
 
         String name = "wolfjump";
         String uuid = p.getUniqueId().toString();
+
+        if (!WGUtil.canPearl(p)) {
+            ChatUtil.sendString(p, "You cannot use pounce here!");
+            return;
+        }
 
         if (Cooldown.isCooledDown(name, uuid)) {
             //Jump
