@@ -8,10 +8,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Material;
-import org.bukkit.entity.Creature;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
@@ -20,13 +17,15 @@ import java.util.List;
 
 public class HellishTruce implements IAbility {
 
-    private final static List<EntityType> hellMobs = Lists.newArrayList(EntityType.MAGMA_CUBE, EntityType.GHAST, EntityType.PIG_ZOMBIE, EntityType.BLAZE);
+    private final static List<EntityType> hellMobs = Lists.newArrayList(EntityType.MAGMA_CUBE, EntityType.GHAST, EntityType.PIG_ZOMBIE, EntityType.BLAZE, EntityType.SKELETON);
 
     @Override
     public void run(Event event) {
         if (event instanceof EntityTargetLivingEntityEvent) {
             EntityTargetLivingEntityEvent e = (EntityTargetLivingEntityEvent) event;
             if (hellMobs.contains(e.getEntityType())) {
+                if (e.getEntityType() == EntityType.SKELETON && ((Skeleton) e.getEntity()).getSkeletonType() != Skeleton.SkeletonType.WITHER)
+                    return;
                 e.setCancelled(true);
             }
         }
