@@ -19,8 +19,6 @@ import java.util.List;
 public class MenuListener implements Listener {
     @EventHandler
     public void buyItem(InventoryClickEvent e) {
-        if (!WorldCheck.isEnabled(e.getWhoClicked().getWorld())) return;
-
         Player p = (Player) e.getWhoClicked();
         if (e.getInventory().getName() != null && e.getInventory().getName().contains(ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Perk-Points: ")) {
             if (!e.getCursor().getType().equals(Material.AIR)) {
@@ -33,6 +31,11 @@ public class MenuListener implements Listener {
                 return;
             }
             if (!e.getCurrentItem().hasItemMeta() || !e.getCurrentItem().getItemMeta().hasDisplayName()) {
+                e.setCancelled(true);
+                return;
+            }
+            if (!WorldCheck.isEnabled(e.getWhoClicked().getWorld())) {
+                ChatUtil.sendString((Player) e.getWhoClicked(), "This is not a races world!");
                 e.setCancelled(true);
                 return;
             }
