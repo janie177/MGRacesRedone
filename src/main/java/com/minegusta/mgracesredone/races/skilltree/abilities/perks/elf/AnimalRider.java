@@ -7,11 +7,9 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ChatUtil;
 import org.bukkit.Material;
-import org.bukkit.entity.Animals;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
@@ -28,6 +26,18 @@ public class AnimalRider implements IAbility {
         int level = mgp.getAbilityLevel(AbilityType.ANIMALRIDER);
 
         if (level > 1 || clicked instanceof Animals) {
+            if (e.getRightClicked().getType() == EntityType.ENDERMAN || (e.getRightClicked().getType() == EntityType.WOLF)) {
+                if (e.getRightClicked().getType() == EntityType.WOLF) {
+                    Wolf wolf = (Wolf) e.getRightClicked();
+                    if (wolf.getOwner() != null && !wolf.getOwner().getUniqueId().toString().equals(e.getPlayer().getUniqueId().toString())) {
+                        ChatUtil.sendString(e.getPlayer(), "You cannot ride wolves you do not own.");
+                        return;
+                    }
+                } else {
+                    ChatUtil.sendString(e.getPlayer(), "You cannot ride endermen because of teleportation reasons.");
+                    return;
+                }
+            }
             e.getRightClicked().setPassenger(e.getPlayer());
             ElfListener.riders.put(e.getPlayer().getUniqueId().toString(), (LivingEntity) e.getRightClicked());
         }
