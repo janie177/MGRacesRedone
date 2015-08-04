@@ -105,6 +105,7 @@ public class PearlPower implements IAbility {
         Location l = e.getEntity().getLocation();
 
         boolean refund = level > 3;
+        boolean noDamage = level > 1;
 
         if (a != PearlAbility.NORMAL && !isCooledDown(name, uuid)) {
             ChatUtil.sendString(p, "You have to wait another " + getRemainingCooldown(name, uuid) + " seconds to use " + name + " pearls.");
@@ -117,6 +118,7 @@ public class PearlPower implements IAbility {
 
         switch (a) {
             case NORMAL:
+                normal(l, p, noDamage);
                 break;
             case VACUUM:
                 vacuum(l, e.getEntity());
@@ -143,6 +145,13 @@ public class PearlPower implements IAbility {
     private void explode(Location l, Player p) {
         if (!WGUtil.canGetDamage(p)) return;
         l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
+    }
+
+    private void normal(Location l, Player p, boolean noDamage) {
+        if (!noDamage) {
+            p.damage(3);
+        }
+        p.teleport(l);
     }
 
     private void vacuum(Location l, Entity pearl) {
