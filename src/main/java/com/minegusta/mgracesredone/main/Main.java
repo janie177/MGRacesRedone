@@ -58,6 +58,7 @@ public class Main extends JavaPlugin {
         SaveTask.start();
         BleedTask.start();
         BoostTask.start();
+        if (Bukkit.getPluginManager().isPluginEnabled("Vampire")) VampireTask.start();
         RideTask.start();
         MissileTask.start();
         InvisibleTask.start();
@@ -85,6 +86,7 @@ public class Main extends JavaPlugin {
         MissileTask.stop();
         BleedTask.stop();
         RideTask.stop();
+        VampireTask.stop();
         InvisibleTask.stop();
         ShieldTask.stop();
 
