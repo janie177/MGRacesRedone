@@ -104,6 +104,11 @@ public class MenuListener implements Listener {
             return;
         }
 
+        if (!bought.getRaces().contains(mgp.getRaceType())) {
+            ChatUtil.sendString(p, "That perk is unavailable to your race!");
+            return;
+        }
+
         int playerlevel = 0;
         if (mgp.hasAbility(bought)) {
             playerlevel = mgp.getAbilityLevel(bought);

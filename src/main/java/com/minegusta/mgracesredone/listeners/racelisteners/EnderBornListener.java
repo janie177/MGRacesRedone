@@ -3,7 +3,6 @@ package com.minegusta.mgracesredone.listeners.racelisteners;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
-import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.PearlPower;
 import com.minegusta.mgracesredone.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -128,9 +127,7 @@ public class EnderBornListener implements Listener {
         Player p = e.getPlayer();
 
         if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.PEARLPOWER) > 1) {
-            if (PearlPower.getFromMap(p) != PearlPower.PearlAbility.NORMAL) {
-                e.setCancelled(true);
-            }
+            e.setCancelled(true);
         }
     }
 
