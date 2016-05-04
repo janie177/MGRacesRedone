@@ -55,7 +55,7 @@ public class BattleCry implements IAbility {
 
         //Effects
         EffectUtil.playParticle(player, Effect.VILLAGER_THUNDERCLOUD);
-        EffectUtil.playSound(player, Sound.ANVIL_USE);
+        EffectUtil.playSound(player, Sound.BLOCK_ANVIL_USE);
 
         //The variables
         boolean strength = level > 3;
@@ -77,7 +77,7 @@ public class BattleCry implements IAbility {
             if (le instanceof Player) {
                 le.sendMessage(ChatColor.RED + "You were knocked back by an angry dwarf!");
             }
-            EffectUtil.playSound(le, Sound.ANVIL_USE);
+            EffectUtil.playSound(le, Sound.BLOCK_ANVIL_USE);
             EffectUtil.playParticle(le, Effect.CRIT);
 
             //Launch the entity

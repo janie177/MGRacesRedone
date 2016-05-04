@@ -76,7 +76,7 @@ public class WhirlWind implements IAbility {
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
                     if (k % 20 == 0) {
-                        EffectUtil.playSound(center, Sound.ENDERDRAGON_WINGS);
+                        EffectUtil.playSound(center, Sound.ENTITY_ENDERDRAGON_FLAP);
                         if (lightning && RandomUtil.chance(30)) {
                             double x = center.getX() + (RandomUtil.randomNumber(14) - 7);
                             double z = center.getZ() + (RandomUtil.randomNumber(14) - 7);

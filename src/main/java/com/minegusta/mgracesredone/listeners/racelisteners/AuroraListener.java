@@ -83,7 +83,7 @@ public class AuroraListener implements Listener {
                     PotionUtil.updatePotion(le, PotionEffectType.SLOW, 5, 8);
                 }
             }
-            EffectUtil.playSound(e.getEntity().getLocation(), Sound.DIG_SNOW);
+            EffectUtil.playSound(e.getEntity().getLocation(), Sound.BLOCK_SNOW_BREAK);
             EffectUtil.playParticle(e.getEntity().getLocation(), Effect.SNOW_SHOVEL, 1, 1, 1, 14, 25);
         } else if (e.getEntity().getShooter() instanceof IceBarragePoisonThrower) {
             // Acceptable use of Entity::getNearbyEntities according to Spigot
@@ -94,7 +94,7 @@ public class AuroraListener implements Listener {
                     PotionUtil.updatePotion(le, PotionEffectType.POISON, 1, 3);
                 }
             }
-            EffectUtil.playSound(e.getEntity().getLocation(), Sound.DIG_SNOW);
+            EffectUtil.playSound(e.getEntity().getLocation(), Sound.BLOCK_SNOW_BREAK);
             EffectUtil.playParticle(e.getEntity().getLocation(), Effect.SNOW_SHOVEL, 1, 1, 1, 14, 25);
         }
     }

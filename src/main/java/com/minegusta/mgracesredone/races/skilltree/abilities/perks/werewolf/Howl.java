@@ -53,7 +53,7 @@ public class Howl implements IAbility {
         boolean strength = level > 1;
         boolean speed = level > 3;
 
-        EffectUtil.playSound(player, Sound.WOLF_HOWL);
+        EffectUtil.playSound(player, Sound.ENTITY_WOLF_HOWL);
 
         for (int i = 0; i < amount; i++) {
             Wolf w = (Wolf) player.getWorld().spawnEntity(player.getLocation(), EntityType.WOLF);
@@ -61,7 +61,7 @@ public class Howl implements IAbility {
             w.setCustomName(ChatColor.DARK_GRAY + "Pooch");
             w.setCustomNameVisible(true);
             w.setCollarColor(DyeColor.MAGENTA);
-            EffectUtil.playSound(player, Sound.WOLF_BARK);
+            EffectUtil.playSound(player, Sound.ENTITY_WOLF_PANT);
 
             if (strength) PotionUtil.updatePotion(w, PotionEffectType.INCREASE_DAMAGE, 0, 6000);
             if (speed) PotionUtil.updatePotion(w, PotionEffectType.SPEED, 0, 6000);

@@ -43,7 +43,7 @@ public class Pounce implements IAbility {
 
         if (Cooldown.isCooledDown(name, uuid)) {
             //Jump
-            EffectUtil.playSound(p, Sound.WOLF_HOWL);
+            EffectUtil.playSound(p, Sound.ENTITY_WOLF_HOWL);
             EffectUtil.playParticle(p, Effect.FLAME);
 
             p.setVelocity(p.getLocation().getDirection().normalize().multiply(power));

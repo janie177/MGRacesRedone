@@ -26,7 +26,7 @@ public class Combatant implements IAbility {
 
     @Override
     public void run(Player player) {
-        EffectUtil.playSound(player, Sound.ANVIL_USE);
+        EffectUtil.playSound(player, Sound.BLOCK_ANVIL_USE);
 
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());

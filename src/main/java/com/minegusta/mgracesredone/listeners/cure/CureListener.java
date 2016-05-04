@@ -43,7 +43,7 @@ public class CureListener implements Listener {
                     ItemUtil.removeAmount(p, item.getMaterial(), item.getAmount());
                 }
                 ChatUtil.sendString(p, "You are now human!");
-                EffectUtil.playSound(p, Sound.VILLAGER_YES);
+                EffectUtil.playSound(p, Sound.ENTITY_VILLAGER_YES);
                 EffectUtil.playParticle(p, Effect.ENDER_SIGNAL, 1, 1, 1, 6);
                 EffectUtil.playParticle(p, Effect.POTION_SWIRL_TRANSPARENT, 1, 1, 1, 30);
                 Races.setRace(p, RaceType.HUMAN);

@@ -35,7 +35,7 @@ public class Canis implements IAbility {
             w.setTamed(true);
             w.setOwner(p);
             EffectUtil.playParticle(w, Effect.HEART);
-            EffectUtil.playSound(p, Sound.WOLF_HOWL);
+            EffectUtil.playSound(p, Sound.ENTITY_WOLF_HOWL);
             p.sendMessage(ChatColor.RED + "You tamed a wolf! It's now part of your pack.");
         } else if (level > 1 && p.isSneaking() && w.getOwner().getUniqueId().equals(p.getUniqueId())) {
             double health = p.getHealth();
@@ -50,7 +50,7 @@ public class Canis implements IAbility {
 
             EffectUtil.playParticle(p, Effect.HEART);
 
-            EffectUtil.playSound(p, Sound.WOLF_GROWL);
+            EffectUtil.playSound(p, Sound.ENTITY_WOLF_GROWL);
             EffectUtil.playParticle(w, Effect.CRIT, 1, 1, 1, 30);
             w.damage(1000);
             p.sendMessage(ChatColor.DARK_GREEN + "You drained a wolf's life force and healed yourself!");

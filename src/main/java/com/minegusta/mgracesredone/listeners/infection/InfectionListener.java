@@ -43,7 +43,7 @@ public class InfectionListener implements Listener {
                 ChatUtil.sendString(p, "You feel all heat leave your body and are now an Aurora!");
                 EffectUtil.playParticle(p, Effect.SNOW_SHOVEL, 1, 1, 1, 15);
                 EffectUtil.playParticle(p, Effect.SNOWBALL_BREAK, 1, 1, 1, 15);
-                EffectUtil.playSound(p, Sound.SPLASH);
+                EffectUtil.playSound(p, Sound.ENTITY_PLAYER_SPLASH);
                 ItemUtil.removeOne(p, Recipe.ICECRYSTAL.getResult());
             }
         }
@@ -67,7 +67,7 @@ public class InfectionListener implements Listener {
 
             if (BlockUtil.radiusCheck(center, 12, Material.OBSIDIAN, 55)) {
                 Races.setRace(p, RaceType.DEMON);
-                EffectUtil.playSound(p, Sound.AMBIENCE_THUNDER);
+                EffectUtil.playSound(p, Sound.ENTITY_LIGHTNING_THUNDER);
                 ChatUtil.sendString(p, "You are now a Demon!");
 
                 for (int i = 0; i < 20 * 20; i++) {
@@ -75,7 +75,7 @@ public class InfectionListener implements Listener {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
                         p.getWorld().spigot().playEffect(center.getLocation(), Effect.LAVADRIP, 1, 1, k / 80, 1 + k / 250, k / 80, 1, 30 + k / 2, 30);
                         if (k % 20 == 0) {
-                            center.getWorld().playSound(center.getLocation(), Sound.GHAST_MOAN, 5, 5);
+                            center.getWorld().playSound(center.getLocation(), Sound.ENTITY_GHAST_AMBIENT, 5, 5);
                         }
                     }, i);
                 }
@@ -112,7 +112,7 @@ public class InfectionListener implements Listener {
                 BlockUtil.poofBlocks(b, 8, Lists.newArrayList(Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE), Material.AIR, Effect.CLOUD);
                 Races.setRace(p, RaceType.DWARF);
                 ChatUtil.sendString(p, "Diggy diggy hole, you are now a Dwarf!");
-                EffectUtil.playSound(p, Sound.ANVIL_USE);
+                EffectUtil.playSound(p, Sound.BLOCK_ANVIL_USE);
                 ItemUtil.removeOne(p, Recipe.SHINYGEM.getResult());
             }
         }
@@ -172,7 +172,7 @@ public class InfectionListener implements Listener {
         if (kills > 99) {
             ChatUtil.sendString(p, "You are now an Elf!");
             EffectUtil.playParticle(p, Effect.HEART, 1, 1, 1, 40);
-            EffectUtil.playSound(p, Sound.ARROW_HIT);
+            EffectUtil.playSound(p, Sound.ENTITY_ARROW_HIT);
             Races.setRace(p, RaceType.ELF);
             return;
         }
@@ -240,7 +240,7 @@ public class InfectionListener implements Listener {
 
             wolf.getWorld().createExplosion(wolf.getLocation(), 0, false);
 
-            EffectUtil.playSound(p, Sound.WOLF_HOWL);
+            EffectUtil.playSound(p, Sound.ENTITY_WOLF_HOWL);
             EffectUtil.playParticle(wolf, Effect.LARGE_SMOKE, 1, 1, 1, 300);
             wolf.remove();
             Races.setRace(p, RaceType.WEREWOLF);

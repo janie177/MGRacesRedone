@@ -171,7 +171,7 @@ public class EnderRiftPortal {
         EffectUtil.playParticle(l, Effect.CLOUD, 0, 0, 0, 1 / 30, 6, 30);
         EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 0, 0, 0, 1 / 10, 3, 30);
         EffectUtil.playParticle(l, Effect.FIREWORKS_SPARK, 0, 1, 0, 1 / 10, 3, 30);
-        EffectUtil.playSound(l, Sound.PORTAL_TRAVEL, 3, 4);
+        EffectUtil.playSound(l, Sound.BLOCK_PORTAL_TRAVEL, 3, 4);
 
         Location newLocation = new Location(l.getWorld(), l.getX(), l.getY(), l.getZ());
 
@@ -210,12 +210,12 @@ public class EnderRiftPortal {
                 }
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
-                EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);
+                EffectUtil.playSound(ent, Sound.BLOCK_PORTAL_TRIGGER);
                 addTeleported(id);
             } else if (altEntities && (ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)) {
                 ent.teleport(l2);
                 EffectUtil.playParticle(ent, Effect.CLOUD);
-                EffectUtil.playSound(ent, Sound.PORTAL_TRIGGER);
+                EffectUtil.playSound(ent, Sound.BLOCK_PORTAL_TRIGGER);
                 addTeleported(id);
             }
         }

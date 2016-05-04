@@ -25,7 +25,7 @@ public class InvincibleBoost {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
                 if (p.isOnline()) {
                     EffectUtil.playParticle(p, Effect.VILLAGER_THUNDERCLOUD);
-                    EffectUtil.playSound(p, Sound.ANVIL_LAND);
+                    EffectUtil.playSound(p, Sound.BLOCK_ANVIL_LAND);
                 }
             }, 20 * i);
         }
@@ -36,7 +36,7 @@ public class InvincibleBoost {
             if (p.isOnline()) {
                 AngelInvincibility.remove(uuid);
                 p.setHealth(endHealth);
-                EffectUtil.playSound(p, Sound.WITHER_DEATH);
+                EffectUtil.playSound(p, Sound.ENTITY_WITHER_DEATH);
                 EffectUtil.playParticle(p, Effect.CLOUD);
             }
         }, 20 * seconds);

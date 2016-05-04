@@ -55,7 +55,7 @@ public class Naturalist implements IAbility {
             if (p.getHealth() <= 5 && !p.isDead() && mgp.getAbilityLevel(getType()) > 3) {
                 for (Entity ent : p.getNearbyEntities(6, 6, 6)) {
                     if (ent instanceof Animals) {
-                        EffectUtil.playSound(p, Sound.FIREWORK_LARGE_BLAST2);
+                        EffectUtil.playSound(p, Sound.ENTITY_FIREWORK_LARGE_BLAST);
                         EffectUtil.playParticle(ent, Effect.CLOUD);
                         EffectUtil.playParticle(p, Effect.HEART);
                         double max = p.getMaxHealth() - p.getHealth();
