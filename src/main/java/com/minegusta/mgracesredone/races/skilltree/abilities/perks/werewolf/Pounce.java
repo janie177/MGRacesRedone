@@ -17,6 +17,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class Pounce implements IAbility {
     @Override
     public void run(Event event) {
         PlayerInteractEvent e = (PlayerInteractEvent) event;
+        if (e.getHand() != EquipmentSlot.HAND) return;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());

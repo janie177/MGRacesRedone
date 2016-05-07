@@ -84,7 +84,7 @@ public class HellRift implements IAbility {
                         EffectUtil.playParticle(l, Effect.LAVADRIP, 30);
 
                         if (k % 20 == 0) {
-                            EffectUtil.playSound(l, Sound.PORTAL);
+                            EffectUtil.playSound(l, Sound.BLOCK_PORTAL_TRIGGER);
                         }
 
                         //The sucking people in effect

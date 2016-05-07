@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
@@ -102,15 +103,16 @@ public class AuroraListener implements Listener {
     @EventHandler
     public void onAuroraInteract(PlayerInteractEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
-        if (e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY() && ItemUtil.isSword(e.getPlayer().getItemInHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.FROST)) {
+        if (e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY() && ItemUtil.isSword(e.getPlayer().getInventory().getItemInMainHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.FROST)) {
             AbilityType.FROST.run(e.getPlayer());
         }
-        if (e.getAction() == Action.RIGHT_CLICK_AIR && PlayerUtil.isInWater(e.getPlayer()) && ItemUtil.isSword(e.getPlayer().getItemInHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.DROWNINGPOOL)) {
+        if (e.getAction() == Action.RIGHT_CLICK_AIR && PlayerUtil.isInWater(e.getPlayer()) && ItemUtil.isSword(e.getPlayer().getInventory().getItemInMainHand().getType()) && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.DROWNINGPOOL)) {
             AbilityType.DROWNINGPOOL.run(e.getPlayer());
         }
 
-        if (e.getAction() == Action.LEFT_CLICK_AIR && e.getPlayer().getItemInHand().getType() == Material.SNOW_BALL && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.TIDALWAVE)) {
+        if (e.getAction() == Action.LEFT_CLICK_AIR && e.getPlayer().getInventory().getItemInMainHand().getType() == Material.SNOW_BALL && Races.getMGPlayer(e.getPlayer()).hasAbility(AbilityType.TIDALWAVE)) {
             AbilityType.TIDALWAVE.run(e.getPlayer());
         }
     }

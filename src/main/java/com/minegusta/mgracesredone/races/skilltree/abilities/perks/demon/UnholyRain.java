@@ -112,7 +112,7 @@ public class UnholyRain implements IAbility {
             Missile.createMissile(player.getLocation(), player.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
             Cooldown.newCoolDown(name, uuid, getCooldown(Races.getMGPlayer(player).getAbilityLevel(getType())));
             EffectUtil.playParticle(player, Effect.MAGIC_CRIT);
-            EffectUtil.playSound(player, Sound.AMBIENCE_THUNDER);
+            EffectUtil.playSound(player, Sound.ENTITY_LIGHTNING_THUNDER);
             ChatUtil.sendString(player, ChatColor.DARK_RED + "You call an unholy rain on your location!");
 
             MGPlayer mgp = Races.getMGPlayer(player);

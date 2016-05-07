@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.UUID;
 
@@ -78,19 +79,20 @@ public class EnderBornListener implements Listener {
     @EventHandler
     public void onPearlToggle(PlayerInteractEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
 
         //Switching pearl mode
-        if (p.getItemInHand().getType() == Material.ENDER_PEARL && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) && Races.getMGPlayer(p).hasAbility(AbilityType.PEARLPOWER)) {
+        if (p.getInventory().getItemInMainHand().getType() == Material.ENDER_PEARL && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) && Races.getMGPlayer(p).hasAbility(AbilityType.PEARLPOWER)) {
             AbilityType.PEARLPOWER.run(p);
         }
         //Activate EndRift
-        if (p.getItemInHand().getType() == Material.STICK && mgp.hasAbility(AbilityType.ENDRIFT)) {
+        if (p.getInventory().getItemInMainHand().getType() == Material.STICK && mgp.hasAbility(AbilityType.ENDRIFT)) {
             AbilityType.ENDRIFT.run(e);
         }
         //Telekinesis.
-        else if (p.getItemInHand().getType() == Material.BLAZE_ROD && (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && mgp.hasAbility(AbilityType.TELEKINESIS)) {
+        else if (p.getInventory().getItemInMainHand().getType() == Material.BLAZE_ROD && (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && mgp.hasAbility(AbilityType.TELEKINESIS)) {
             AbilityType.TELEKINESIS.run(p);
         }
         //Activate shadow

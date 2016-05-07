@@ -22,6 +22,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.ConcurrentMap;
@@ -103,9 +104,10 @@ public class InfectionListener implements Listener {
     public void onDwarfInfect(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (!WorldCheck.isEnabled(p.getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         if (Races.getRace(p) != RaceType.HUMAN) return;
-        if (e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.SHINYGEM.getResult())) {
+        if (e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && ItemUtil.areEqualIgnoreAmount(p.getInventory().getItemInMainHand(), Recipe.SHINYGEM.getResult())) {
             Block b = e.getClickedBlock();
             if (b.getType() != Material.DIAMOND_ORE) return;
             if (BlockUtil.radiusCheck(b, 8, Material.DIAMOND_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.EMERALD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.GOLD_ORE, 2) && BlockUtil.radiusCheck(b, 8, Material.LAPIS_ORE, 2)) {
@@ -122,12 +124,13 @@ public class InfectionListener implements Listener {
     @EventHandler
     public void onEnderBornInfect(final PlayerInteractEntityEvent e) {
         final Player p = e.getPlayer();
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         if (!WorldCheck.isEnabled(p.getWorld())) return;
 
         if (!(e.getRightClicked() instanceof Enderman) || Races.getRace(p) != RaceType.HUMAN) return;
 
-        if (ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.ENDEREYE.getResult())) {
+        if (ItemUtil.areEqualIgnoreAmount(p.getInventory().getItemInMainHand(), Recipe.ENDEREYE.getResult())) {
             e.setCancelled(true);
             for (int i = 0; i < 20 * 10; i++) {
                 final int k = i;
@@ -228,8 +231,9 @@ public class InfectionListener implements Listener {
     public void onWerewolfInfect(PlayerInteractEntityEvent e) {
         Player p = e.getPlayer();
         if (!WorldCheck.isEnabled(p.getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
-        if (e.getRightClicked() instanceof Wolf && ItemUtil.areEqualIgnoreAmount(p.getItemInHand(), Recipe.WOLFBONE.getResult())) {
+        if (e.getRightClicked() instanceof Wolf && ItemUtil.areEqualIgnoreAmount(p.getInventory().getItemInMainHand(), Recipe.WOLFBONE.getResult())) {
             if (!WeatherUtil.isFullMoon(e.getPlayer().getWorld())) {
                 p.sendMessage(ChatColor.RED + "It is not a full moon.");
                 return;

@@ -75,7 +75,7 @@ public class Dwarf implements Race {
 
         int minerLevel = mgp.getAbilityLevel(AbilityType.MINER);
 
-        if (minerLevel > 0 && ItemUtil.isPickAxe(p.getItemInHand().getType())) {
+        if (minerLevel > 0 && ItemUtil.isPickAxe(p.getInventory().getItemInMainHand().getType())) {
             PotionUtil.updatePotion(p, PotionEffectType.FAST_DIGGING, 2, 5);
         }
     }

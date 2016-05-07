@@ -21,11 +21,13 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 public class WereWolfListener implements Listener {
     @EventHandler
     public void onWolfInteract(PlayerInteractEntityEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
 
@@ -59,7 +61,7 @@ public class WereWolfListener implements Listener {
             if (!WGUtil.canFightEachother(player, damager)) return;
 
             if (isWereWolf(player)) {
-                if (ItemUtil.isGoldTool(damager.getItemInHand().getType())) {
+                if (ItemUtil.isGoldTool(damager.getInventory().getItemInMainHand().getType())) {
                     e.setDamage(e.getDamage() + 10.0);
                     if (Races.getMGPlayer(player).hasAbility(AbilityType.GOLDRESISTANCE)) {
                         AbilityType.GOLDRESISTANCE.run(e);
@@ -74,12 +76,12 @@ public class WereWolfListener implements Listener {
 
             if (!WeatherUtil.isNight(damager.getWorld())) return;
 
-            if (damager.getItemInHand().getType() == null || damager.getItemInHand().getType() == Material.AIR) {
+            if (damager.getInventory().getItemInMainHand().getType() == null || damager.getInventory().getItemInMainHand().getType() == Material.AIR) {
                 if (mgp.hasAbility(AbilityType.CLAWS)) AbilityType.CLAWS.run(e);
                 if (mgp.hasAbility(AbilityType.CARNIVORE)) AbilityType.CARNIVORE.run(e);
             }
 
-            if (isWereWolf(damager) && damager.getItemInHand().getType() != Material.AIR && WeatherUtil.isNight(damager.getWorld()) && WeatherUtil.isFullMoon(damager.getWorld())) {
+            if (isWereWolf(damager) && damager.getInventory().getItemInMainHand().getType() != Material.AIR && WeatherUtil.isNight(damager.getWorld()) && WeatherUtil.isFullMoon(damager.getWorld())) {
                 e.setDamage(e.getDamage() / 2);
             }
         }
@@ -88,16 +90,17 @@ public class WereWolfListener implements Listener {
     @EventHandler
     public void onPounce(PlayerInteractEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         MGPlayer mgp = Races.getMGPlayer(e.getPlayer());
 
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (mgp.hasAbility(AbilityType.HOWL) && e.getPlayer().getItemInHand().getType() == Material.BONE) {
+            if (mgp.hasAbility(AbilityType.HOWL) && e.getPlayer().getInventory().getItemInMainHand().getType() == Material.BONE) {
                 AbilityType.HOWL.run(e.getPlayer());
             }
         }
 
-        if ((e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_BLOCK) && mgp.hasAbility(AbilityType.DIG) && e.getPlayer().getItemInHand().getType() == Material.AIR) {
+        if ((e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_BLOCK) && mgp.hasAbility(AbilityType.DIG) && e.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
             AbilityType.DIG.run(e);
         }
 

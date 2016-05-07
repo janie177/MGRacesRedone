@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 public class DemonListener implements Listener {
     @EventHandler
@@ -59,9 +60,10 @@ public class DemonListener implements Listener {
     @EventHandler
     public void onDemonInteract(PlayerInteractEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         Player p = e.getPlayer();
-        Material hand = p.getItemInHand().getType();
+        Material hand = p.getInventory().getItemInMainHand().getType();
         if (hand != Material.BLAZE_ROD) return;
 
         String uuid = e.getPlayer().getUniqueId().toString();

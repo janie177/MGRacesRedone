@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class CureListener implements Listener {
@@ -24,6 +25,8 @@ public class CureListener implements Listener {
     @EventHandler
     public void onCure(PlayerInteractEvent event) {
         Player p = event.getPlayer();
+
+        if (event.getHand() != EquipmentSlot.HAND) return;
 
         if (!WorldCheck.isEnabled(p.getWorld())) return;
 

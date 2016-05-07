@@ -52,7 +52,7 @@ public class PointyShooty implements IAbility {
                 final ProjectileSource shooter = projectile.getShooter();
                 final Location l = projectile.getLocation();
 
-                final boolean enchantment = ((Player) e.getEntity()).getItemInHand().containsEnchantment(Enchantment.ARROW_INFINITE);
+                final boolean enchantment = ((Player) e.getEntity()).getInventory().getItemInMainHand().containsEnchantment(Enchantment.ARROW_INFINITE);
                 if (!enchantment) {
                     ItemUtil.removeOne((Player) e.getEntity(), Material.ARROW);
                 }

@@ -20,6 +20,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.concurrent.ConcurrentMap;
@@ -83,12 +84,13 @@ public class ElfListener implements Listener {
     @EventHandler
     public void onElfInteract(PlayerInteractEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         Player p = e.getPlayer();
 
-        Material hand = p.getItemInHand().getType();
+        Material hand = p.getInventory().getItemInMainHand().getType();
 
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && p.getItemInHand().getType() == Material.AIR && e.getClickedBlock().getType() == Material.GRASS && Races.getMGPlayer(p).hasAbility(AbilityType.NATURALIST)) {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && p.getInventory().getItemInMainHand().getType() == Material.AIR && e.getClickedBlock().getType() == Material.GRASS && Races.getMGPlayer(p).hasAbility(AbilityType.NATURALIST)) {
             AbilityType.NATURALIST.run(e);
             return;
         }
@@ -137,13 +139,13 @@ public class ElfListener implements Listener {
     @EventHandler
     public void onElfRide(PlayerInteractEntityEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
-
+        if (e.getHand() != EquipmentSlot.HAND) return;
         if (e.getRightClicked() instanceof LivingEntity && !(e.getRightClicked() instanceof Player || e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Horse)) {
             MGPlayer mgp = Races.getMGPlayer(e.getPlayer());
 
             if (!mgp.hasAbility(AbilityType.ANIMALRIDER)) return;
 
-            if (e.getPlayer().getItemInHand().getType() == null || e.getPlayer().getItemInHand().getType() == Material.AIR) {
+            if (e.getPlayer().getInventory().getItemInMainHand().getType() == null || e.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
                 AbilityType.ANIMALRIDER.run(e);
             } else {
                 ChatUtil.sendString(e.getPlayer(), "Elves can only ride animals with an empty hand.");

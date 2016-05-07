@@ -19,6 +19,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffectType;
 
 public class DwarfListener implements Listener {
@@ -29,7 +30,7 @@ public class DwarfListener implements Listener {
         //Axe boost in damage
         if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
             Player p = (Player) e.getDamager();
-            if (ItemUtil.isAxe(p.getItemInHand().getType()) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled() && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLEAXE)) {
+            if (ItemUtil.isAxe(p.getInventory().getItemInMainHand().getType()) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled() && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLEAXE)) {
                 AbilityType.BATTLEAXE.run(e);
             }
         }
@@ -92,6 +93,7 @@ public class DwarfListener implements Listener {
     @EventHandler
     public void onBattleCry(PlayerInteractEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         Player p = e.getPlayer();
 
@@ -102,18 +104,18 @@ public class DwarfListener implements Listener {
         }
 
         //StoneShape
-        if (e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.STONESHAPE) && ItemUtil.isAxe(e.getPlayer().getItemInHand().getType()) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY()) {
+        if (e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.STONESHAPE) && ItemUtil.isAxe(e.getPlayer().getInventory().getItemInMainHand().getType()) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY()) {
             AbilityType.STONESHAPE.run(p);
         }
 
         //Earthquake
-        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && Races.getMGPlayer(p).hasAbility(AbilityType.EARTQUAKE) && ItemUtil.isPickAxe(p.getItemInHand().getType())) {
+        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && Races.getMGPlayer(p).hasAbility(AbilityType.EARTQUAKE) && ItemUtil.isPickAxe(p.getInventory().getItemInMainHand().getType())) {
             AbilityType.EARTQUAKE.run(p);
             return;
         }
 
         //Battle Cry
-        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && ItemUtil.isAxe(p.getItemInHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLECRY)) {
+        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && ItemUtil.isAxe(p.getInventory().getItemInMainHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLECRY)) {
             AbilityType.BATTLECRY.run(p);
         }
     }

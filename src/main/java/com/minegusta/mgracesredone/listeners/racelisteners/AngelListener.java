@@ -16,6 +16,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 public class AngelListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
@@ -28,7 +29,7 @@ public class AngelListener implements Listener {
 
         if (!Races.getMGPlayer(p).hasAbility(AbilityType.GLIDE)) return;
 
-        if (p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER) {
+        if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() == Material.FEATHER) {
             AbilityType.GLIDE.run(p);
         }
     }
@@ -84,7 +85,7 @@ public class AngelListener implements Listener {
         //Angels cannot damage anything without a sword or bow.
         if (e.getDamager() instanceof Player && Races.getRace((Player) e.getDamager()) == RaceType.ANGEL) {
             Player p = (Player) e.getDamager();
-            if (!ItemUtil.isSword(p.getItemInHand().getType())) {
+            if (!ItemUtil.isSword(p.getInventory().getItemInMainHand().getType())) {
                 e.setDamage(0);
             }
         }
@@ -158,6 +159,7 @@ public class AngelListener implements Listener {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
 
         Player p = e.getPlayer();
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         //Activate justice
         if (e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.JUSTICE) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY()) {
@@ -167,16 +169,16 @@ public class AngelListener implements Listener {
         }
 
         if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR)) {
-            if (p.getItemInHand().getType() == Material.BOOK && Races.getMGPlayer(p).hasAbility(AbilityType.PRAYER)) {
+            if (p.getInventory().getItemInMainHand().getType() == Material.BOOK && Races.getMGPlayer(p).hasAbility(AbilityType.PRAYER)) {
                 AbilityType.PRAYER.run(p);
             }
-            if (ItemUtil.isSword(p.getItemInHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.HOLYRAIN)) {
+            if (ItemUtil.isSword(p.getInventory().getItemInMainHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.HOLYRAIN)) {
                 AbilityType.HOLYRAIN.run(p);
-            } else if (p.getItemInHand() != null && p.getItemInHand().getType() == Material.FEATHER) {
+            } else if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() == Material.FEATHER) {
                 if (Races.getMGPlayer(p).hasAbility(AbilityType.WHIRLWIND)) {
                     AbilityType.WHIRLWIND.run(p);
                 }
-            } else if (p.getItemInHand().getType() == Material.IRON_INGOT) {
+            } else if (p.getInventory().getItemInMainHand().getType() == Material.IRON_INGOT) {
                 if (Races.getMGPlayer(p).hasAbility(AbilityType.STEELSKIN)) {
                     AbilityType.STEELSKIN.run(p);
                 }

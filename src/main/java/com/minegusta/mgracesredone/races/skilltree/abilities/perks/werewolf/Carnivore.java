@@ -31,7 +31,8 @@ public class Carnivore implements IAbility {
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());
 
-        if (p.getItemInHand().getType() != Material.AIR || e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) return;
+        if (p.getInventory().getItemInMainHand().getType() != Material.AIR || e.getCause() == EntityDamageEvent.DamageCause.CUSTOM)
+            return;
 
         int chance = 15;
         if (level > 3) chance = 30;

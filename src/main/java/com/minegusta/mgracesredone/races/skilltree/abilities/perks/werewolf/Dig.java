@@ -21,6 +21,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
@@ -36,6 +37,7 @@ public class Dig implements IAbility {
     public void run(Event event) {
 
         PlayerInteractEvent e = (PlayerInteractEvent) event;
+        if (e.getHand() != EquipmentSlot.HAND) return;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
         String uuid = p.getUniqueId().toString();

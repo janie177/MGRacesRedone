@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Canis implements IAbility {
     public void run(Event event) {
 
         PlayerInteractEntityEvent e = (PlayerInteractEntityEvent) event;
+        if (e.getHand() != EquipmentSlot.HAND) return;
         Player p = e.getPlayer();
         MGPlayer mgp = Races.getMGPlayer(p);
         int level = mgp.getAbilityLevel(getType());

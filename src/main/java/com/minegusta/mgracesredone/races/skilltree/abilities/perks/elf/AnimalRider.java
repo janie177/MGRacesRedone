@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class AnimalRider implements IAbility {
     @Override
     public void run(Event event) {
         PlayerInteractEntityEvent e = (PlayerInteractEntityEvent) event;
+        if (e.getHand() != EquipmentSlot.HAND) return;
 
         Entity clicked = e.getRightClicked();
         MGPlayer mgp = Races.getMGPlayer(e.getPlayer());

@@ -20,6 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Naturalist implements IAbility {
     public void run(Event event) {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent e = (PlayerInteractEvent) event;
+            if (e.getHand() != EquipmentSlot.HAND) return;
             Player p = e.getPlayer();
             MGPlayer mgp = Races.getMGPlayer(p);
 
