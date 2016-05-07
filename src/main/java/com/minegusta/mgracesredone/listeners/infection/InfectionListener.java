@@ -24,7 +24,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 public class InfectionListener implements Listener {
@@ -254,5 +258,117 @@ public class InfectionListener implements Listener {
             ChatUtil.sendList(p, new String[]{"You are now a Werewolf!", "Awoo!!"});
 
         }
+    }
+
+
+    //Vampire
+    @EventHandler
+    public void onVampireInfect(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
+        if (e.getHand() != EquipmentSlot.HAND) return;
+
+        if (!e.hasBlock() || e.getClickedBlock().getType() != Material.GOLD_BLOCK) return;
+
+        if (Races.getRace(p) != RaceType.HUMAN) return;
+
+
+        //Check if it's an altar.
+        if (BlockUtil.radiusCheck(e.getClickedBlock(), 7, Material.OBSIDIAN, 10) && BlockUtil.radiusCheck(e.getClickedBlock(), 7, Material.GOLD_BLOCK, 4)) {
+            //Check if it's night
+            if (!WeatherUtil.isNight(p.getWorld())) {
+                ChatUtil.sendString(p, ChatColor.RED + "It has to be night if you want to use the Vampire altar...");
+                return;
+            }
+
+            boolean humanBlood = false;
+            int mobBlood = 0;
+            ItemStack humanBloodStack = null;
+            ItemStack mobBloodStack = null;
+
+            //Check ingredients
+            for (ItemStack i : p.getInventory()) {
+                if (i.getType() == Material.INK_SACK) {
+                    //Rose red
+                    if (i.getDurability() == 1) {
+                        List<String> lore = i.getItemMeta().getLore();
+                        if (lore.isEmpty()) continue;
+                        if (ChatColor.stripColor(lore.get(0)).equalsIgnoreCase("Human Blood Essence")) {
+                            humanBlood = true;
+                            humanBloodStack = i;
+                        } else if (ChatColor.stripColor(lore.get(0)).equalsIgnoreCase("Monster Blood Essence")) {
+                            mobBlood += i.getAmount();
+                            mobBloodStack = i;
+                        }
+                    }
+                }
+            }
+
+            //Ingredients are there
+            if (humanBlood && mobBlood > 2) {
+
+                //Remove items
+                ItemUtil.removeOne(p, humanBloodStack);
+                ItemUtil.removeOne(p, mobBloodStack);
+                ItemUtil.removeOne(p, mobBloodStack);
+                ItemUtil.removeOne(p, mobBloodStack);
+
+                //Play effect
+                EffectUtil.playParticle(e.getClickedBlock().getLocation(), Effect.MOBSPAWNER_FLAMES);
+                EffectUtil.playSound(e.getClickedBlock().getLocation(), Sound.ENTITY_LIGHTNING_THUNDER);
+
+                p.sendMessage(ChatColor.RED + "Your sacrifice has been accepted!");
+                p.sendMessage(ChatColor.RED + "A dark potion appears at the altar...");
+
+                //Drop the potion
+                ItemStack coldBloodPotion = new ItemStack(Material.POTION, 1) {
+                    {
+                        PotionMeta meta = (PotionMeta) getItemMeta();
+                        PotionData data = new PotionData(PotionType.INSTANT_HEAL);
+
+
+                        meta.setDisplayName(ChatColor.DARK_RED + "Cold Blood Potion");
+                        meta.setLore(Lists.newArrayList(ChatColor.DARK_RED + "Cold Blood Potion"));
+                        meta.setBasePotionData(data);
+                        setItemMeta(meta);
+                    }
+                };
+
+                p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation(), coldBloodPotion);
+
+            } else {
+                ChatUtil.sendString(p, ChatColor.RED + "You need at least one Human Blood Essence and 3 Monster Blood Essence.");
+                return;
+            }
+
+        }
+    }
+
+    //Drinking the potion
+    @EventHandler
+    public void onVampirePotionDrink(PlayerItemConsumeEvent e) {
+        Player p = e.getPlayer();
+        if (!WorldCheck.isEnabled(p.getWorld())) return;
+
+        if (e.isCancelled()) return;
+
+        if (e.getItem().getType() != Material.POTION) return;
+
+        PotionMeta meta = (PotionMeta) e.getItem().getItemMeta();
+        if (meta.hasLore() && !meta.getLore().isEmpty()) {
+            String lore = ChatColor.stripColor(meta.getLore().get(0));
+
+            //Make vampire
+            if (lore.equalsIgnoreCase("Cold Blood Potion")) {
+                if (Races.getRace(p) != RaceType.HUMAN) {
+                    ChatUtil.sendString(p, ChatColor.RED + "Only humans can drink this potion.");
+                    e.setCancelled(true);
+                    return;
+                }
+                Races.setRace(p, RaceType.VAMPIRE);
+                ChatUtil.sendString(p, "You are now a Vampire!");
+            }
+        }
+
     }
 }

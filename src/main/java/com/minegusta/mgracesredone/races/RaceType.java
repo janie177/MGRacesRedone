@@ -11,6 +11,7 @@ public enum RaceType {
     AURORA(new Aurora(), ChatColor.AQUA + "[Au]"),
     ENDERBORN(new EnderBorn(), ChatColor.DARK_PURPLE + "[EB]"),
     ANGEL(new Angel(), ChatColor.YELLOW + "[An]"),
+    VAMPIRE(new Vampire(), ChatColor.DARK_RED + "[V]"),
     DEMON(new Demon(), ChatColor.RED + "[De]");
 
     private Race race;

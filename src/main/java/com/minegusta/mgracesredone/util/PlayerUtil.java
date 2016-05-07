@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PlayerUtil {
 
-    private static final List<RaceType> unholy = Lists.newArrayList(RaceType.DEMON, RaceType.ENDERBORN, RaceType.WEREWOLF);
+    private static final List<RaceType> unholy = Lists.newArrayList(RaceType.DEMON, RaceType.ENDERBORN, RaceType.WEREWOLF, RaceType.VAMPIRE);
 
     public static boolean isHoly(Player p) {
         return !isUnholy(p);
