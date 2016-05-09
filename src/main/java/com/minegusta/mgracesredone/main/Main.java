@@ -2,10 +2,7 @@ package com.minegusta.mgracesredone.main;
 
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.tasks.*;
-import com.minegusta.mgracesredone.util.CountRaces;
-import com.minegusta.mgracesredone.util.OnReload;
-import com.minegusta.mgracesredone.util.ScoreboardUtil;
-import com.minegusta.mgracesredone.util.VampireFoodUtil;
+import com.minegusta.mgracesredone.util.*;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -36,6 +33,9 @@ public class Main extends JavaPlugin {
 
         //Save default config
         Main.getPlugin().saveDefaultConfig();
+
+        //Load spawn locations
+        SpawnLocationUtil.init();
 
         //Register recipes
         Recipe.registerRecipes();
