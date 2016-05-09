@@ -33,10 +33,11 @@ public class Thrall implements IAbility {
 		z.setCanPickupItems(false);
 		z.setCustomName(ChatColor.RED + "Vampire's Thrall");
 		z.setCustomNameVisible(true);
+		z.setBaby(false);
 
 		PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 1, 600);
 		PotionUtil.updatePotion(z, PotionEffectType.INCREASE_DAMAGE, 0, 600);
-		PotionUtil.updatePotion(z, PotionEffectType.SPEED, 0, 600);
+		PotionUtil.updatePotion(z, PotionEffectType.SPEED, 0, 6);
 		PotionUtil.updatePotion(z, PotionEffectType.FIRE_RESISTANCE, 0, 600);
 
 		Optional<Player> target = player.getWorld().getPlayers().stream().filter(p -> !p.getName().equalsIgnoreCase(player.getName()) && p.getLocation().distance(player.getLocation()) < 15).findAny();
@@ -54,7 +55,7 @@ public class Thrall implements IAbility {
 				s.setCanPickupItems(false);
 				s.setCustomName(ChatColor.RED + "Vampire's Skeletal Thrall");
 				s.setCustomNameVisible(true);
-				PotionUtil.updatePotion(s, PotionEffectType.SPEED, 0, 600);
+				PotionUtil.updatePotion(s, PotionEffectType.SPEED, 0, 6);
 				if (target.isPresent()) ((Creature) s).setTarget(target.get());
 				if (level > 2) {
 					PotionUtil.updatePotion(s, PotionEffectType.INCREASE_DAMAGE, 0, 600);

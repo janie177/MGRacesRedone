@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.vampire;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.listeners.general.FallDamageManager;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
@@ -36,35 +37,41 @@ public class Blink implements IAbility {
 		//Turn invisible
 		InvisibilityUtil.add(uuid, duration);
 
-		//Make task for bats and particles.
-		int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), () -> {
 
-
-			if (!player.isOnline()) {
-				return;
-			}
-			//Flying
-			Vector victor = ((player.getPassenger() != null) && (player.getLocation().getDirection().getY() > 0.0D) ? player.getLocation().getDirection().clone().setY(0) : player.getLocation().getDirection()).normalize().multiply(1.5D);
-			player.setVelocity(victor);
-
-			//Particle
-			EffectUtil.playParticle(player, Effect.LARGE_SMOKE);
-
-			Entity bat = player.getWorld().spawnEntity(player.getLocation(), EntityType.BAT);
-			//Bat
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
-			{
-				if (bat.isValid() && !bat.isDead()) bat.remove();
-			}, 7);
-
-		}, 0, 2);
-
-		//Make task to turn player back visible and cancel the task
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+		for (int i = 0; i <= duration * 10; i++)
 		{
-			InvisibilityUtil.remove(uuid);
-			if (Bukkit.getScheduler().isCurrentlyRunning(taskId)) Bukkit.getScheduler().cancelTask(taskId);
-		}, duration * 20);
+			if (player.isOnline()) FallDamageManager.addToFallMap(player);
+			final int k = i;
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+				if (!player.isOnline()) {
+					return;
+				}
+				//Flying
+				Vector victor = ((player.getPassenger() != null) && (player.getLocation().getDirection().getY() > 0.0D) ? player.getLocation().getDirection().clone().setY(0) : player.getLocation().getDirection()).normalize().multiply(1.30D);
+				player.setVelocity(victor);
+
+				//Particle
+
+				for (int i2 = 0; i2 < 3; i2++) {
+					Entity bat = player.getWorld().spawnEntity(player.getLocation(), EntityType.BAT);
+					EffectUtil.playParticle(player, Effect.SMOKE);
+					//Bat
+					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+					{
+						if (bat.isValid()) bat.remove();
+					}, 7);
+				}
+
+			}, i * 2);
+
+			if (i == duration * 10) {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+				{
+					InvisibilityUtil.remove(uuid);
+					if (player.isOnline()) FallDamageManager.addToFallMap(player);
+				}, i * 10);
+			}
+		}
 
 		return true;
 	}

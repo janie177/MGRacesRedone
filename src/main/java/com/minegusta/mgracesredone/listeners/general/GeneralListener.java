@@ -40,6 +40,11 @@ public class GeneralListener implements Listener {
         if (InvisibilityUtil.contains(uuid)) {
             InvisibilityUtil.remove(uuid);
         }
+
+        for (String s : InvisibilityUtil.values()) {
+            Player p = Bukkit.getPlayer(UUID.fromString(s));
+            e.getPlayer().showPlayer(p);
+        }
     }
 
     @EventHandler

@@ -100,7 +100,7 @@ public class Vampire implements Race {
 			}
 		}
 		if (regenLevel > 3 && WeatherUtil.isNight(p.getWorld())) {
-			if (p.getHealth() < 4) {
+			if (p.getHealth() < 4 && !p.isDead() && p.getHealth() > 0 && p.getFoodLevel() > 1) {
 				int food = p.getFoodLevel() - 1;
 				double maxHealed = p.getMaxHealth() - p.getHealth();
 				double healed = food > maxHealed ? maxHealed : food;
