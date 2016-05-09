@@ -79,6 +79,11 @@ public class ElfListener implements Listener {
                 AbilityType.NATURALIST.run(e);
             }
         }
+
+        //Block ArrowNado damage towards the shooter.
+        if (e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof ElfShooter && e.getEntity() instanceof Player && e.getEntity().getUniqueId().toString().equalsIgnoreCase(((ElfShooter) ((Arrow) e.getDamager()).getShooter()).getUuid())) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler

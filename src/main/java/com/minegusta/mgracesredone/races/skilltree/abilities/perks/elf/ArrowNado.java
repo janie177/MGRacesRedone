@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.ElfShooter;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -50,6 +51,7 @@ public class ArrowNado implements IAbility {
 		final Location center = l;
 		final int interval = twice ? 20 : 40;
 		final List<Entity> arrows = Lists.newArrayList();
+		ElfShooter es = new ElfShooter(shooter.getUniqueId().toString());
 		for (int i = 0; i <= 20 * duration; i++) {
 			if (i % 2 == 0) {
 				final int k = i;
@@ -72,12 +74,12 @@ public class ArrowNado implements IAbility {
 								TippedArrow arrow = (TippedArrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.TIPPED_ARROW);
 								arrow.setBasePotionData(new PotionData(RandomUtil.fiftyfifty() ? PotionType.POISON : PotionType.INSTANT_DAMAGE, false, false));
 								arrow.setCritical(false);
-								arrow.setShooter(shooter);
+								arrow.setShooter(es);
 								arrows.add(arrow);
 							} else {
 								Arrow arrow = (Arrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.ARROW);
 								arrow.setCritical(true);
-								arrow.setShooter(shooter);
+								arrow.setShooter(es);
 								arrows.add(arrow);
 							}
 						}
