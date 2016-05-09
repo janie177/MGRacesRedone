@@ -69,7 +69,7 @@ public class ArrowNado implements IAbility {
 						//Spawn arrow.
 						if (k % interval == 0) {
 							if (poison && RandomUtil.chance(70)) {
-								TippedArrow arrow = (TippedArrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.ARROW);
+								TippedArrow arrow = (TippedArrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.TIPPED_ARROW);
 								arrow.setBasePotionData(new PotionData(RandomUtil.fiftyfifty() ? PotionType.POISON : PotionType.INSTANT_DAMAGE, false, false));
 								arrow.setCritical(false);
 								arrow.setShooter(shooter);
