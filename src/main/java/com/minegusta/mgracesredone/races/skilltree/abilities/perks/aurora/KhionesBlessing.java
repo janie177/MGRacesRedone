@@ -101,7 +101,7 @@ public class KhionesBlessing implements IAbility {
 
 	@Override
 	public Material getDisplayItem() {
-		return Material.FROSTED_ICE;
+		return Material.PACKED_ICE;
 	}
 
 	@Override

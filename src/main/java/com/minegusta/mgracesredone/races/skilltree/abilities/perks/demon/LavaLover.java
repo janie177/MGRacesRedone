@@ -28,7 +28,7 @@ public class LavaLover implements IAbility {
 
         player.setVelocity(player.getLocation().getDirection().normalize().multiply(boost));
 
-        if (player.getVelocity().getY() > 1.2) {
+        if (player.getVelocity().getY() > 1.0) {
             FallDamageManager.addToFallMap(player.getUniqueId().toString());
         }
         return true;

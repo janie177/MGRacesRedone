@@ -28,7 +28,7 @@ public class AquaMan implements IAbility {
         //Launch the player forward
         player.setVelocity(player.getLocation().getDirection().normalize().multiply(speed));
 
-        if (player.getVelocity().getY() > 1.2 && level > 1) {
+        if (player.getVelocity().getY() > 1.0 && level > 1) {
             FallDamageManager.addToFallMap(player.getUniqueId().toString());
         }
 
