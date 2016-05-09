@@ -9,10 +9,8 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ElfShooter;
 import com.minegusta.mgracesredone.util.RandomUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import com.minegusta.mgracesredone.util.WGUtil;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionData;
@@ -33,6 +31,11 @@ public class ArrowNado implements IAbility {
 		MGPlayer mgp = Races.getMGPlayer(player);
 		int level = mgp.getAbilityLevel(getType());
 
+		if (!WGUtil.canPVP(player)) {
+			player.sendMessage(ChatColor.RED + "You cannot use that here!");
+			return false;
+		}
+
 		//Checks for level
 		boolean poison = false, twice = false;
 
@@ -50,7 +53,7 @@ public class ArrowNado implements IAbility {
 	private void createWind(final Player shooter, Location l, int duration, boolean twice, final boolean poison) {
 		final Location center = l;
 		final int interval = twice ? 20 : 40;
-		final List<Entity> arrows = Lists.newArrayList();
+		List<Entity> arrows = Lists.newArrayList();
 		ElfShooter es = new ElfShooter(shooter.getUniqueId().toString());
 		for (int i = 0; i <= 20 * duration; i++) {
 			if (i % 2 == 0) {
@@ -125,6 +128,13 @@ public class ArrowNado implements IAbility {
 								a.setVelocity(v.multiply(1.8));
 							}
 						});
+
+						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+						{
+							arrows.stream().filter(Entity::isValid).forEach(Entity::remove);
+							arrows.clear();
+							targets.clear();
+						}, 60);
 					}
 				}, i);
 			}

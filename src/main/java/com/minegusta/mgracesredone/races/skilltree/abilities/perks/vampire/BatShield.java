@@ -10,6 +10,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.RandomUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.EntityType;
@@ -34,6 +35,11 @@ public class BatShield implements IAbility {
 		MGPlayer mgp = Races.getMGPlayer(player);
 		int level = mgp.getAbilityLevel(getType());
 
+		if (!WGUtil.canPVP(player)) {
+			player.sendMessage(ChatColor.RED + "You cannot use that here!");
+			return false;
+		}
+
 		PotionUtil.updatePotion(player, PotionEffectType.DAMAGE_RESISTANCE, 1, 6);
 
 		if (level > 1) {
@@ -46,7 +52,7 @@ public class BatShield implements IAbility {
 				{
 					if (!player.isOnline()) return;
 					EffectUtil.playParticle(player, Effect.SLIME);
-					player.getWorld().getLivingEntities().stream().filter(e -> e.getLocation().distance(player.getLocation()) < 3).forEach(e -> e.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 4, 0)));
+					player.getWorld().getLivingEntities().stream().filter(e -> e.getLocation().distance(player.getLocation()) < 3 && !e.getUniqueId().toString().equalsIgnoreCase(player.getUniqueId().toString())).forEach(e -> e.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 4, 0)));
 				}, i * 20);
 			}
 		}
@@ -73,11 +79,10 @@ public class BatShield implements IAbility {
 						EffectUtil.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK);
 					}
 					EffectUtil.playParticle(player.getLocation(), Effect.PARTICLE_SMOKE, 1, 10, 1, 30, 50);
-					player.getWorld().spawnEntity(player.getLocation().clone().add(RandomUtil.randomDouble(0, 3) - 3, RandomUtil.randomDouble(0, 3) - 3, RandomUtil.randomDouble(0, 3) - 3), EntityType.BAT);
+					player.getWorld().spawnEntity(player.getLocation().clone().add(RandomUtil.randomDouble(0, 6) - 3, RandomUtil.randomDouble(0, 6) - 3, RandomUtil.randomDouble(0, 6) - 3), EntityType.BAT);
 
-					//The sucking people in effect
 					player.getLocation().getWorld().getEntitiesByClasses(Bat.class, Projectile.class).stream().
-							filter(ent -> ent.getLocation().distance(player.getLocation()) <= 2).forEach(ent -> {
+							filter(ent -> ent.getLocation().distance(player.getLocation()) <= 4).forEach(ent -> {
 
 						double angle = Math.toRadians(14);
 						double radius = Math.abs(ent.getLocation().distance(player.getLocation()));
