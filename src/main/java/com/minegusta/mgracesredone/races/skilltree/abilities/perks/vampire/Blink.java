@@ -52,14 +52,14 @@ public class Blink implements IAbility {
 
 				//Particle
 
-				for (int i2 = 0; i2 < 3; i2++) {
+				for (int i2 = 0; i2 < 4; i2++) {
 					Entity bat = player.getWorld().spawnEntity(player.getLocation(), EntityType.BAT);
 					EffectUtil.playParticle(player, Effect.SMOKE);
 					//Bat
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 					{
 						if (bat.isValid()) bat.remove();
-					}, 7);
+					}, 14);
 				}
 
 			}, i * 2);
