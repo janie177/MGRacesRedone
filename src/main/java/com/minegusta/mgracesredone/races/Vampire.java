@@ -123,6 +123,8 @@ public class Vampire implements Race {
 			if (darkbloodLevel > 4 && (hand == Material.POTION || hand == Material.SPLASH_POTION || hand == Material.LINGERING_POTION)) {
 				PotionMeta meta = (PotionMeta) p.getInventory().getItemInOffHand().getItemMeta();
 				PotionEffectType type = meta.getBasePotionData().getType().getEffectType();
+				if (type == PotionEffectType.HEAL || type == PotionEffectType.HEALTH_BOOST)
+					type = PotionEffectType.REGENERATION;
 				if (PotionUtil.isPositiveForPlayer(type)) PotionUtil.updatePotion(p, type, 0, 5);
 			}
 
