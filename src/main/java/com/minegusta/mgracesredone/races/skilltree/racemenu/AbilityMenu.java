@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.List;
 
@@ -34,6 +33,8 @@ public class AbilityMenu {
 
         int count = 0;
 
+        int totalSpentPoints = getTotalSpentBasePoints(mgp);
+
         for (AbilityType type : getAbilities(mgp.getRaceType())) {
             for (int level = 1; level <= type.getMaxLevel(); level++) {
                 ItemStack is = new ItemStack(Material.BARRIER);
@@ -54,7 +55,7 @@ public class AbilityMenu {
                     }
                 } else {
                     meta.setDisplayName(ChatColor.DARK_RED + type.getName());
-                    lore.add(ChatColor.YELLOW + "Cost: " + ChatColor.LIGHT_PURPLE + type.getCost(level));
+                    lore.add(ChatColor.YELLOW + "Cost: " + ChatColor.LIGHT_PURPLE + type.getCost(level, totalSpentPoints));
                     lore.add(ChatColor.YELLOW + "Level: " + ChatColor.LIGHT_PURPLE + level);
                     lore.add(ChatColor.YELLOW + "Type: " + ChatColor.DARK_PURPLE + type.getGroup().name());
                     if (type.getCooldown(level) != 0)
@@ -96,13 +97,30 @@ public class AbilityMenu {
         };
     }
 
-    public static ItemStack getInfoStack(MGPlayer mgp) {
+    public static int getTotalSpentBasePoints(MGPlayer mgp) {
         int totalAbilities = 0;
         for (AbilityType t : mgp.getAbilities().keySet()) {
             for (int levels = 1; levels <= mgp.getAbilityLevel(t); levels++) {
-                totalAbilities = totalAbilities + t.getCost(levels);
+                totalAbilities = totalAbilities + t.getBaseCost(levels);
             }
         }
+        return totalAbilities;
+    }
+
+    public static int getTotalSpentPoints(MGPlayer mgp) {
+        int totalAbilities = 0;
+        int totalSpent = getTotalSpentBasePoints(mgp);
+        for (AbilityType t : mgp.getAbilities().keySet()) {
+            for (int levels = 1; levels <= mgp.getAbilityLevel(t); levels++) {
+                totalAbilities = totalAbilities + t.getCost(levels, totalSpent);
+            }
+        }
+        return totalAbilities;
+    }
+
+    public static ItemStack getInfoStack(MGPlayer mgp) {
+
+        int totalAbilities = getTotalSpentBasePoints(mgp);
 
         ItemStack info = new ItemStack(Material.BOOK, 1);
 
@@ -112,23 +130,25 @@ public class AbilityMenu {
         meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "INFO");
 
         Player p = mgp.getPlayer();
-        int extraPerkPoints = 0;
 
-        for (PermissionAttachmentInfo i : p.getEffectivePermissions()) {
-            if (i.getPermission().toLowerCase().startsWith("mgraces.perks.")) {
+
+        //int extraPerkPoints = 0;
+
+        /*for (PermissionAttachmentInfo i : p.getEffectivePermissions()) {
+            if (i.getPermission().toLowerCase().startsWith("minegusta.perks.")) {
                 try {
-                    int extra = Integer.parseInt(i.getPermission().toLowerCase().replace("mgraces.perks.", ""));
+                    int extra = Integer.parseInt(i.getPermission().toLowerCase().replace("minegusta.perks.", ""));
                     if (extra > extraPerkPoints) extraPerkPoints = extra;
                 } catch (Exception ignored) {
                 }
             }
-        }
+        }*/
 
-        int spendable = mgp.getRaceType().getPerkPointCap() + extraPerkPoints;
+        //int spendable = mgp.getRaceType().getPerkPointCap() + extraPerkPoints;
 
         lore.add(ChatColor.LIGHT_PURPLE + "Perks are unlocked by killing different people.");
-        lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of " + spendable + " perk-points.");
-        lore.add(ChatColor.LIGHT_PURPLE + "You have currently spent: " + ChatColor.DARK_PURPLE + totalAbilities + ChatColor.LIGHT_PURPLE + " Perk-Points.");
+        //lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of " + spendable + " perk-points.");
+        lore.add(ChatColor.LIGHT_PURPLE + "You have currently spent: " + ChatColor.DARK_PURPLE + getTotalSpentPoints(mgp) + ChatColor.LIGHT_PURPLE + " Perk-Points.");
         lore.add(ChatColor.LIGHT_PURPLE + "Click a perk to unlock it.");
         lore.add(ChatColor.LIGHT_PURPLE + "Choose wisely because you cannot un-buy perks.");
         lore.add(ChatColor.LIGHT_PURPLE + "If you want to reset, click the skull next to this book.");

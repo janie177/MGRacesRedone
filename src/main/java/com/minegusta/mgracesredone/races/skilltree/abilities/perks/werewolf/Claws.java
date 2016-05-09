@@ -35,8 +35,8 @@ public class Claws implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -77,6 +77,11 @@ public class Claws implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.WEREWOLF);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

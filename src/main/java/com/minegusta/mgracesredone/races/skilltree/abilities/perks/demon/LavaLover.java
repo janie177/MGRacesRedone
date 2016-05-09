@@ -20,7 +20,7 @@ public class LavaLover implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
 
         int level = mgp.getAbilityLevel(getType());
@@ -31,6 +31,7 @@ public class LavaLover implements IAbility {
         if (player.getVelocity().getY() > 1.2) {
             FallDamageManager.addToFallMap(player.getUniqueId().toString());
         }
+        return true;
     }
 
     @Override
@@ -55,7 +56,8 @@ public class LavaLover implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return level;
+        if (level == 1) return 2;
+        return 1;
     }
 
     @Override
@@ -71,6 +73,11 @@ public class LavaLover implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.DEMON);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

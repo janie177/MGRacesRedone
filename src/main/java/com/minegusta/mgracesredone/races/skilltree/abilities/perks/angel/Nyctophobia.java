@@ -17,8 +17,9 @@ public class Nyctophobia implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         // Do nothing
+        return true;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Nyctophobia implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -59,6 +60,11 @@ public class Nyctophobia implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ANGEL);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

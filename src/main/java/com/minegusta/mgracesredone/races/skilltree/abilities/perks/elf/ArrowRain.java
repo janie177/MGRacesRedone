@@ -41,13 +41,14 @@ public class ArrowRain implements IAbility {
                 int zAdded = -4 + RandomUtil.randomNumber(8);
                 Location dropLocation = new Location(l.getWorld(), l.getX(), l.getY(), l.getZ());
                 l.getWorld().spawnEntity(dropLocation.add(xAdded, 15, zAdded), EntityType.ARROW);
+                l.getWorld().spawnEntity(dropLocation.add(xAdded, 15, zAdded), EntityType.ARROW);
             }, 5 * i);
         }
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -67,13 +68,13 @@ public class ArrowRain implements IAbility {
 
     @Override
     public Material getDisplayItem() {
-        return Material.LEATHER_HELMET;
+        return Material.TIPPED_ARROW;
     }
 
     @Override
     public int getPrice(int level) {
 
-        return 4 - level;
+        return 2;
     }
 
     @Override
@@ -89,6 +90,11 @@ public class ArrowRain implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ELF);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

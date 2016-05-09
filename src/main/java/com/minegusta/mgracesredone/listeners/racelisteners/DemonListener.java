@@ -1,25 +1,19 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
-import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
-import com.minegusta.mgracesredone.util.DemonPowers;
 import com.minegusta.mgracesredone.util.PlayerUtil;
 import com.minegusta.mgracesredone.util.WeatherUtil;
 import com.minegusta.mgracesredone.util.WorldCheck;
-import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.inventory.EquipmentSlot;
 
 public class DemonListener implements Listener {
     @EventHandler
@@ -55,43 +49,6 @@ public class DemonListener implements Listener {
             e.setCancelled(true);
         }
 
-    }
-
-    @EventHandler
-    public void onDemonInteract(PlayerInteractEvent e) {
-        if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
-        if (e.getHand() != EquipmentSlot.HAND) return;
-
-        Player p = e.getPlayer();
-        Material hand = p.getInventory().getItemInMainHand().getType();
-        if (hand != Material.BLAZE_ROD) return;
-
-        String uuid = e.getPlayer().getUniqueId().toString();
-
-        MGPlayer mgp = Races.getMGPlayer(p);
-
-        //Check to see if the player even has an ability.
-        if (!(mgp.hasAbility(AbilityType.UNHOLYRAIN) || mgp.hasAbility(AbilityType.METEORSTORM) || mgp.hasAbility(AbilityType.HELLRIFT)))
-            return;
-
-        DemonPowers.DemonPower power = DemonPowers.getPower(p);
-
-
-        //Switch to next
-        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-            power = DemonPowers.nextPower(p);
-            return;
-        }
-
-        //Do the powers
-
-        if (power == DemonPowers.DemonPower.HELL_RIFT) {
-            AbilityType.HELLRIFT.run(p);
-        } else if (power == DemonPowers.DemonPower.UNHOLY_RAIN) {
-            AbilityType.UNHOLYRAIN.run(p);
-        } else if (power == DemonPowers.DemonPower.METEOR_STORM) {
-            AbilityType.METEORSTORM.run(p);
-        }
     }
 
     @EventHandler
@@ -134,7 +91,7 @@ public class DemonListener implements Listener {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
 
-            if (!(e.getDamager() instanceof LivingEntity) || !(p.getHealth() < 6)) return;
+            if (!(e.getDamager() instanceof LivingEntity) || !(p.getHealth() < 8)) return;
 
             if (Races.getMGPlayer(p).hasAbility(AbilityType.MINIONMASTER)) {
                 AbilityType.MINIONMASTER.run(e);

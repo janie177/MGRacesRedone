@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.main;
 
 
+import com.minegusta.mgracesredone.listeners.bind.BindListener;
 import com.minegusta.mgracesredone.listeners.cure.CureListener;
 import com.minegusta.mgracesredone.listeners.general.FallDamageManager;
 import com.minegusta.mgracesredone.listeners.general.GeneralListener;
@@ -23,6 +24,7 @@ public enum Listener {
     ANGEL_LISTENER(new AngelListener()),
     ENDERBORN_LISTENER(new EnderBornListener()),
     VAMPIRE_LISTENER(new VampireListener()),
+    BIND_LISTENER(new BindListener()),
     MENU_LISTENER(new MenuListener());
 
     private org.bukkit.event.Listener listener;

@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.tasks.*;
 import com.minegusta.mgracesredone.util.CountRaces;
 import com.minegusta.mgracesredone.util.OnReload;
 import com.minegusta.mgracesredone.util.ScoreboardUtil;
+import com.minegusta.mgracesredone.util.VampireFoodUtil;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -33,8 +34,14 @@ public class Main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(listener.get(), this);
         }
 
+        //Save default config
+        Main.getPlugin().saveDefaultConfig();
+
         //Register recipes
         Recipe.registerRecipes();
+
+        //Load all the food amounts per entity for the vampoopers.
+        VampireFoodUtil.init();
 
         WG_ENABLED = Bukkit.getPluginManager().isPluginEnabled("WorldGuard");
 
@@ -62,6 +69,7 @@ public class Main extends JavaPlugin {
         MissileTask.start();
         InvisibleTask.start();
         ShieldTask.start();
+        BloodLustTask.start();
 
     }
 
@@ -87,6 +95,7 @@ public class Main extends JavaPlugin {
         RideTask.stop();
         InvisibleTask.stop();
         ShieldTask.stop();
+        BloodLustTask.stop();
 
         //Save
         SaveTask.save();

@@ -2,7 +2,7 @@ main: com.minegusta.mgracesredone.main.Main
 authors: [janie177, HQM]
 name: MGRacesRedone
 version: ${project.version}
-depend: [WorldGuard, Vault]
+depend: [WorldGuard, Vault, MGEssentials]
 commands:
    race:
       aliases: [races, class, classes, rc]
@@ -16,6 +16,21 @@ commands:
       usage: /perkreset
       description: Resets your perks WITHOUT refunding you.
    perk:
-      aliases: [perks, power, powers, pp, skilltree, tree, ]
+      aliases: [perks, power, powers, pp, skilltree, tree]
       usage: /Race
       description: All information you need about races.
+   bind:
+      aliases: [b, binds, cast, ability]
+      usage: /Bind
+      description: Bind an ability to an item. Right click said item to use.
+   unbind:
+      aliases: [ub, clearbind, rebind, clearability]
+      usage: /Unind
+      description: Unind an ability from an item.
+   spawn:
+      usage: /Spawn
+      description: Teleport to the server spawn.
+   mainspawn:
+      usage: /Mainspawn
+      description: Teleport to the trade hub.
+      aliases: [hub, tradedistrict, human, humanspawn, mainspawn, hubportal, tradehub]

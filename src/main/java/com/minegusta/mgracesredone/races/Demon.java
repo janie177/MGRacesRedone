@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.races;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon.Hellspawn;
 import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
@@ -69,7 +70,7 @@ public class Demon implements Race {
         }
 
         if (WeatherUtil.isHell(loc)) {
-            if (mgp.hasAbility(AbilityType.HELLSPAWN)) {
+            if (mgp.hasAbility(AbilityType.HELLSPAWN) && Hellspawn.isToggled(p)) {
                 int level = mgp.getAbilityLevel(AbilityType.HELLSPAWN);
                 EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
 
@@ -89,6 +90,7 @@ public class Demon implements Race {
             if (mgp.hasAbility(AbilityType.ENVIRONMENTALIST) && mgp.getAbilityLevel(AbilityType.ENVIRONMENTALIST) > 4) {
                 EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
+                PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
             }
         } else if (biome == WeatherUtil.BiomeType.COLD || biome == WeatherUtil.BiomeType.ICE) {
             int slowAmp = 1;

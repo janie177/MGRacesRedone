@@ -17,8 +17,8 @@ public class Environmentalist implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -62,6 +62,11 @@ public class Environmentalist implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return false;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -84,7 +89,7 @@ public class Environmentalist implements IAbility {
                 desc = new String[]{"You only take half as much water damage."};
                 break;
             case 5:
-                desc = new String[]{"In hot biomes, you will gain a speed boost."};
+                desc = new String[]{"In hot biomes, you will gain a speed and strength boost."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

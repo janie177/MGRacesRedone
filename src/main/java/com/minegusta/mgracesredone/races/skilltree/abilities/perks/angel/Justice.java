@@ -7,8 +7,6 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,25 +25,12 @@ public class Justice implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-        String name = "justice";
-        String id = player.getUniqueId().toString();
-
-        if (!Cooldown.isCooledDown(name, id)) {
-            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, id) + " seconds to use Justice.");
-            return;
-        }
+    public boolean run(Player player) {
 
 
         //level
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-
-        //Start cooldown
-        Cooldown.newCoolDown(name, id, getCooldown(level));
-
-        //Message
-        ChatUtil.sendString(player, "You activate Justice!");
 
         //Getting the launch speed
         double speed = 1.5 + level / 3;
@@ -80,6 +65,8 @@ public class Justice implements IAbility {
 
         //Launch the player
         player.setVelocity(new Vector(player.getVelocity().getX(), speed, player.getVelocity().getZ()));
+
+        return true;
     }
 
     @Override
@@ -104,10 +91,7 @@ public class Justice implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        if (level == 1) {
-            return 2;
-        }
-        return 1;
+        return 2;
     }
 
     @Override
@@ -126,6 +110,11 @@ public class Justice implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }
@@ -136,7 +125,7 @@ public class Justice implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"To activate justice, hit the ground under you while sneaking.", "You will be launched into the air."};
+                desc = new String[]{"Launch into the air.", "Bind using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"When activating justice, you push back enemies."};

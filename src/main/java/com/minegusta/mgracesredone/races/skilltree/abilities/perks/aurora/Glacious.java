@@ -1,16 +1,23 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 public class Glacious implements IAbility {
+
+    private static ConcurrentMap<String, Boolean> toggled = Maps.newConcurrentMap();
 
     @Override
     public void run(Event event) {
@@ -18,8 +25,23 @@ public class Glacious implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
 
+        if (toggled.containsKey(player.getUniqueId().toString())) {
+            toggled.remove(player.getUniqueId().toString());
+            player.sendMessage(ChatColor.AQUA + "You enabled your Glacious buffs.");
+            PotionUtil.updatePotion(player, PotionEffectType.SPEED, 4, 0);
+            PotionUtil.updatePotion(player, PotionEffectType.JUMP, 4, 0);
+        } else {
+            toggled.put(player.getUniqueId().toString(), true);
+            player.sendMessage(ChatColor.AQUA + "You disabled your Glacious buffs.");
+        }
+
+        return false;
+    }
+
+    public static boolean isToggled(Player player) {
+        return toggled.containsKey(player.getUniqueId().toString());
     }
 
     @Override
@@ -63,6 +85,11 @@ public class Glacious implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -73,7 +100,7 @@ public class Glacious implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"In cold biomes, you will gain a speed boost."};
+                desc = new String[]{"In cold biomes, you will gain a speed boost.", "Bind to an item to toggle using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"In ice biomes you will gain a defence boost."};

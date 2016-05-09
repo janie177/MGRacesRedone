@@ -45,7 +45,7 @@ public class Carnivore implements IAbility {
 
     //The food boosts
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
 
@@ -57,6 +57,7 @@ public class Carnivore implements IAbility {
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 1, 15);
             EffectUtil.playParticle(player, Effect.CRIT, 1, 1, 1, 30);
         }
+        return false;
     }
 
     @Override
@@ -97,6 +98,11 @@ public class Carnivore implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.WEREWOLF);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

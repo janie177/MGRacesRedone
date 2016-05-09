@@ -35,11 +35,6 @@ public class DwarfListener implements Listener {
             }
         }
 
-        //SpiritAxe activation
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity && !e.isCancelled() && ((Player) e.getDamager()).isSneaking() && Races.getMGPlayer((Player) e.getDamager()).hasAbility(AbilityType.SPIRITAXE)) {
-            AbilityType.SPIRITAXE.run(e);
-        }
-
         //Arrow weakness
         if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
@@ -101,22 +96,6 @@ public class DwarfListener implements Listener {
         if (e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.GOLD_BLOCK && Races.getMGPlayer(p).getAbilityLevel(AbilityType.TUNNLER) > 3) {
             AbilityType.TUNNLER.run(p);
             return;
-        }
-
-        //StoneShape
-        if (e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.STONESHAPE) && ItemUtil.isAxe(e.getPlayer().getInventory().getItemInMainHand().getType()) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY()) {
-            AbilityType.STONESHAPE.run(p);
-        }
-
-        //Earthquake
-        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && Races.getMGPlayer(p).hasAbility(AbilityType.EARTQUAKE) && ItemUtil.isPickAxe(p.getInventory().getItemInMainHand().getType())) {
-            AbilityType.EARTQUAKE.run(p);
-            return;
-        }
-
-        //Battle Cry
-        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && ItemUtil.isAxe(p.getInventory().getItemInMainHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLECRY)) {
-            AbilityType.BATTLECRY.run(p);
         }
     }
 

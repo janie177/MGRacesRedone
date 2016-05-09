@@ -23,11 +23,12 @@ public class Tunnler implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         //Give effects when the player hits a gold block.
         PotionUtil.updatePotion(player, PotionEffectType.SPEED, 2, 5);
         PotionUtil.updatePotion(player, PotionEffectType.JUMP, 1, 5);
         EffectUtil.playParticle(player, Effect.FLAME);
+        return false;
     }
 
     @Override
@@ -69,6 +70,11 @@ public class Tunnler implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.DWARF);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.races;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora.Glacious;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PlayerUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
@@ -58,7 +59,7 @@ public class Aurora implements Race {
     public void passiveBoost(Player p) {
         MGPlayer mgp = Races.getMGPlayer(p);
 
-        int feeshLevel = mgp.getAbilityLevel(AbilityType.FEESH);
+        int feeshLevel = mgp.getAbilityLevel(AbilityType.Fish);
 
         if (PlayerUtil.isInWater(p) && feeshLevel > 1) {
             PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 5);
@@ -84,7 +85,7 @@ public class Aurora implements Race {
 
         int glaceLevel = mgp.getAbilityLevel(AbilityType.GLACIOUS);
 
-        if (biome == WeatherUtil.BiomeType.ICE && glaceLevel > 0) {
+        if (biome == WeatherUtil.BiomeType.ICE && glaceLevel > 0 && Glacious.isToggled(p)) {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             if (glaceLevel > 4) {
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
@@ -93,7 +94,7 @@ public class Aurora implements Race {
             if (glaceLevel > 2) PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             if (glaceLevel > 3) PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
-        } else if (glaceLevel > 0 && biome == WeatherUtil.BiomeType.COLD) {
+        } else if (glaceLevel > 0 && biome == WeatherUtil.BiomeType.COLD && Glacious.isToggled(p)) {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             EffectUtil.playParticle(p, Effect.SNOW_SHOVEL);
         } else if (biome == WeatherUtil.BiomeType.HOT || biome == WeatherUtil.BiomeType.WARM) {

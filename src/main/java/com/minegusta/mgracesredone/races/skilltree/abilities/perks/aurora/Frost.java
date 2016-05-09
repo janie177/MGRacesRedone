@@ -9,10 +9,10 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,32 +35,27 @@ public class Frost implements IAbility {
     private static ConcurrentMap<String, List<Block>> frozenMap = Maps.newConcurrentMap();
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
 
         if (!WGUtil.canBuild(player)) {
-            ChatUtil.sendString(player, "You cannot use Frost here!");
-            return;
+            player.sendMessage(ChatColor.RED + "You cannot use Frost here!");
+            return false;
         }
 
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
         Location l = player.getLocation();
-        String uuid = player.getUniqueId().toString();
-        String cooldownName = "frost";
 
-        if (Cooldown.isCooledDown(cooldownName, uuid)) {
-            ChatUtil.sendString(player, "You use frost on your location!");
-            Cooldown.newCoolDown(cooldownName, uuid, getCooldown(level));
-            int radius = 5;
-            boolean weaken = level > 2;
-            int time = 6;
-            if (level > 1) time = 15;
-            if (level > 3) radius = 8;
+        ChatUtil.sendString(player, "You use frost on your location!");
+        int radius = 5;
+        boolean weaken = level > 2;
+        int time = 6;
+        if (level > 1) time = 15;
+        if (level > 3) radius = 8;
 
-            start(l, radius, time, weaken, uuid, player);
-        } else {
-            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(cooldownName, uuid) + " seconds to use Frost.");
-        }
+        start(l, radius, time, weaken, player.getUniqueId().toString(), player);
+
+        return true;
     }
 
     private void start(Location l, int radius, int time, boolean weaken, final String uuid, Player p) {
@@ -140,6 +135,11 @@ public class Frost implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }
@@ -150,7 +150,7 @@ public class Frost implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Freeze the floor around you, freezing enemies.", "Activate by hitting the floor with a sword."};
+                desc = new String[]{"Freeze the floor around you, freezing enemies.", "Bind to an item using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"Enemies stay frozen twice as long."};

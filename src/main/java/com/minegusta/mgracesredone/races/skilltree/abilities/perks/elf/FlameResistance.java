@@ -25,8 +25,8 @@ public class FlameResistance implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -51,20 +51,7 @@ public class FlameResistance implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        int cost = 1;
-        switch (level) {
-            case 1:
-                cost = 1;
-                break;
-            case 2:
-                cost = 2;
-                break;
-            case 3:
-                cost = 2;
-                break;
-        }
-
-        return cost;
+        return 1;
     }
 
     @Override
@@ -80,6 +67,11 @@ public class FlameResistance implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ELF);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

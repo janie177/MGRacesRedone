@@ -1,16 +1,22 @@
 package com.minegusta.mgracesredone.playerdata;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.manager.AbilityFileManager;
+import com.minegusta.mgracesredone.util.BindUtil;
 import com.minegusta.mgracesredone.util.ScoreboardUtil;
 import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
@@ -20,6 +26,7 @@ public class MGPlayer {
     private String name;
     private RaceType raceType;
     private FileConfiguration conf;
+    private Binds binds;
     private double health;
     private int perkpoints;
     private ConcurrentMap<AbilityType, Integer> abilities = Maps.newConcurrentMap();
@@ -31,6 +38,24 @@ public class MGPlayer {
         this.raceType = RaceType.valueOf(conf.getString("racetype", "HUMAN"));
         this.perkpoints = conf.getInt("perkpoints", 0);
         this.health = conf.getDouble("health", getHealth());
+
+        List<Bind> binds = Lists.newArrayList();
+        if (conf.isSet("binds")) {
+            ConfigurationSection bindConf = conf.getConfigurationSection("binds");
+
+            for (String s : bindConf.getKeys(false)) {
+                try {
+                    Material item = Material.valueOf(bindConf.getString(s + ".item"));
+                    short data = (short) bindConf.getInt(s + ".data");
+                    AbilityType abilityType = AbilityType.valueOf(bindConf.getString(s + ".ability"));
+                    Bind bind = new Bind(abilityType, item, data);
+                    binds.add(bind);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        this.binds = new Binds(binds);
+
         AbilityFileManager.loadAbilities(this);
 
         updateAttributes();
@@ -48,9 +73,43 @@ public class MGPlayer {
         buildMGPlayer(uuid, f);
     }
 
-
+    //BINDS//
     //------------------------------------------------------------------------------//
 
+    public List<Bind> getBinds() {
+        return binds.getBinds();
+    }
+
+    public boolean isBind(Material item, short data, boolean ignoreData) {
+        return binds.isBind(item, data, ignoreData);
+    }
+
+    public Optional<AbilityType> getBindForItem(Material item, short data, boolean ignoreData) {
+        return binds.getAbilityForItem(item, data, ignoreData);
+    }
+
+    public void addBind(Material item, AbilityType type, short data) {
+        removeBind(item, data, BindUtil.ignoreItemData(item));
+        Bind bind = new Bind(type, item, data);
+        binds.addBind(bind);
+    }
+
+    public List<Bind> getBindForAbility(AbilityType type) {
+        return binds.getBindForAbility(type);
+    }
+
+    public void resetBinds() {
+        binds.getBinds().clear();
+    }
+
+    public void removeBind(Material item, short data, boolean ignoreData) {
+        binds.getBinds().stream().filter(b -> b.getItem() == item && (b.getData() == data || ignoreData)).forEach(b -> {
+            binds.removeBind(b);
+        });
+    }
+
+
+    //------------------------------------------------------------------------------//
     public void addAbility(AbilityType type, int level) {
         abilities.put(type, level);
     }
@@ -115,8 +174,10 @@ public class MGPlayer {
         this.raceType = raceType;
         updateHealth();
         updateScoreboard();
-        perkpoints = 0;
+        //3 perkpoints to start with.
+        perkpoints = 3;
         abilities.clear();
+        binds.getBinds().clear();
         saveFile();
     }
 
@@ -156,6 +217,20 @@ public class MGPlayer {
         conf.set("racetype", raceType.name());
         conf.set("perkpoints", perkpoints);
         conf.set("health", getHealth());
+
+        if (conf.isSet("binds")) {
+            conf.set("binds", null);
+        }
+
+        if (!binds.getBinds().isEmpty()) {
+            for (Bind b : binds.getBinds()) {
+                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".item", b.getItem().name());
+                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".data", b.getData());
+                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".ability", b.getAbilityType());
+            }
+        }
+
+
         AbilityFileManager.saveAbilities(this);
     }
 

@@ -7,7 +7,6 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.ChatColor;
@@ -26,48 +25,40 @@ public class Prayer implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
-        String name = "pray";
         int level = mgp.getAbilityLevel(getType());
-        String uuid = mgp.getUniqueIdAsString();
 
         if (!WGUtil.canGetDamage(player)) {
             ChatUtil.sendString(player, "You cannot use Prayer here!");
-            return;
+            return false;
         }
 
-        if (Cooldown.isCooledDown(name, uuid)) {
-            //The cooldown + message
-            Cooldown.newCoolDown(name, uuid, getCooldown(level));
-            ChatUtil.sendString(player, "You pray and your requests are answered!");
+        ChatUtil.sendString(player, "You pray and your requests are answered!");
 
-            //The bunny
-            Location l = player.getLocation();
-            int amount = 1;
-            if (level > 1) amount++;
+        //The bunny
+        Location l = player.getLocation();
+        int amount = 1;
+        if (level > 1) amount++;
 
-            for (int i = 0; i < amount; i++) {
-                Rabbit rabbit = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
-                if (level > 2) {
-                    PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 1, 600);
-                    PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 0, 600);
-                    PotionUtil.updatePotion(rabbit, PotionEffectType.REGENERATION, 0, 60);
-                }
-                rabbit.setAdult();
-                rabbit.setCustomName(ChatColor.RED + "Judas");
-                rabbit.setCustomNameVisible(true);
-                rabbit.setRabbitType(Rabbit.Type.THE_KILLER_BUNNY);
-
-                rabbit.getWorld().getEntitiesByClass(LivingEntity.class).stream().filter(le -> le.getLocation().
-                        distance(rabbit.getLocation()) <= 8).filter(le -> !(le instanceof Animals) &&
-                        !(le instanceof Player && Races.getRace((Player) le).equals(RaceType.ANGEL))).
-                        forEach(rabbit::setTarget);
+        for (int i = 0; i < amount; i++) {
+            Rabbit rabbit = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
+            if (level > 2) {
+                PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 1, 600);
+                PotionUtil.updatePotion(rabbit, PotionEffectType.SPEED, 0, 600);
+                PotionUtil.updatePotion(rabbit, PotionEffectType.REGENERATION, 0, 60);
             }
+            rabbit.setAdult();
+            rabbit.setCustomName(ChatColor.RED + "Judas");
+            rabbit.setCustomNameVisible(true);
+            rabbit.setRabbitType(Rabbit.Type.THE_KILLER_BUNNY);
 
-        } else {
-            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Prayer.");
+            rabbit.getWorld().getEntitiesByClass(LivingEntity.class).stream().filter(le -> le.getLocation().
+                    distance(rabbit.getLocation()) <= 8).filter(le -> !(le instanceof Animals) &&
+                    !(le instanceof Player && Races.getRace((Player) le).equals(RaceType.ANGEL))).
+                    forEach(rabbit::setTarget);
         }
+        return true;
     }
 
     @Override
@@ -77,7 +68,8 @@ public class Prayer implements IAbility {
 
     @Override
     public AbilityType getType() {
-        return AbilityType.PRAYER;
+        //return AbilityType.PRAYER;
+        return null;
     }
 
     @Override
@@ -108,6 +100,11 @@ public class Prayer implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ANGEL);
+    }
+
+    @Override
+    public boolean canBind() {
+        return true;
     }
 
     @Override

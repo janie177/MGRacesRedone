@@ -8,7 +8,6 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.ShadowInvisibility;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ public class Shadow implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         String uuid = player.getUniqueId().toString();
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
@@ -32,28 +31,22 @@ public class Shadow implements IAbility {
         if (ShadowInvisibility.contains(uuid)) {
             ShadowInvisibility.remove(uuid);
             ChatUtil.sendString(player, "You are no longer invisible!");
-            return;
-        }
-
-        if (!Cooldown.isCooledDown(name, uuid)) {
-            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
-            return;
+            return true;
         }
 
         if (level < 2 && player.getLocation().getBlock().getLightLevel() > 6) {
             ChatUtil.sendString(player, "You cannot use invisibility in light areas.");
-            return;
+            return false;
         }
 
         ChatUtil.sendString(player, "You are now invisible!");
-        Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
         int duration = 6;
         if (level > 3) duration = 10;
 
         ShadowInvisibility.add(uuid, duration);
 
-
+        return true;
     }
 
     @Override
@@ -78,7 +71,8 @@ public class Shadow implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        if (level == 2) return 1;
+        return 2;
     }
 
     @Override
@@ -88,13 +82,18 @@ public class Shadow implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        if (level > 2) return 30;
+        if (level > 2) return 35;
         return 40;
     }
 
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ENDERBORN);
+    }
+
+    @Override
+    public boolean canBind() {
+        return true;
     }
 
     @Override
@@ -108,16 +107,16 @@ public class Shadow implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"You can toggle invisibility in dark areas.", "Activate by right clicking the floor underneath you.", "You will leave a dark shadow on the floor.", "Will last for 6 seconds."};
+                desc = new String[]{"You can toggle invisibility in dark areas.", "Bind to an item using /Bind.", "You will leave a dark shadow on the floor.", "Will last for 6 seconds."};
                 break;
             case 2:
                 desc = new String[]{"You can now toggle invisibility in lighter areas."};
                 break;
             case 3:
-                desc = new String[]{"Your cooldown is reduced to 30 seconds.", "Your invisibility will last for 10 seconds."};
+                desc = new String[]{"Your cooldown is reduced to 35 seconds.", "Your invisibility will last for 10 seconds."};
                 break;
             case 4:
-                desc = new String[]{"When invisible, you gain a speed 1 boost."};
+                desc = new String[]{"When invisible, you gain a speed 1 and strength 2 boost."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

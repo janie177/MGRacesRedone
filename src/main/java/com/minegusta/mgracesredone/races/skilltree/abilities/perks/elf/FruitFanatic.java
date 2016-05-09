@@ -18,65 +18,66 @@ import java.util.List;
 public class FruitFanatic implements IAbility {
     @Override
     public void run(Event event) {
-        PlayerItemConsumeEvent e = (PlayerItemConsumeEvent) event;
-        Player p = e.getPlayer();
-        MGPlayer mgp = Races.getMGPlayer(p);
-        int level = mgp.getAbilityLevel(getType());
+        if (event instanceof PlayerItemConsumeEvent) {
+            PlayerItemConsumeEvent e = (PlayerItemConsumeEvent) event;
+            Player p = e.getPlayer();
+            MGPlayer mgp = Races.getMGPlayer(p);
+            int level = mgp.getAbilityLevel(getType());
 
-        int duration1, duration2, amp1, amp2;
+            int duration1, duration2, amp1, amp2;
 
-        switch (level) {
-            case 1: {
-                amp1 = 0;
-                amp2 = 0;
-                duration1 = 2;
-                duration2 = 0;
+            switch (level) {
+                case 1: {
+                    amp1 = 0;
+                    amp2 = 0;
+                    duration1 = 2;
+                    duration2 = 0;
+                }
+                break;
+                case 2: {
+                    amp1 = 0;
+                    amp2 = 0;
+                    duration1 = 4;
+                    duration2 = 0;
+                }
+                break;
+                case 3: {
+                    amp1 = 0;
+                    amp2 = 1;
+                    duration1 = 6;
+                    duration2 = 4;
+                }
+                break;
+                case 4: {
+                    amp1 = 0;
+                    amp2 = 1;
+                    duration1 = 6;
+                    duration2 = 6;
+                }
+                break;
+                case 5: {
+                    amp1 = 0;
+                    amp2 = 1;
+                    duration1 = 6;
+                    duration2 = 8;
+                }
+                break;
+                default: {
+                    amp1 = 0;
+                    amp2 = 0;
+                    duration1 = 2;
+                    duration2 = 2;
+                }
             }
-            break;
-            case 2: {
-                amp1 = 0;
-                amp2 = 0;
-                duration1 = 4;
-                duration2 = 0;
-            }
-            break;
-            case 3: {
-                amp1 = 0;
-                amp2 = 1;
-                duration1 = 6;
-                duration2 = 4;
-            }
-            break;
-            case 4: {
-                amp1 = 0;
-                amp2 = 1;
-                duration1 = 6;
-                duration2 = 6;
-            }
-            break;
-            case 5: {
-                amp1 = 0;
-                amp2 = 1;
-                duration1 = 6;
-                duration2 = 8;
-            }
-            break;
-            default: {
-                amp1 = 0;
-                amp2 = 0;
-                duration1 = 2;
-                duration2 = 2;
-            }
+
+            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, amp1, duration1);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, amp2, duration2);
         }
-
-        PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, amp1, duration1);
-        PotionUtil.updatePotion(p, PotionEffectType.SPEED, amp2, duration2);
-
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -117,6 +118,11 @@ public class FruitFanatic implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ELF);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

@@ -8,10 +8,9 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,29 +29,18 @@ public class StoneShape implements IAbility {
     public static ConcurrentMap<Location, Boolean> wallBlocks = Maps.newConcurrentMap();
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         //Standard data needed.
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-        String name = "stones";
-        String uuid = player.getUniqueId().toString();
 
-        //Cooldown?
-        if (!Cooldown.isCooledDown(name, uuid)) {
-            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
-            return;
-        }
 
         //Worldguard?
         if (!WGUtil.canBuild(player)) {
-            ChatUtil.sendString(player, "You cannot use " + getName() + " here.");
-            return;
+            player.sendMessage(ChatColor.RED + "You cannot use " + getName() + " here.");
+            return false;
         }
 
-        //Run the ability here.
-
-        ChatUtil.sendString(player, "You used " + getName() + "!");
-        Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
         //Spawn the stone wall.
         boolean explode = level > 2;
@@ -85,11 +73,13 @@ public class StoneShape implements IAbility {
                 if (loc.getBlock().getType() == Material.STONE) loc.getBlock().setType(Material.AIR);
             }
         }, duration * 20);
+
+        return true;
     }
 
     @Override
     public String getName() {
-        return "StoneShape";
+        return "Stone Shape";
     }
 
     @Override
@@ -128,6 +118,11 @@ public class StoneShape implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }
@@ -138,7 +133,7 @@ public class StoneShape implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Create a stone wall around you, effectively blocking out or trapping enemies.", "Activate by hitting the floor with an axe.", "Lasts for 6 seconds."};
+                desc = new String[]{"Create a stone wall around you, effectively blocking out or trapping enemies.", "Bind to an item using /Bind.", "Lasts for 6 seconds."};
                 break;
             case 2:
                 desc = new String[]{"Your wall lasts for 10 seconds."};

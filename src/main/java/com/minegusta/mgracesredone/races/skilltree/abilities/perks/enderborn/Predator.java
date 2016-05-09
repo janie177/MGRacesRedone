@@ -44,7 +44,7 @@ public class Predator implements IAbility {
 
     //The food boosts
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
 
@@ -56,6 +56,7 @@ public class Predator implements IAbility {
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 1, 15);
             EffectUtil.playParticle(player, Effect.PORTAL, 1, 1, 1, 30);
         }
+        return true;
     }
 
     @Override
@@ -80,7 +81,7 @@ public class Predator implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -96,6 +97,11 @@ public class Predator implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ENDERBORN);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.minegusta.mgracesredone.main;
 
-import com.minegusta.mgracesredone.commands.AdminCommand;
-import com.minegusta.mgracesredone.commands.PerkCommand;
-import com.minegusta.mgracesredone.commands.PerkResetCommand;
-import com.minegusta.mgracesredone.commands.RaceCommand;
+import com.minegusta.mgracesredone.commands.*;
 import org.bukkit.command.CommandExecutor;
 
 public enum Command {
@@ -12,6 +9,10 @@ public enum Command {
     RACEADMIN(new AdminCommand()),
     RACE(new RaceCommand()),
     PERK(new PerkCommand()),
+    BIND(new BindCommand()),
+    UNBIND(new UnbindCommand()),
+    SPAWN(new SpawnCommand()),
+    MAINSPAWN(new MainSpawnCommand()),
     PERKRESET(new PerkResetCommand());
 
     private CommandExecutor commandExecutor;

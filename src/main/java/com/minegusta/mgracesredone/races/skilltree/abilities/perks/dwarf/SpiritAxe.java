@@ -2,29 +2,29 @@ package com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
 
 public class SpiritAxe implements IAbility {
@@ -32,37 +32,40 @@ public class SpiritAxe implements IAbility {
 
     @Override
     public void run(Event event) {
-        EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
-        Player player = (Player) e.getDamager();
-        LivingEntity target = (LivingEntity) e.getEntity();
+
+    }
+
+    @Override
+    public boolean run(Player player) {
 
         //Standard data needed.
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-        String name = "axespirit";
-        final String uuid = player.getUniqueId().toString();
-
-        //Cooldown?
-        if (!Cooldown.isCooledDown(name, uuid)) {
-            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
-            return;
-        }
+        String uuid = player.getUniqueId().toString();
 
         //Worldguard?
         if (!WGUtil.canBuild(player)) {
-            ChatUtil.sendString(player, "You cannot use " + getName() + " here.");
-            return;
+            player.sendMessage(ChatColor.RED + "You cannot use " + getName() + " here.");
+            return false;
         }
 
-        //Run the ability here.
+        Location l = player.getTargetBlock(Sets.newHashSet(Material.AIR), 20).getLocation();
 
-        ChatUtil.sendString(player, "You used " + getName() + "!");
-        Cooldown.newCoolDown(name, uuid, getCooldown(level));
+        LivingEntity target;
+
+        Optional<LivingEntity> optionalTarget = l.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(l) < 3).findFirst();
+
+        if (optionalTarget.isPresent()) target = optionalTarget.get();
+        else {
+            player.sendMessage(ChatColor.RED + "No target could be found.");
+            return false;
+        }
+
 
         boolean damageResist = level > 4;
         boolean sideAxes = level > 3;
         boolean diamond = level > 2;
-        boolean strengt = level > 1;
+        boolean strength = level > 1;
 
         //Summon the axe
         final Skeleton skeleton = (Skeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.SKELETON);
@@ -72,7 +75,7 @@ public class SpiritAxe implements IAbility {
         skeleton.getEquipment().setItemInHandDropChance(0);
         skeleton.setCustomName(ChatColor.AQUA + "Spirit Axe");
         if (diamond) skeleton.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_AXE, 1));
-        if (strengt) PotionUtil.updatePotion(skeleton, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
+        if (strength) PotionUtil.updatePotion(skeleton, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
         if (damageResist) PotionUtil.updatePotion(skeleton, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
 
         axes.put(skeleton.getUniqueId().toString(), uuid);
@@ -97,7 +100,7 @@ public class SpiritAxe implements IAbility {
                 s.getEquipment().setItemInHand(new ItemStack(Material.IRON_AXE, 1));
                 s.getEquipment().setItemInHandDropChance(0);
                 s.setCustomName(ChatColor.AQUA + "Spirit Axe");
-                if (strengt) PotionUtil.updatePotion(s, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
+                if (strength) PotionUtil.updatePotion(s, PotionEffectType.INCREASE_DAMAGE, 0, 3600);
                 if (damageResist) PotionUtil.updatePotion(s, PotionEffectType.DAMAGE_RESISTANCE, 0, 3600);
                 s.setTarget(target);
 
@@ -107,7 +110,7 @@ public class SpiritAxe implements IAbility {
 
                 //Despawn task
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
-                    if (!s.isDead()) {
+                    if (s.isValid()) {
                         s.remove();
                     }
                     axes.remove(id);
@@ -115,11 +118,7 @@ public class SpiritAxe implements IAbility {
 
             }
         }
-    }
-
-    @Override
-    public void run(Player player) {
-
+        return true;
     }
 
     @Override
@@ -163,6 +162,11 @@ public class SpiritAxe implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -173,7 +177,7 @@ public class SpiritAxe implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Summon a flying iron axe that attacks your (player) target.", "Activate by crouch hitting a target.", "Lasts for 6 seconds."};
+                desc = new String[]{"Summon a flying iron axe that attacks your target.", "Bind to an item using /Bind.", "Lasts for 6 seconds."};
                 break;
             case 2:
                 desc = new String[]{"Your axe has a strength boost."};

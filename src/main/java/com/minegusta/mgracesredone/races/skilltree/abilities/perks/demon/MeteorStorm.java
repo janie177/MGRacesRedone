@@ -8,8 +8,6 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
@@ -32,37 +30,24 @@ public class MeteorStorm implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-        String name = "mstorm";
-        String id = player.getUniqueId().toString();
-        int cooldownTime = 60;
+    public boolean run(Player player) {
+        MGPlayer mgp = Races.getMGPlayer(player);
+        int level = mgp.getAbilityLevel(getType());
+        Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 30, 0);
 
-        if (Cooldown.isCooledDown(name, id)) {
-
-            MGPlayer mgp = Races.getMGPlayer(player);
-            int level = mgp.getAbilityLevel(getType());
-            Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 30, 0);
-
-            if (!WGUtil.canBuild(player, target.getLocation())) {
-                ChatUtil.sendString(player, "You cannot use MeteorStorm here!");
-                return;
-            }
-
-            ChatUtil.sendString(player, "You call a Meteor Storm on your enemies!");
-
-            Cooldown.newCoolDown(name, id, cooldownTime);
-
-            int interval = 16;
-            int duration = 6;
-
-            if (level > 2) duration = 10;
-            if (level > 1) interval = 8;
-
-            runStorm(target.getLocation(), duration, interval);
-
-        } else {
-            ChatUtil.sendString(player, ChatColor.RED + "You need to wait another " + Cooldown.getRemaining(name, id) + " seconds to use Meteor Storm.");
+        if (!WGUtil.canBuild(player, target.getLocation())) {
+            player.sendMessage(ChatColor.RED + "You cannot use MeteorStorm here!");
+            return false;
         }
+
+        int interval = 16;
+        int duration = 6;
+
+        if (level > 2) duration = 10;
+        if (level > 1) interval = 8;
+
+        runStorm(target.getLocation(), duration, interval);
+        return true;
     }
 
     private void runStorm(final Location location, final int duration, final int interval) {
@@ -103,7 +88,7 @@ public class MeteorStorm implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return level;
+        return 2;
     }
 
     @Override
@@ -113,12 +98,17 @@ public class MeteorStorm implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        return 0;
+        return 60;
     }
 
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.DEMON);
+    }
+
+    @Override
+    public boolean canBind() {
+        return true;
     }
 
     @Override
@@ -132,7 +122,7 @@ public class MeteorStorm implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Call a Meteor storm on your location.", "Activate using a blazerod.", "Duration: 6 seconds."};
+                desc = new String[]{"Call a Meteor storm on your location.", "Bind to an item using /Bind.", "Duration: 6 seconds."};
                 break;
             case 2:
                 desc = new String[]{"The amount of meteors in your storm is doubled."};

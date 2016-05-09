@@ -3,6 +3,8 @@ package com.minegusta.mgracesredone.commands;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
+import com.minegusta.mgracesredone.util.SpawnLocationUtil;
+import com.minegusta.mgracesredone.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -20,10 +22,32 @@ public class AdminCommand implements CommandExecutor
             return true;
         }
 
+        if (args.length == 2 && args[0].equalsIgnoreCase("setspawn") && s instanceof Player) {
+            Player p = (Player) s;
+
+            if (!WorldCheck.isEnabled(p.getWorld())) {
+                p.sendMessage(ChatColor.RED + "This world does not have races enabled.");
+                return true;
+            }
+
+            String race = args[1];
+            try {
+                RaceType raceType = RaceType.valueOf(race.toUpperCase());
+                SpawnLocationUtil.setSpawn(raceType, ((Player) s).getLocation());
+                if (raceType == RaceType.HUMAN) {
+                    p.getWorld().setSpawnLocation((int) p.getLocation().getX(), (int) p.getLocation().getY(), (int) p.getLocation().getZ());
+                }
+                s.sendMessage(ChatColor.GREEN + "Spawn for " + raceType.name() + " is now set at your location.");
+            } catch (Exception ignored) {
+            }
+            return true;
+        }
+
         if (args.length < 3) {
             s.sendMessage(ChatColor.RED + "Invalid command. Usage: ");
             s.sendMessage(ChatColor.GRAY + "/RA Set <Player> <Race>");
             s.sendMessage(ChatColor.GRAY + "/RA PerkPoints <add/set/remove> <Player> <amount>");
+            s.sendMessage(ChatColor.GRAY + "/RA SetSpawn <Race>");
             return true;
         }
 
@@ -57,6 +81,7 @@ public class AdminCommand implements CommandExecutor
                     s.sendMessage(ChatColor.RED + "Invalid command. Usage: ");
                     s.sendMessage(ChatColor.GRAY + "/RA Set <Player> <Race>");
                     s.sendMessage(ChatColor.GRAY + "/RA PerkPoints <add/set/remove> <Player> <amount>");
+                    s.sendMessage(ChatColor.GRAY + "/RA SetSpawn <Race>");
                 }
                 return true;
             } else if (args[1].equalsIgnoreCase("set")) {
@@ -74,6 +99,7 @@ public class AdminCommand implements CommandExecutor
                     s.sendMessage(ChatColor.RED + "Invalid command. Usage: ");
                     s.sendMessage(ChatColor.GRAY + "/RA Set <Player> <Race>");
                     s.sendMessage(ChatColor.GRAY + "/RA PerkPoints <add/set/remove> <Player> <amount>");
+                    s.sendMessage(ChatColor.GRAY + "/RA SetSpawn <Race>");
                 }
                 return true;
             } else if (args[1].equalsIgnoreCase("remove")) {
@@ -91,6 +117,7 @@ public class AdminCommand implements CommandExecutor
                     s.sendMessage(ChatColor.RED + "Invalid command. Usage: ");
                     s.sendMessage(ChatColor.GRAY + "/RA Set <Player> <Race>");
                     s.sendMessage(ChatColor.GRAY + "/RA PerkPoints <add/set/remove> <Player> <amount>");
+                    s.sendMessage(ChatColor.GRAY + "/RA SetSpawn <Race>");
                 }
                 return true;
             }
@@ -99,6 +126,7 @@ public class AdminCommand implements CommandExecutor
 
         s.sendMessage(ChatColor.RED + "Invalid command. Usage: ");
         s.sendMessage(ChatColor.GRAY + "/RA Set <Player> <Race>");
+        s.sendMessage(ChatColor.GRAY + "/RA SetSpawn <Race>");
         return true;
     }
 }

@@ -3,7 +3,7 @@ package com.minegusta.mgracesredone.commands;
 import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
-import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.racemenu.AbilityMenu;
 import com.minegusta.mgracesredone.util.ChatUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -40,12 +40,7 @@ public class PerkResetCommand implements CommandExecutor {
 
             MGPlayer mgp = Races.getMGPlayer(p);
 
-            int totalAbilities = 0;
-            for (AbilityType t : mgp.getAbilities().keySet()) {
-                for (int levels = 1; levels <= mgp.getAbilityLevel(t); levels++) {
-                    totalAbilities = totalAbilities + t.getCost(levels);
-                }
-            }
+            int totalAbilities = AbilityMenu.getTotalSpentPoints(mgp);
 
             mgp.addPerkPoints(totalAbilities / 4);
             mgp.clearAbilities();

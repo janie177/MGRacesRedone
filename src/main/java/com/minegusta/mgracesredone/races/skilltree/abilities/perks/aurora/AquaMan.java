@@ -1,6 +1,7 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgracesredone.listeners.general.FallDamageManager;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
@@ -19,13 +20,19 @@ public class AquaMan implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         double speed = 1.25;
         int level = Races.getMGPlayer(player).getAbilityLevel(getType());
-        if (level > 1) speed = 1.8;
+        if (level > 2) speed = 1.8;
 
         //Launch the player forward
         player.setVelocity(player.getLocation().getDirection().normalize().multiply(speed));
+
+        if (player.getVelocity().getY() > 1.2 && level > 1) {
+            FallDamageManager.addToFallMap(player.getUniqueId().toString());
+        }
+
+        return false;
     }
 
     @Override
@@ -69,6 +76,11 @@ public class AquaMan implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return false;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 2;
     }
@@ -82,6 +94,9 @@ public class AquaMan implements IAbility {
                 desc = new String[]{"Crouching in water will now launch you forward."};
                 break;
             case 2:
+                desc = new String[]{"You will no longer take fall damage when launching out of the water."};
+                break;
+            case 3:
                 desc = new String[]{"You will be launched 50% faster."};
                 break;
             default:

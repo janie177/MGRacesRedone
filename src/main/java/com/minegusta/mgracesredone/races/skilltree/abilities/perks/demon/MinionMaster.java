@@ -77,8 +77,8 @@ public class MinionMaster implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -103,6 +103,7 @@ public class MinionMaster implements IAbility {
 
     @Override
     public int getPrice(int level) {
+        if (level > 2) return 2;
         return 1;
     }
 
@@ -122,6 +123,11 @@ public class MinionMaster implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return false;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }
@@ -132,7 +138,7 @@ public class MinionMaster implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"When below 6 health, 3 zombie-pig-men will come to aid you.", "It is strongly advised to also have Hellish Truce perk 1."};
+                desc = new String[]{"When below 8 health, 3 zombie-pig-men will come to aid you.", "It is strongly advised to also have Hellish Truce perk 1."};
                 break;
             case 2:
                 desc = new String[]{"An additional blaze will spawn."};

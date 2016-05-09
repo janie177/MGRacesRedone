@@ -64,7 +64,7 @@ public class EndRift implements IAbility {
         //Running the ability
         if (p.isSneaking()) {
             if (!EnderRiftPortal.portalsSet(uuid)) {
-                ChatUtil.sendString(p, "You do not have your portals set! Use a stick to set them.");
+                ChatUtil.sendString(p, "You do not have your portals set! Bind the ability to an item to set them.");
                 return;
             }
 
@@ -105,8 +105,8 @@ public class EndRift implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -131,8 +131,7 @@ public class EndRift implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        if (level == 3) return 3;
-        return 2;
+        return 1;
     }
 
     @Override
@@ -152,6 +151,11 @@ public class EndRift implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }
@@ -162,7 +166,7 @@ public class EndRift implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport yourself.", "Place portals by right/left clicking a stick.", "Crouch click a stick to activate.", "Will stay open for 5 seconds.", "Portals cannot be placed above the void or in solid blocks.", "Distance between portals may not be larger than 40 blocks.", "You cannot travel between different worlds."};
+                desc = new String[]{"Open two portals that teleport entities to eachother.", "Your portal will transport yourself.", "Place portals by right/left clicking a bound item.", "Crouch click a bound item to activate.", "Will stay open for 5 seconds.", "Portals cannot be placed above the void or in solid blocks.", "Distance between portals may not be larger than 40 blocks.", "You cannot travel between different worlds."};
                 break;
             case 2:
                 desc = new String[]{"Your portal will transport mobs and itemstacks.", "The portals stay open for 9 seconds."};

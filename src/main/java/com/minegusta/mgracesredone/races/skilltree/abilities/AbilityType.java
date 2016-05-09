@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.dwarf.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.elf.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.enderborn.*;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.vampire.*;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.werewolf.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -43,18 +44,20 @@ public enum AbilityType {
     TUNNLER(new Tunnler()),
     AQUAMAN(new AquaMan()),
     DROWNINGPOOL(new DrowningPool()),
-    FEESH(new Feesh()),
+    Fish(new Fish()),
     FROST(new Frost()),
     GLACIOUS(new Glacious()),
     HEATTOLLERANCE(new HeatTollerance()),
     ICEBARRAGE(new IceBarrage()),
+    KHIONESBLESSING(new KhionesBlessing()),
     TIDALWAVE(new TidalWave()),
     GLIDE(new Glide()),
-    HOLYNESS(new Holyness()),
+    HOLINESS(new Holiness()),
     HOLYRAIN(new HolyRain()),
     JUSTICE(new Justice()),
     NYCTOPHOBIA(new Nyctophobia()),
-    PRAYER(new Prayer()),
+    //PRAYER(new Prayer()), //Remove prayer for now as it's replaced by DIVINEBLADE
+    DIVINEBLADE(new DivineBlade()), //Replaced Prayer
     PURGE(new Purge()),
     STEELSKIN(new SteelSkin()),
     WHIRLWIND(new WhirlWind()),
@@ -70,10 +73,20 @@ public enum AbilityType {
     RANGER(new Ranger()),
     FORESTFRIEND(new ForestFriend()),
     ARROWRAIN(new ArrowRain()),
+    ARROWNADO(new ArrowNado()),
     POINTYSHOOTY(new PointyShooty()),
     ANIMALRIDER(new AnimalRider()),
     NATURALIST(new Naturalist()),
     FLAMERESISTANCE(new FlameResistance()),
+    BLOODLUST(new BloodLust()),
+    REGENERATE(new Regenerate()),
+    DARKBLOOD(new DarkBlood()),
+    BATSHIELD(new BatShield()),
+    MONSTERMASH(new MonsterMash()),
+    VAMPIRICGRASP(new VampiricGrasp()),
+    THRALL(new Thrall()),
+    WOODBANE(new WoodBane()),
+    BLINK(new Blink()),
     FRUITFANATIC(new FruitFanatic());
 
 
@@ -95,11 +108,26 @@ public enum AbilityType {
         return ability.getName();
     }
 
+    public boolean canBind() {
+        return ability.canBind();
+    }
+
     public List<RaceType> getRaces() {
         return ability.getRaces();
     }
 
-    public int getCost(int level) {
+    /**
+     * Get the cost
+     *
+     * @param level            The level to get the cost for.
+     * @param totalPerksPoints Add this value divided by a number to the price.
+     * @return The baseprice +
+     */
+    public int getCost(int level, int totalPerksPoints) {
+        return ability.getPrice(level) + (totalPerksPoints / 5);
+    }
+
+    public int getBaseCost(int level) {
         return ability.getPrice(level);
     }
 
@@ -119,8 +147,8 @@ public enum AbilityType {
         return ability.getGroup();
     }
 
-    public void run(Player player) {
-        ability.run(player);
+    public boolean run(Player player) {
+        return ability.run(player);
     }
 
     public void run(Event event) {

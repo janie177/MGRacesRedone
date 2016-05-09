@@ -20,8 +20,6 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 
 public class UnholyRain implements IAbility {
-    private static final List<EntityType> unholy = Lists.newArrayList(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.WITCH, EntityType.BLAZE, EntityType.GHAST, EntityType.ENDERMAN, EntityType.PIG_ZOMBIE, EntityType.CAVE_SPIDER, EntityType.SPIDER, EntityType.CREEPER, EntityType.ENDERMITE, EntityType.GUARDIAN, EntityType.WITHER);
-    private static final List<RaceType> unholyRaces = Lists.newArrayList(RaceType.DEMON, RaceType.WEREWOLF, RaceType.ENDERBORN);
 
     @Override
     public void run(Event event) {
@@ -60,13 +58,13 @@ public class UnholyRain implements IAbility {
 
             if (ent instanceof Player) {
                 Player p = (Player) ent;
-                if (unholyRaces.contains(Races.getRace(p))) {
+                if (PlayerUtil.isUnholy(p)) {
                     if (heal) heal(p);
                 } else {
                     damage(p);
                 }
             } else {
-                if (unholy.contains(ent.getType())) {
+                if (MonsterUtil.isUnholy(le.getType())) {
                     if (heal) heal(le);
                 } else {
                     damage(le);
@@ -99,33 +97,27 @@ public class UnholyRain implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-        String uuid = player.getUniqueId().toString();
-        String name = "uhrain";
+    public boolean run(Player player) {
 
         if (!WGUtil.canBuild(player)) {
-            ChatUtil.sendString(player, "You cannot use this here!");
-            return;
+            player.sendMessage(ChatColor.RED + "You cannot use this here!");
+            return false;
         }
 
-        if (Cooldown.isCooledDown(name, uuid)) {
-            Missile.createMissile(player.getLocation(), player.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
-            Cooldown.newCoolDown(name, uuid, getCooldown(Races.getMGPlayer(player).getAbilityLevel(getType())));
-            EffectUtil.playParticle(player, Effect.MAGIC_CRIT);
-            EffectUtil.playSound(player, Sound.ENTITY_LIGHTNING_THUNDER);
-            ChatUtil.sendString(player, ChatColor.DARK_RED + "You call an unholy rain on your location!");
+        Missile.createMissile(player.getLocation(), player.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
+        EffectUtil.playParticle(player, Effect.MAGIC_CRIT);
+        EffectUtil.playSound(player, Sound.ENTITY_LIGHTNING_THUNDER);
 
-            MGPlayer mgp = Races.getMGPlayer(player);
-            int level = mgp.getAbilityLevel(getType());
+        MGPlayer mgp = Races.getMGPlayer(player);
+        int level = mgp.getAbilityLevel(getType());
 
-            boolean heal = level > 1;
-            int duration = 9;
-            if (level > 2) duration = 18;
+        boolean heal = level > 1;
+        int duration = 9;
+        if (level > 2) duration = 18;
 
-            startRain(player.getLocation().add(0, 9, 0), heal, duration);
-        } else {
-            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Unholy Rain.");
-        }
+        startRain(player.getLocation().add(0, 9, 0), heal, duration);
+
+        return true;
     }
 
     @Override
@@ -169,6 +161,11 @@ public class UnholyRain implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }
@@ -179,7 +176,7 @@ public class UnholyRain implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Summon an unholy rain on your location for 9 seconds.", "Activate using a blazerod.", "This rain damages holy creatures."};
+                desc = new String[]{"Summon an unholy rain on your location for 9 seconds.", "Bind to an item using /Bind.", "This rain damages holy creatures."};
                 break;
             case 2:
                 desc = new String[]{"Your holy rain will heal unholy creatures."};

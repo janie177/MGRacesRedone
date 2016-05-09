@@ -18,14 +18,15 @@ public class Glide implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
+
         int level = Races.getMGPlayer(player).getAbilityLevel(getType());
         double speedY = -0.18;
         if (level > 1) {
             speedY = -0.12;
         }
-
         player.setVelocity(player.getLocation().getDirection().multiply(0.6).setY(speedY));
+        return true;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class Glide implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -69,6 +70,11 @@ public class Glide implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 2;
     }
@@ -79,7 +85,7 @@ public class Glide implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"When holding a feather you will glide down instead of falling."};
+                desc = new String[]{"When holding a bound item you will glide down instead of falling.", "Bind using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"Gliding lasts twice as long."};

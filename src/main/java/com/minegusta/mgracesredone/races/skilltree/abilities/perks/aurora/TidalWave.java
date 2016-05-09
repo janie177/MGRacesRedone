@@ -9,10 +9,9 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,29 +33,20 @@ public class TidalWave implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         if (!WGUtil.canBuild(player)) {
-            ChatUtil.sendString(player, "You cannot use TidalWave here!");
-            return;
+            player.sendMessage(ChatColor.RED + "You cannot use TidalWave here!");
+            return false;
         }
-
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-        String uuid = player.getUniqueId().toString();
-        String cooldownName = "wave";
 
-        if (Cooldown.isCooledDown(cooldownName, uuid)) {
-            ChatUtil.sendString(player, "You use tidal wave on your location!");
-            Cooldown.newCoolDown(cooldownName, uuid, getCooldown(level));
+        int radius = 7;
+        boolean damage = level > 1;
+        if (level > 2) radius = 14;
 
-            int radius = 7;
-            boolean damage = level > 1;
-            if (level > 2) radius = 14;
-
-            start(radius, damage, player);
-        } else {
-            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(cooldownName, uuid) + " seconds to use TidalWave.");
-        }
+        start(radius, damage, player);
+        return true;
     }
 
     private void start(int radius, final boolean damage, Player p) {
@@ -167,6 +157,11 @@ public class TidalWave implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }
@@ -177,7 +172,7 @@ public class TidalWave implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Cast a wall of water in any of four directions.", "Activate by left-clicking a snowball."};
+                desc = new String[]{"Cast a wall of water in any of four directions.", "Bind to an item using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"Your wave will cause drown damage to anyone in it."};

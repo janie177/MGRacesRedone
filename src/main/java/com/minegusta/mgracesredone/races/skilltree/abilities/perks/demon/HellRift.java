@@ -8,8 +8,6 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.*;
@@ -30,29 +28,16 @@ public class HellRift implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
-
-        String name = "hrift";
-        String id = player.getUniqueId().toString();
-
-        if (!Cooldown.isCooledDown(name, id)) {
-            ChatUtil.sendString(player, ChatColor.RED + "Hell Rift will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
-            return;
-        }
-
         //Get the target a block above the floor.
         Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 20).getRelative(0, 2, 0);
 
         //Only in non-building areas.
         if (!WGUtil.canBuild(player, target.getLocation())) {
-            ChatUtil.sendString(player, "You cannot use this here!");
-            return;
+            player.sendMessage(ChatColor.DARK_RED + "You cannot use this here!");
+            return false;
         }
-
-
-        //Start the cooldown
-        Cooldown.newCoolDown(name, id, getCooldown(mgp.getAbilityLevel(getType())));
 
 
         int level = mgp.getAbilityLevel(getType());
@@ -63,9 +48,11 @@ public class HellRift implements IAbility {
 
         boolean explode = level > 2;
 
-        ChatUtil.sendString(player, "You opened a Hell Rift!");
+        player.sendMessage(ChatColor.DARK_RED + "You opened a Hell Rift!");
 
         runHellRift(target, duration, explode);
+
+        return true;
     }
 
     private void runHellRift(final Block target, int duration, boolean explode) {
@@ -132,19 +119,7 @@ public class HellRift implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        int price = 1;
-        switch (level) {
-            case 1:
-                price = 2;
-                break;
-            case 2:
-                price = 1;
-                break;
-            case 3:
-                price = 1;
-                break;
-        }
-        return price;
+        return 2;
     }
 
     @Override
@@ -163,6 +138,11 @@ public class HellRift implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }
@@ -173,7 +153,7 @@ public class HellRift implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Open a rift that sucks in loose entities.", "Activate using a blazerod.", "The rift stays open for 6 seconds.", "Demons are immune."};
+                desc = new String[]{"Open a rift that sucks in loose entities.", "Bind to an item using /Bind.", "The rift stays open for 6 seconds.", "Demons are immune."};
                 break;
             case 2:
                 desc = new String[]{"Your rift will now stay twice as long."};

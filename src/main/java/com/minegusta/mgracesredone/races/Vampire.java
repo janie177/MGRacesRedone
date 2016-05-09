@@ -1,11 +1,16 @@
 package com.minegusta.mgracesredone.races;
 
+import com.minegusta.mgessentials.MGEssentialsPlugin;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
-import com.minegusta.mgracesredone.util.WeatherUtil;
+import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
+import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffectType;
 
 public class Vampire implements Race {
 	@Override
@@ -23,9 +28,7 @@ public class Vampire implements Race {
 		return new String[]
 				{
 						"To become Vampire, follow these steps:",
-						"Find a vampire and ask them to infect you.",
-						"Alternatively, you can sacrifice your soul.",
-						"To do this, drink a potion of cold blood.",
+						"Drink a potion of cold blood.",
 						"The potion can be obtained by offering",
 						"Blood Essence to a vampire altar at night.",
 						"A vampire altar needs to contain 4 Gold Blocks",
@@ -57,18 +60,84 @@ public class Vampire implements Race {
 						"Perks are magic and darkness based.",
 						"Vampires blend in well with humans, as they have much in common.",
 						"They are weak to Smite and wooden weapons.",
-						"Humans are merely their prey."
+						"Vampires have a blood bar instead of food bar.",
+						"It only drains when using abilities.",
+						"Fill it by hitting living beings."
 
 				};
 	}
 
+	int interval = 0;
 	@Override
 	public void passiveBoost(Player p) {
-		Location loc = p.getLocation();
-		WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
 		MGPlayer mgp = Races.getMGPlayer(p);
 
 		//Passive vampire boosts
 
+		//Burn in the sun
+		if (!WeatherUtil.isNight(p.getWorld()) && PlayerUtil.isInOpenAir(p) && !WeatherUtil.isRaining(p.getWorld())) {
+			p.setFireTicks(80);
+			PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 12);
+			PotionUtil.updatePotion(p, PotionEffectType.BLINDNESS, 0, 8);
+			PotionUtil.updatePotion(p, PotionEffectType.SLOW, 0, 8);
+			PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 3, 8);
+			EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
+		}
+
+		interval++;
+
+		int regenLevel = mgp.getAbilityLevel(AbilityType.REGENERATE);
+
+		//Regenerate from REGENERATE Ability when NOT in combat
+		if (interval > 2) {
+			interval = 0;
+			if (WeatherUtil.isNight(p.getWorld()) && regenLevel > 0 && !MGEssentialsPlugin.inCombat(p)) {
+				regenLevel = regenLevel > 3 ? 3 : regenLevel;
+				double max = p.getMaxHealth() - p.getHealth();
+				if (max >= regenLevel) {
+					p.setHealth(p.getHealth() + regenLevel);
+				}
+			}
+		}
+		if (regenLevel > 3 && WeatherUtil.isNight(p.getWorld())) {
+			if (p.getHealth() < 4) {
+				int food = p.getFoodLevel() - 1;
+				double maxHealed = p.getMaxHealth() - p.getHealth();
+				double healed = food > maxHealed ? maxHealed : food;
+				p.setHealth(p.getHealth() + healed);
+				VampireFoodUtil.setCanChangeFood(p);
+				p.setFoodLevel(1);
+				p.sendMessage(org.bukkit.ChatColor.DARK_RED + "Your blood was sacrificed to prevent you from dying!");
+				EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
+			}
+		}
+
+		//DarkBlood
+		int darkbloodLevel;
+		if ((darkbloodLevel = mgp.getAbilityLevel(AbilityType.DARKBLOOD)) > 0) {
+			if (DarkBloodUtil.isToggledOn(p)) {
+				//level 1
+				PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 20);
+
+				//level 3
+				if (darkbloodLevel > 2) {
+					PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
+				}
+
+				//level 4
+				if (darkbloodLevel > 3) {
+					PotionUtil.updatePotion(p, PotionEffectType.JUMP, 1, 5);
+				}
+			}
+
+			//level 5, potions
+			Material hand = p.getInventory().getItemInOffHand().getType();
+			if (darkbloodLevel > 4 && (hand == Material.POTION || hand == Material.SPLASH_POTION || hand == Material.LINGERING_POTION)) {
+				PotionMeta meta = (PotionMeta) p.getInventory().getItemInOffHand().getItemMeta();
+				PotionEffectType type = meta.getBasePotionData().getType().getEffectType();
+				PotionUtil.updatePotion(p, type, 0, 5);
+			}
+
+		}
 	}
 }

@@ -7,7 +7,10 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.*;
+import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -28,30 +31,16 @@ public class BattleCry implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         //Standard data needed.
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-        String name = "bcry";
-        String uuid = player.getUniqueId().toString();
-
-        //Cooldown?
-        if (!Cooldown.isCooledDown(name, uuid)) {
-            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
-            return;
-        }
 
         //Worldguard?
         if (!WGUtil.canBuild(player)) {
             ChatUtil.sendString(player, "You cannot use " + getName() + " here.");
-            return;
+            return false;
         }
-
-        //Run the ability here.
-
-        //Message + cooldown start.
-        ChatUtil.sendString(player, "You used " + getName() + "!");
-        Cooldown.newCoolDown(name, uuid, getCooldown(level));
 
         //Effects
         EffectUtil.playParticle(player, Effect.VILLAGER_THUNDERCLOUD);
@@ -89,6 +78,7 @@ public class BattleCry implements IAbility {
             //stun
             if (stun) PotionUtil.updatePotion(le, PotionEffectType.SLOW, 10, 4);
         }
+        return true;
     }
 
     @Override
@@ -133,6 +123,11 @@ public class BattleCry implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -143,7 +138,7 @@ public class BattleCry implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Yell to intimidate enemies, knocking them back.", "Activate by right clicking an axe."};
+                desc = new String[]{"Yell to intimidate enemies, knocking them back.", "Bind using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"Affected enemies are now stunned for 4 seconds."};

@@ -7,8 +7,6 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EntityUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
@@ -30,31 +28,25 @@ public class DrowningPool implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-        if (!WGUtil.canBuild(player)) {
-            ChatUtil.sendString(player, "You cannot use Drowning Pool here!");
-            return;
+    public boolean run(Player player) {
+        if (!WGUtil.canBuild(player) || !EntityUtil.isInWater(player)) {
+            player.sendMessage(ChatColor.RED + "You cannot use Drowning Pool here!");
+            return false;
         }
 
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
         Location l = player.getLocation();
-        String uuid = player.getUniqueId().toString();
-        String cooldownName = "drown";
 
-        if (Cooldown.isCooledDown(cooldownName, uuid)) {
-            ChatUtil.sendString(player, "You use drowning pool on your location!");
-            Cooldown.newCoolDown(cooldownName, uuid, getCooldown(level));
-            int radius = 8;
-            boolean air = level > 2;
-            int duration = 6;
-            if (level > 1) duration = 10;
-            if (level > 3) radius = 12;
+        int radius = 8;
+        boolean air = level > 2;
+        int duration = 6;
+        if (level > 1) duration = 10;
+        if (level > 3) radius = 12;
 
-            start(l, radius, duration, air);
-        } else {
-            ChatUtil.sendString(player, "You need to wait another " + Cooldown.getRemaining(cooldownName, uuid) + " seconds to use Drowning Pool.");
-        }
+        start(l, radius, duration, air);
+
+        return true;
     }
 
     private void start(final Location l, final int radius, final int duration, final boolean air) {
@@ -68,7 +60,7 @@ public class DrowningPool implements IAbility {
                                 le.setVelocity(new Vector(le.getVelocity().getX(), -0.12, le.getVelocity().getZ()));
                                 if (le instanceof Player) {
                                     le.sendMessage(ChatColor.RED + "You are pulled underwater!");
-                        }
+                                }
                                 if (air && le.getRemainingAir() > 3) {
                                     le.setRemainingAir(3);
                                 }
@@ -119,6 +111,11 @@ public class DrowningPool implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }
@@ -129,7 +126,7 @@ public class DrowningPool implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"When in water, entities around you will be pulled down.", "Activate by right clicking with a sword in water.", "Will last for 6 seconds.", "The radius is 8."};
+                desc = new String[]{"When in water, entities around you will be pulled down.", "Bind to an item using /Bind.", "Will last for 6 seconds.", "The radius is 8."};
                 break;
             case 2:
                 desc = new String[]{"The duration is increased to 10 seconds."};

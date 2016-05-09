@@ -6,8 +6,6 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
 import org.bukkit.ChatColor;
@@ -31,21 +29,9 @@ public class Howl implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
-
-        String name = getName();
-        String uuid = player.getUniqueId().toString();
-
-        if (!Cooldown.isCooledDown(name, uuid)) {
-            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
-            return;
-        }
-
-        Cooldown.newCoolDown(name, uuid, getCooldown(level));
-
-        ChatUtil.sendString(player, "You summoned a pack of wolves!");
 
         int amount = 1;
         if (level > 2) amount = 2;
@@ -66,7 +52,7 @@ public class Howl implements IAbility {
             if (strength) PotionUtil.updatePotion(w, PotionEffectType.INCREASE_DAMAGE, 0, 6000);
             if (speed) PotionUtil.updatePotion(w, PotionEffectType.SPEED, 0, 6000);
         }
-
+        return true;
     }
 
     @Override
@@ -110,6 +96,11 @@ public class Howl implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -120,7 +111,7 @@ public class Howl implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Right click a bone to summon a tamed wolf."};
+                desc = new String[]{"Summon a tamed wolf to your aid.", "Bind to an item using //Bind."};
                 break;
             case 2:
                 desc = new String[]{"Your wolf now has a strength boost."};

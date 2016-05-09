@@ -1,12 +1,9 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
 import com.google.common.collect.Lists;
-import com.minegusta.mgracesredone.main.Races;
-import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -18,20 +15,15 @@ public class FireProof implements IAbility {
     @Override
     public void run(Event event) {
         EntityDamageEvent e = (EntityDamageEvent) event;
-        Player p = (Player) e.getEntity();
+        e.setDamage(0);
+        e.getEntity().setFireTicks(0);
+        e.setCancelled(true);
 
-        MGPlayer mgp = Races.getMGPlayer(p);
-
-        if (mgp.getAbilityLevel(getType()) > 1 || RandomUtil.fiftyfifty()) {
-            e.setDamage(0);
-            e.getEntity().setFireTicks(0);
-            e.setCancelled(true);
-        }
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -75,8 +67,13 @@ public class FireProof implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return false;
+    }
+
+    @Override
     public int getMaxLevel() {
-        return 2;
+        return 1;
     }
 
     @Override
@@ -85,9 +82,6 @@ public class FireProof implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"There's a 50% chance you take no fire and lava damage."};
-                break;
-            case 2:
                 desc = new String[]{"You never take fire or lava damage."};
                 break;
             default:

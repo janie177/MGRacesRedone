@@ -1,17 +1,25 @@
 package com.minegusta.mgracesredone.races.skilltree.abilities.perks.demon;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
+import com.minegusta.mgracesredone.util.PotionUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 public class Hellspawn implements IAbility {
+
+    private static ConcurrentMap<String, Boolean> toggled = Maps.newConcurrentMap();
+
     @Override
     public void run(Event event) {
         if (event instanceof EntityDamageEvent) {
@@ -21,8 +29,29 @@ public class Hellspawn implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
 
+        //Is enabled
+        if (toggled.containsKey(player.getUniqueId().toString())) {
+            //Disable
+            toggled.remove(player.getUniqueId().toString());
+            player.sendMessage(ChatColor.RED + "You disabled your HellSpawn effects.");
+            PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 3, 0);
+            PotionUtil.updatePotion(player, PotionEffectType.SPEED, 3, 0);
+            PotionUtil.updatePotion(player, PotionEffectType.JUMP, 3, 0);
+            PotionUtil.updatePotion(player, PotionEffectType.DAMAGE_RESISTANCE, 3, 0);
+        }
+        //Is disabled
+        else {
+            //Enable
+            toggled.put(player.getUniqueId().toString(), true);
+            player.sendMessage(ChatColor.RED + "You enabled your HellSpawn effects.");
+        }
+        return true;
+    }
+
+    public static boolean isToggled(Player player) {
+        return toggled.containsKey(player.getUniqueId().toString());
     }
 
     @Override
@@ -47,7 +76,8 @@ public class Hellspawn implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        return 2;
+        if (level == 4) return 2;
+        return 1;
     }
 
     @Override
@@ -66,6 +96,11 @@ public class Hellspawn implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -79,7 +114,7 @@ public class Hellspawn implements IAbility {
                 desc = new String[]{"In the nether, you will no longer take fall damage."};
                 break;
             case 2:
-                desc = new String[]{"When standing on obsidian, you will gain a defence boost."};
+                desc = new String[]{"When standing on obsidian, you will gain a defence boost.", "Bind effect toggle using /Bind."};
                 break;
             case 3:
                 desc = new String[]{"In the nether, you will gain a strength boost."};

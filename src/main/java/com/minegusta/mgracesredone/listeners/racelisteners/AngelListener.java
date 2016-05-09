@@ -1,10 +1,11 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
-import com.minegusta.mgracesredone.playerdata.MGPlayer;
+import com.minegusta.mgracesredone.playerdata.Bind;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -12,13 +13,14 @@ import org.bukkit.entity.Rabbit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.entity.EntityDamageByBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.EquipmentSlot;
 
 public class AngelListener implements Listener {
+
     @EventHandler(priority = EventPriority.LOWEST)
     private void angelFalling(PlayerMoveEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
@@ -29,8 +31,15 @@ public class AngelListener implements Listener {
 
         if (!Races.getMGPlayer(p).hasAbility(AbilityType.GLIDE)) return;
 
-        if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() == Material.FEATHER) {
-            AbilityType.GLIDE.run(p);
+        short data = p.getInventory().getItemInMainHand().getDurability();
+        Material item = p.getInventory().getItemInMainHand().getType();
+        boolean ignoreData = BindUtil.ignoreItemData(item);
+
+        for (Bind b : Races.getMGPlayer(p).getBindForAbility(AbilityType.GLIDE)) {
+            if (b.getItem() == item && (data == b.getData() || ignoreData)) {
+                AbilityType.GLIDE.run(p);
+                break;
+            }
         }
     }
 
@@ -41,9 +50,9 @@ public class AngelListener implements Listener {
         if (e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             Player p = (Player) e.getEntity();
 
-            if (!Races.getMGPlayer(p).hasAbility(AbilityType.HOLYNESS)) return;
+            if (!Races.getMGPlayer(p).hasAbility(AbilityType.HOLINESS)) return;
 
-            //Do not run this in the holyness class because YOLO ;D
+            //Do not run this in the holiness class because YOLO ;D
             e.setDamage(0);
             e.setCancelled(true);
         }
@@ -66,18 +75,6 @@ public class AngelListener implements Listener {
     }
 
     @EventHandler
-    public void onAngelFood(FoodLevelChangeEvent e) {
-        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
-
-        if (e.getEntity() instanceof Player) {
-            MGPlayer mgp = Races.getMGPlayer((Player) e.getEntity());
-            if (mgp.getAbilityLevel(AbilityType.HOLYNESS) < 3) return;
-            AbilityType.HOLYNESS.run(e);
-        }
-    }
-
-
-    @EventHandler
     public void onAngelDamage(EntityDamageByEntityEvent e) {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
@@ -93,6 +90,8 @@ public class AngelListener implements Listener {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
             Player p = (Player) e.getDamager();
             int level = Races.getMGPlayer(p).getAbilityLevel(AbilityType.PURGE);
+
+            //Purge against mobs
             if (Races.getMGPlayer(p).hasAbility(AbilityType.PURGE) && MonsterUtil.isUnholy(e.getEntityType())) {
                 //Apply extra damage.
                 int damage = level + 1;
@@ -102,6 +101,8 @@ public class AngelListener implements Listener {
                     e.setDamage(e.getDamage() + level);
                 }
             }
+
+            //Purge against races
             if (e.getEntity() instanceof Player && PlayerUtil.isUnholy((Player) e.getEntity())) {
                 //Crit chance against RACES.
                 if (level > 3) {
@@ -116,11 +117,20 @@ public class AngelListener implements Listener {
                     }
                 }
             }
+
+            //Invincibility damage halved
+            if (AngelInvincibility.contains(p.getUniqueId().toString())) {
+                e.setDamage(e.getDamage() / 2);
+            }
+
         }
 
         //Angels wont get damage in invincibility mode.
         if (e.getEntity() instanceof Player) {
             if (AngelInvincibility.contains(e.getEntity().getUniqueId().toString())) {
+                if (e.getDamager() instanceof Player) {
+                    e.getDamager().sendMessage(ChatColor.RED + "The Angel has activated invincibility! RUN!");
+                }
                 e.setDamage(0.0);
             }
         }
@@ -149,39 +159,6 @@ public class AngelListener implements Listener {
         if (e.getEntity() instanceof Player) {
             if (AngelInvincibility.contains(e.getEntity().getUniqueId().toString())) {
                 e.setDamage(0.0);
-            }
-        }
-    }
-
-
-    @EventHandler
-    public void onHolyRain(PlayerInteractEvent e) {
-        if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
-
-        Player p = e.getPlayer();
-        if (e.getHand() != EquipmentSlot.HAND) return;
-
-        //Activate justice
-        if (e.getAction() == Action.LEFT_CLICK_BLOCK && Races.getMGPlayer(p).hasAbility(AbilityType.JUSTICE) && e.getClickedBlock().getLocation().distance(p.getLocation()) < 2 && e.getClickedBlock().getY() < e.getPlayer().getLocation().getY()) {
-            if (p.isSneaking()) {
-                AbilityType.JUSTICE.run(p);
-            }
-        }
-
-        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR)) {
-            if (p.getInventory().getItemInMainHand().getType() == Material.BOOK && Races.getMGPlayer(p).hasAbility(AbilityType.PRAYER)) {
-                AbilityType.PRAYER.run(p);
-            }
-            if (ItemUtil.isSword(p.getInventory().getItemInMainHand().getType()) && Races.getMGPlayer(p).hasAbility(AbilityType.HOLYRAIN)) {
-                AbilityType.HOLYRAIN.run(p);
-            } else if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() == Material.FEATHER) {
-                if (Races.getMGPlayer(p).hasAbility(AbilityType.WHIRLWIND)) {
-                    AbilityType.WHIRLWIND.run(p);
-                }
-            } else if (p.getInventory().getItemInMainHand().getType() == Material.IRON_INGOT) {
-                if (Races.getMGPlayer(p).hasAbility(AbilityType.STEELSKIN)) {
-                    AbilityType.STEELSKIN.run(p);
-                }
             }
         }
     }

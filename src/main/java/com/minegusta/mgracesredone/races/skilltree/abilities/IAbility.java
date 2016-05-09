@@ -20,7 +20,7 @@ public interface IAbility {
      *
      * @param player The player to run the event for.
      */
-    void run(Player player);
+    boolean run(Player player);
 
     /**
      * Get the string for this perk. This is used in the perk shop.
@@ -80,6 +80,13 @@ public interface IAbility {
      * @return
      */
     List<RaceType> getRaces();
+
+    /**
+     * Get if this ability can be bound to an item using the /bind command.
+     *
+     * @return
+     */
+    boolean canBind();
 
     /**
      * A method to retrieve the max level of this perk.

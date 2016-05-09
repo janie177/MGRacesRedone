@@ -5,31 +5,21 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.BlockUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 import java.util.List;
 
-public class Holyness implements IAbility {
+public class Holiness implements IAbility {
     @Override
     public void run(Event event) {
-
-        if (event instanceof FoodLevelChangeEvent) {
-            FoodLevelChangeEvent e = (FoodLevelChangeEvent) event;
-            Player p = (Player) e.getEntity();
-            if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && e.getFoodLevel() < ((Player) e.getEntity()).getFoodLevel()) {
-                e.setCancelled(true);
-            }
-        }
 
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return true;
     }
 
     @Override
@@ -39,7 +29,7 @@ public class Holyness implements IAbility {
 
     @Override
     public AbilityType getType() {
-        return AbilityType.HOLYNESS;
+        return AbilityType.HOLINESS;
     }
 
     @Override
@@ -73,6 +63,11 @@ public class Holyness implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return false;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -89,7 +84,7 @@ public class Holyness implements IAbility {
                 desc = new String[]{"You will get a healing boost in light areas."};
                 break;
             case 3:
-                desc = new String[]{"Food will not drain in light areas."};
+                desc = new String[]{"You will no longer get de-buffs in the dark in high areas."};
                 break;
             case 4:
                 desc = new String[]{"When up in the sky, you will get a defence, speed and jump boost."};

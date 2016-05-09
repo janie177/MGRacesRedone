@@ -180,7 +180,7 @@ public class PearlPower implements IAbility {
         Enderman man = (Enderman) l.getWorld().spawnEntity(l, EntityType.ENDERMAN);
         PotionUtil.updatePotion(man, PotionEffectType.INCREASE_DAMAGE, 2, 60);
         PotionUtil.updatePotion(man, PotionEffectType.DAMAGE_RESISTANCE, 1, 60);
-        man.setCustomName(ChatColor.DARK_PURPLE + "END OF MAN");
+        man.setCustomName(ChatColor.DARK_PURPLE + "Enderborn Minion");
         man.setCustomNameVisible(true);
 
         for (Entity ent : pearl.getNearbyEntities(7, 7, 7)) {
@@ -199,17 +199,18 @@ public class PearlPower implements IAbility {
         for (int i = 0; i < 2; i++) {
             Endermite mite = (Endermite) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMITE);
             mite.setCustomNameVisible(true);
-            mite.setCustomName(ChatColor.LIGHT_PURPLE + "U wot mite?");
+            mite.setCustomName(ChatColor.LIGHT_PURPLE + "Enderborn Minion");
         }
     }
 
     //Switching pearl mode
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
 
         addToMap(player, PearlAbility.getNext(getFromMap(player).getOrder(), level));
+        return true;
     }
 
     @Override
@@ -250,6 +251,11 @@ public class PearlPower implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ENDERBORN);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

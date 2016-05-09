@@ -71,8 +71,9 @@ public class Angel implements Race {
         }
 
 
-        //String at high areas
-        if (height > 100 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 3) {
+        int holinesslevel = mgp.getAbilityLevel(AbilityType.HOLINESS);
+
+        if (height > 100 && holinesslevel > 3) {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
@@ -80,7 +81,7 @@ public class Angel implements Race {
         //Weak in low areas and dark ones
         else if (height < 50) {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
-        } else if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.DARK) {
+        } else if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.DARK && (height < 100 || holinesslevel < 3)) {
             int strength = 1;
             if (mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) > 0) {
                 strength = 0;
@@ -89,13 +90,13 @@ public class Angel implements Race {
         }
 
         //At low health they will be able to escape
-        if (p.getHealth() < 6 && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 4) {
+        if (p.getHealth() <= 6 && holinesslevel > 4) {
             PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
         }
 
         //Heal in light areas with the holiness perk.
-        if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && mgp.hasAbility(AbilityType.HOLYNESS) && mgp.getAbilityLevel(AbilityType.HOLYNESS) > 1) {
+        if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.LIGHT && mgp.getAbilityLevel(AbilityType.HOLINESS) > 1) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 3, 0, false, false));
         }
     }

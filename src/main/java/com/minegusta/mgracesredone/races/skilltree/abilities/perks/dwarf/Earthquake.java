@@ -8,7 +8,6 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import com.minegusta.mgracesredone.util.RandomUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.Bukkit;
@@ -32,7 +31,7 @@ public class Earthquake implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         //Standard data needed.
         MGPlayer mgp = Races.getMGPlayer(player);
         int level = mgp.getAbilityLevel(getType());
@@ -42,27 +41,16 @@ public class Earthquake implements IAbility {
         int duration = 10;
         if (level > 2) duration = 15;
         Location l = player.getLocation();
-        String name = "quake";
-        String uuid = player.getUniqueId().toString();
-
-        //Cooldown?
-        if (!Cooldown.isCooledDown(name, uuid)) {
-            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + getName() + ".");
-            return;
-        }
 
         //Worldguard?
         if (!WGUtil.canBuild(player)) {
             ChatUtil.sendString(player, "You cannot use " + getName() + " here.");
-            return;
+            return false;
         }
-
-        //Message
-        ChatUtil.sendString(player, "You used earthquake on your location!");
 
         //Run the ability here\
         task(l, duration, radius, strength);
-        Cooldown.newCoolDown(name, uuid, getCooldown(level));
+        return true;
     }
 
     private void task(final Location l, int duration, final int radius, final double strength) {
@@ -175,6 +163,11 @@ public class Earthquake implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }
@@ -185,7 +178,7 @@ public class Earthquake implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Cause an earthquake, unbalancing entities around you.", "Activate by right clicking a pickaxe.", "Lasts 10 seconds."};
+                desc = new String[]{"Cause an earthquake, unbalancing entities around you.", "Bind to an item using /Bind.", "Lasts 10 seconds."};
                 break;
             case 2:
                 desc = new String[]{"The floor around enemies will distort."};

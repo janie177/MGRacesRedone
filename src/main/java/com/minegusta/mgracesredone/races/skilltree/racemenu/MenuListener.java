@@ -12,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.List;
 
@@ -70,16 +69,11 @@ public class MenuListener implements Listener {
         List<String> lore = i.getItemMeta().getLore();
         int level = Integer.parseInt(ChatColor.stripColor(lore.get(1).replace("Level: ", "")));
 
-        int totalAbilities = 0;
-        for (AbilityType t : mgp.getAbilities().keySet()) {
-            for (int levels = 1; levels <= mgp.getAbilityLevel(t); levels++) {
-                totalAbilities = totalAbilities + t.getCost(levels);
-            }
-        }
+        int totalSpentPoints = AbilityMenu.getTotalSpentBasePoints(mgp);
 
         //The cap for perks
 
-        int extraPerkPoints = 0;
+        /*int extraPerkPoints = 0;
 
         for (PermissionAttachmentInfo info : p.getEffectivePermissions()) {
             if (info.getPermission().toLowerCase().startsWith("mgraces.perks.")) {
@@ -91,15 +85,18 @@ public class MenuListener implements Listener {
             }
         }
 
+
+        //Cap is disabled because you can now unlock every perk, just at an increasing price.
+
         int cap = mgp.getRaceType().getPerkPointCap() + extraPerkPoints;
 
-        if (totalAbilities >= cap || totalAbilities + bought.getCost(level) > cap) {
-            int newAmountSpent = bought.getCost(level) + totalAbilities;
-            ChatUtil.sendList(p, new String[]{"Buying this perk would exceed the Perk-Point cap.", "You spent " + totalAbilities + " Perk-Points.", "The maximum of Perk-Points spent is: " + cap + ".", "When buying this perk, your total would be: " + newAmountSpent + "."});
+        if (totalSpentPoints >= cap || totalSpentPoints + bought.getCost(level, totalSpentPoints) > cap) {
+            int newAmountSpent = bought.getCost(level, totalSpentPoints) + totalSpentPoints;
+            ChatUtil.sendList(p, new String[]{"Buying this perk would exceed the Perk-Point cap.", "You spent " + totalSpentPoints + " Perk-Points.", "The maximum of Perk-Points spent is: " + cap + ".", "When buying this perk, your total would be: " + newAmountSpent + "."});
             return;
-        }
+        } */
 
-        if (bought.getCost(level) > pointsPresent) {
+        if (bought.getCost(level, totalSpentPoints) > pointsPresent) {
             ChatUtil.sendString(p, "You do not have enough perk-points to buy this.");
             return;
         }
@@ -124,7 +121,7 @@ public class MenuListener implements Listener {
             return;
         }
 
-        if (mgp.removePerkPoints(bought.getCost(level))) {
+        if (mgp.removePerkPoints(bought.getCost(level, totalSpentPoints))) {
             ChatUtil.sendString(p, "You have unlocked " + bought.getName() + " level " + level + "!");
             mgp.addAbility(bought, level);
             AbilityMenu.buildInventory(p);

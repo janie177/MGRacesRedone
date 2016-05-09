@@ -46,8 +46,8 @@ public class ForestFriend implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -91,6 +91,11 @@ public class ForestFriend implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return false;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }
@@ -107,7 +112,7 @@ public class ForestFriend implements IAbility {
                 desc = new String[]{"When throwing a chicken egg, chickens spawn 50% of the time."};
                 break;
             case 3:
-                desc = new String[]{"In forest biomes, you will get a speed II and jump II boost during the day."};
+                desc = new String[]{"In forest and plains biomes, you will get a speed II and jump II boost."};
                 break;
             case 4:
                 desc = new String[]{"Crouch-hit baby animals to make them grow instantly."};

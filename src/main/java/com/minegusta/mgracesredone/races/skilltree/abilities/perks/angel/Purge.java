@@ -17,8 +17,8 @@ public class Purge implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return true;
     }
 
     @Override
@@ -43,9 +43,6 @@ public class Purge implements IAbility {
 
     @Override
     public int getPrice(int level) {
-        if (level == 4) {
-            return 2;
-        }
         return 1;
     }
 
@@ -62,6 +59,11 @@ public class Purge implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.ANGEL);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

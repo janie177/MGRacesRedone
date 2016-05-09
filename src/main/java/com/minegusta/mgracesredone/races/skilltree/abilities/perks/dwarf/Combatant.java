@@ -25,7 +25,7 @@ public class Combatant implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         EffectUtil.playSound(player, Sound.BLOCK_ANVIL_USE);
 
         MGPlayer mgp = Races.getMGPlayer(player);
@@ -45,7 +45,7 @@ public class Combatant implements IAbility {
         if (level > 3) {
             PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 0, 5);
         }
-
+        return false;
     }
 
     @Override
@@ -87,6 +87,11 @@ public class Combatant implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.DWARF);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

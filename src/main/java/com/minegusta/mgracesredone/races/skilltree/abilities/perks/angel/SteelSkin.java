@@ -6,8 +6,6 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.AngelInvincibility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.Cooldown;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,23 +20,23 @@ public class SteelSkin implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-        String uuid = player.getUniqueId().toString();
-        String name = "invincible";
-        if (Cooldown.isCooledDown(name, uuid)) {
-            int duration = 5;
-            int level = Races.getMGPlayer(player).getAbilityLevel(getType());
-            if (level > 1) duration = 8;
-            if (level > 2) duration = 10;
+    public boolean run(Player player) {
 
-            int endHealth = 4 - level;
-
-            Cooldown.newCoolDown(name, uuid, getCooldown(level));
-            player.sendMessage(ChatColor.GOLD + "You are invincible for 8 seconds!");
-            AngelInvincibility.startInvincibility(player, duration, endHealth);
-        } else {
-            ChatUtil.sendString(player, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Invincibility.");
+        int duration = 5;
+        int level = Races.getMGPlayer(player).getAbilityLevel(getType());
+        if (level > 1) {
+            duration = 7;
         }
+        if (level > 2) {
+            duration = 9;
+        }
+
+        int endHealth = 4 - level;
+
+        player.sendMessage(ChatColor.GOLD + "You are invincible for 8 seconds!");
+        AngelInvincibility.startInvincibility(player, duration, endHealth);
+
+        return true;
     }
 
     @Override
@@ -82,6 +80,11 @@ public class SteelSkin implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }
@@ -92,13 +95,13 @@ public class SteelSkin implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Become invincible for 5 seconds.", "When time runs out, your health is set to 3.", "Activate by right-clicking an iron ingot."};
+                desc = new String[]{"Become invincible for 5 seconds.", "When time runs out, your health is set to 3.", "Your own damage output is halved.", "Bind using /Bind."};
                 break;
             case 2:
-                desc = new String[]{"Your invincibility lasts for 8 seconds.", "When time runs out, your health is set to 2."};
+                desc = new String[]{"Your invincibility lasts for 7 seconds.", "When time runs out, your health is set to 2."};
                 break;
             case 3:
-                desc = new String[]{"Your invincibility lasts for 10 seconds.", "When time runs out your health is set to 1.", "You will also obtain a weakness effect for 6 seconds."};
+                desc = new String[]{"Your invincibility lasts for 9 seconds.", "When time runs out your health is set to 1.", "You will also obtain a weakness effect for 6 seconds."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

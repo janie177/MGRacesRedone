@@ -261,6 +261,8 @@ public class InfectionListener implements Listener {
     }
 
 
+    private static long lastRan = 0;
+
     //Vampire
     @EventHandler
     public void onVampireInfect(PlayerInteractEvent e) {
@@ -272,6 +274,9 @@ public class InfectionListener implements Listener {
 
         if (Races.getRace(p) != RaceType.HUMAN) return;
 
+        //Add this so that people cant spam the altars, causing the block loops to run the entire time and possibly cause lag.
+        if (lastRan > System.currentTimeMillis()) return;
+        lastRan = System.currentTimeMillis() + 1000;
 
         //Check if it's an altar.
         if (BlockUtil.radiusCheck(e.getClickedBlock(), 7, Material.OBSIDIAN, 10) && BlockUtil.radiusCheck(e.getClickedBlock(), 7, Material.GOLD_BLOCK, 4)) {

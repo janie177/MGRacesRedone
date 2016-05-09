@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.races;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
+import com.minegusta.mgracesredone.races.skilltree.abilities.perks.werewolf.Nocturnal;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.PlayerUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
@@ -97,7 +98,7 @@ public class Werewolf implements Race {
             PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
         }
 
-        if (WeatherUtil.isNight(p.getWorld()) && mgp.hasAbility(AbilityType.NOCTURNAL)) {
+        if (WeatherUtil.isNight(p.getWorld()) && mgp.hasAbility(AbilityType.NOCTURNAL) && Nocturnal.isToggled(p)) {
             int level = mgp.getAbilityLevel(AbilityType.NOCTURNAL);
 
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);

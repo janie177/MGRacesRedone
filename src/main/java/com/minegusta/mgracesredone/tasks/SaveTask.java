@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.tasks;
 
 import com.minegusta.mgracesredone.data.Storage;
 import com.minegusta.mgracesredone.main.Main;
+import com.minegusta.mgracesredone.util.SpawnLocationUtil;
 import org.bukkit.Bukkit;
 
 public class SaveTask {
@@ -19,5 +20,6 @@ public class SaveTask {
 
     public static void save() {
         Storage.getPlayers().forEach(com.minegusta.mgracesredone.playerdata.MGPlayer::saveFile);
+        SpawnLocationUtil.saveToFile();
     }
 }

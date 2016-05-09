@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.RandomUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class HellishTruce implements IAbility {
 
-    private final static List<EntityType> hellMobs = Lists.newArrayList(EntityType.MAGMA_CUBE, EntityType.GHAST, EntityType.PIG_ZOMBIE, EntityType.BLAZE, EntityType.SKELETON);
+    private final static List<EntityType> hellMobs = Lists.newArrayList(EntityType.MAGMA_CUBE, EntityType.GHAST, EntityType.PIG_ZOMBIE, EntityType.BLAZE, EntityType.SKELETON, EntityType.WITHER);
 
     @Override
     public void run(Event event) {
@@ -40,17 +41,20 @@ public class HellishTruce implements IAbility {
             if (level < 2) return;
 
             if (RandomUtil.chance(10 * (level - 1))) {
-                p.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(p.getLocation()) <= 10).
+                p.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(p.getLocation()) <= 40).
                         filter(ent -> hellMobs.contains(ent.getType())).forEach(ent -> {
                     ((Creature) ent).setTarget((LivingEntity) e.getEntity());
                 });
+                p.sendMessage(ChatColor.DARK_RED + "The monsters of hell are coming to your aid!");
+                if (e.getEntity() instanceof Player)
+                    e.getEntity().sendMessage(ChatColor.DARK_RED + "The monsters of hell are siding with the Demon!");
             }
         }
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
@@ -91,6 +95,11 @@ public class HellishTruce implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.DEMON);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override

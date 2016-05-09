@@ -4,8 +4,8 @@ import com.minegusta.mgracesredone.main.Main;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.ChatUtil;
+import com.minegusta.mgracesredone.util.InvisibilityUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.ShadowInvisibility;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
@@ -28,12 +28,12 @@ public class InvisibleTask {
 
         //make everyone visible
         Collection<? extends Player> online = Bukkit.getOnlinePlayers();
-        ShadowInvisibility.values().stream().map(UUID::fromString).map(Bukkit::getPlayer).
+        InvisibilityUtil.values().stream().map(UUID::fromString).map(Bukkit::getPlayer).
                 filter(Objects::nonNull).forEach(invisible -> online.forEach(player -> player.showPlayer(invisible)));
     }
 
     private static void boost() {
-        ShadowInvisibility.values().stream().map(UUID::fromString).map(Bukkit::getPlayer).
+        InvisibilityUtil.values().stream().map(UUID::fromString).map(Bukkit::getPlayer).
                 filter(Objects::nonNull).map(Player::getLocation).forEach(location -> {
             location.getWorld().spigot().playEffect(location, Effect.LARGE_SMOKE, 0, 0, 1, 0, 1, 1 / 10, 20, 30);
         });
@@ -41,10 +41,10 @@ public class InvisibleTask {
         count++;
 
         if (count % 4 == 0) {
-            ShadowInvisibility.values().forEach(id -> {
-                ShadowInvisibility.add(id, ShadowInvisibility.getRaining(id) - 1);
-                if (ShadowInvisibility.getRaining(id) < 1) {
-                    ShadowInvisibility.remove(id);
+            InvisibilityUtil.values().forEach(id -> {
+                InvisibilityUtil.add(id, InvisibilityUtil.getRaining(id) - 1);
+                if (InvisibilityUtil.getRaining(id) < 1) {
+                    InvisibilityUtil.remove(id);
                     ChatUtil.sendString(Bukkit.getPlayer(UUID.fromString(id)), "Your invisibility has ran out!");
                 }
             });
@@ -53,11 +53,12 @@ public class InvisibleTask {
         if (count > 7) {
             count = 0;
 
-            ShadowInvisibility.values().stream().map(UUID::fromString).map(Bukkit::getPlayer).
+            InvisibilityUtil.values().stream().map(UUID::fromString).map(Bukkit::getPlayer).
                     filter(Objects::nonNull).forEach(player -> {
                 int level = Races.getMGPlayer(player).getAbilityLevel(AbilityType.SHADOW);
                 if (level > 3) {
                     PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 5);
+                    PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 5);
                 }
             });
         }

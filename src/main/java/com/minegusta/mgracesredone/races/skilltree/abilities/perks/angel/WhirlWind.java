@@ -8,7 +8,9 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.*;
+import com.minegusta.mgracesredone.util.EffectUtil;
+import com.minegusta.mgracesredone.util.RandomUtil;
+import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
@@ -27,30 +29,17 @@ public class WhirlWind implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
+    public boolean run(Player player) {
         MGPlayer mgp = Races.getMGPlayer(player);
-
-        String name = "wwind";
-        String id = player.getUniqueId().toString();
-
-        if (!Cooldown.isCooledDown(name, id)) {
-            ChatUtil.sendString(player, ChatColor.RED + "WhirlWind will be ready in " + Cooldown.getRemaining(name, id) + " seconds.");
-            return;
-        }
 
         //Get the target a block above the floor.
         Block target = player.getTargetBlock(Sets.newHashSet(Material.AIR), 40).getRelative(0, 2, 0);
 
         //Only in non-building areas.
         if (!WGUtil.canBuild(player, target.getLocation())) {
-            ChatUtil.sendString(player, "You cannot use this here!");
-            return;
+            player.sendMessage(ChatColor.RED + "You cannot use that here!");
+            return false;
         }
-
-
-        //Start the new cooldown.
-        Cooldown.newCoolDown(name, id, getCooldown(mgp.getAbilityLevel(getType())));
-
 
         int level = mgp.getAbilityLevel(getType());
 
@@ -63,9 +52,8 @@ public class WhirlWind implements IAbility {
         double startingStrength = 0.09;
         if (level > 1) startingStrength = 0.19;
 
-        ChatUtil.sendString(player, "You summon a Whirlwind!");
-
         runWhirlWind(target, duration, launch, lightning, startingStrength);
+        return true;
     }
 
     private void runWhirlWind(final Block target, int duration, final boolean launch, final boolean lightning, final double startingStrength) {
@@ -170,6 +158,11 @@ public class WhirlWind implements IAbility {
     }
 
     @Override
+    public boolean canBind() {
+        return true;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -180,7 +173,7 @@ public class WhirlWind implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Right click a feather to start a tornado on that location.", "Your tornado lasts for 10 seconds."};
+                desc = new String[]{"Right click to start a tornado.", "Your tornado lasts for 10 seconds.", "Bind using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"Your tornado is now twice as strong."};

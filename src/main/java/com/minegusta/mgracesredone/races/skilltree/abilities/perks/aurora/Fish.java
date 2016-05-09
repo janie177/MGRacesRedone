@@ -11,7 +11,7 @@ import org.bukkit.event.Event;
 
 import java.util.List;
 
-public class Feesh implements IAbility {
+public class Fish implements IAbility {
 
     @Override
     public void run(Event event) {
@@ -19,18 +19,18 @@ public class Feesh implements IAbility {
     }
 
     @Override
-    public void run(Player player) {
-
+    public boolean run(Player player) {
+        return false;
     }
 
     @Override
     public String getName() {
-        return "Feesh";
+        return "Fish";
     }
 
     @Override
     public AbilityType getType() {
-        return AbilityType.FEESH;
+        return AbilityType.Fish;
     }
 
     @Override
@@ -61,6 +61,11 @@ public class Feesh implements IAbility {
     @Override
     public List<RaceType> getRaces() {
         return Lists.newArrayList(RaceType.AURORA);
+    }
+
+    @Override
+    public boolean canBind() {
+        return false;
     }
 
     @Override
