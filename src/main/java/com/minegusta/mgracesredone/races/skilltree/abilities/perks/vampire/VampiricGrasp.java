@@ -40,8 +40,10 @@ public class VampiricGrasp implements IAbility {
 		}
 
 		if (level < 4) {
+
+
 			Location targetLocation = player.getTargetBlock(Sets.newHashSet(Material.AIR), 10).getRelative(0, 2, 0).getLocation();
-			Optional<LivingEntity> target = player.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(targetLocation) < 4).findFirst();
+			Optional<LivingEntity> target = player.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(targetLocation) < 4 && !ent.getUniqueId().toString().equalsIgnoreCase(player.getUniqueId().toString())).findFirst();
 			if (!target.isPresent()) {
 				player.sendMessage(ChatColor.RED + "No living being could be found.");
 				return false;
@@ -52,21 +54,20 @@ public class VampiricGrasp implements IAbility {
 
 			int damage = level > 3 ? 3 : level;
 
-			//The actual draining
-			int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), () ->
+			for (int i = 0; i < duration * 2; i++)
 			{
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 				{
 					if (!player.isOnline() || !target.get().isValid()) return;
+					if (target.get().getLocation().distance(player.getLocation()) > 10) return;
 
 					if (runDrain(player, target.get(), damage)) {
 						player.sendMessage(ChatColor.DARK_RED + "You absorb your targets life force...");
 					}
-				}
-			}, 0, 10);
+				}, 10 * i);
+			}
 
-			//Cancel task eventually
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
-					stopTask(taskId), duration * 20);
+
 		} else {
 			List<LivingEntity> targets = Lists.newArrayList();
 			player.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(player.getLocation()) < 11).forEach(targets::add);
@@ -80,23 +81,17 @@ public class VampiricGrasp implements IAbility {
 
 			int damage = level > 3 ? 3 : level;
 
-			//The actual draining
-			int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), () ->
+			for (int i = 0; i < duration * 2; i++)
 			{
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 				{
-					if (!player.isOnline()) return;
-
-					targets.stream().forEach(ent ->
+					targets.stream().filter(LivingEntity::isValid).filter(ent -> ent.getLocation().distance(player.getLocation()) < 11).forEach(ent ->
 					{
 						runDrain(player, ent, damage);
 					});
 					player.sendMessage(ChatColor.DARK_RED + "You absorb your targets life force...");
-				}
-			}, 0, 16);
-
-			//Cancel task eventually
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
-					stopTask(taskId), duration * 20);
+				}, 10 * i);
+			}
 		}
 
 
@@ -130,12 +125,6 @@ public class VampiricGrasp implements IAbility {
 		}
 
 		return false;
-	}
-
-	private void stopTask(int taskId) {
-		if (Bukkit.getScheduler().isCurrentlyRunning(taskId)) {
-			Bukkit.getScheduler().cancelTask(taskId);
-		}
 	}
 
 	@Override
