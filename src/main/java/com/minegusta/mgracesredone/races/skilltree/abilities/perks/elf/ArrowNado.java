@@ -48,7 +48,7 @@ public class ArrowNado implements IAbility {
 
 	private void createWind(final Player shooter, Location l, int duration, boolean twice, final boolean poison) {
 		final Location center = l;
-		final int interval = twice ? 2 : 4;
+		final int interval = twice ? 20 : 40;
 		final List<Entity> arrows = Lists.newArrayList();
 		for (int i = 0; i <= 20 * duration; i++) {
 			if (i % 2 == 0) {
@@ -108,12 +108,12 @@ public class ArrowNado implements IAbility {
 					if (k == 20 * duration) {
 						List<LivingEntity> targets = Lists.newArrayList();
 
+						l.getWorld().getLivingEntities().stream().filter(le -> le.getLocation().distance(center) < 35 && (le instanceof Player || le instanceof Monster)).forEach(targets::add);
+
 						if (targets.contains(shooter)) targets.remove(shooter);
 						if (targets.isEmpty()) {
 							arrows.stream().filter(Entity::isValid).forEach(Entity::remove);
 						}
-
-						l.getWorld().getLivingEntities().stream().filter(le -> le.getLocation().distance(center) < 35 && (le instanceof Player || le instanceof Monster)).forEach(targets::add);
 
 						arrows.stream().filter(ent -> ent.isValid() && !ent.isOnGround()).forEach(a ->
 						{
