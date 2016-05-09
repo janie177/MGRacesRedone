@@ -226,7 +226,7 @@ public class MGPlayer {
             for (Bind b : binds.getBinds()) {
                 conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".item", b.getItem().name());
                 conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".data", b.getData());
-                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".ability", b.getAbilityType());
+                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".ability", b.getAbilityType().name());
             }
         }
 
