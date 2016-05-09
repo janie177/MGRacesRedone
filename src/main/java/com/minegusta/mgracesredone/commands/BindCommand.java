@@ -48,7 +48,8 @@ public class BindCommand implements CommandExecutor {
 
 				ChatUtil.sendFancyBanner(p);
 				if (abilityTypeList.isEmpty()) {
-					p.sendMessage(ChatColor.RED + "You do not have any abilities bound!");
+					p.sendMessage(ChatColor.RED + "You do not have any abilities available!");
+					p.sendMessage(ChatColor.RED + "Unlock them using /Perk.");
 				} else {
 					p.sendMessage(ChatColor.YELLOW + "Abilities you can bind:");
 					for (AbilityType a : abilityTypeList) {
