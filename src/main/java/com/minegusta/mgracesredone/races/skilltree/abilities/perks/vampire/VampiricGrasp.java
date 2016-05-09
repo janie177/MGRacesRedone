@@ -8,7 +8,6 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.EntityDamageByEntityEventUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.*;
@@ -70,7 +69,7 @@ public class VampiricGrasp implements IAbility {
 
 		} else {
 			List<LivingEntity> targets = Lists.newArrayList();
-			player.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(player.getLocation()) < 11).forEach(targets::add);
+			player.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(player.getLocation()) < 11 && !ent.getUniqueId().toString().equalsIgnoreCase(player.getUniqueId().toString())).forEach(targets::add);
 			if (targets.isEmpty()) {
 				player.sendMessage(ChatColor.RED + "No living being could be found.");
 				return false;
@@ -112,11 +111,14 @@ public class VampiricGrasp implements IAbility {
 			double zLength = (target.getLocation().getZ() - attacker.getLocation().getZ()) / 5;
 
 			for (int i = 1; i < 6; i++) {
-				EffectUtil.playParticle(target.getLocation().clone().add(xLength, yLength, zLength), Effect.MAGIC_CRIT);
+				//Red dust.
+				target.getWorld().spigot().playEffect(target.getLocation().clone().add(xLength, yLength, zLength), Effect.COLOURED_DUST, 0, 0, 255, 0, 0, 1, 0, 16);
 			}
 
-			//Damage the player
+			//Damage the target
 			target.damage(damage);
+			//Heal the attacker
+			attacker.setHealth(attacker.getHealth() + (attacker.getHealth() < attacker.getMaxHealth() ? 1 : 0));
 
 			if (target instanceof Player) {
 				((Player) target).sendMessage(ChatColor.RED + "Your blood is being drained!");
