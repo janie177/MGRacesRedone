@@ -131,24 +131,25 @@ public class VampireListener implements Listener {
 
 			double damage = e.getDamage();
 
-			LivingEntity attacker = (LivingEntity) e.getDamager();
-			if (attacker instanceof Player) {
-				ItemStack weapon = ((Player) attacker).getInventory().getItemInMainHand();
-				if (ItemUtil.isWood(weapon.getType())) {
-					damage = damage + 8;
-					int reduction;
-					if ((reduction = mgp.getAbilityLevel(AbilityType.WOODBANE)) > 0) {
-						damage -= reduction;
+			if (e.getDamager() instanceof LivingEntity) {
+				LivingEntity attacker = (LivingEntity) e.getDamager();
+				if (attacker instanceof Player) {
+					ItemStack weapon = ((Player) attacker).getInventory().getItemInMainHand();
+					if (ItemUtil.isWood(weapon.getType())) {
+						damage = damage + 8;
+						int reduction;
+						if ((reduction = mgp.getAbilityLevel(AbilityType.WOODBANE)) > 0) {
+							damage -= reduction;
+						}
 					}
-				}
-				if (weapon.containsEnchantment(Enchantment.DAMAGE_UNDEAD)) {
-					int level = weapon.getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD);
-					damage += level / 2;
-				}
+					if (weapon.containsEnchantment(Enchantment.DAMAGE_UNDEAD)) {
+						int level = weapon.getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD);
+						damage += level / 2;
+					}
 
-				e.setDamage(damage);
+					e.setDamage(damage);
+				}
 			}
-
 		}
 	}
 
