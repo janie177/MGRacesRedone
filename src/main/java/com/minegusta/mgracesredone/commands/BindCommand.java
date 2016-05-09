@@ -94,7 +94,8 @@ public class BindCommand implements CommandExecutor {
 				return true;
 
 
-			} catch (Exception ignored) {
+			} catch (Exception e) {
+				e.printStackTrace();
 				ChatUtil.sendString(p, "That ability could not be found.");
 			}
 

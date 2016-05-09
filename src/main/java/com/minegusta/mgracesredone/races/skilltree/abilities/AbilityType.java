@@ -124,7 +124,7 @@ public enum AbilityType {
      * @return The baseprice +
      */
     public int getCost(int level, int totalPerksPoints) {
-        return ability.getPrice(level) + (totalPerksPoints / 7);
+        return ability.getPrice(level) + (totalPerksPoints / 13);
     }
 
     public int getBaseCost(int level) {

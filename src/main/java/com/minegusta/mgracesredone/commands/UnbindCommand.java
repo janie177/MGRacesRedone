@@ -29,7 +29,7 @@ public class UnbindCommand implements CommandExecutor {
 		if (args.length < 1) {
 			try {
 				Material item = p.getInventory().getItemInMainHand().getType();
-				short data = p.getInventory().getItemInMainHand().getDurability();
+				short data = item != Material.AIR ? p.getInventory().getItemInMainHand().getDurability() : 0;
 
 				boolean ignoreData = BindUtil.ignoreItemData(item);
 

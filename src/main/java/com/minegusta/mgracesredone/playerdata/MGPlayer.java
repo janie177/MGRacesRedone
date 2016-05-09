@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
@@ -76,7 +77,7 @@ public class MGPlayer {
     //BINDS//
     //------------------------------------------------------------------------------//
 
-    public List<Bind> getBinds() {
+    public Set<Bind> getBinds() {
         return binds.getBinds();
     }
 
