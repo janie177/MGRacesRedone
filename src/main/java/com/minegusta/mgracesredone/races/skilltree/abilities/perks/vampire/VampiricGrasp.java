@@ -53,7 +53,7 @@ public class VampiricGrasp implements IAbility {
 
 			int damage = level > 3 ? 3 : level;
 
-			for (int i = 0; i < duration * 2; i++)
+			for (int i = 0; i < duration; i++)
 			{
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 				{
@@ -63,7 +63,7 @@ public class VampiricGrasp implements IAbility {
 					if (runDrain(player, target.get(), damage)) {
 						player.sendMessage(ChatColor.DARK_RED + "You absorb your targets life force...");
 					}
-				}, 10 * i);
+				}, 20 * i);
 			}
 
 
@@ -80,7 +80,7 @@ public class VampiricGrasp implements IAbility {
 
 			int damage = level > 3 ? 3 : level;
 
-			for (int i = 0; i < duration * 2; i++)
+			for (int i = 0; i < duration; i++)
 			{
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 				{
@@ -89,7 +89,7 @@ public class VampiricGrasp implements IAbility {
 						runDrain(player, ent, damage);
 					});
 					player.sendMessage(ChatColor.DARK_RED + "You absorb your targets life force...");
-				}, 10 * i);
+				}, 20 * i);
 			}
 		}
 
@@ -106,9 +106,9 @@ public class VampiricGrasp implements IAbility {
 		if (!e.isCancelled()) {
 
 			//Make the particles
-			double yLength = (target.getLocation().getY() - attacker.getLocation().getY()) / 10;
-			double xLength = (target.getLocation().getX() - attacker.getLocation().getX()) / 10;
-			double zLength = (target.getLocation().getZ() - attacker.getLocation().getZ()) / 10;
+			double yLength = (attacker.getLocation().getY() - target.getLocation().getY()) / 10;
+			double xLength = (attacker.getLocation().getX() - target.getLocation().getX()) / 10;
+			double zLength = (attacker.getLocation().getZ() - target.getLocation().getZ()) / 10;
 
 			for (int i = 1; i < 11; i++) {
 				//Red dust.
