@@ -112,7 +112,7 @@ public class VampiricGrasp implements IAbility {
 
 			for (int i = 1; i < 11; i++) {
 				//Red dust.
-				target.getWorld().spigot().playEffect(target.getLocation().clone().subtract(xLength * i, (yLength + 1) * i, zLength * i), Effect.COLOURED_DUST, 0, 0, 255, 0, 0, 1, 0, 30);
+				target.getWorld().spigot().playEffect(target.getLocation().clone().add(xLength * i, (yLength * i) + 1, zLength * i), Effect.COLOURED_DUST, 0, 0, 255, 0, 0, 1, 0, 30);
 			}
 
 			//Damage the target
