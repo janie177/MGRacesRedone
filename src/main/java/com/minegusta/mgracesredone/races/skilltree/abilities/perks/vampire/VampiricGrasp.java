@@ -106,13 +106,13 @@ public class VampiricGrasp implements IAbility {
 		if (!e.isCancelled()) {
 
 			//Make the particles
-			double yLength = (target.getLocation().getY() - attacker.getLocation().getY()) / 5;
-			double xLength = (target.getLocation().getX() - attacker.getLocation().getX()) / 5;
-			double zLength = (target.getLocation().getZ() - attacker.getLocation().getZ()) / 5;
+			double yLength = (target.getLocation().getY() - attacker.getLocation().getY()) / 10;
+			double xLength = (target.getLocation().getX() - attacker.getLocation().getX()) / 10;
+			double zLength = (target.getLocation().getZ() - attacker.getLocation().getZ()) / 10;
 
-			for (int i = 1; i < 6; i++) {
+			for (int i = 1; i < 11; i++) {
 				//Red dust.
-				target.getWorld().spigot().playEffect(target.getLocation().clone().add(xLength, yLength, zLength), Effect.COLOURED_DUST, 0, 0, 255, 0, 0, 1, 0, 16);
+				target.getWorld().spigot().playEffect(target.getLocation().clone().subtract(xLength * i, (yLength + 1) * i, zLength * i), Effect.COLOURED_DUST, 0, 0, 255, 0, 0, 1, 0, 30);
 			}
 
 			//Damage the target

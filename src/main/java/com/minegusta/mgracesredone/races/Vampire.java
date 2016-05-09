@@ -91,24 +91,12 @@ public class Vampire implements Race {
 		//Regenerate from REGENERATE Ability when NOT in combat
 		if (interval > 2) {
 			interval = 0;
-			if (WeatherUtil.isNight(p.getWorld()) && regenLevel > 0 && !MGEssentialsPlugin.inCombat(p)) {
+			if (WeatherUtil.isNight(p.getWorld()) && regenLevel > 0 && !p.isDead() && !MGEssentialsPlugin.inCombat(p)) {
 				regenLevel = regenLevel > 3 ? 3 : regenLevel;
 				double max = p.getMaxHealth() - p.getHealth();
 				if (max >= regenLevel) {
 					p.setHealth(p.getHealth() + regenLevel);
 				}
-			}
-		}
-		if (regenLevel > 3 && WeatherUtil.isNight(p.getWorld())) {
-			if (p.getHealth() < 4 && !p.isDead() && p.getHealth() > 0 && p.getFoodLevel() > 1) {
-				int food = p.getFoodLevel() - 1;
-				double maxHealed = p.getMaxHealth() - p.getHealth();
-				double healed = food > maxHealed ? maxHealed : food;
-				p.setHealth(p.getHealth() + healed);
-				VampireFoodUtil.setCanChangeFood(p);
-				p.setFoodLevel(1);
-				p.sendMessage(org.bukkit.ChatColor.DARK_RED + "Your blood was sacrificed to prevent you from dying!");
-				EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
 			}
 		}
 
