@@ -28,7 +28,7 @@ public class BindListener implements Listener {
 		MGPlayer mgp = Races.getMGPlayer(p);
 
 		Material item = e.getItem().getType();
-		short data = e.getItem().getDurability();
+		short data = item != Material.AIR ? e.getItem().getDurability() : 0;
 		boolean ignoreData = BindUtil.ignoreItemData(item);
 
 		Optional<AbilityType> ability = mgp.getBindForItem(item, data, ignoreData);
