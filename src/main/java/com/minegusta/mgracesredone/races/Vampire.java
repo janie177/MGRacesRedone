@@ -75,7 +75,7 @@ public class Vampire implements Race {
 		//Passive vampire boosts
 
 		//Burn in the sun
-		if (!WeatherUtil.isOverWorld(p.getLocation()) && !WeatherUtil.isNight(p.getWorld()) && PlayerUtil.isInOpenAir(p) && !WeatherUtil.isRaining(p.getWorld())) {
+		if (WeatherUtil.isOverWorld(p.getLocation()) && !WeatherUtil.isNight(p.getWorld()) && PlayerUtil.isInOpenAir(p) && !WeatherUtil.isRaining(p.getWorld())) {
 			p.setFireTicks(80);
 			PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 12);
 			PotionUtil.updatePotion(p, PotionEffectType.BLINDNESS, 0, 8);
