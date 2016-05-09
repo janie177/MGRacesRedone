@@ -89,7 +89,7 @@ public class BindCommand implements CommandExecutor {
 				short data = p.getInventory().getItemInMainHand().getDurability();
 
 				mgp.addBind(item, type, data);
-				ChatUtil.sendString(p, ChatColor.GREEN + "You bound " + ChatColor.YELLOW + type.getName() + ChatColor.GREEN + " to " + ChatColor.YELLOW + item.name() + (!ignoreData ? ":" + item.getData() : "") + ChatColor.GREEN + ".");
+				ChatUtil.sendString(p, ChatColor.GREEN + "You bound " + ChatColor.YELLOW + type.getName() + ChatColor.GREEN + " to " + ChatColor.YELLOW + item.name() + (!ignoreData ? ":" + data : "") + ChatColor.GREEN + ".");
 
 				return true;
 
