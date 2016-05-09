@@ -50,7 +50,6 @@ public class MonsterMash implements IAbility {
 
 				//Break truce if attacking an allied mob
 				if (truce.contains(target.getType())) {
-					damager.sendMessage(ChatColor.RED + "You have temporarily broken your truce with monsters!");
 					VampireTruceUtil.setAttackable(damager, 60);
 				}
 
