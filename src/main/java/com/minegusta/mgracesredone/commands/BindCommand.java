@@ -86,7 +86,7 @@ public class BindCommand implements CommandExecutor {
 
 				Material item = p.getInventory().getItemInMainHand().getType();
 				boolean ignoreData = BindUtil.ignoreItemData(item);
-				short data = p.getInventory().getItemInMainHand().getDurability();
+				short data = item != Material.AIR ? p.getInventory().getItemInMainHand().getDurability() : 0;
 
 				mgp.addBind(item, type, data);
 				ChatUtil.sendString(p, ChatColor.GREEN + "You bound " + ChatColor.YELLOW + type.getName() + ChatColor.GREEN + " to " + ChatColor.YELLOW + item.name() + (!ignoreData ? ":" + data : "") + ChatColor.GREEN + ".");

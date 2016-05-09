@@ -31,8 +31,8 @@ public class AngelListener implements Listener {
 
         if (!Races.getMGPlayer(p).hasAbility(AbilityType.GLIDE)) return;
 
-        short data = p.getInventory().getItemInMainHand().getDurability();
         Material item = p.getInventory().getItemInMainHand().getType();
+        short data = item != Material.AIR ? p.getInventory().getItemInMainHand().getDurability() : 0;
         boolean ignoreData = BindUtil.ignoreItemData(item);
 
         for (Bind b : Races.getMGPlayer(p).getBindForAbility(AbilityType.GLIDE)) {

@@ -90,7 +90,7 @@ public class EnderBornListener implements Listener {
         }
 
         Material hand = p.getInventory().getItemInMainHand().getType();
-        short data = p.getInventory().getItemInMainHand().getDurability();
+        short data = hand != Material.AIR ? p.getInventory().getItemInMainHand().getDurability() : 0;
         boolean ignoreData = BindUtil.ignoreItemData(hand);
 
         //Activate EndRift

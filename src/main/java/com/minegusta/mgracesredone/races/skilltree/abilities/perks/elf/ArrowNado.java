@@ -176,7 +176,7 @@ public class ArrowNado implements IAbility {
 
 	@Override
 	public int getMaxLevel() {
-		return 4;
+		return 3;
 	}
 
 	@Override
