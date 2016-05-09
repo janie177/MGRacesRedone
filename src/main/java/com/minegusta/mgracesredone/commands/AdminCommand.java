@@ -39,6 +39,7 @@ public class AdminCommand implements CommandExecutor
                 }
                 s.sendMessage(ChatColor.GREEN + "Spawn for " + raceType.name() + " is now set at your location.");
             } catch (Exception ignored) {
+                s.sendMessage(ChatColor.RED + "That race does not exist.");
             }
             return true;
         }
