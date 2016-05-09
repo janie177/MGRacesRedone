@@ -185,7 +185,7 @@ public class VampiricGrasp implements IAbility {
 
 	@Override
 	public int getMaxLevel() {
-		return 0;
+		return 4;
 	}
 
 	@Override

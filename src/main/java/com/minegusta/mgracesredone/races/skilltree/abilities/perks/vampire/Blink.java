@@ -32,7 +32,7 @@ public class Blink implements IAbility {
 		MGPlayer mgp = Races.getMGPlayer(player);
 		int level = mgp.getAbilityLevel(getType());
 		String uuid = player.getUniqueId().toString();
-		int duration = level + 1;
+		int duration = level;
 
 		//Turn invisible
 		InvisibilityUtil.add(uuid, duration);
@@ -132,13 +132,13 @@ public class Blink implements IAbility {
 
 		switch (level) {
 			case 1:
-				desc = new String[]{"Become invincible for 2 seconds while being able to fly quickly.", "Bind to an item using /Bind."};
+				desc = new String[]{"Become invincible for 1 seconds while being able to fly quickly.", "Bind to an item using /Bind."};
 				break;
 			case 2:
-				desc = new String[]{"Blinking lasts 3 seconds."};
+				desc = new String[]{"Blinking lasts 2 seconds."};
 				break;
 			case 3:
-				desc = new String[]{"Blinking lasts 4 seconds."};
+				desc = new String[]{"Blinking lasts 3 seconds."};
 				break;
 			default:
 				desc = new String[]{"This is an error!"};
