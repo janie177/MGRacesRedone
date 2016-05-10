@@ -42,7 +42,7 @@ public class BloodLustTask {
 					EffectUtil.playParticle(p, Effect.LARGE_SMOKE);
 					EffectUtil.playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF);
 
-					if (level > 1 && healInterval > 2) {
+					if (level > 1 && healInterval > 3) {
 						p.setHealth(p.getHealth() + (p.getHealth() < p.getMaxHealth() ? 1 : 0));
 					}
 					if (level > 2) {
@@ -55,8 +55,8 @@ public class BloodLustTask {
 
 			healInterval++;
 			foodInterval++;
-			healInterval = healInterval > 2 ? 0 : healInterval;
-			foodInterval = foodInterval > 6 ? 0 : foodInterval;
+			healInterval = healInterval > 4 ? 0 : healInterval;
+			foodInterval = foodInterval > 7 ? 0 : foodInterval;
 		}, 20, 10);
 	}
 
@@ -69,6 +69,9 @@ public class BloodLustTask {
 	public static void removePlayer(Player p) {
 		if (players.containsKey(p)) players.remove(p);
 		p.sendMessage(ChatColor.RED + "BloodLust is no longer active.");
+		PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 0);
+		PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 0);
+		PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
 	}
 
 	public static boolean containsPlayer(Player p) {
