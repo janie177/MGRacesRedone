@@ -111,8 +111,7 @@ public class AbilityMenu {
         int totalAbilities = 0;
         for (AbilityType t : mgp.getAbilities().keySet()) {
             for (int levels = 1; levels <= mgp.getAbilityLevel(t); levels++) {
-                int increase = totalAbilities / 9;
-                totalAbilities = (totalAbilities + t.getBaseCost(levels)) + increase;
+                totalAbilities = totalAbilities + t.getCost(levels, totalAbilities);
             }
         }
         return totalAbilities;
