@@ -101,6 +101,8 @@ public class VampireListener implements Listener {
 					return;
 				}
 
+				foodAmount = (int) e.getDamage() * foodAmount;
+
 				int maxHealed = 20 - p.getFoodLevel();
 				if (maxHealed > 0) {
 					VampireFoodUtil.setCanChangeFood(p);
