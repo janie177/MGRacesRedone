@@ -14,7 +14,7 @@ public class SpawnCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (args.length > 1 && sender.hasPermission("minegusta.spawn.other")) {
+		if (args.length > 0 && sender.hasPermission("minegusta.spawn.other")) {
 			String player = args[0];
 			try {
 				Player p = Bukkit.getPlayer(player);
