@@ -11,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.concurrent.ConcurrentMap;
 
@@ -107,8 +108,8 @@ public class SpecialArrows {
 
         FallDamageManager.addToFallMap(p);
         p.getLocation().setY(p.getLocation().getY() + 0.05);
-        p.getLocation().setDirection(l.getDirection());
-        p.setVelocity(p.getLocation().getDirection().multiply(2.5));
+        Vector v = arrow.getLocation().toVector().subtract(p.getLocation().toVector());
+        p.setVelocity(v.multiply(2.5));
         arrow.remove();
     }
 
