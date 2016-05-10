@@ -1,7 +1,6 @@
 package com.minegusta.mgracesredone.tasks;
 
 import com.minegusta.mgracesredone.main.Main;
-import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.WeaknessUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -21,7 +20,7 @@ public class WeaknessTask {
 				}
 				//Apply the weakness effect.
 				else {
-					EffectUtil.playParticle(ent, Effect.POTION_SWIRL);
+					ent.getWorld().spigot().playEffect(ent.getLocation().clone().add(0, 1, 0), Effect.POTION_SWIRL_TRANSPARENT, 0, 0, 1, 1, 1, 0, 9, 30);
 				}
 			});
 		}, 20, 20);

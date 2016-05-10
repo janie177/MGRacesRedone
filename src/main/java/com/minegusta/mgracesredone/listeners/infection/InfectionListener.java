@@ -293,7 +293,7 @@ public class InfectionListener implements Listener {
 
             //Check ingredients
             for (ItemStack i : p.getInventory()) {
-                if (i.getType() == Material.INK_SACK) {
+                if (i != null && i.getType() == Material.INK_SACK) {
                     //Rose red
                     if (i.getDurability() == 1) {
                         List<String> lore = i.getItemMeta().getLore();
