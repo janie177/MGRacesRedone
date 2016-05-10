@@ -80,7 +80,7 @@ public class Blink implements IAbility {
 				{
 					InvisibilityUtil.remove(uuid);
 					if (player.isOnline()) FallDamageManager.addToFallMap(player);
-				}, i * 10);
+				}, i * 2);
 			}
 		}
 
