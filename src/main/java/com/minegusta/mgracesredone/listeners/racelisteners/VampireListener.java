@@ -106,7 +106,7 @@ public class VampireListener implements Listener {
 					VampireFoodUtil.setCanChangeFood(p);
 					EffectUtil.playParticle(e.getEntity().getLocation(), Effect.CRIT);
 					EffectUtil.playSound(e.getEntity().getLocation(), Sound.BLOCK_WATER_AMBIENT);
-					foodAmount = maxHealed > foodAmount ? maxHealed : foodAmount;
+					foodAmount = maxHealed < foodAmount ? maxHealed : foodAmount;
 					p.setFoodLevel(p.getFoodLevel() + foodAmount);
 					p.sendMessage(ChatColor.RED + "You feed off the living being...");
 				}
