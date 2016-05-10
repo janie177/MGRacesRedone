@@ -22,8 +22,9 @@ public class BindListener implements Listener {
 
 	@EventHandler
 	public void onBindClick(PlayerInteractEvent e) {
+
 		Player p = e.getPlayer();
-		if (!WorldCheck.isEnabled(p.getWorld()) || e.isCancelled() || e.getHand() != EquipmentSlot.HAND) return;
+		if (!WorldCheck.isEnabled(p.getWorld()) || e.getHand() != EquipmentSlot.HAND) return;
 
 		MGPlayer mgp = Races.getMGPlayer(p);
 
@@ -67,7 +68,7 @@ public class BindListener implements Listener {
 	public void onBindClickEntity(PlayerInteractEntityEvent e) {
 
 		Player p = e.getPlayer();
-		if (!WorldCheck.isEnabled(p.getWorld()) || e.isCancelled() || e.getHand() != EquipmentSlot.HAND) return;
+		if (!WorldCheck.isEnabled(p.getWorld()) || e.isCancelled()) return;
 		MGPlayer mgp = Races.getMGPlayer(p);
 
 		Material item = e.getPlayer().getInventory().getItemInMainHand().getType();
@@ -91,7 +92,7 @@ public class BindListener implements Listener {
 				ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + a.getName() + ".");
 				return;
 			}
-			ChatUtil.sendString(p, "You used " + a.getName() + "!");
+			if (ability.get() != AbilityType.TELEKINESIS) ChatUtil.sendString(p, "You used " + a.getName() + "!");
 			Cooldown.newCoolDown(name, uuid, a.getCooldown(mgp.getAbilityLevel(a)));
 			//----//           //----//
 

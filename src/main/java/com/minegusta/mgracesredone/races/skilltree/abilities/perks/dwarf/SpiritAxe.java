@@ -167,6 +167,11 @@ public class SpiritAxe implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Summon a spectral axe that damages your targets.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }

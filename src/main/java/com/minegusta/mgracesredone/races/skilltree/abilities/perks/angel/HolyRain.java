@@ -160,6 +160,11 @@ public class HolyRain implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Call a holy rain on your location.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

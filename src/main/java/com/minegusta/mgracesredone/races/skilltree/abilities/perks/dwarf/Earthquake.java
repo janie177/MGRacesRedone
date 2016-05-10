@@ -129,7 +129,7 @@ public class Earthquake implements IAbility {
 
     @Override
     public AbilityType getType() {
-        return AbilityType.EARTQUAKE;
+        return AbilityType.EARTHQUAKE;
     }
 
     @Override
@@ -165,6 +165,11 @@ public class Earthquake implements IAbility {
     @Override
     public boolean canBind() {
         return true;
+    }
+
+    @Override
+    public String getBindDescription() {
+        return "Cause an earthquake, shaking your enemies.";
     }
 
     @Override

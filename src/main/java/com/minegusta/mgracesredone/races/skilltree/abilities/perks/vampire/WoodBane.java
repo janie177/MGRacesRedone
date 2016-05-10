@@ -69,7 +69,7 @@ public class WoodBane implements IAbility {
 
 	@Override
 	public int getMaxLevel() {
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -88,6 +88,9 @@ public class WoodBane implements IAbility {
 				break;
 			case 4:
 				desc = new String[]{"Extra damage from wood is reduced to 4."};
+				break;
+			case 5:
+				desc = new String[]{"Extra damage from wood is reduced to 5."};
 				break;
 			default:
 				desc = new String[]{"This is an error!"};

@@ -175,6 +175,11 @@ public class VampiricGrasp implements IAbility {
 	}
 
 	@Override
+	public String getBindDescription() {
+		return "Drain the blood of the living.";
+	}
+
+	@Override
 	public int getMaxLevel() {
 		return 4;
 	}

@@ -163,6 +163,11 @@ public class WhirlWind implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Call a whirlwind where you are aiming at.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }

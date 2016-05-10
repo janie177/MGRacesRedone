@@ -92,6 +92,11 @@ public class DarkBlood implements IAbility {
 	}
 
 	@Override
+	public String getBindDescription() {
+		return "Toggle vampiric effects at night.";
+	}
+
+	@Override
 	public int getMaxLevel() {
 		return 5;
 	}

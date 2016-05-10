@@ -86,7 +86,7 @@ public class Regenerate implements IAbility {
 				desc = new String[]{"At night, regenerate fastest when out of combat."};
 				break;
 			case 4:
-				desc = new String[]{"Heal yourself, setting your blood bar to 1.", "Activated when below 8 health.", "Only works at night."};
+				desc = new String[]{"Heal yourself, setting your blood bar to 1.", "Activated when below 8 health.", "Only works at night every 5 minutes."};
 				break;
 			default:
 				desc = new String[]{"This is an error!"};

@@ -122,6 +122,11 @@ public class Blink implements IAbility {
 	}
 
 	@Override
+	public String getBindDescription() {
+		return "Become a swarm of bats and fly short distances.";
+	}
+
+	@Override
 	public int getMaxLevel() {
 		return 3;
 	}

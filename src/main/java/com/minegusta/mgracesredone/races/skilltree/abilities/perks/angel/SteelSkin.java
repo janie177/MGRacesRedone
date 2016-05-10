@@ -85,6 +85,11 @@ public class SteelSkin implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Become immortal for a short period of time. Halves your damage output.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

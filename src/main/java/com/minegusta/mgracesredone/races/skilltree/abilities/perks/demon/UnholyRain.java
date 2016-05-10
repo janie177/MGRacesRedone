@@ -166,6 +166,11 @@ public class UnholyRain implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Call an unholy rain on your location.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

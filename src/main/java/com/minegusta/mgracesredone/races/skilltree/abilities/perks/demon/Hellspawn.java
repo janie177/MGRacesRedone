@@ -101,6 +101,11 @@ public class Hellspawn implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Toggle nether demon effects.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }

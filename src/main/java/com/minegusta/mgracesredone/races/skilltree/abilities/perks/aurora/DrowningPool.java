@@ -116,6 +116,11 @@ public class DrowningPool implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Drown any entities around you when in the water.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }

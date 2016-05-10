@@ -97,6 +97,11 @@ public class Shadow implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Become a shadow for a short time.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }

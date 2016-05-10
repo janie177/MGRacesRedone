@@ -36,7 +36,7 @@ public enum AbilityType {
     BATTLEAXE(new BattleAxe()),
     BATTLECRY(new BattleCry()),
     COMBATANT(new Combatant()),
-    EARTQUAKE(new Earthquake()),
+    EARTHQUAKE(new Earthquake()),
     MINER(new Miner()),
     PROJECTILEPROTECTION(new ProjectileProtection()),
     SPIRITAXE(new SpiritAxe()),
@@ -133,6 +133,10 @@ public enum AbilityType {
 
     public int getID() {
         return ability.getID();
+    }
+
+    public String getBindDescription() {
+        return ability.getBindDescription();
     }
 
     public int getMaxLevel() {

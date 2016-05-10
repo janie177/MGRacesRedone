@@ -113,6 +113,11 @@ public class DivineBlade implements IAbility {
 	}
 
 	@Override
+	public String getBindDescription() {
+		return "Remove any negative potion effects. Add good ones.";
+	}
+
+	@Override
 	public int getMaxLevel() {
 		return 4;
 	}

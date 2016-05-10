@@ -143,6 +143,11 @@ public class HellRift implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Open a rift that sucks in anything nearby.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

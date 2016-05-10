@@ -40,7 +40,7 @@ public class Combatant implements IAbility {
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 7);
         }
         if (level > 2) {
-            PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, 7);
+            PotionUtil.updatePotion(player, PotionEffectType.SPEED, 1, 7);
         }
         if (level > 3) {
             PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 0, 5);

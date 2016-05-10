@@ -123,6 +123,11 @@ public class StoneShape implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Encase yourself in solid rock.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

@@ -89,6 +89,15 @@ public interface IAbility {
     boolean canBind();
 
     /**
+     * Return the description shown in the /Bind List All command.
+     *
+     * @return
+     */
+    default String getBindDescription() {
+        return "";
+    }
+
+    /**
      * A method to retrieve the max level of this perk.
      *
      * @return The maxium level possible. May NEVER be over 5.

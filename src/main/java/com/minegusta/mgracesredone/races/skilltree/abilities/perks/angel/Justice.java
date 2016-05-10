@@ -115,6 +115,11 @@ public class Justice implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Launch yourself into the air.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }

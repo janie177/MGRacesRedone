@@ -35,7 +35,7 @@ public class Thrall implements IAbility {
 		z.setCustomNameVisible(true);
 		z.setBaby(false);
 
-		PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 1, 600);
+		PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 0, 600);
 		PotionUtil.updatePotion(z, PotionEffectType.INCREASE_DAMAGE, 0, 600);
 		PotionUtil.updatePotion(z, PotionEffectType.SPEED, 0, 6);
 		PotionUtil.updatePotion(z, PotionEffectType.FIRE_RESISTANCE, 0, 600);
@@ -66,7 +66,7 @@ public class Thrall implements IAbility {
 
 		//Buff them more
 		if (level > 2) {
-			PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 2, 600);
+			PotionUtil.updatePotion(z, PotionEffectType.DAMAGE_RESISTANCE, 1, 600);
 			PotionUtil.updatePotion(z, PotionEffectType.INCREASE_DAMAGE, 1, 600);
 		}
 
@@ -116,6 +116,11 @@ public class Thrall implements IAbility {
 	@Override
 	public boolean canBind() {
 		return true;
+	}
+
+	@Override
+	public String getBindDescription() {
+		return "Summon undead Thralls to aid you in combat.";
 	}
 
 	@Override

@@ -140,6 +140,11 @@ public class Frost implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Freeze enemies around you.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }

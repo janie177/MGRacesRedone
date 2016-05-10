@@ -112,6 +112,11 @@ public class MeteorStorm implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Call a meteor storm on your location.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

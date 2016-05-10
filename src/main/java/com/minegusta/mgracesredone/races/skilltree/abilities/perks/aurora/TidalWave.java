@@ -162,6 +162,11 @@ public class TidalWave implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "A tidal wave will hit targets in your direction.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

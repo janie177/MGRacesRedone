@@ -128,6 +128,11 @@ public class BattleCry implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Knock back enemies with your battlecry.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }

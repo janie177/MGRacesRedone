@@ -50,9 +50,9 @@ public class ArrowNado implements IAbility {
 		return true;
 	}
 
-	private void createWind(final Player shooter, Location l, int duration, boolean twice, final boolean poison) {
-		final Location center = l;
-		final int interval = twice ? 20 : 40;
+	private void createWind(Player shooter, Location l, int duration, boolean twice, boolean poison) {
+		Location center = l;
+		int interval = twice ? 20 : 40;
 		List<Entity> arrows = Lists.newArrayList();
 		ElfShooter es = new ElfShooter(shooter.getUniqueId().toString());
 		for (int i = 0; i <= 20 * duration; i++) {
@@ -184,6 +184,11 @@ public class ArrowNado implements IAbility {
 	@Override
 	public boolean canBind() {
 		return true;
+	}
+
+	@Override
+	public String getBindDescription() {
+		return "Call a tornado of arrows that then hit nearby enemies.";
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class Telekinesis implements IAbility {
 
         String uuid = player.getUniqueId().toString();
 
-        if (cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 250) {
+        if (cooldown.containsKey(uuid) && System.currentTimeMillis() - cooldown.get(uuid) < 100) {
             return false;
         }
 
@@ -139,6 +139,11 @@ public class Telekinesis implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Attract items and entities towards you.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 4;
     }
@@ -149,7 +154,7 @@ public class Telekinesis implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Slowly attract items towards you.", "Activate by right-clicking a blaze rod."};
+                desc = new String[]{"Slowly attract items towards you.", "Bind to an item using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"You will now attract mobs as well."};

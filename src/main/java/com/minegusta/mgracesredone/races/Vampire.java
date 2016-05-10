@@ -62,7 +62,7 @@ public class Vampire implements Race {
 						"They are weak to Smite and wooden weapons.",
 						"Vampires have a blood bar instead of food bar.",
 						"It only drains when using abilities.",
-						"Fill it by hitting living beings."
+						"Fill it by hitting living beings with your hands."
 
 				};
 	}

@@ -103,7 +103,7 @@ public class SpecialArrows {
             return;
         }
 
-        Cooldown.newCoolDown(name, uuid, 2);
+        Cooldown.newCoolDown(name, uuid, 1);
 
         FallDamageManager.addToFallMap(p);
         p.getLocation().setY(p.getLocation().getY() + 0.05);

@@ -101,6 +101,11 @@ public class Howl implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Summon wolves to your aid.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }
@@ -111,7 +116,7 @@ public class Howl implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Summon a tamed wolf to your aid.", "Bind to an item using //Bind."};
+                desc = new String[]{"Summon a tamed wolf to your aid.", "Bind to an item using /Bind."};
                 break;
             case 2:
                 desc = new String[]{"Your wolf now has a strength boost."};

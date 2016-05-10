@@ -64,7 +64,7 @@ public class BatShield implements IAbility {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 		{
 			if (player.isOnline()) {
-				player.getWorld().getEntitiesByClass(Bat.class).stream().filter(b -> b.getLocation().distance(player.getLocation()) < 9).forEach(Bat::remove);
+				player.getWorld().getEntitiesByClass(Bat.class).stream().filter(b -> b.getLocation().distance(player.getLocation()) < 15).forEach(Bat::remove);
 			}
 		}, 6 * 20);
 
@@ -156,6 +156,11 @@ public class BatShield implements IAbility {
 	@Override
 	public boolean canBind() {
 		return true;
+	}
+
+	@Override
+	public String getBindDescription() {
+		return "Summon bats to shield you.";
 	}
 
 	@Override

@@ -108,6 +108,11 @@ public class Prayer implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Summon a killer bunny to your aid.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

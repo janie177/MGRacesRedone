@@ -75,6 +75,11 @@ public class Glide implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Hold the bound item when falling to glide.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 2;
     }

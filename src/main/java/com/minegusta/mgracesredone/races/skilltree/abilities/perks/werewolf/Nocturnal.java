@@ -99,6 +99,11 @@ public class Nocturnal implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Toggle nightly boosts for werewolf.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }

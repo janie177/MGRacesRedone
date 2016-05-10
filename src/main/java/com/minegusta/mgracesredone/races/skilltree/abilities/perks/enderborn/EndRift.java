@@ -156,6 +156,11 @@ public class EndRift implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Set two portals, then teleport between them.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 3;
     }

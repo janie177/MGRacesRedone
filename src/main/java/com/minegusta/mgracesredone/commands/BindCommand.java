@@ -53,7 +53,7 @@ public class BindCommand implements CommandExecutor {
 				} else {
 					p.sendMessage(ChatColor.YELLOW + "Abilities you can bind:");
 					for (AbilityType a : abilityTypeList) {
-						p.sendMessage(ChatColor.GRAY + " - " + a.name());
+						p.sendMessage(ChatColor.GREEN + " - " + a.name() + ChatColor.GRAY + " - " + a.getBindDescription());
 					}
 				}
 

@@ -90,6 +90,11 @@ public class Glacious implements IAbility {
     }
 
     @Override
+    public String getBindDescription() {
+        return "Toggle boosts in cold biomes.";
+    }
+
+    @Override
     public int getMaxLevel() {
         return 5;
     }

@@ -25,13 +25,20 @@ import org.bukkit.potion.PotionEffectType;
 public class DwarfListener implements Listener {
     @EventHandler
     public void onDwarfDamage(EntityDamageByEntityEvent e) {
-        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld()) || e.isCancelled()) return;
 
         //Axe boost in damage
         if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
             Player p = (Player) e.getDamager();
             if (ItemUtil.isAxe(p.getInventory().getItemInMainHand().getType()) && WGUtil.canFightEachother(p, e.getEntity()) && !e.isCancelled() && Races.getMGPlayer(p).hasAbility(AbilityType.BATTLEAXE)) {
                 AbilityType.BATTLEAXE.run(e);
+            }
+        }
+
+        if (e.getDamager() instanceof Skeleton && e.getEntity() instanceof Player) {
+            String uuid;
+            if (SpiritAxe.axes.containsKey(e.getDamager().getUniqueId().toString()) && SpiritAxe.axes.get(e.getDamager().getUniqueId().toString()).equalsIgnoreCase(e.getEntity().getUniqueId().toString())) {
+                e.setCancelled(true);
             }
         }
 

@@ -96,6 +96,11 @@ public class VampireListener implements Listener {
 
 			int foodAmount;
 			if (mgp.isRace(RaceType.VAMPIRE) && (foodAmount = VampireFoodUtil.getFoodForEntityType(e.getEntityType())) > 0) {
+
+				if (p.getInventory().getItemInMainHand().getType() != Material.AIR) {
+					return;
+				}
+
 				double damage = e.getDamage();
 				foodAmount = (int) damage * foodAmount / 2;
 
@@ -106,6 +111,7 @@ public class VampireListener implements Listener {
 					EffectUtil.playSound(e.getEntity().getLocation(), Sound.BLOCK_WATER_AMBIENT);
 					foodAmount = maxHealed > foodAmount ? maxHealed : foodAmount;
 					p.setFoodLevel(p.getFoodLevel() + foodAmount);
+					p.sendMessage(ChatColor.RED + "You feed from the living being...");
 				}
 			}
 		}
@@ -128,7 +134,7 @@ public class VampireListener implements Listener {
 
 			//Blood sacrifice
 			int regenLevel = mgp.getAbilityLevel(AbilityType.REGENERATE);
-			if (regenLevel > 3 && WeatherUtil.isNight(p.getWorld())) {
+			if (regenLevel > 3 && WeatherUtil.isNight(p.getWorld()) && Cooldown.isCooledDown("bcrifice", p.getUniqueId().toString())) {
 				if (p.getHealth() < 8 && !p.isDead() && p.getHealth() > 0 && p.getFoodLevel() > 1) {
 					int food = p.getFoodLevel() - 1;
 					double maxHealed = p.getMaxHealth() - p.getHealth();
@@ -138,6 +144,7 @@ public class VampireListener implements Listener {
 					p.setFoodLevel(1);
 					p.sendMessage(org.bukkit.ChatColor.DARK_RED + "Your blood was sacrificed to prevent you from dying!");
 					EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
+					Cooldown.newCoolDown("bcrifice", p.getUniqueId().toString(), 300);
 				}
 			}
 

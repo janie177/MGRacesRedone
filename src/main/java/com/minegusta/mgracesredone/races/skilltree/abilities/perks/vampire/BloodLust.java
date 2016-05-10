@@ -77,6 +77,11 @@ public class BloodLust implements IAbility {
 	}
 
 	@Override
+	public String getBindDescription() {
+		return "Activate powerful effects.";
+	}
+
+	@Override
 	public int getMaxLevel() {
 		return 3;
 	}

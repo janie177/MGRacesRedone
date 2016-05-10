@@ -130,6 +130,11 @@ public class KhionesBlessing implements IAbility {
 	}
 
 	@Override
+	public String getBindDescription() {
+		return "Encase yourself in a healing shell of ice.";
+	}
+
+	@Override
 	public int getMaxLevel() {
 		return 3;
 	}
