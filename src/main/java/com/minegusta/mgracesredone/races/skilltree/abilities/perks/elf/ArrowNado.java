@@ -52,7 +52,7 @@ public class ArrowNado implements IAbility {
 
 	private void createWind(Player shooter, Location l, int duration, boolean twice, boolean poison) {
 		Location center = l;
-		int interval = twice ? 20 : 40;
+		int interval = twice ? 2 : 4;
 		List<Entity> arrows = Lists.newArrayList();
 		ElfShooter es = new ElfShooter(shooter.getUniqueId().toString());
 		for (int i = 0; i <= 20 * duration; i++) {
@@ -82,7 +82,7 @@ public class ArrowNado implements IAbility {
 
 					//The sucking people in effect
 					center.getWorld().getEntitiesByClasses(Arrow.class, TippedArrow.class, SpectralArrow.class).stream().
-							filter(ent -> ent.getLocation().distance(center) <= 8).forEach(ent ->
+							filter(ent -> ent.getLocation().distance(center) <= 12).forEach(ent ->
 					{
 						double angle = Math.toRadians(8);
 						double radius = Math.abs(ent.getLocation().distance(center));
