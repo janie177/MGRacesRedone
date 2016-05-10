@@ -48,11 +48,11 @@ public class VampireListener implements Listener {
 			return;
 		}
 
-		if (e.getEntity() instanceof Player && RandomUtil.chance(10)) {
+		if (e.getEntity() instanceof Player && RandomUtil.chance(25)) {
 			//Drop item
 			e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), humanBloodEssence);
 
-		} else if (e.getEntity() instanceof Monster && RandomUtil.chance(3)) {
+		} else if (e.getEntity() instanceof Monster && RandomUtil.chance(5)) {
 			//Drop item
 			e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), monsterBloodEssence);
 		}
