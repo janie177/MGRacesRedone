@@ -64,28 +64,28 @@ public class ArrowNado implements IAbility {
 						center.getWorld().playSound(center, Sound.ENTITY_ARROW_SHOOT, 10, 1);
 					}
 
+					//Spawn arrow.
+					if (k % interval == 0) {
+						if (poison && RandomUtil.chance(70)) {
+							TippedArrow arrow = (TippedArrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.TIPPED_ARROW);
+							arrow.setBasePotionData(new PotionData(RandomUtil.fiftyfifty() ? PotionType.POISON : PotionType.INSTANT_DAMAGE, false, false));
+							arrow.setCritical(false);
+							arrow.setShooter(es);
+							arrows.add(arrow);
+						} else {
+							Arrow arrow = (Arrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.ARROW);
+							arrow.setCritical(true);
+							arrow.setShooter(es);
+							arrows.add(arrow);
+						}
+					}
+
 					//The sucking people in effect
 					center.getWorld().getEntitiesByClasses(Arrow.class, TippedArrow.class, SpectralArrow.class).stream().
 							filter(ent -> ent.getLocation().distance(center) <= 8).forEach(ent ->
 					{
 						double angle = Math.toRadians(8);
 						double radius = Math.abs(ent.getLocation().distance(center));
-
-						//Spawn arrow.
-						if (k % interval == 0) {
-							if (poison && RandomUtil.chance(70)) {
-								TippedArrow arrow = (TippedArrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.TIPPED_ARROW);
-								arrow.setBasePotionData(new PotionData(RandomUtil.fiftyfifty() ? PotionType.POISON : PotionType.INSTANT_DAMAGE, false, false));
-								arrow.setCritical(false);
-								arrow.setShooter(es);
-								arrows.add(arrow);
-							} else {
-								Arrow arrow = (Arrow) l.getWorld().spawnEntity(l.clone().add(RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5, RandomUtil.randomNumber(10) - 5), EntityType.ARROW);
-								arrow.setCritical(true);
-								arrow.setShooter(es);
-								arrows.add(arrow);
-							}
-						}
 
 						if (radius < 1) {
 							ent.setVelocity(new Vector(1, 0, 1));
