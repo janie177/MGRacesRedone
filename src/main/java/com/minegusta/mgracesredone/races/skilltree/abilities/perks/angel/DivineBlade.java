@@ -8,6 +8,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.PotionUtil;
+import com.minegusta.mgracesredone.util.WeaknessUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -49,14 +50,14 @@ public class DivineBlade implements IAbility {
 			}
 		}
 
-		final Player p = player;
 		for (int i = 0; i < duration; i++) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
-				if (!p.isOnline()) return;
+				if (!player.isOnline()) return;
 
-				for (PotionEffect e : p.getActivePotionEffects()) {
+				WeaknessUtil.removeWeakness(player);
+				for (PotionEffect e : player.getActivePotionEffects()) {
 					if (PotionUtil.isNegativeForPlayer(e.getType())) {
-						p.removePotionEffect(e.getType());
+						player.removePotionEffect(e.getType());
 					}
 				}
 

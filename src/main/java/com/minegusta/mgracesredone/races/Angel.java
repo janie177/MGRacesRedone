@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.BlockUtil;
 import com.minegusta.mgracesredone.util.PotionUtil;
+import com.minegusta.mgracesredone.util.WeaknessUtil;
 import com.minegusta.mgracesredone.util.WeatherUtil;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
@@ -67,7 +68,7 @@ public class Angel implements Race {
             if (mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) < 2) {
                 PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 10);
             }
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
+            WeaknessUtil.setWeakness(p, 3, 5);
         }
 
 
@@ -80,13 +81,13 @@ public class Angel implements Race {
         }
         //Weak in low areas and dark ones
         else if (height < 50) {
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
+            WeaknessUtil.setWeakness(p, 2, 5);
         } else if (BlockUtil.getLightLevel(p.getLocation()) == BlockUtil.LightLevel.DARK && (height < 100 || holinesslevel < 3)) {
             int strength = 1;
             if (mgp.getAbilityLevel(AbilityType.NYCTOPHOBIA) > 0) {
                 strength = 0;
             }
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, strength, 5);
+            WeaknessUtil.setWeakness(p, strength + 2, 5);
         }
 
         //At low health they will be able to escape

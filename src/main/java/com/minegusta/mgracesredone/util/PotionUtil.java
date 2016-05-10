@@ -16,11 +16,7 @@ public class PotionUtil {
      * @param seconds   The duration in seconds.
      */
     public static void updatePotion(Player p, PotionEffectType type, int amplifier, int seconds) {
-        p.getActivePotionEffects().stream().filter(pe -> pe.getType().equals(type) && pe.getAmplifier() <= amplifier).
-                forEach(pe -> {
-                    p.removePotionEffect(type);
-                });
-        p.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false, false));
+        updatePotion((LivingEntity) p, type, amplifier, seconds);
     }
 
     public static void updatePotion(LivingEntity ent, PotionEffectType type, int amplifier, int seconds) {

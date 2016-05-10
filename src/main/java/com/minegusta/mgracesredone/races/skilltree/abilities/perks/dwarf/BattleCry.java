@@ -7,10 +7,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.ChatUtil;
-import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.WGUtil;
+import com.minegusta.mgracesredone.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -73,7 +70,7 @@ public class BattleCry implements IAbility {
             le.setVelocity(le.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(knockbackPower));
 
             //weaken
-            if (weaken) PotionUtil.updatePotion(le, PotionEffectType.WEAKNESS, 1, 6);
+            if (weaken) WeaknessUtil.setWeakness(le, 2, 5);
 
             //stun
             if (stun) PotionUtil.updatePotion(le, PotionEffectType.SLOW, 10, 4);

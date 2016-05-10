@@ -4,10 +4,7 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.aurora.Glacious;
-import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.PlayerUtil;
-import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.WeatherUtil;
+import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
@@ -112,7 +109,7 @@ public class Aurora implements Race {
             }
 
             PotionUtil.updatePotion(p, PotionEffectType.SLOW, slow, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, weakness, 5);
+            WeaknessUtil.setWeakness(p, weakness + 1, 5);
             if (digging > 0) PotionUtil.updatePotion(p, PotionEffectType.SLOW_DIGGING, digging, 5);
             EffectUtil.playParticle(p, Effect.WATERDRIP);
             if (biome == WeatherUtil.BiomeType.HOT && confusion) {

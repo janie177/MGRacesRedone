@@ -101,12 +101,12 @@ public class Demon implements Race {
                     PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 5);
                 }
             }
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 1, 5);
+            WeaknessUtil.setWeakness(p, 3, 5);
             PotionUtil.updatePotion(p, PotionEffectType.SLOW, slowAmp, 5);
             EffectUtil.playParticle(p, Effect.LAVADRIP);
         } else {
             EffectUtil.playParticle(p, Effect.LAVADRIP);
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 0, 5);
+            WeaknessUtil.setWeakness(p, 2, 5);
         }
 
 

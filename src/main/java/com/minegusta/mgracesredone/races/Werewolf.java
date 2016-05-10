@@ -4,10 +4,7 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.perks.werewolf.Nocturnal;
-import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.PlayerUtil;
-import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.WeatherUtil;
+import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
@@ -90,12 +87,12 @@ public class Werewolf implements Race {
 
             int armour = PlayerUtil.getArmorAmount(p);
             if (armour != 0) {
-                PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, (armour * 2) + 2, 5);
+                WeaknessUtil.setWeakness(p, (armour * 2) + 2, 5);
             } else {
                 PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 2, 5);
             }
         } else if (phase == WeatherUtil.MoonPhase.NEW) {
-            PotionUtil.updatePotion(p, PotionEffectType.WEAKNESS, 2, 5);
+            WeaknessUtil.setWeakness(p, 3, 5);
         }
 
         if (WeatherUtil.isNight(p.getWorld()) && mgp.hasAbility(AbilityType.NOCTURNAL) && Nocturnal.isToggled(p)) {

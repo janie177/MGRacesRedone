@@ -69,6 +69,7 @@ public class Main extends JavaPlugin {
         MissileTask.start();
         InvisibleTask.start();
         ShieldTask.start();
+        WeaknessTask.start();
         BloodLustTask.start();
 
     }
@@ -95,6 +96,7 @@ public class Main extends JavaPlugin {
         RideTask.stop();
         InvisibleTask.stop();
         ShieldTask.stop();
+        WeaknessTask.stop();
         BloodLustTask.stop();
 
         //Save

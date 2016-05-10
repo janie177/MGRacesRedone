@@ -64,7 +64,7 @@ public class IceBarrage implements IAbility {
                         PotionUtil.updatePotion(le, PotionEffectType.SLOW, 1, 8);
                         PotionUtil.updatePotion(le, PotionEffectType.BLINDNESS, 1, 5);
                         if (level > 1) {
-                            PotionUtil.updatePotion(le, PotionEffectType.WEAKNESS, 1, 8);
+                            WeaknessUtil.setWeakness(p, 2, 5);
                         }
                     });
         } else {

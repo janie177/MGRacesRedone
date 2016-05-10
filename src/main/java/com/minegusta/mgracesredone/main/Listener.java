@@ -5,6 +5,7 @@ import com.minegusta.mgracesredone.listeners.bind.BindListener;
 import com.minegusta.mgracesredone.listeners.cure.CureListener;
 import com.minegusta.mgracesredone.listeners.general.FallDamageManager;
 import com.minegusta.mgracesredone.listeners.general.GeneralListener;
+import com.minegusta.mgracesredone.listeners.general.WeaknessListener;
 import com.minegusta.mgracesredone.listeners.infection.InfectionListener;
 import com.minegusta.mgracesredone.listeners.perkpoints.PerkPointListener;
 import com.minegusta.mgracesredone.listeners.racelisteners.*;
@@ -22,6 +23,7 @@ public enum Listener {
     DEMON_LISTENER(new DemonListener()),
     WEREWOLF_LISTENER(new WereWolfListener()),
     ANGEL_LISTENER(new AngelListener()),
+    WEAKNESS_LISTENER(new WeaknessListener()),
     ENDERBORN_LISTENER(new EnderBornListener()),
     VAMPIRE_LISTENER(new VampireListener()),
     BIND_LISTENER(new BindListener()),
