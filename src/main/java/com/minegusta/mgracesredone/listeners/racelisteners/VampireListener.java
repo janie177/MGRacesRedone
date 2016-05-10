@@ -102,6 +102,7 @@ public class VampireListener implements Listener {
 				}
 
 				foodAmount = (int) e.getDamage() * foodAmount;
+				foodAmount = foodAmount == 0 ? 1 : foodAmount;
 
 				int maxHealed = 20 - p.getFoodLevel();
 				if (maxHealed > 0) {

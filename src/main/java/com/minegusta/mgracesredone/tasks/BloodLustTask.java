@@ -32,7 +32,7 @@ public class BloodLustTask {
 
 					int level = players.get(p);
 					if (p.getFoodLevel() < 2) removePlayer(p);
-					if (foodInterval > 6) {
+					if (foodInterval > 3) {
 						VampireFoodUtil.setCanChangeFood(p, 60);
 						p.setFoodLevel(p.getFoodLevel() - 1);
 					}
@@ -56,7 +56,7 @@ public class BloodLustTask {
 			healInterval++;
 			foodInterval++;
 			healInterval = healInterval > 4 ? 0 : healInterval;
-			foodInterval = foodInterval > 7 ? 0 : foodInterval;
+			foodInterval = foodInterval > 4 ? 0 : foodInterval;
 		}, 20, 10);
 	}
 

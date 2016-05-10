@@ -77,7 +77,7 @@ public class Regenerate implements IAbility {
 
 		switch (level) {
 			case 1:
-				desc = new String[]{"At night, regenerate when not in combat."};
+				desc = new String[]{"At night, regenerate when not in combat.", "Consumes blood.", "Minimal blood level is 3."};
 				break;
 			case 2:
 				desc = new String[]{"At night, regenerate twice as fast out of combat."};

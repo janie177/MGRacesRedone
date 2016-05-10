@@ -89,13 +89,15 @@ public class Vampire implements Race {
 		int regenLevel = mgp.getAbilityLevel(AbilityType.REGENERATE);
 
 		//Regenerate from REGENERATE Ability when NOT in combat
-		if (interval > 2) {
+		if (interval > 2 && p.getFoodLevel() > 6) {
 			interval = 0;
 			if (WeatherUtil.isNight(p.getWorld()) && regenLevel > 0 && !p.isDead() && !MGEssentialsPlugin.inCombat(p)) {
 				regenLevel = regenLevel > 3 ? 3 : regenLevel;
 				double max = p.getMaxHealth() - p.getHealth();
 				if (max >= regenLevel) {
 					p.setHealth(p.getHealth() + regenLevel);
+					VampireFoodUtil.setCanChangeFood(p);
+					p.setFoodLevel(p.getFoodLevel() - 1);
 				}
 			}
 		}
