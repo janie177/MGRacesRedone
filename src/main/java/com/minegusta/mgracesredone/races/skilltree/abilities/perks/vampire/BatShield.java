@@ -7,10 +7,7 @@ import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
-import com.minegusta.mgracesredone.util.EffectUtil;
-import com.minegusta.mgracesredone.util.PotionUtil;
-import com.minegusta.mgracesredone.util.RandomUtil;
-import com.minegusta.mgracesredone.util.WGUtil;
+import com.minegusta.mgracesredone.util.*;
 import org.bukkit.*;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.EntityType;
@@ -39,6 +36,15 @@ public class BatShield implements IAbility {
 			player.sendMessage(ChatColor.RED + "You cannot use that here!");
 			return false;
 		}
+
+		if (player.getFoodLevel() < 2) {
+			player.sendMessage(ChatColor.RED + "You need more blood to use this.");
+			return false;
+		}
+
+		//Drain 2 food.
+		VampireFoodUtil.setCanChangeFood(player);
+		player.setFoodLevel(player.getFoodLevel() - 2);
 
 		PotionUtil.updatePotion(player, PotionEffectType.DAMAGE_RESISTANCE, 1, 6);
 

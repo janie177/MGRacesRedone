@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.PotionUtil;
+import com.minegusta.mgracesredone.util.VampireFoodUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -27,6 +28,15 @@ public class Thrall implements IAbility {
 	public boolean run(Player player) {
 		MGPlayer mgp = Races.getMGPlayer(player);
 		int level = mgp.getAbilityLevel(getType());
+
+		if (player.getFoodLevel() < 2) {
+			player.sendMessage(ChatColor.RED + "You need more blood to use this.");
+			return false;
+		}
+
+		//Drain 2 food.
+		VampireFoodUtil.setCanChangeFood(player);
+		player.setFoodLevel(player.getFoodLevel() - 2);
 
 		//Spawn the thralls
 		Zombie z = (Zombie) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);

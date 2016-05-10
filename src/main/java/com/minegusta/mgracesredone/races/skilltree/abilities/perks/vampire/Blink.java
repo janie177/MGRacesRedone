@@ -10,7 +10,9 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.EffectUtil;
 import com.minegusta.mgracesredone.util.InvisibilityUtil;
+import com.minegusta.mgracesredone.util.VampireFoodUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -33,6 +35,15 @@ public class Blink implements IAbility {
 		int level = mgp.getAbilityLevel(getType());
 		String uuid = player.getUniqueId().toString();
 		int duration = level;
+
+		if (player.getFoodLevel() < 2) {
+			player.sendMessage(ChatColor.RED + "You need more blood to use this.");
+			return false;
+		}
+
+		//Drain 2 food.
+		VampireFoodUtil.setCanChangeFood(player);
+		player.setFoodLevel(player.getFoodLevel() - 2);
 
 		//Turn invisible
 		InvisibilityUtil.add(uuid, duration);
@@ -137,7 +148,7 @@ public class Blink implements IAbility {
 
 		switch (level) {
 			case 1:
-				desc = new String[]{"Become invincible for 1 seconds while being able to fly quickly.", "Bind to an item using /Bind."};
+				desc = new String[]{"Become invincible for 1 seconds while being able to fly quickly.", "Bind to an item using /Bind.", "Will use a little of your blood bar."};
 				break;
 			case 2:
 				desc = new String[]{"Blinking lasts 2 seconds."};
