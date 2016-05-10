@@ -109,7 +109,7 @@ public class SpecialArrows {
         FallDamageManager.addToFallMap(p);
         p.getLocation().setY(p.getLocation().getY() + 0.05);
         Vector v = arrow.getLocation().toVector().subtract(p.getLocation().toVector());
-        p.setVelocity(v.multiply(2.5));
+        p.setVelocity(v.normalize().multiply(2.5));
         arrow.remove();
     }
 
