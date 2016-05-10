@@ -109,10 +109,9 @@ public class AbilityMenu {
 
     public static int getTotalSpentPoints(MGPlayer mgp) {
         int totalAbilities = 0;
-        int totalSpent = getTotalSpentBasePoints(mgp);
         for (AbilityType t : mgp.getAbilities().keySet()) {
             for (int levels = 1; levels <= mgp.getAbilityLevel(t); levels++) {
-                totalAbilities = totalAbilities + t.getCost(levels, totalSpent);
+                totalAbilities = totalAbilities + t.getBaseCost(levels) + totalAbilities / 7;
             }
         }
         return totalAbilities;
