@@ -134,7 +134,7 @@ public class VampireListener implements Listener {
 			//Blood sacrifice
 			int regenLevel = mgp.getAbilityLevel(AbilityType.REGENERATE);
 			if (regenLevel > 3 && WeatherUtil.isNight(p.getWorld()) && Cooldown.isCooledDown("bcrifice", p.getUniqueId().toString())) {
-				if (p.getHealth() < 8 && !p.isDead() && p.getHealth() > 0 && p.getFoodLevel() > 1) {
+				if (!p.isDead() && p.getHealth() - e.getDamage() < 1 && p.getFoodLevel() > 1) {
 					int food = p.getFoodLevel() - 1;
 					double maxHealed = p.getMaxHealth() - p.getHealth();
 					double healed = food > maxHealed ? maxHealed : food;
