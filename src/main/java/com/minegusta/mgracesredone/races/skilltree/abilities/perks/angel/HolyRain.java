@@ -30,8 +30,11 @@ public class HolyRain implements IAbility {
 
         for (int i = 0; i <= duration * 20; i++) {
             if (i % 4 == 0) {
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20), i);
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> runRain(location, heal), i);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+                {
+                    w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
+                    runRain(location.clone().subtract(0, 9, 0), heal);
+                }, i);
             }
         }
     }
@@ -46,10 +49,8 @@ public class HolyRain implements IAbility {
                 Player p = (Player) le;
                 if (PlayerUtil.isUnholy(p)) {
                     damage(p);
-                } else {
-                    if (heal) {
-                        heal(p);
-                    }
+                } else if (heal) {
+                    heal(p);
                 }
             } else {
                 if (MonsterUtil.isUnholy(le.getType())) {
@@ -64,7 +65,7 @@ public class HolyRain implements IAbility {
     }
 
     private void heal(LivingEntity ent) {
-        if (ent.isDead()) return;
+        if (!ent.isValid()) return;
 
         boolean regen = true;
         for (PotionEffect e : ent.getActivePotionEffects()) {
@@ -79,7 +80,7 @@ public class HolyRain implements IAbility {
     }
 
     private void damage(LivingEntity ent) {
-
+        if (!ent.isValid()) return;
         PotionUtil.updatePotion(ent, PotionEffectType.HUNGER, 0, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.SLOW, 1, 5);
         PotionUtil.updatePotion(ent, PotionEffectType.POISON, 1, 5);

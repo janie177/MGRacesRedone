@@ -124,8 +124,7 @@ public class VampireListener implements Listener {
 			return;
 		}
 
-		//Passs event to MonsterMash
-		AbilityType.MONSTERMASH.run(e);
+
 
 		if (e.getEntity() instanceof Player) {
 			Player p = (Player) e.getEntity();
@@ -147,6 +146,9 @@ public class VampireListener implements Listener {
 					Cooldown.newCoolDown("bcrifice", p.getUniqueId().toString(), 300);
 				}
 			}
+
+			//Passs event to MonsterMash
+			AbilityType.MONSTERMASH.run(e);
 
 			if (!mgp.isRace(RaceType.VAMPIRE)) {
 				return;

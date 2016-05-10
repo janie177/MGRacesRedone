@@ -84,6 +84,7 @@ public class AngelListener implements Listener {
             Player p = (Player) e.getDamager();
             if (!ItemUtil.isSword(p.getInventory().getItemInMainHand().getType())) {
                 e.setDamage(0);
+                e.setCancelled(true);
             }
         }
 
