@@ -23,20 +23,19 @@ public class PerkResetCommand implements CommandExecutor {
         Player p = (Player) s;
 
         if (!commandCount.containsKey(p.getUniqueId().toString())) {
-            ChatUtil.sendString(p, "Are you absolutely sure? You will lose alot of spent points.");
+            ChatUtil.sendString(p, "Are you absolutely sure? You will lose everything!");
             p.sendMessage(ChatColor.RED + "Use the command again to confirm.");
             commandCount.put(p.getUniqueId().toString(), 1);
             return true;
         }
         if (commandCount.containsKey(p.getUniqueId().toString()) && commandCount.get(p.getUniqueId().toString()) == 1) {
-            ChatUtil.sendString(p, "You will only get 25% of your spent points back.");
+            ChatUtil.sendString(p, "You will lose all your perk points.");
             p.sendMessage(ChatColor.RED + "Are you ENTIRELY sure?");
             p.sendMessage(ChatColor.RED + "Use the command one last time to reset all your perks.");
             commandCount.put(p.getUniqueId().toString(), 2);
             return true;
         } else if (commandCount.containsKey(p.getUniqueId().toString()) && commandCount.get(p.getUniqueId().toString()) == 2) {
             ChatUtil.sendString(p, "Your perks have been reset.");
-            ChatUtil.sendString(p, "You have been returned 25% of your spent points.");
 
             MGPlayer mgp = Races.getMGPlayer(p);
 

@@ -147,7 +147,7 @@ public class AbilityMenu {
 
         lore.add(ChatColor.LIGHT_PURPLE + "Perks are unlocked by killing different people.");
         //lore.add(ChatColor.LIGHT_PURPLE + "You can spend a maximum of " + spendable + " perk-points.");
-        lore.add(ChatColor.LIGHT_PURPLE + "You have currently spent: " + ChatColor.DARK_PURPLE + getTotalSpentPoints(mgp) + ChatColor.LIGHT_PURPLE + " Perk-Points.");
+        //lore.add(ChatColor.LIGHT_PURPLE + "You have currently spent: " + ChatColor.DARK_PURPLE + getTotalSpentPoints(mgp) + ChatColor.LIGHT_PURPLE + " Perk-Points.");
         lore.add(ChatColor.LIGHT_PURPLE + "Click a perk to unlock it.");
         lore.add(ChatColor.LIGHT_PURPLE + "Choose wisely because you cannot un-buy perks.");
         lore.add(ChatColor.LIGHT_PURPLE + "If you want to reset, click the skull next to this book.");
