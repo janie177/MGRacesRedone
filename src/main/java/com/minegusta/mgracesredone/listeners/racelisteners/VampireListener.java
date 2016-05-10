@@ -101,9 +101,6 @@ public class VampireListener implements Listener {
 					return;
 				}
 
-				double damage = e.getDamage();
-				foodAmount = (int) damage * foodAmount / 2;
-
 				int maxHealed = 20 - p.getFoodLevel();
 				if (maxHealed > 0) {
 					VampireFoodUtil.setCanChangeFood(p);
@@ -111,7 +108,7 @@ public class VampireListener implements Listener {
 					EffectUtil.playSound(e.getEntity().getLocation(), Sound.BLOCK_WATER_AMBIENT);
 					foodAmount = maxHealed > foodAmount ? maxHealed : foodAmount;
 					p.setFoodLevel(p.getFoodLevel() + foodAmount);
-					p.sendMessage(ChatColor.RED + "You feed from the living being...");
+					p.sendMessage(ChatColor.RED + "You feed off the living being...");
 				}
 			}
 		}
