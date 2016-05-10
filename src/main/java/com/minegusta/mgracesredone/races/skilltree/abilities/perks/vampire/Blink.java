@@ -46,7 +46,7 @@ public class Blink implements IAbility {
 		player.setFoodLevel(player.getFoodLevel() - 2);
 
 		//Turn invisible
-		InvisibilityUtil.add(uuid, duration);
+		InvisibilityUtil.add(uuid);
 
 
 		for (int i = 0; i <= duration * 10; i++)

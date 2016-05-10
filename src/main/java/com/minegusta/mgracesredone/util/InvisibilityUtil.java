@@ -16,25 +16,24 @@ public class InvisibilityUtil {
 		return invisible.containsKey(uuid);
 	}
 
-	public static void add(String uuid, int duration) {
+	public static void add(String uuid) {
 		Player added = Bukkit.getPlayer(UUID.fromString(uuid));
-		invisible.put(uuid, duration);
+		invisible.put(uuid, 1);
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.hidePlayer(added);
 		}
-	}
-
-	public static int getRaining(String uuid) {
-		return invisible.get(uuid);
 	}
 
 	public static void remove(String uuid) {
 		if (invisible.containsKey(uuid)) {
 			invisible.remove(uuid);
 		}
-		Player removed = Bukkit.getPlayer(UUID.fromString(uuid));
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			p.showPlayer(removed);
+		try {
+			Player removed = Bukkit.getPlayer(UUID.fromString(uuid));
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				p.showPlayer(removed);
+			}
+		} catch (Exception ignored) {
 		}
 	}
 
