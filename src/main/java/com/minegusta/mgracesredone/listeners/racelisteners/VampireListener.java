@@ -194,7 +194,9 @@ public class VampireListener implements Listener {
 	//Cancel fall damage when the correct perk is present
 	@EventHandler
 	public void onVampireFall(EntityDamageEvent e) {
-		if (e.isCancelled() || !WorldCheck.isEnabled(e.getEntity().getWorld()) || !(e instanceof Player)) return;
+		if (e.isCancelled() || !WorldCheck.isEnabled(e.getEntity().getWorld()) || !(e.getEntity() instanceof Player)) {
+			return;
+		}
 		AbilityType.DARKBLOOD.run(e);
 	}
 }
