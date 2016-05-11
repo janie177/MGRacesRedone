@@ -73,7 +73,7 @@ public class ColdBlooded implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        return 0;
+        return 20;
     }
 
     @Override
