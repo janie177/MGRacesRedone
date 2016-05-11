@@ -17,7 +17,7 @@ public class ItemUtil {
     private final static List<Material> goldItems = Lists.newArrayList(Material.GOLD_SWORD, Material.GOLD_AXE, Material.GOLD_HOE, Material.GOLD_PICKAXE, Material.GOLD_SPADE);
     private final static List<Material> pickAxes = Lists.newArrayList(Material.DIAMOND_PICKAXE, Material.GOLD_PICKAXE, Material.IRON_PICKAXE, Material.STONE_PICKAXE, Material.WOOD_PICKAXE);
     private final static List<Material> fruits = Lists.newArrayList(Material.APPLE, Material.CARROT_ITEM, Material.POTATO_ITEM, Material.GOLDEN_APPLE, Material.GOLDEN_CARROT, Material.COOKIE, Material.MUSHROOM_SOUP, Material.MELON, Material.PUMPKIN_PIE);
-    private final static List<Material> rawMeat = Lists.newArrayList(Material.RAW_BEEF, Material.RAW_CHICKEN, Material.RAW_FISH, Material.PORK);
+    private final static List<Material> rawMeat = Lists.newArrayList(Material.RAW_BEEF, Material.MUTTON, Material.RAW_CHICKEN, Material.RAW_FISH, Material.PORK);
     private static final List<Material> ores = Lists.newArrayList(Material.DIAMOND_ORE, Material.IRON_ORE, Material.LAPIS_ORE, Material.GOLD_ORE, Material.EMERALD_ORE, Material.COAL_ORE, Material.REDSTONE_ORE, Material.GLOWING_REDSTONE_ORE, Material.QUARTZ_ORE);
     private static final List<Material> wood = Lists.newArrayList(Material.WOOD_AXE, Material.WOOD_SWORD, Material.WOOD_SPADE, Material.STICK, Material.WOOD_PICKAXE, Material.WOOD_HOE);
 

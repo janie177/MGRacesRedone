@@ -23,6 +23,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Naturalist implements IAbility {
     @Override
@@ -52,8 +53,8 @@ public class Naturalist implements IAbility {
             Player p = (Player) e.getEntity();
             MGPlayer mgp = Races.getMGPlayer(p);
 
-            if (p.getHealth() <= 5 && !p.isDead() && mgp.getAbilityLevel(getType()) > 3) {
-                for (Entity ent : p.getNearbyEntities(6, 6, 6)) {
+            if (p.getHealth() - e.getDamage() <= 5 && !p.isDead() && mgp.getAbilityLevel(getType()) > 3) {
+                for (Entity ent : p.getWorld().getLivingEntities().stream().filter(entity -> entity.getLocation().distance(p.getLocation()) < 6).collect(Collectors.toList())) {
                     if (ent instanceof Animals) {
                         EffectUtil.playSound(p, Sound.ENTITY_FIREWORK_LARGE_BLAST);
                         EffectUtil.playParticle(ent, Effect.CLOUD);
@@ -64,6 +65,7 @@ public class Naturalist implements IAbility {
                         ((Animals) ent).damage(amount);
                         p.setHealth(p.getHealth() + amount);
                         p.sendMessage(ChatColor.GREEN + "An animal gave you some of it's life force!");
+                        if (p.getHealth() > p.getMaxHealth() / 2) break;
                     }
                 }
             }
