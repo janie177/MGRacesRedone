@@ -94,12 +94,6 @@ public class WereWolfListener implements Listener {
 
         MGPlayer mgp = Races.getMGPlayer(e.getPlayer());
 
-        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (mgp.hasAbility(AbilityType.HOWL) && e.getPlayer().getInventory().getItemInMainHand().getType() == Material.BONE) {
-                AbilityType.HOWL.run(e.getPlayer());
-            }
-        }
-
         if ((e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_BLOCK) && mgp.hasAbility(AbilityType.DIG) && e.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
             AbilityType.DIG.run(e);
         }
