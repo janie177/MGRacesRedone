@@ -58,11 +58,11 @@ public class Aurora implements Race {
 
         int feeshLevel = mgp.getAbilityLevel(AbilityType.Fish);
 
-        if (PlayerUtil.isInWater(p) && feeshLevel > 1) {
+        if (PlayerUtil.isInWater(p) && feeshLevel > 0) {
             PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 5);
         }
 
-        if (PlayerUtil.isInWater(p) && feeshLevel > 0) {
+        if (PlayerUtil.isInWater(p) && feeshLevel > 1) {
             PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 20);
         }
 

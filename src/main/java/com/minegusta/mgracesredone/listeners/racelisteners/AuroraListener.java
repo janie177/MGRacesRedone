@@ -32,7 +32,7 @@ public class AuroraListener implements Listener {
         if (e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
             if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
             Player p = (Player) e.getEntity();
-            if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.Fish) > 1) {
+            if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.Fish) > 0) {
                 e.setCancelled(true);
             }
         } else if (e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL) {

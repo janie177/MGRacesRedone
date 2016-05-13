@@ -79,10 +79,10 @@ public class Fish implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Underwater, you will have a clear vision."};
+                desc = new String[]{"You will be able to breathe underwater."};
                 break;
             case 2:
-                desc = new String[]{"You will be able to breathe underwater."};
+                desc = new String[]{"Underwater, you will have a clear vision."};
                 break;
             case 3:
                 desc = new String[]{"In water, you will have a protecting effect."};
