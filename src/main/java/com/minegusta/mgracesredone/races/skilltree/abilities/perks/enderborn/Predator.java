@@ -106,7 +106,7 @@ public class Predator implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 4;
     }
 
     @Override
