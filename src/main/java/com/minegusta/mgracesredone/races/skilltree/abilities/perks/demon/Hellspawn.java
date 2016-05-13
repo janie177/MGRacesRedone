@@ -35,23 +35,23 @@ public class Hellspawn implements IAbility {
         if (toggled.containsKey(player.getUniqueId().toString())) {
             //Disable
             toggled.remove(player.getUniqueId().toString());
+            player.sendMessage(ChatColor.RED + "You enabled your HellSpawn effects.");
+        }
+        //Is disabled
+        else {
+            //Enable
+            toggled.put(player.getUniqueId().toString(), true);
             player.sendMessage(ChatColor.RED + "You disabled your HellSpawn effects.");
             PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 3, 0);
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 3, 0);
             PotionUtil.updatePotion(player, PotionEffectType.JUMP, 3, 0);
             PotionUtil.updatePotion(player, PotionEffectType.DAMAGE_RESISTANCE, 3, 0);
         }
-        //Is disabled
-        else {
-            //Enable
-            toggled.put(player.getUniqueId().toString(), true);
-            player.sendMessage(ChatColor.RED + "You enabled your HellSpawn effects.");
-        }
         return true;
     }
 
     public static boolean isToggled(Player player) {
-        return toggled.containsKey(player.getUniqueId().toString());
+        return !toggled.containsKey(player.getUniqueId().toString());
     }
 
     @Override

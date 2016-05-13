@@ -10,23 +10,22 @@ public class DarkBloodUtil {
 	private static ConcurrentMap<String, Boolean> players = Maps.newConcurrentMap();
 
 	public static boolean isToggledOn(Player p) {
-		return players.containsKey(p.getName().toLowerCase()) && players.get(p.getName().toLowerCase());
+		return !players.containsKey(p.getName().toLowerCase());
 	}
 
-	public static void setForPlayer(Player p, boolean enabled) {
-		players.put(p.getName().toLowerCase(), enabled);
-		if (!enabled) {
-			//Set the night vision to 1 second remaining so it will go off right after toggling, rather than having it stay on for another 20 seconds.
-			PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 1);
-		}
+	public static void setForPlayer(Player p) {
+		players.put(p.getName().toLowerCase(), true);
+		//Set the night vision to 1 second remaining so it will go off right after toggling, rather than having it stay on for another 20 seconds.
+		PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 1);
+
 	}
 
 	public static boolean toggle(Player p) {
 		if (isToggledOn(p)) {
-			setForPlayer(p, false);
+			players.remove(p.getName().toLowerCase());
 			return false;
 		} else {
-			setForPlayer(p, true);
+			setForPlayer(p);
 			return true;
 		}
 	}

@@ -29,19 +29,19 @@ public class Glacious implements IAbility {
 
         if (toggled.containsKey(player.getUniqueId().toString())) {
             toggled.remove(player.getUniqueId().toString());
+            player.sendMessage(ChatColor.AQUA + "You disabled your Glacious buffs.");
+        } else {
+            toggled.put(player.getUniqueId().toString(), true);
             player.sendMessage(ChatColor.AQUA + "You enabled your Glacious buffs.");
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 4, 0);
             PotionUtil.updatePotion(player, PotionEffectType.JUMP, 4, 0);
-        } else {
-            toggled.put(player.getUniqueId().toString(), true);
-            player.sendMessage(ChatColor.AQUA + "You disabled your Glacious buffs.");
         }
 
         return false;
     }
 
     public static boolean isToggled(Player player) {
-        return toggled.containsKey(player.getUniqueId().toString());
+        return !toggled.containsKey(player.getUniqueId().toString());
     }
 
     @Override

@@ -38,9 +38,9 @@ public class DarkBlood implements IAbility {
 
 		if (mgp.hasAbility(getType())) {
 			if (DarkBloodUtil.toggle(player)) {
-				player.sendMessage(ChatColor.GREEN + "You toggled on Dark Blood effects.");
+				player.sendMessage(ChatColor.GREEN + "You toggled off Dark Blood effects.");
 			} else {
-				player.sendMessage(ChatColor.RED + "You toggled off Dark Blood effects.");
+				player.sendMessage(ChatColor.RED + "You toggled on Dark Blood effects.");
 			}
 		}
 		return true;
