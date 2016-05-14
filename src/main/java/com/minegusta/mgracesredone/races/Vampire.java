@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -75,7 +76,7 @@ public class Vampire implements Race {
 		//Passive vampire boosts
 
 		//Burn in the sun
-		if (WeatherUtil.isOverWorld(p.getLocation()) && !WeatherUtil.isNight(p.getWorld()) && PlayerUtil.isInOpenAir(p) && !WeatherUtil.isRaining(p.getWorld())) {
+		if (p.getGameMode() != GameMode.CREATIVE && WeatherUtil.isOverWorld(p.getLocation()) && !WeatherUtil.isNight(p.getWorld()) && PlayerUtil.isInOpenAir(p) && !WeatherUtil.isRaining(p.getWorld())) {
 			p.setFireTicks(80);
 			PotionUtil.updatePotion(p, PotionEffectType.CONFUSION, 0, 12);
 			PotionUtil.updatePotion(p, PotionEffectType.BLINDNESS, 0, 8);
