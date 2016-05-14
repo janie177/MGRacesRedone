@@ -22,10 +22,10 @@ public class DarkBloodUtil {
 
 	public static boolean toggle(Player p) {
 		if (isToggledOn(p)) {
-			players.remove(p.getName().toLowerCase());
+			setForPlayer(p);
 			return false;
 		} else {
-			setForPlayer(p);
+			players.remove(p.getName().toLowerCase());
 			return true;
 		}
 	}
