@@ -9,6 +9,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.EntityDamageByEntityEventUtil;
+import com.minegusta.mgracesredone.util.VampireFoodUtil;
 import com.minegusta.mgracesredone.util.WGUtil;
 import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
@@ -118,7 +119,11 @@ public class VampiricGrasp implements IAbility {
 			//Damage the target
 			target.damage(damage);
 			//Heal the attacker
-			attacker.setHealth(attacker.getHealth() + (attacker.getHealth() < attacker.getMaxHealth() ? 1 : 0));
+			if (!attacker.isDead()) {
+				attacker.setFoodLevel(attacker.getFoodLevel() + (attacker.getFoodLevel() == 20 ? 0 : 1));
+				VampireFoodUtil.setCanChangeFood(attacker, 60);
+				attacker.setHealth(attacker.getHealth() + (attacker.getHealth() < attacker.getMaxHealth() ? 1 : 0));
+			}
 
 			if (target instanceof Player) {
 				((Player) target).sendMessage(ChatColor.RED + "Your blood is being drained!");

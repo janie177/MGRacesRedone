@@ -9,10 +9,7 @@ import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.VampireTruceUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Creature;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
@@ -59,7 +56,7 @@ public class MonsterMash implements IAbility {
 					if (target instanceof Player)
 						target.sendMessage(ChatColor.RED + "Nearby monsters are siding with the vampire!");
 					helpCooldown = System.currentTimeMillis() + 4000;
-					damager.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(target.getLocation()) < 40 && truce.contains(ent.getType()) && ent instanceof Creature)
+					damager.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(target.getLocation()) < 40 && (ent instanceof Zombie || ent instanceof Skeleton))
 							.forEach(ent -> ((Creature) ent).setTarget(target));
 				}
 			}
@@ -130,7 +127,7 @@ public class MonsterMash implements IAbility {
 				desc = new String[]{"Most hostile mobs will no longer target you unless provoked."};
 				break;
 			case 2:
-				desc = new String[]{"Truced mobs will now aid you in combat."};
+				desc = new String[]{"Skeletons and Zombies will now aid you in combat."};
 				break;
 			default:
 				desc = new String[]{"This is an error!"};

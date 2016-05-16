@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.concurrent.ConcurrentMap;
@@ -18,7 +19,6 @@ import java.util.concurrent.ConcurrentMap;
 public class BloodLustTask {
 
 	public static ConcurrentMap<Player, Integer> players = Maps.newConcurrentMap();
-	public static int healInterval = 0;
 	public static int foodInterval = 0;
 
 	private static int ID = -1;
@@ -41,10 +41,8 @@ public class BloodLustTask {
 					PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
 					EffectUtil.playParticle(p, Effect.LARGE_SMOKE);
 					EffectUtil.playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF);
+					p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 57, 0));
 
-					if (level > 1 && healInterval > 3) {
-						p.setHealth(p.getHealth() + (p.getHealth() < p.getMaxHealth() ? 1 : 0));
-					}
 					if (level > 2) {
 						PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
 					}
@@ -53,9 +51,7 @@ public class BloodLustTask {
 				}
 			});
 
-			healInterval++;
 			foodInterval++;
-			healInterval = healInterval > 4 ? 0 : healInterval;
 			foodInterval = foodInterval > 4 ? 0 : foodInterval;
 		}, 20, 10);
 	}
