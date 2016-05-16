@@ -33,7 +33,7 @@ public class HolyRain implements IAbility {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
                 {
                     w.spigot().playEffect(location, Effect.WATERDRIP, 1, 1, 8, 0, 8, 1, 25, 20);
-                    runRain(location.clone().subtract(0, 9, 0), heal);
+                    runRain(location, heal);
                 }, i);
             }
         }
@@ -44,7 +44,7 @@ public class HolyRain implements IAbility {
             return;
         }
         location.getWorld().getLivingEntities().stream().
-                filter(ent -> ent.getLocation().distance(location) <= 8).forEach(le -> {
+                filter(ent -> ent.getLocation().distance(location) <= 16).forEach(le -> {
             if (le instanceof Player) {
                 Player p = (Player) le;
                 if (PlayerUtil.isUnholy(p)) {
