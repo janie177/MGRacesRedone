@@ -56,7 +56,7 @@ public class MonsterMash implements IAbility {
 					if (target instanceof Player)
 						target.sendMessage(ChatColor.RED + "Nearby monsters are siding with the vampire!");
 					helpCooldown = System.currentTimeMillis() + 4000;
-					damager.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(target.getLocation()) < 40 && (ent instanceof Zombie || ent instanceof Skeleton))
+					damager.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(target.getLocation()) < 40 && !(ent instanceof PigZombie) && (ent instanceof Zombie || ent instanceof Skeleton))
 							.forEach(ent -> ((Creature) ent).setTarget(target));
 				}
 			}
