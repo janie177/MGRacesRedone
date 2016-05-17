@@ -3,6 +3,7 @@ package com.minegusta.mgracesredone.main;
 import com.minegusta.mgracesredone.recipes.Recipe;
 import com.minegusta.mgracesredone.tasks.*;
 import com.minegusta.mgracesredone.util.*;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -11,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     private static Main PLUGIN;
     private static boolean WG_ENABLED = false;
+    private static WorldGuardPlugin WORLDGUARD = null;
     private Permission permission;
 
     @Override
@@ -44,6 +46,7 @@ public class Main extends JavaPlugin {
         VampireFoodUtil.init();
 
         WG_ENABLED = Bukkit.getPluginManager().isPluginEnabled("WorldGuard");
+        if (WG_ENABLED) WORLDGUARD = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
 
         if (!setupPermissions()) {
             getLogger().severe("===========================================================");
@@ -76,6 +79,10 @@ public class Main extends JavaPlugin {
 
     public Permission getPermissions() {
         return permission;
+    }
+
+    public static WorldGuardPlugin getWorldGuard() {
+        return WORLDGUARD;
     }
 
     private boolean setupPermissions() {

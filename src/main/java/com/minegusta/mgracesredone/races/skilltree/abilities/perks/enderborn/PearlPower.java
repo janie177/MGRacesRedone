@@ -156,7 +156,7 @@ public class PearlPower implements IAbility {
 
     private void vacuum(Location l, Entity pearl) {
         for (Entity ent : pearl.getNearbyEntities(5, 5, 5)) {
-            if (!WGUtil.canBuild(ent)) continue;
+            if (!WGUtil.canPVP(ent)) continue;
             if (ent instanceof LivingEntity || ent instanceof Projectile || ent instanceof Item) {
                 double x = ent.getLocation().getX() - l.getX();
                 double z = ent.getLocation().getZ() - l.getZ();
