@@ -66,7 +66,10 @@ public class BindCommand implements CommandExecutor {
 				p.sendMessage(ChatColor.YELLOW + "You currently have the following binds set: ");
 				for (Bind b : mgp.getBinds()) {
 					boolean ignoreData = BindUtil.ignoreItemData(b.getItem());
-					p.sendMessage(ChatColor.YELLOW + "Item: " + ChatColor.GRAY + b.getItem().name() + ChatColor.GREEN + (!ignoreData ? " Data:" + ChatColor.GRAY + b.getData() : "") + ChatColor.YELLOW + " Ability: " + ChatColor.GRAY + " - " + b.getAbilityType().getName());
+					p.sendMessage(ChatColor.YELLOW + "Item: " + ChatColor.GRAY + b.getItem().name() + ChatColor.GREEN + (!ignoreData ? " Data:" + ChatColor.GRAY + b.getData() : "") + ChatColor.YELLOW + " Abilities: ");
+					for (AbilityType type : b.getAbilityTypes()) {
+						p.sendMessage(ChatColor.GRAY + "     - " + type.name());
+					}
 				}
 				ChatUtil.sendFooter(p);
 				return true;
@@ -88,7 +91,7 @@ public class BindCommand implements CommandExecutor {
 				boolean ignoreData = BindUtil.ignoreItemData(item);
 				short data = item != Material.AIR ? p.getInventory().getItemInMainHand().getDurability() : 0;
 
-				mgp.addBind(item, type, data);
+				mgp.addBind(item, Lists.newArrayList(type), data);
 				ChatUtil.sendString(p, ChatColor.GREEN + "You bound " + ChatColor.YELLOW + type.getName() + ChatColor.GREEN + " to " + ChatColor.YELLOW + item.name() + (!ignoreData ? ":" + data : "") + ChatColor.GREEN + ".");
 
 				return true;
