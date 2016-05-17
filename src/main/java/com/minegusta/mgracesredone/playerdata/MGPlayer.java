@@ -51,7 +51,10 @@ public class MGPlayer {
 
                     List<AbilityType> abilityTypes = Lists.newArrayList();
                     for (String ability : bindConf.getStringList(s + ".abilities")) {
-                        abilityTypes.add(AbilityType.valueOf(ability));
+                        try {
+                            abilityTypes.add(AbilityType.valueOf(ability));
+                        } catch (Exception ignored) {
+                        }
                     }
 
                     Bind bind = new Bind(abilityTypes, item, data);
@@ -242,8 +245,8 @@ public class MGPlayer {
                 conf.set("binds." + key + ".item", b.getItem().name());
                 conf.set("binds." + key + ".data", b.getData());
                 List<String> abilities = Lists.newArrayList();
-                b.getAbilityTypes().stream().forEach(a -> abilities.add(a.getName()));
-                conf.set("binds." + key + ".ability", abilities);
+                b.getAbilityTypes().stream().forEach(a -> abilities.add(a.name()));
+                conf.set("binds." + key + ".abilities", abilities);
             }
         }
 
