@@ -43,7 +43,7 @@ public class Bind {
 	public boolean scrollActive() {
 		if (abilityTypes.size() < 2) return false;
 		int index = abilityTypes.indexOf(active) + 1;
-		if (abilityTypes.size() - 1 <= index) {
+		if (abilityTypes.size() <= index) {
 			active = abilityTypes.get(0);
 		} else {
 			active = abilityTypes.get(index);

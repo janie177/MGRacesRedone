@@ -68,7 +68,7 @@ public class BindCommand implements CommandExecutor {
 					boolean ignoreData = BindUtil.ignoreItemData(b.getItem());
 					p.sendMessage(ChatColor.YELLOW + "Item: " + ChatColor.GRAY + b.getItem().name() + ChatColor.GREEN + (!ignoreData ? " Data:" + ChatColor.GRAY + b.getData() : "") + ChatColor.YELLOW + " Abilities: ");
 					for (AbilityType type : b.getAbilityTypes()) {
-						p.sendMessage(ChatColor.GRAY + "     - " + type.name());
+						p.sendMessage(ChatColor.GRAY + "     - " + ChatColor.GREEN + type.name());
 					}
 				}
 				ChatUtil.sendFooter(p);
