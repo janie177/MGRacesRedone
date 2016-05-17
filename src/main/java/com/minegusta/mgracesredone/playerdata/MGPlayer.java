@@ -48,8 +48,13 @@ public class MGPlayer {
                 try {
                     Material item = Material.valueOf(bindConf.getString(s + ".item"));
                     short data = (short) bindConf.getInt(s + ".data");
-                    AbilityType abilityType = AbilityType.valueOf(bindConf.getString(s + ".ability"));
-                    Bind bind = new Bind(abilityType, item, data);
+
+                    List<AbilityType> abilityTypes = Lists.newArrayList();
+                    for (String ability : bindConf.getStringList(s + ".abilities")) {
+                        abilityTypes.add(AbilityType.valueOf(ability));
+                    }
+
+                    Bind bind = new Bind(abilityTypes, item, data);
                     binds.add(bind);
                 } catch (Exception ignored) {
                 }
@@ -85,14 +90,22 @@ public class MGPlayer {
         return binds.isBind(item, data, ignoreData);
     }
 
-    public Optional<AbilityType> getBindForItem(Material item, short data, boolean ignoreData) {
+    public Optional<List<AbilityType>> getAbilitiesForItem(Material item, short data, boolean ignoreData) {
         return binds.getAbilityForItem(item, data, ignoreData);
     }
 
-    public void addBind(Material item, AbilityType type, short data) {
-        removeBind(item, data, BindUtil.ignoreItemData(item));
-        Bind bind = new Bind(type, item, data);
-        binds.addBind(bind);
+    public void addBind(Material item, List<AbilityType> types, short data) {
+        Optional<Bind> b = getBindForItem(item, data, BindUtil.ignoreItemData(item));
+        if (b.isPresent()) {
+            types.stream().forEach(t -> b.get().getAbilityTypes().add(t));
+        } else {
+            Bind bind = new Bind(types, item, data);
+            binds.addBind(bind);
+        }
+    }
+
+    public Optional<Bind> getBindForItem(Material item, short data, boolean ignoreData) {
+        return binds.getBindForItem(item, data, ignoreData);
     }
 
     public List<Bind> getBindForAbility(AbilityType type) {
@@ -225,9 +238,12 @@ public class MGPlayer {
 
         if (!binds.getBinds().isEmpty()) {
             for (Bind b : binds.getBinds()) {
-                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".item", b.getItem().name());
-                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".data", b.getData());
-                conf.set("binds." + b.getAbilityType().name().toLowerCase() + ".ability", b.getAbilityType().name());
+                String key = b.getItem().name().toLowerCase() + b.getData();
+                conf.set("binds." + key + ".item", b.getItem().name());
+                conf.set("binds." + key + ".data", b.getData());
+                List<String> abilities = Lists.newArrayList();
+                b.getAbilityTypes().stream().forEach(a -> abilities.add(a.getName()));
+                conf.set("binds." + key + ".ability", abilities);
             }
         }
 

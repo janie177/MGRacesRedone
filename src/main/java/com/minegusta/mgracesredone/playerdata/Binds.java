@@ -38,10 +38,19 @@ public class Binds {
 		return false;
 	}
 
+	public Optional<Bind> getBindForItem(Material item, short data, boolean ignoreData) {
+		for (Bind b : binds.keySet()) {
+			if (b.getItem() == item && (b.getData() == data || ignoreData)) {
+				return Optional.of(b);
+			}
+		}
+		return Optional.empty();
+	}
+
 	public List<Bind> getBindForAbility(AbilityType type) {
 		List<Bind> bList = Lists.newArrayList();
 		for (Bind b : getBinds()) {
-			if (b.getAbilityType() == type) bList.add(b);
+			if (b.getAbilityTypes().contains(type)) bList.add(b);
 		}
 		return bList;
 	}
@@ -54,10 +63,10 @@ public class Binds {
 		binds.put(b, true);
 	}
 
-	public Optional<AbilityType> getAbilityForItem(Material item, short data, boolean ignoreData) {
+	public Optional<List<AbilityType>> getAbilityForItem(Material item, short data, boolean ignoreData) {
 		for (Bind b : binds.keySet()) {
 			if (b.getItem() == item && (ignoreData || data == b.getData())) {
-				return Optional.of(b.getAbilityType());
+				return Optional.of(b.getAbilityTypes());
 			}
 		}
 		return Optional.empty();
