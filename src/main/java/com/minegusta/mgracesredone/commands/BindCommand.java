@@ -113,8 +113,11 @@ public class BindCommand implements CommandExecutor {
 		p.sendMessage(ChatColor.LIGHT_PURPLE + " /Bind List All" + ChatColor.GRAY + " - List all abilities you have that can be bound.");
 		p.sendMessage(ChatColor.LIGHT_PURPLE + " /Bind List" + ChatColor.GRAY + " - List all binds you have currently set.");
 		p.sendMessage(ChatColor.LIGHT_PURPLE + " /Bind <Name>" + ChatColor.GRAY + " - Bind ability with said name to the item in your hand.");
-		p.sendMessage(ChatColor.LIGHT_PURPLE + " /Unbind" + ChatColor.GRAY + " - Remove bind from the item in your hand.");
+		p.sendMessage(ChatColor.LIGHT_PURPLE + " /Unbind" + ChatColor.GRAY + " - Remove binds from the item in your hand.");
 		p.sendMessage(ChatColor.LIGHT_PURPLE + " /Unbind All" + ChatColor.GRAY + " - Unbind all bound abilities.");
+		p.sendMessage(ChatColor.YELLOW + "You can bind multiple abilities to a single item.");
+		p.sendMessage(ChatColor.GRAY + "- Left click to scroll through abilities.");
+		p.sendMessage(ChatColor.GRAY + "- Right click to activate the selected ability.");
 		ChatUtil.sendFooter(p);
 	}
 }
