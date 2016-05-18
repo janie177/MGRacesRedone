@@ -30,7 +30,10 @@ public class DivineBlade implements IAbility {
 		MGPlayer mgp = Races.getMGPlayer(player);
 		int level = mgp.getAbilityLevel(getType());
 		int duration = 9;
-
+		//Level 4
+		if (level > 3) {
+			duration = 18;
+		}
 
 		//Level 2
 		if (level > 1) {
@@ -42,11 +45,6 @@ public class DivineBlade implements IAbility {
 				PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, duration);
 				PotionUtil.updatePotion(player, PotionEffectType.INCREASE_DAMAGE, 1, duration);
 				PotionUtil.updatePotion(player, PotionEffectType.JUMP, 2, duration);
-
-				//Level 4
-				if (level > 3) {
-					duration = 18;
-				}
 			}
 		}
 
