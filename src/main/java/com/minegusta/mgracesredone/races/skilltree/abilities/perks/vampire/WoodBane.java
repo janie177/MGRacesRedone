@@ -90,7 +90,7 @@ public class WoodBane implements IAbility {
 				desc = new String[]{"Extra damage from wood is reduced to 4."};
 				break;
 			case 5:
-				desc = new String[]{"Extra damage from wood is reduced to 5."};
+				desc = new String[]{"Extra damage from wood is reduced to 3."};
 				break;
 			default:
 				desc = new String[]{"This is an error!"};
