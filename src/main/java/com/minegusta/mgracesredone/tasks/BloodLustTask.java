@@ -41,7 +41,7 @@ public class BloodLustTask {
 					PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
 					EffectUtil.playParticle(p, Effect.LARGE_SMOKE);
 					EffectUtil.playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 57, 0));
+					if (level > 1) p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 57, 0));
 
 					if (level > 2) {
 						PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
