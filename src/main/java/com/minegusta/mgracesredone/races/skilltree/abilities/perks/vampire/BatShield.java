@@ -49,7 +49,7 @@ public class BatShield implements IAbility {
 		PotionUtil.updatePotion(player, PotionEffectType.DAMAGE_RESISTANCE, 1, 6);
 
 		if (level > 1) {
-			PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 0, 6);
+			PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 1, 6);
 		}
 
 		if (level > 2) {
