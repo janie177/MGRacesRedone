@@ -34,6 +34,11 @@ public class Thrall implements IAbility {
 			return false;
 		}
 
+		if (player.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(player.getLocation()) < 20 && !(ent instanceof Player)).count() > 40) {
+			player.sendMessage(ChatColor.RED + "There is too many entities around you already.");
+			return false;
+		}
+
 		//Drain 2 food.
 		VampireFoodUtil.setCanChangeFood(player);
 		player.setFoodLevel(player.getFoodLevel() - 2);
