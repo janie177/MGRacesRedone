@@ -189,7 +189,7 @@ public class MGPlayer {
     }
 
     public void setRaceType(RaceType raceType) {
-        RaceChangeEvent e = new RaceChangeEvent(getPlayer());
+        RaceChangeEvent e = new RaceChangeEvent(getPlayer(), raceType.name(), this.raceType.name());
         Bukkit.getPluginManager().callEvent(e);
         this.raceType = raceType;
         updateHealth();
