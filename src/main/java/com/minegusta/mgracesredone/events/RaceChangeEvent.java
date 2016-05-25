@@ -1,23 +1,29 @@
 package com.minegusta.mgracesredone.events;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 
-public class RaceChangeEvent extends PlayerEvent {
+public class RaceChangeEvent extends Event {
 
 	private String to;
 	private String from;
+	private Player player;
 
 	public RaceChangeEvent(Player who, String to, String from) {
-		super(who);
 		this.to = to;
+		this.player = who;
 		this.from = from;
 	}
 
-	@Override
+	private static final HandlerList handlers = new HandlerList();
+
 	public HandlerList getHandlers() {
-		return null;
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	public String to() {
@@ -26,5 +32,9 @@ public class RaceChangeEvent extends PlayerEvent {
 
 	public String from() {
 		return from;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 }
