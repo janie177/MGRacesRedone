@@ -2,6 +2,7 @@ package com.minegusta.mgracesredone.playerdata;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.minegusta.mgracesredone.events.RaceChangeEvent;
 import com.minegusta.mgracesredone.files.FileManager;
 import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
@@ -188,6 +189,8 @@ public class MGPlayer {
     }
 
     public void setRaceType(RaceType raceType) {
+        RaceChangeEvent e = new RaceChangeEvent(getPlayer());
+        Bukkit.getPluginManager().callEvent(e);
         this.raceType = raceType;
         updateHealth();
         updateScoreboard();
