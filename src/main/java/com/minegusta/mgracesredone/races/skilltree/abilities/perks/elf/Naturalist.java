@@ -53,7 +53,7 @@ public class Naturalist implements IAbility {
             Player p = (Player) e.getEntity();
             MGPlayer mgp = Races.getMGPlayer(p);
 
-            if (p.getHealth() - e.getDamage() <= 5 && !p.isDead() && mgp.getAbilityLevel(getType()) > 3) {
+            if (p.getHealth() - e.getFinalDamage() <= 5 && !p.isDead() && mgp.getAbilityLevel(getType()) > 3) {
                 for (Entity ent : p.getWorld().getLivingEntities().stream().filter(entity -> entity.getLocation().distance(p.getLocation()) < 6).collect(Collectors.toList())) {
                     if (ent instanceof Animals) {
                         EffectUtil.playSound(p, Sound.ENTITY_FIREWORK_LARGE_BLAST);
