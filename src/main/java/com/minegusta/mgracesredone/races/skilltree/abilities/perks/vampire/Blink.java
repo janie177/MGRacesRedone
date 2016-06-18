@@ -34,7 +34,13 @@ public class Blink implements IAbility {
 		MGPlayer mgp = Races.getMGPlayer(player);
 		int level = mgp.getAbilityLevel(getType());
 		String uuid = player.getUniqueId().toString();
-		int duration = level;
+		double duration = 10; //duration in ticks. 20 ticks is one second. Will multiply by 2 later in the loop.
+		if (level > 1) {
+			duration = 15; //duration is now 1.5 seconds.
+		}
+		if (level > 2) {
+			duration = 20; //Duration is 2 seconds now.
+		}
 
 		if (player.getFoodLevel() < 2) {
 			player.sendMessage(ChatColor.RED + "You need more blood to use this.");
@@ -49,10 +55,9 @@ public class Blink implements IAbility {
 		InvisibilityUtil.add(uuid);
 
 
-		for (int i = 0; i <= duration * 10; i++)
+		for (int i = 0; i <= duration * 2; i++)
 		{
 			if (player.isOnline()) FallDamageManager.addToFallMap(player);
-			final int k = i;
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
 				if (!player.isOnline()) {
 					return;
@@ -75,7 +80,7 @@ public class Blink implements IAbility {
 
 			}, i * 2);
 
-			if (i == duration * 10) {
+			if (i == duration * 2) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 				{
 					InvisibilityUtil.remove(uuid);
@@ -151,10 +156,10 @@ public class Blink implements IAbility {
 				desc = new String[]{"Become invincible for 1 seconds while being able to fly quickly.", "Bind to an item using /Bind.", "Will use a little of your blood bar."};
 				break;
 			case 2:
-				desc = new String[]{"Blinking lasts 2 seconds."};
+				desc = new String[]{"Blinking lasts 1.5 seconds."};
 				break;
 			case 3:
-				desc = new String[]{"Blinking lasts 3 seconds."};
+				desc = new String[]{"Blinking lasts 2 seconds."};
 				break;
 			default:
 				desc = new String[]{"This is an error!"};
