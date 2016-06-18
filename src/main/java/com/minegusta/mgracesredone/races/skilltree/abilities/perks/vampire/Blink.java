@@ -34,12 +34,12 @@ public class Blink implements IAbility {
 		MGPlayer mgp = Races.getMGPlayer(player);
 		int level = mgp.getAbilityLevel(getType());
 		String uuid = player.getUniqueId().toString();
-		double duration = 10; //duration in ticks. 20 ticks is one second. Will multiply by 2 later in the loop.
+		double duration = 20; //duration in ticks. 20 ticks is one second. Will multiply by 2 later in the loop.
 		if (level > 1) {
-			duration = 15; //duration is now 1.5 seconds.
+			duration = 30; //duration is now 1.5 seconds.
 		}
 		if (level > 2) {
-			duration = 20; //Duration is 2 seconds now.
+			duration = 40; //Duration is 2 seconds now.
 		}
 
 		if (player.getFoodLevel() < 2) {
@@ -55,32 +55,34 @@ public class Blink implements IAbility {
 		InvisibilityUtil.add(uuid);
 
 
-		for (int i = 0; i <= duration * 2; i++)
+		for (int i = 0; i <= duration; i++)
 		{
 			if (player.isOnline()) FallDamageManager.addToFallMap(player);
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
-				if (!player.isOnline()) {
-					return;
-				}
-				//Flying
-				Vector victor = ((player.getPassenger() != null) && (player.getLocation().getDirection().getY() > 0.0D) ? player.getLocation().getDirection().clone().setY(0) : player.getLocation().getDirection()).normalize().multiply(1.30D);
-				player.setVelocity(victor);
+			if (i % 2 == 0) {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+					if (!player.isOnline()) {
+						return;
+					}
+					//Flying
+					Vector victor = ((player.getPassenger() != null) && (player.getLocation().getDirection().getY() > 0.0D) ? player.getLocation().getDirection().clone().setY(0) : player.getLocation().getDirection()).normalize().multiply(1.30D);
+					player.setVelocity(victor);
 
-				//Particle
+					//Particle
 
-				for (int i2 = 0; i2 < 4; i2++) {
-					Entity bat = player.getWorld().spawnEntity(player.getLocation(), EntityType.BAT);
-					EffectUtil.playParticle(player, Effect.SMOKE);
-					//Bat
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
-					{
-						if (bat.isValid()) bat.remove();
-					}, 14);
-				}
+					for (int i2 = 0; i2 < 4; i2++) {
+						Entity bat = player.getWorld().spawnEntity(player.getLocation(), EntityType.BAT);
+						EffectUtil.playParticle(player, Effect.SMOKE);
+						//Bat
+						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
+						{
+							if (bat.isValid()) bat.remove();
+						}, 14);
+					}
 
-			}, i * 2);
+				}, i);
+			}
 
-			if (i == duration * 2) {
+			if (i == duration) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
 				{
 					InvisibilityUtil.remove(uuid);
