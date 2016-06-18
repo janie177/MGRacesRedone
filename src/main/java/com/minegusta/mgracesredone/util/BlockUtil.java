@@ -1,6 +1,5 @@
 package com.minegusta.mgracesredone.util;
 
-import com.google.common.collect.Lists;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -57,20 +56,6 @@ public class BlockUtil {
 
     public static Material getBlockAtPlayer(Player p) {
         return getBlockAtLocation(p.getLocation());
-    }
-
-    public static List<Block> getCircle(Location center, int radius, boolean fill) {
-        List<Block> list = Lists.newArrayList();
-        int x = (int) center.getX();
-        int y = (int) center.getY();
-        int z = (int) center.getZ();
-
-        if (fill) {
-
-        } else {
-
-        }
-        return list;
     }
 
 

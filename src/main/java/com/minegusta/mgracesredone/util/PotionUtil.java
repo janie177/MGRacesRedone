@@ -29,7 +29,6 @@ public class PotionUtil {
 
     private static final List<PotionEffectType> negative = Lists.newArrayList(PotionEffectType.POISON, PotionEffectType.WITHER, PotionEffectType.WEAKNESS, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HARM, PotionEffectType.UNLUCK, PotionEffectType.HUNGER, PotionEffectType.LEVITATION, PotionEffectType.GLOWING);
 
-
     public static boolean isNegativeForPlayer(PotionEffectType type) {
         return negative.contains(type);
     }
