@@ -1,7 +1,6 @@
 package com.minegusta.mgracesredone.listeners.racelisteners;
 
 import com.minegusta.mgracesredone.main.Races;
-import com.minegusta.mgracesredone.playerdata.Bind;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
@@ -87,20 +86,6 @@ public class EnderBornListener implements Listener {
         //Switching pearl mode
         if (p.getInventory().getItemInMainHand().getType() == Material.ENDER_PEARL && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) && Races.getMGPlayer(p).hasAbility(AbilityType.PEARLPOWER)) {
             AbilityType.PEARLPOWER.run(p);
-        }
-
-        Material hand = p.getInventory().getItemInMainHand().getType();
-        short data = hand != Material.AIR ? p.getInventory().getItemInMainHand().getDurability() : 0;
-        boolean ignoreData = BindUtil.ignoreItemData(hand);
-
-        //Activate EndRift
-        if (mgp.hasAbility(AbilityType.ENDRIFT)) {
-            for (Bind b : mgp.getBindForAbility(AbilityType.ENDRIFT)) {
-                if (b.getItem() == hand && (ignoreData || data == b.getData())) {
-                    AbilityType.ENDRIFT.run(e);
-                    break;
-                }
-            }
         }
     }
 
