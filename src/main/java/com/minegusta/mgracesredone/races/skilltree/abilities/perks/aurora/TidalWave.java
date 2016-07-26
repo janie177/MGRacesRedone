@@ -148,7 +148,7 @@ public class TidalWave implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        return 60;
+        return 45;
     }
 
     @Override

@@ -101,7 +101,7 @@ public class Justice implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        return 70;
+        return 65;
     }
 
     @Override

@@ -96,7 +96,7 @@ public class Pounce implements IAbility {
 
     @Override
     public int getCooldown(int level) {
-        int returned = 30;
+        int returned;
         switch (level) {
             case 1:
                 returned = 30;

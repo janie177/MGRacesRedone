@@ -60,7 +60,6 @@ public class Elf implements Race {
 
     @Override
     public void passiveBoost(Player p) {
-
         Location loc = p.getLocation();
         WeatherUtil.BiomeType biome = WeatherUtil.getBiomeType(loc);
         MGPlayer mgp = Races.getMGPlayer(p);

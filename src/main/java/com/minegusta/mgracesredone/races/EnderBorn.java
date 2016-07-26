@@ -68,7 +68,7 @@ public class EnderBorn implements Race {
                 EffectUtil.playParticle(p, Effect.PORTAL);
                 PotionUtil.updatePotion(p, PotionEffectType.SPEED, 0, 5);
                 if (level > 1) {
-                    PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+                    PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
                     if (level > 2) {
                         PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
                         if (level > 3) {
@@ -93,8 +93,9 @@ public class EnderBorn implements Race {
 
         //Darkness check
         if (BlockUtil.getLightLevel(loc) == BlockUtil.LightLevel.DARK && mgp.hasAbility(AbilityType.COLDBLOODED)) {
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, 0, 5);
             if (mgp.getAbilityLevel(AbilityType.COLDBLOODED) > 1) {
+                PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
                 PotionUtil.updatePotion(p, PotionEffectType.NIGHT_VISION, 0, 18);
             }
         }

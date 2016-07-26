@@ -8,9 +8,12 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.ChatUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -40,8 +43,17 @@ public class AnimalRider implements IAbility {
                     return;
                 }
             }
-            e.getRightClicked().setPassenger(e.getPlayer());
-            ElfListener.riders.put(e.getPlayer().getUniqueId().toString(), (LivingEntity) e.getRightClicked());
+
+            BlockBreakEvent be = new BlockBreakEvent(clicked.getLocation().getBlock(), e.getPlayer());
+            Bukkit.getPluginManager().callEvent(be);
+
+            if (!be.isCancelled()) {
+                be.setCancelled(true);
+                e.getRightClicked().setPassenger(e.getPlayer());
+                ElfListener.riders.put(e.getPlayer().getUniqueId().toString(), (LivingEntity) e.getRightClicked());
+            } else {
+                ChatUtil.sendString(e.getPlayer(), ChatColor.RED + "You cannot ride animals here.");
+            }
         }
     }
 

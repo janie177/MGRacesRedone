@@ -47,7 +47,7 @@ public class AngelListener implements Listener {
     public void onFallDamage(EntityDamageEvent e) {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if (e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL) {
+        if (e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.FALL || e.getCause() == EntityDamageEvent.DamageCause.FLY_INTO_WALL)) {
             Player p = (Player) e.getEntity();
 
             if (!Races.getMGPlayer(p).hasAbility(AbilityType.HOLINESS)) return;

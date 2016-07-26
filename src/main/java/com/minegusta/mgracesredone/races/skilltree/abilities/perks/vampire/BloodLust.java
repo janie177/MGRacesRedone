@@ -92,7 +92,7 @@ public class BloodLust implements IAbility {
 
 		switch (level) {
 			case 1:
-				desc = new String[]{"Activate Bloodlust mode. This uses your blood bar.", "Gives you Jump 3 and Speed 3.", "Bind using /Bind."};
+				desc = new String[]{"Activate Bloodlust mode. This uses your blood bar.", "Gives you Jump 4 and Speed 4.", "Bind using /Bind."};
 				break;
 			case 2:
 				desc = new String[]{"Now also gives Regeneration 1."};

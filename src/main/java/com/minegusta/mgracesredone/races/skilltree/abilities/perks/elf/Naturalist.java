@@ -177,7 +177,7 @@ public class Naturalist implements IAbility {
                 desc = new String[]{"When nearly dead, you absorb life from nearby animals."};
                 break;
             case 5:
-                desc = new String[]{"Right-clicking grass with your hands acts as bone meal."};
+                desc = new String[]{"Right-clicking grass with your hands acts as bone meal.", "When wearing light armour below diamond,", "you gain speed II and no fall damage."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

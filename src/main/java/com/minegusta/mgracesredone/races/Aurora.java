@@ -59,7 +59,7 @@ public class Aurora implements Race {
         int feeshLevel = mgp.getAbilityLevel(AbilityType.Fish);
 
         if (PlayerUtil.isInWater(p) && feeshLevel > 0) {
-            PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.WATER_BREATHING, 0, 10);
         }
 
         if (PlayerUtil.isInWater(p) && feeshLevel > 1) {
@@ -67,14 +67,14 @@ public class Aurora implements Race {
         }
 
         if (feeshLevel > 4 && WeatherUtil.isFullMoon(p.getWorld())) {
-            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 5);
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.SPEED, 1, 10);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 10);
         }
 
         if (feeshLevel > 2 && (PlayerUtil.isInRain(p) || PlayerUtil.isInWater(p))) {
-            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+            PotionUtil.updatePotion(p, PotionEffectType.DAMAGE_RESISTANCE, 0, 10);
             if (feeshLevel > 3) {
-                PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+                PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 10);
             }
         }
 

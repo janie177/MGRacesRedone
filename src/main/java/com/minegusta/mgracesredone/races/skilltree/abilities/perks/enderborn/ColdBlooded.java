@@ -102,10 +102,10 @@ public class ColdBlooded implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"When in the shadow, you gain a defensive boost."};
+                desc = new String[]{"When in the shadow, you gain a regeneration boost."};
                 break;
             case 2:
-                desc = new String[]{"In dark areas, you obtain nightvision."};
+                desc = new String[]{"In dark areas, you obtain nightvision.", "You also gain a speed boost."};
                 break;
             case 3:
                 desc = new String[]{"Your blood temperature is dropped.", "Endermen and mites will no longer be able to see or attack you."};

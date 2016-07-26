@@ -72,6 +72,10 @@ public class FruitFanatic implements IAbility {
 
             PotionUtil.updatePotion(p, PotionEffectType.REGENERATION, amp1, duration1);
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, amp2, duration2);
+
+            int maxHealed = 20 - e.getPlayer().getFoodLevel();
+            e.getPlayer().setFoodLevel(e.getPlayer().getFoodLevel() + maxHealed < 2 ? maxHealed : 2);
+
         }
     }
 
@@ -136,7 +140,7 @@ public class FruitFanatic implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"When eating fruit, you gain 2 seconds of regeneration."};
+                desc = new String[]{"When eating fruit, you gain 2 seconds of regeneration.", "Also heals more food bar."};
                 break;
             case 2:
                 desc = new String[]{"When eating fruit, you gain 4 seconds of regeneration."};

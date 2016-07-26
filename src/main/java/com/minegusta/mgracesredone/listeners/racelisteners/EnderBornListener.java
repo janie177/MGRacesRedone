@@ -40,9 +40,19 @@ public class EnderBornListener implements Listener {
 
         //Bleeding
         if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
+
+            MGPlayer mgp = Races.getMGPlayer((Player) e.getDamager());
+
             Player p = (Player) e.getDamager();
-            if (!e.isCancelled() && Races.getMGPlayer(p).getAbilityLevel(AbilityType.PREDATOR) > 1 && WGUtil.canFightEachother(p, e.getEntity())) {
+            if (!e.isCancelled() && mgp.getAbilityLevel(AbilityType.PREDATOR) > 1 && WGUtil.canFightEachother(p, e.getEntity())) {
                 AbilityType.PREDATOR.run(e);
+            }
+
+            //Backstabbing
+            if (!e.isCancelled() && mgp.getAbilityLevel(AbilityType.PREDATOR) > 4) {
+                if (Math.abs(e.getDamager().getLocation().getYaw() - e.getEntity().getLocation().getYaw()) < 50) {
+                    e.setDamage(e.getDamage() * 1.2);
+                }
             }
         }
 

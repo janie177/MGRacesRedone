@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.concurrent.ConcurrentMap;
@@ -120,7 +121,7 @@ public class ElfListener implements Listener {
 
             //Elves have fire weakness
             if (Races.getRace(p) == RaceType.ELF) {
-                e.setDamage(e.getDamage() + 4.0);
+                e.setDamage(e.getDamage() + 3.0);
             }
             if (Races.getMGPlayer(p).hasAbility(AbilityType.FLAMERESISTANCE)) {
                 AbilityType.FLAMERESISTANCE.run(e);
@@ -155,6 +156,30 @@ public class ElfListener implements Listener {
             } else {
                 ChatUtil.sendString(e.getPlayer(), "Elves can only ride animals with an empty hand.");
             }
+        }
+    }
+
+    @EventHandler
+    public void onFallDamage(EntityDamageEvent e) {
+        if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
+        if (e.isCancelled()) return;
+
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
+            MGPlayer mgp = Races.getMGPlayer(p);
+            if (mgp.getAbilityLevel(AbilityType.NATURALIST) > 4) {
+                boolean run = false;
+                for (ItemStack i : p.getInventory().getArmorContents()) {
+                    if (i != null && ItemUtil.isDiamondArmour(i.getType())) {
+                        run = true;
+                        break;
+                    }
+                }
+                if (run) {
+                    e.setCancelled(true);
+                }
+            }
+
         }
     }
 

@@ -12,6 +12,7 @@ import com.minegusta.mgracesredone.util.RandomUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -40,8 +41,10 @@ public class ArrowRain implements IAbility {
                 int xAdded = -4 + RandomUtil.randomNumber(8);
                 int zAdded = -4 + RandomUtil.randomNumber(8);
                 Location dropLocation = new Location(l.getWorld(), l.getX(), l.getY(), l.getZ());
-                l.getWorld().spawnEntity(dropLocation.add(xAdded, 15, zAdded), EntityType.ARROW);
-                l.getWorld().spawnEntity(dropLocation.add(xAdded, 15, zAdded), EntityType.ARROW);
+                for (int p = 0; p < 2; p++) {
+                    Arrow arrow = (Arrow) l.getWorld().spawnEntity(dropLocation.add(xAdded, 15, zAdded), EntityType.ARROW);
+                    arrow.setCritical(true);
+                }
             }, 5 * i);
         }
     }

@@ -125,7 +125,7 @@ public class ArrowNado implements IAbility {
 							LivingEntity target = targets.get(RandomUtil.randomNumber(targets.size()) - 1);
 							if (target.isValid()) {
 								Vector v = target.getLocation().toVector().subtract(a.getLocation().toVector());
-								a.setVelocity(v.multiply(1.8));
+								a.setVelocity(v.multiply(1.7));
 							}
 						});
 
@@ -173,7 +173,7 @@ public class ArrowNado implements IAbility {
 
 	@Override
 	public int getCooldown(int level) {
-		return 40;
+		return 70;
 	}
 
 	@Override

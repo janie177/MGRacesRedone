@@ -37,11 +37,11 @@ public class BloodLustTask {
 						p.setFoodLevel(p.getFoodLevel() - 1);
 					}
 
-					PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 5);
-					PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 5);
+					PotionUtil.updatePotion(p, PotionEffectType.SPEED, 3, 5);
+					PotionUtil.updatePotion(p, PotionEffectType.JUMP, 3, 5);
 					EffectUtil.playParticle(p, Effect.LARGE_SMOKE);
 					EffectUtil.playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF);
-					if (level > 1) p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 57, 0));
+					if (level > 1) p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 0, 0));
 
 					if (level > 2) {
 						PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
@@ -65,9 +65,9 @@ public class BloodLustTask {
 	public static void removePlayer(Player p) {
 		if (players.containsKey(p)) players.remove(p);
 		p.sendMessage(ChatColor.RED + "BloodLust is no longer active.");
-		PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 0);
-		PotionUtil.updatePotion(p, PotionEffectType.JUMP, 2, 0);
-		PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
+		PotionUtil.updatePotion(p, PotionEffectType.SPEED, 4, 0);
+		PotionUtil.updatePotion(p, PotionEffectType.JUMP, 4, 0);
+		PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 4, 0);
 	}
 
 	public static boolean containsPlayer(Player p) {

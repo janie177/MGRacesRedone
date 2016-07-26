@@ -75,7 +75,7 @@ public class Demon implements Race {
                 EffectUtil.playParticle(p, Effect.MOBSPAWNER_FLAMES);
 
                 if (level > 2) {
-                    PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 0, 5);
+                    PotionUtil.updatePotion(p, PotionEffectType.INCREASE_DAMAGE, 1, 5);
                 }
                 if (level > 3) {
                     PotionUtil.updatePotion(p, PotionEffectType.SPEED, 2, 5);
@@ -106,7 +106,7 @@ public class Demon implements Race {
             EffectUtil.playParticle(p, Effect.LAVADRIP);
         } else {
             EffectUtil.playParticle(p, Effect.LAVADRIP);
-            WeaknessUtil.setWeakness(p, 2, 5);
+            WeaknessUtil.setWeakness(p, 1, 5);
         }
 
 

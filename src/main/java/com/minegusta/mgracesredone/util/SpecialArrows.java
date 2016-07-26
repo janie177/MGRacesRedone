@@ -104,12 +104,12 @@ public class SpecialArrows {
             return;
         }
 
-        Cooldown.newCoolDown(name, uuid, 1);
+        Cooldown.newCoolDown(name, uuid, 4);
 
         FallDamageManager.addToFallMap(p);
         p.getLocation().setY(p.getLocation().getY() + 0.05);
         Vector v = arrow.getLocation().toVector().subtract(p.getLocation().toVector());
-        p.setVelocity(v.normalize().multiply(2.5));
+        p.setVelocity(v.normalize().multiply(3.0));
         arrow.remove();
     }
 

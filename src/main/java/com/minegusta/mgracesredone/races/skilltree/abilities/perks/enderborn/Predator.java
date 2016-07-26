@@ -56,6 +56,10 @@ public class Predator implements IAbility {
             PotionUtil.updatePotion(player, PotionEffectType.SPEED, 1, 15);
             EffectUtil.playParticle(player, Effect.PORTAL, 1, 1, 1, 30);
         }
+
+        int maxHealed = 20 - player.getFoodLevel();
+        player.setFoodLevel(player.getFoodLevel() + maxHealed < 2 ? maxHealed : 2);
+
         return true;
     }
 
@@ -106,7 +110,7 @@ public class Predator implements IAbility {
 
     @Override
     public int getMaxLevel() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -115,7 +119,7 @@ public class Predator implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"When eating raw food you gain a regeneration effect."};
+                desc = new String[]{"When eating raw food you gain a regeneration effect.", "Also heals more food bar."};
                 break;
             case 2:
                 desc = new String[]{"When hitting enemies they have a 10% chance to start bleeding.", "Bleeding lasts 4 seconds."};
@@ -125,6 +129,9 @@ public class Predator implements IAbility {
                 break;
             case 4:
                 desc = new String[]{"Your chance to make enemies bleed is now 20%."};
+                break;
+            case 5:
+                desc = new String[]{"Backstabbing does 1.2x damage."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};
