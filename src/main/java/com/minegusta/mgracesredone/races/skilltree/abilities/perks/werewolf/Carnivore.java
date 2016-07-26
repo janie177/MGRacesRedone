@@ -59,7 +59,7 @@ public class Carnivore implements IAbility {
         }
 
         int maxHealed = 20 - player.getFoodLevel();
-        player.setFoodLevel(player.getFoodLevel() + maxHealed < 2 ? maxHealed : 2);
+        player.setFoodLevel(player.getFoodLevel() + (maxHealed < 2 ? maxHealed : 2));
 
         return false;
     }

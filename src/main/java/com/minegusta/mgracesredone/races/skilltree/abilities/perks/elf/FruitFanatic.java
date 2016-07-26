@@ -74,7 +74,7 @@ public class FruitFanatic implements IAbility {
             PotionUtil.updatePotion(p, PotionEffectType.SPEED, amp2, duration2);
 
             int maxHealed = 20 - e.getPlayer().getFoodLevel();
-            e.getPlayer().setFoodLevel(e.getPlayer().getFoodLevel() + maxHealed < 2 ? maxHealed : 2);
+            e.getPlayer().setFoodLevel(e.getPlayer().getFoodLevel() + (maxHealed < 2 ? maxHealed : 2));
 
         }
     }
