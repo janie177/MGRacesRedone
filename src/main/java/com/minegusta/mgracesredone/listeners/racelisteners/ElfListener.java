@@ -164,22 +164,24 @@ public class ElfListener implements Listener {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
         if (e.isCancelled()) return;
 
-        if (e.getEntity() instanceof Player) {
-            Player p = (Player) e.getEntity();
-            MGPlayer mgp = Races.getMGPlayer(p);
-            if (mgp.getAbilityLevel(AbilityType.NATURALIST) > 4) {
-                boolean run = false;
-                for (ItemStack i : p.getInventory().getArmorContents()) {
-                    if (i != null && ItemUtil.isDiamondArmour(i.getType())) {
-                        run = true;
-                        break;
+        EntityDamageEvent.DamageCause cause = e.getCause();
+        if (cause == EntityDamageEvent.DamageCause.FALL) {
+            if (e.getEntity() instanceof Player) {
+                Player p = (Player) e.getEntity();
+                MGPlayer mgp = Races.getMGPlayer(p);
+                if (mgp.getAbilityLevel(AbilityType.NATURALIST) > 4) {
+                    boolean run = true;
+                    for (ItemStack i : p.getInventory().getArmorContents()) {
+                        if (i != null && ItemUtil.isDiamondArmour(i.getType())) {
+                            run = false;
+                            break;
+                        }
+                    }
+                    if (run) {
+                        e.setCancelled(true);
                     }
                 }
-                if (run) {
-                    e.setCancelled(true);
-                }
             }
-
         }
     }
 

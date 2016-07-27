@@ -34,10 +34,10 @@ public class BoostTask {
         if (count % 5 == 0) {
             Storage.getPlayers().stream().filter(mgp -> RaceType.ELF.equals(mgp.getRaceType())).filter(mgp -> mgp.getAbilityLevel(AbilityType.NATURALIST) > 4).forEach(mgp -> {
                 Player p = mgp.getPlayer();
-                boolean run = false;
+                boolean run = true;
                 for (ItemStack i : p.getInventory().getArmorContents()) {
                     if (i != null && ItemUtil.isDiamondArmour(i.getType())) {
-                        run = true;
+                        run = false;
                         break;
                     }
                 }
