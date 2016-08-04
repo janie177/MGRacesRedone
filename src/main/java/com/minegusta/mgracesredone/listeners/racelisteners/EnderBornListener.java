@@ -4,7 +4,10 @@ import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
+import net.minegusta.mglib.utils.Title;
+import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -52,6 +55,8 @@ public class EnderBornListener implements Listener {
             if (!e.isCancelled() && mgp.getAbilityLevel(AbilityType.PREDATOR) > 4) {
                 if (Math.abs(e.getDamager().getLocation().getYaw() - e.getEntity().getLocation().getYaw()) < 50) {
                     e.setDamage(e.getDamage() * 1.2);
+                    Title title = TitleUtil.createTitle("", ChatColor.RED + "Backstab! " + ChatColor.DARK_PURPLE + "1.2x Damage Done", 5, 15, 5, true);
+                    title.send(p);
                 }
             }
         }

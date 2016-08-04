@@ -51,6 +51,11 @@
             <systemPath>${basedir}/src/lib/MGEssentials.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>net.minegusta</groupId>
+            <artifactId>mglib</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.5</version>

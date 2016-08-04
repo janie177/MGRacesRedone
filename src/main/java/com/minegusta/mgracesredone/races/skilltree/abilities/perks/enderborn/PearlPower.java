@@ -118,7 +118,7 @@ public class PearlPower implements IAbility {
 
         switch (a) {
             case NORMAL:
-                normal(l, p, noDamage);
+                normal(l, p, noDamage, p.getLocation());
                 break;
             case VACUUM:
                 vacuum(l, e.getEntity());
@@ -147,10 +147,13 @@ public class PearlPower implements IAbility {
         l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
     }
 
-    private void normal(Location l, Player p, boolean noDamage) {
+    private void normal(Location l, Player p, boolean noDamage, Location location) {
         if (!noDamage) {
             p.damage(3);
         }
+        //Set players pitch and yaw to correspond with the former location.
+        l.setPitch(location.getPitch());
+        l.setYaw(location.getYaw());
         p.teleport(l);
     }
 
