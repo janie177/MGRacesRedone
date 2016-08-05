@@ -111,7 +111,7 @@ public class DwarfListener implements Listener {
     public void onDwarfMonsterTarget(EntityTargetLivingEntityEvent e) {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
 
-        if (!(e.getEntity() instanceof Skeleton) && !(e.getTarget() instanceof Player)) return;
+        if (!(e.getEntity() instanceof Skeleton) || !(e.getTarget() instanceof Player)) return;
 
         String id = e.getEntity().getUniqueId().toString();
 

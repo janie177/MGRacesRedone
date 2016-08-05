@@ -194,7 +194,7 @@ public class InfectionListener implements Listener {
         Player p = e.getEntity();
         if (Races.getRace(p) != RaceType.HUMAN) return;
 
-        if (p.getLastDamageCause().getCause() == null || p.getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.FALL)
+        if (p.getLastDamageCause() == null || p.getLastDamageCause().getCause() == null || p.getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.FALL)
             return;
 
         if (p.getInventory().containsAtLeast(Recipe.ANGELRECIPE.getResult(), 1)) {
