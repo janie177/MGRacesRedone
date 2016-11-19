@@ -9,6 +9,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 
 public class PotionUtil {
+    private static final List<PotionEffectType> negative = Lists.newArrayList(PotionEffectType.POISON, PotionEffectType.WITHER, PotionEffectType.WEAKNESS, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HARM, PotionEffectType.UNLUCK, PotionEffectType.HUNGER, PotionEffectType.LEVITATION, PotionEffectType.GLOWING);
+
     /**
      * @param p         The player involved.
      * @param type      The type of the potion.
@@ -26,8 +28,6 @@ public class PotionUtil {
                 });
         ent.addPotionEffect(new PotionEffect(type, 20 * seconds, amplifier, false, false));
     }
-
-    private static final List<PotionEffectType> negative = Lists.newArrayList(PotionEffectType.POISON, PotionEffectType.WITHER, PotionEffectType.WEAKNESS, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HARM, PotionEffectType.UNLUCK, PotionEffectType.HUNGER, PotionEffectType.LEVITATION, PotionEffectType.GLOWING);
 
     public static boolean isNegativeForPlayer(PotionEffectType type) {
         return negative.contains(type);

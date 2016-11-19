@@ -9,10 +9,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class BlockUtil {
-    public enum LightLevel {
-        DARK, LIGHT
-    }
-
     /**
      * Look in a radius around a block and count for a needed material. Return if there is enough.
      *
@@ -58,7 +54,6 @@ public class BlockUtil {
         return getBlockAtLocation(p.getLocation());
     }
 
-
     public static void poofBlocks(Block center, int radius, List<Material> searched, Material replacement, Effect effect) {
         for (int x = -(radius); x <= radius; x++) {
             for (int y = -(radius); y <= radius; y++) {
@@ -71,5 +66,10 @@ public class BlockUtil {
                 }
             }
         }
+    }
+
+
+    public enum LightLevel {
+        DARK, LIGHT
     }
 }

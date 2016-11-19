@@ -25,12 +25,12 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Telekinesis implements IAbility {
 
+    public static ConcurrentMap<String, Long> cooldown = Maps.newConcurrentMap();
+
     @Override
     public void run(Event event) {
 
     }
-
-    public static ConcurrentMap<String, Long> cooldown = Maps.newConcurrentMap();
 
     @Override
     public boolean run(Player player) {
@@ -72,8 +72,8 @@ public class Telekinesis implements IAbility {
         //Run the ability
         player.getWorld().getEntities().stream().filter(ent ->
                 !ent.getUniqueId().equals(player.getUniqueId()) &&
-                (ent.getLocation().distance(target.getLocation()) <= 12 ||
-                        ent.getLocation().distance(target2.getLocation()) < 6) && (ent instanceof Item ||
+                        (ent.getLocation().distance(target.getLocation()) <= 12 ||
+                                ent.getLocation().distance(target2.getLocation()) < 6) && (ent instanceof Item ||
                         ent instanceof Projectile || (mobs && ent instanceof LivingEntity &&
                         !(ent instanceof Player)) || (players && ent instanceof Player && !((Player) ent).isFlying())) &&
                         WGUtil.canBuild(player, ent.getLocation())).forEach(ent -> {

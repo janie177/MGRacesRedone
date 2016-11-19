@@ -34,8 +34,7 @@ public enum RaceType {
         return race.getInfo();
     }
 
-    public int getPerkPointCap()
-    {
+    public int getPerkPointCap() {
         return race.getPerkPointCap();
     }
 

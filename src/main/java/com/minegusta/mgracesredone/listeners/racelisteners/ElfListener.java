@@ -28,6 +28,8 @@ import java.util.concurrent.ConcurrentMap;
 
 public class ElfListener implements Listener {
 
+    public static ConcurrentMap<String, LivingEntity> riders = Maps.newConcurrentMap();
+
     @EventHandler
     public void onElfFruitEat(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
@@ -128,8 +130,6 @@ public class ElfListener implements Listener {
             }
         }
     }
-
-    public static ConcurrentMap<String, LivingEntity> riders = Maps.newConcurrentMap();
 
     @EventHandler
     public void onDisMount(EntityDismountEvent e) {

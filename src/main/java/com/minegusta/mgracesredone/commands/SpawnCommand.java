@@ -12,30 +12,30 @@ import org.bukkit.entity.Player;
 
 public class SpawnCommand implements CommandExecutor {
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (args.length > 0 && sender.hasPermission("minegusta.spawn.other")) {
-			String player = args[0];
-			try {
-				Player p = Bukkit.getPlayer(player);
-				p.sendMessage(ChatColor.YELLOW + "You have been teleported to the spawn by " + sender.getName() + ".");
-				sender.sendMessage(ChatColor.YELLOW + "You teleported " + p.getDisplayName() + ChatColor.YELLOW + " to the spawn.");
-				if (WorldCheck.isEnabled(p.getWorld())) p.teleport(SpawnLocationUtil.getSpawn(Races.getRace(p)));
-				else p.teleport(p.getWorld().getSpawnLocation());
-				return true;
-			} catch (Exception ignored) {
-				sender.sendMessage(ChatColor.YELLOW + "That player could not be found.");
-				return true;
-			}
-		}
-		if (sender instanceof Player && sender.hasPermission("minegusta.spawn")) {
-			if (!WorldCheck.isEnabled(((Player) sender).getWorld())) {
-				((Player) sender).teleport(((Player) sender).getWorld().getSpawnLocation());
-			} else {
-				((Player) sender).teleport(SpawnLocationUtil.getSpawn(Races.getRace((Player) sender)));
-			}
-			sender.sendMessage(ChatColor.YELLOW + "You teleported to the spawn.");
-		}
-		return true;
-	}
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length > 0 && sender.hasPermission("minegusta.spawn.other")) {
+            String player = args[0];
+            try {
+                Player p = Bukkit.getPlayer(player);
+                p.sendMessage(ChatColor.YELLOW + "You have been teleported to the spawn by " + sender.getName() + ".");
+                sender.sendMessage(ChatColor.YELLOW + "You teleported " + p.getDisplayName() + ChatColor.YELLOW + " to the spawn.");
+                if (WorldCheck.isEnabled(p.getWorld())) p.teleport(SpawnLocationUtil.getSpawn(Races.getRace(p)));
+                else p.teleport(p.getWorld().getSpawnLocation());
+                return true;
+            } catch (Exception ignored) {
+                sender.sendMessage(ChatColor.YELLOW + "That player could not be found.");
+                return true;
+            }
+        }
+        if (sender instanceof Player && sender.hasPermission("minegusta.spawn")) {
+            if (!WorldCheck.isEnabled(((Player) sender).getWorld())) {
+                ((Player) sender).teleport(((Player) sender).getWorld().getSpawnLocation());
+            } else {
+                ((Player) sender).teleport(SpawnLocationUtil.getSpawn(Races.getRace((Player) sender)));
+            }
+            sender.sendMessage(ChatColor.YELLOW + "You teleported to the spawn.");
+        }
+        return true;
+    }
 }

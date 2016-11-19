@@ -25,6 +25,24 @@ public class IceBarrage implements IAbility {
     private static final double[] directions = {0.04, -0.04, 0.06, -0.06};
     private static final Effect[] effects = {Effect.SNOW_SHOVEL, Effect.WATERDRIP, Effect.SNOWBALL_BREAK};
 
+    private static void callRain(Location l, final boolean poison) {
+        //The loop for the amount of seconds needed.
+        for (int i = 0; i < 20 * 7; i++) {
+            if (i % 5 == 0) {
+                double xoffSet = RandomUtil.randomNumber(10) - 5;
+                double zoffSet = RandomUtil.randomNumber(10) - 5;
+                final Location spot = new Location(l.getWorld(), l.getX() + xoffSet, l.getY() + 20, l.getZ() + zoffSet);
+
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+                    final Snowball rain = (Snowball) spot.getWorld().spawnEntity(spot, EntityType.SNOWBALL);
+                    rain.setVelocity(new Vector(0, -1, 0));
+                    if (poison) rain.setShooter(new IceBarragePoisonThrower());
+                    else rain.setShooter(new IceBarrageThrower());
+                }, i);
+            }
+        }
+    }
+
     @Override
     public void run(Event event) {
         ProjectileHitEvent e = (ProjectileHitEvent) event;
@@ -71,25 +89,6 @@ public class IceBarrage implements IAbility {
             ChatUtil.sendString(p, ChatColor.AQUA + "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use Ice Barrage.");
         }
     }
-
-    private static void callRain(Location l, final boolean poison) {
-        //The loop for the amount of seconds needed.
-        for (int i = 0; i < 20 * 7; i++) {
-            if (i % 5 == 0) {
-                double xoffSet = RandomUtil.randomNumber(10) - 5;
-                double zoffSet = RandomUtil.randomNumber(10) - 5;
-                final Location spot = new Location(l.getWorld(), l.getX() + xoffSet, l.getY() + 20, l.getZ() + zoffSet);
-
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
-                    final Snowball rain = (Snowball) spot.getWorld().spawnEntity(spot, EntityType.SNOWBALL);
-                    rain.setVelocity(new Vector(0, -1, 0));
-                    if (poison) rain.setShooter(new IceBarragePoisonThrower());
-                    else rain.setShooter(new IceBarrageThrower());
-                }, i);
-            }
-        }
-    }
-
 
     @Override
     public boolean run(Player player) {

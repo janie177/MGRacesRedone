@@ -6,15 +6,6 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 
 public class WeatherUtil {
-    public enum BiomeType {
-        HOT, WARM, NEUTRAL, COLD, ICE
-    }
-
-
-    public enum MoonPhase {
-        FULL, QUARTER, HALF, NEW
-    }
-
     public static boolean isHell(Location loc) {
         return loc.getBlock().getBiome() == Biome.HELL;
     }
@@ -89,5 +80,13 @@ public class WeatherUtil {
                 break;
         }
         return phase;
+    }
+
+    public enum BiomeType {
+        HOT, WARM, NEUTRAL, COLD, ICE
+    }
+
+    public enum MoonPhase {
+        FULL, QUARTER, HALF, NEW
     }
 }

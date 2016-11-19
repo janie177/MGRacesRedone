@@ -20,6 +20,10 @@ public class Hellspawn implements IAbility {
 
     private static ConcurrentMap<String, Boolean> toggled = Maps.newConcurrentMap();
 
+    public static boolean isToggled(Player player) {
+        return !toggled.containsKey(player.getUniqueId().toString());
+    }
+
     @Override
     public void run(Event event) {
         if (event instanceof EntityDamageEvent) {
@@ -48,10 +52,6 @@ public class Hellspawn implements IAbility {
             PotionUtil.updatePotion(player, PotionEffectType.DAMAGE_RESISTANCE, 3, 0);
         }
         return true;
-    }
-
-    public static boolean isToggled(Player player) {
-        return !toggled.containsKey(player.getUniqueId().toString());
     }
 
     @Override

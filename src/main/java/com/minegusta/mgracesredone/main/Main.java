@@ -15,6 +15,23 @@ public class Main extends JavaPlugin {
     private static WorldGuardPlugin WORLDGUARD = null;
     private Permission permission;
 
+    public static WorldGuardPlugin getWorldGuard() {
+        return WORLDGUARD;
+    }
+
+    /**
+     * A method to getConfig the instance of the plugin.
+     *
+     * @return The plugin.
+     */
+    public static Main getPlugin() {
+        return PLUGIN;
+    }
+
+    public static boolean isWGEnabled() {
+        return WG_ENABLED;
+    }
+
     @Override
     public void onEnable() {
         //Initialize the plugin
@@ -81,10 +98,6 @@ public class Main extends JavaPlugin {
         return permission;
     }
 
-    public static WorldGuardPlugin getWorldGuard() {
-        return WORLDGUARD;
-    }
-
     private boolean setupPermissions() {
         RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
         if (permissionProvider != null) {
@@ -108,18 +121,5 @@ public class Main extends JavaPlugin {
 
         //Save
         SaveTask.save();
-    }
-
-    /**
-     * A method to getConfig the instance of the plugin.
-     *
-     * @return The plugin.
-     */
-    public static Main getPlugin() {
-        return PLUGIN;
-    }
-
-    public static boolean isWGEnabled() {
-        return WG_ENABLED;
     }
 }

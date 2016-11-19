@@ -11,6 +11,7 @@ import java.util.UUID;
 
 public class ShieldTask {
     private static int id = -1;
+    private static int rotationAngle = 0;
 
     public static void start() {
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ShieldTask::effects, 5, 3);
@@ -21,9 +22,6 @@ public class ShieldTask {
             Bukkit.getScheduler().cancelTask(id);
         }
     }
-
-
-    private static int rotationAngle = 0;
 
     private static void effects() {
         rotationAngle = rotationAngle + 6;

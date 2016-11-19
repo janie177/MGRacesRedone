@@ -32,6 +32,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 public class InfectionListener implements Listener {
+    private static ConcurrentMap<String, Integer> elfKills = Maps.newConcurrentMap();
+    private static long lastRan = 0;
+
     /**
      * It is important to update changes in the documentation by hand!
      */
@@ -93,7 +96,7 @@ public class InfectionListener implements Listener {
                                 final int loc2 = le;
                                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
                                 {
-                                        p.getLocation().getBlock().getRelative(loc1, 0, loc2).setType(Material.FIRE);
+                                    p.getLocation().getBlock().getRelative(loc1, 0, loc2).setType(Material.FIRE);
                                 }, 0);
                             }
                         }
@@ -157,8 +160,6 @@ public class InfectionListener implements Listener {
             }
         }
     }
-
-    private static ConcurrentMap<String, Integer> elfKills = Maps.newConcurrentMap();
 
     //Elf
     @EventHandler
@@ -259,9 +260,6 @@ public class InfectionListener implements Listener {
 
         }
     }
-
-
-    private static long lastRan = 0;
 
     //Vampire
     @EventHandler

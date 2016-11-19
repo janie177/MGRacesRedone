@@ -24,6 +24,10 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 public class WereWolfListener implements Listener {
+    public static boolean isWereWolf(Player p) {
+        return Races.getRace(p) == RaceType.WEREWOLF;
+    }
+
     @EventHandler
     public void onWolfInteract(PlayerInteractEntityEvent e) {
         if (!WorldCheck.isEnabled(e.getPlayer().getWorld())) return;
@@ -48,7 +52,6 @@ public class WereWolfListener implements Listener {
             AbilityType.CARNIVORE.run(p);
         }
     }
-
 
     @EventHandler
     public void onWerewolfDamage(EntityDamageByEntityEvent e) {
@@ -121,9 +124,5 @@ public class WereWolfListener implements Listener {
                 e.setCancelled(true);
             }
         }
-    }
-
-    public static boolean isWereWolf(Player p) {
-        return Races.getRace(p) == RaceType.WEREWOLF;
     }
 }

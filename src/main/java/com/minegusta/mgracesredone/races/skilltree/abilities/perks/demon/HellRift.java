@@ -62,19 +62,19 @@ public class HellRift implements IAbility {
             if (i % 4 == 0) {
                 final int k = i;
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
-                        //Effects lol
-                        EffectUtil.playParticle(l, Effect.PORTAL, 30);
-                        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
-                        EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
-                        EffectUtil.playParticle(l, Effect.FLAME, 30);
-                        EffectUtil.playParticle(l, Effect.FLYING_GLYPH, 30);
-                        EffectUtil.playParticle(l, Effect.LAVADRIP, 30);
+                    //Effects lol
+                    EffectUtil.playParticle(l, Effect.PORTAL, 30);
+                    EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
+                    EffectUtil.playParticle(l, Effect.LARGE_SMOKE, 30);
+                    EffectUtil.playParticle(l, Effect.FLAME, 30);
+                    EffectUtil.playParticle(l, Effect.FLYING_GLYPH, 30);
+                    EffectUtil.playParticle(l, Effect.LAVADRIP, 30);
 
-                        if (k % 20 == 0) {
-                            EffectUtil.playSound(l, Sound.BLOCK_PORTAL_TRIGGER);
-                        }
+                    if (k % 20 == 0) {
+                        EffectUtil.playSound(l, Sound.BLOCK_PORTAL_TRIGGER);
+                    }
 
-                        //The sucking people in effect
+                    //The sucking people in effect
                     l.getWorld().getEntities().stream().filter(ent -> ent.getLocation().distance(l) < 8 && !(ent instanceof Player && Races.getRace((Player) ent) == RaceType.DEMON) && (ent instanceof Player || ent instanceof LivingEntity || ent instanceof Item || ent instanceof Projectile)).forEach(ent ->
                     {
                         double amplifier = 0.05 + 1 / ent.getLocation().distance(l);

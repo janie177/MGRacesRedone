@@ -20,6 +20,10 @@ public class Nocturnal implements IAbility {
 
     private static ConcurrentMap<String, Boolean> toggled = Maps.newConcurrentMap();
 
+    public static boolean isToggled(Player player) {
+        return toggled.containsKey(player.getUniqueId().toString());
+    }
+
     @Override
     public void run(Event event) {
 
@@ -47,10 +51,6 @@ public class Nocturnal implements IAbility {
             player.sendMessage(ChatColor.RED + "You enabled your Nocturnal effects.");
         }
         return true;
-    }
-
-    public static boolean isToggled(Player player) {
-        return toggled.containsKey(player.getUniqueId().toString());
     }
 
     @Override

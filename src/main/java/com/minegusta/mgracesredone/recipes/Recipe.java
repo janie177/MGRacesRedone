@@ -20,6 +20,16 @@ public enum Recipe {
         this.recipe = recipe;
     }
 
+    public static void registerRecipes() {
+        for (Recipe r : Recipe.values()) {
+            ShapelessRecipe recipe = new ShapelessRecipe(r.getResult());
+            for (MGItem i : r.getIngredients()) {
+                recipe.addIngredient(i.getAmount(), i.getMaterial());
+            }
+            Bukkit.addRecipe(recipe);
+        }
+    }
+
     public String getRecipeName() {
         return recipe.getName();
     }
@@ -34,15 +44,5 @@ public enum Recipe {
 
     public MGItem[] getIngredients() {
         return recipe.getIngredients();
-    }
-
-    public static void registerRecipes() {
-        for (Recipe r : Recipe.values()) {
-            ShapelessRecipe recipe = new ShapelessRecipe(r.getResult());
-            for (MGItem i : r.getIngredients()) {
-                recipe.addIngredient(i.getAmount(), i.getMaterial());
-            }
-            Bukkit.addRecipe(recipe);
-        }
     }
 }

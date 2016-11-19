@@ -21,6 +21,21 @@ public class CureListener implements Listener {
     private static int radius = 6;
     private static int secondaryBlockAmount = 12;
 
+    public static MGItem[] getRequiredItems() {
+        return requiredItems;
+    }
+
+    public static int getSecondaryBlockAmount() {
+        return secondaryBlockAmount;
+    }
+
+    public static Material getAltarBlock() {
+        return altarBlock;
+    }
+
+    public static Material getSecondaryBlock() {
+        return secondaryBlock;
+    }
 
     @EventHandler
     public void onCure(PlayerInteractEvent event) {
@@ -53,22 +68,6 @@ public class CureListener implements Listener {
             }
 
         }
-    }
-
-    public static MGItem[] getRequiredItems() {
-        return requiredItems;
-    }
-
-    public static int getSecondaryBlockAmount() {
-        return secondaryBlockAmount;
-    }
-
-    public static Material getAltarBlock() {
-        return altarBlock;
-    }
-
-    public static Material getSecondaryBlock() {
-        return secondaryBlock;
     }
 
 

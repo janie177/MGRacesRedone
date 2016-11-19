@@ -27,12 +27,12 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Frost implements IAbility {
 
+    private static ConcurrentMap<String, List<Block>> frozenMap = Maps.newConcurrentMap();
+
     @Override
     public void run(Event event) {
 
     }
-
-    private static ConcurrentMap<String, List<Block>> frozenMap = Maps.newConcurrentMap();
 
     @Override
     public boolean run(Player player) {

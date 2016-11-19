@@ -23,6 +23,10 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffectType;
 
 public class DwarfListener implements Listener {
+    private static boolean isDwarf(Player p) {
+        return Races.getRace(p) == RaceType.DWARF;
+    }
+
     @EventHandler
     public void onDwarfDamage(EntityDamageByEntityEvent e) {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld()) || e.isCancelled()) return;
@@ -138,9 +142,5 @@ public class DwarfListener implements Listener {
         } else if (level > 2 && e.getBlock().getType() == Material.STONE && e.getBlock().getLightLevel() < 3 && RandomUtil.chance(10) && p.getLocation().getBlock().getType() == Material.AIR) {
             p.getLocation().getBlock().setType(Material.TORCH);
         }
-    }
-
-    private static boolean isDwarf(Player p) {
-        return Races.getRace(p) == RaceType.DWARF;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -23,8 +23,8 @@
 
     <properties> <!-- It is important to keep up to date manually. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot.version>1.9.2-R0.1-SNAPSHOT</spigot.version>
-        <worldguard.version>6.0.0-SNAPSHOT</worldguard.version>
+        <spigot.version>1.10-R0.1-SNAPSHOT</spigot.version>
+        <worldguard.version>6.1.1-SNAPSHOT</worldguard.version>
     </properties>
 
     <repositories>
@@ -34,11 +34,11 @@
         </repository>
         <repository>
             <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo</url>
+            <url>http://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
             <id>vault-repo</id>
-            <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
+            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
     </repositories>
 
@@ -54,11 +54,13 @@
             <groupId>net.minegusta</groupId>
             <artifactId>mglib</artifactId>
             <version>1.0.3</version>
+            <systemPath>${basedir}/src/lib/MGlib.jar</systemPath>
+
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

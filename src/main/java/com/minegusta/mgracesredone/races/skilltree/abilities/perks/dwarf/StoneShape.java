@@ -21,12 +21,12 @@ import java.util.concurrent.ConcurrentMap;
 
 public class StoneShape implements IAbility {
 
+    public static ConcurrentMap<Location, Boolean> wallBlocks = Maps.newConcurrentMap();
+
     @Override
     public void run(Event event) {
 
     }
-
-    public static ConcurrentMap<Location, Boolean> wallBlocks = Maps.newConcurrentMap();
 
     @Override
     public boolean run(Player player) {

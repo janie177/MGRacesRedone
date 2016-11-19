@@ -22,99 +22,99 @@ import java.util.Optional;
 
 public class BindListener implements Listener {
 
-	@EventHandler
-	public void onBindClick(PlayerInteractEvent e) {
+    @EventHandler
+    public void onBindClick(PlayerInteractEvent e) {
 
-		Player p = e.getPlayer();
-		if (!WorldCheck.isEnabled(p.getWorld()) || e.getHand() != EquipmentSlot.HAND) return;
+        Player p = e.getPlayer();
+        if (!WorldCheck.isEnabled(p.getWorld()) || e.getHand() != EquipmentSlot.HAND) return;
 
-		MGPlayer mgp = Races.getMGPlayer(p);
+        MGPlayer mgp = Races.getMGPlayer(p);
 
-		Material item = e.hasItem() ? e.getItem().getType() : Material.AIR;
-		short data = item != Material.AIR ? e.getItem().getDurability() : 0;
-		boolean ignoreData = BindUtil.ignoreItemData(item);
+        Material item = e.hasItem() ? e.getItem().getType() : Material.AIR;
+        short data = item != Material.AIR ? e.getItem().getDurability() : 0;
+        boolean ignoreData = BindUtil.ignoreItemData(item);
 
-		Optional<Bind> b = mgp.getBindForItem(item, data, ignoreData);
-		if (!b.isPresent()) return;
+        Optional<Bind> b = mgp.getBindForItem(item, data, ignoreData);
+        if (!b.isPresent()) return;
 
-		Bind bind = b.get();
-		AbilityType active = bind.getActive();
+        Bind bind = b.get();
+        AbilityType active = bind.getActive();
 
-		if (active.canBind() && mgp.hasAbility(active)) {
+        if (active.canBind() && mgp.hasAbility(active)) {
 
-			if (active == AbilityType.ENDRIFT && e.getAction() != Action.PHYSICAL) {
-				//EndRift has special activation and controls. Has to be an exception.
-				active.run(e);
-				return;
-			}
+            if (active == AbilityType.ENDRIFT && e.getAction() != Action.PHYSICAL) {
+                //EndRift has special activation and controls. Has to be an exception.
+                active.run(e);
+                return;
+            }
 
-			if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-				if (bind.scrollActive()) {
-					p.sendMessage(ChatColor.DARK_PURPLE + "[" + ChatColor.LIGHT_PURPLE + "MG" + ChatColor.DARK_PURPLE + "] " + ChatColor.GREEN + "You selected " + ChatColor.LIGHT_PURPLE + bind.getActive() + ChatColor.GREEN + ".");
-				}
-				return;
-			}
+            if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+                if (bind.scrollActive()) {
+                    p.sendMessage(ChatColor.DARK_PURPLE + "[" + ChatColor.LIGHT_PURPLE + "MG" + ChatColor.DARK_PURPLE + "] " + ChatColor.GREEN + "You selected " + ChatColor.LIGHT_PURPLE + bind.getActive() + ChatColor.GREEN + ".");
+                }
+                return;
+            }
 
-			if ((e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)) return;
+            if ((e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)) return;
 
-			//----// COOL DOWN //----//
-			String name = active.name();
-			String uuid = p.getUniqueId().toString();
-			if (!Cooldown.isCooledDown(name, uuid)) {
-				ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + active.getName() + ".");
-				return;
-			}
-			if (active != AbilityType.TELEKINESIS) ChatUtil.sendString(p, "You used " + active.getName() + "!");
-			//----//           //----//
+            //----// COOL DOWN //----//
+            String name = active.name();
+            String uuid = p.getUniqueId().toString();
+            if (!Cooldown.isCooledDown(name, uuid)) {
+                ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + active.getName() + ".");
+                return;
+            }
+            if (active != AbilityType.TELEKINESIS) ChatUtil.sendString(p, "You used " + active.getName() + "!");
+            //----//           //----//
 
-			//Start cooldown if ability returns true. Returns false when blocked by worldguard for example.
-			if (active.run(p)) {
-				Cooldown.newCoolDown(name, uuid, active.getCooldown(mgp.getAbilityLevel(active)));
-			}
-		}
+            //Start cooldown if ability returns true. Returns false when blocked by worldguard for example.
+            if (active.run(p)) {
+                Cooldown.newCoolDown(name, uuid, active.getCooldown(mgp.getAbilityLevel(active)));
+            }
+        }
 
 
-	}
+    }
 
-	@EventHandler
-	public void onBindClickEntity(PlayerInteractEntityEvent e) {
+    @EventHandler
+    public void onBindClickEntity(PlayerInteractEntityEvent e) {
 
-		Player p = e.getPlayer();
-		if (!WorldCheck.isEnabled(p.getWorld()) || e.isCancelled()) return;
-		MGPlayer mgp = Races.getMGPlayer(p);
+        Player p = e.getPlayer();
+        if (!WorldCheck.isEnabled(p.getWorld()) || e.isCancelled()) return;
+        MGPlayer mgp = Races.getMGPlayer(p);
 
-		Material item = e.getPlayer().getInventory().getItemInMainHand().getType();
-		short data = e.getPlayer().getInventory().getItemInMainHand().getDurability();
-		boolean ignoreData = BindUtil.ignoreItemData(item);
+        Material item = e.getPlayer().getInventory().getItemInMainHand().getType();
+        short data = e.getPlayer().getInventory().getItemInMainHand().getDurability();
+        boolean ignoreData = BindUtil.ignoreItemData(item);
 
-		Optional<Bind> b = mgp.getBindForItem(item, data, ignoreData);
-		if (!b.isPresent()) return;
-		Bind bind = b.get();
+        Optional<Bind> b = mgp.getBindForItem(item, data, ignoreData);
+        if (!b.isPresent()) return;
+        Bind bind = b.get();
 
-		AbilityType active = bind.getActive();
+        AbilityType active = bind.getActive();
 
-		if (active.canBind() && mgp.hasAbility(active)) {
+        if (active.canBind() && mgp.hasAbility(active)) {
 
-			if (active == AbilityType.ENDRIFT) {
-				//Do not do anything for end rift, only activate on the other method above.
-				return;
-			}
+            if (active == AbilityType.ENDRIFT) {
+                //Do not do anything for end rift, only activate on the other method above.
+                return;
+            }
 
-			//----// COOL DOWN //----//
-			String name = active.name();
-			String uuid = p.getUniqueId().toString();
-			if (!Cooldown.isCooledDown(name, uuid)) {
-				ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + active.getName() + ".");
-				return;
-			}
-			if (active != AbilityType.TELEKINESIS) ChatUtil.sendString(p, "You used " + active.getName() + "!");
-			Cooldown.newCoolDown(name, uuid, active.getCooldown(mgp.getAbilityLevel(active)));
-			//----//           //----//
+            //----// COOL DOWN //----//
+            String name = active.name();
+            String uuid = p.getUniqueId().toString();
+            if (!Cooldown.isCooledDown(name, uuid)) {
+                ChatUtil.sendString(p, "You have to wait another " + Cooldown.getRemaining(name, uuid) + " seconds to use " + active.getName() + ".");
+                return;
+            }
+            if (active != AbilityType.TELEKINESIS) ChatUtil.sendString(p, "You used " + active.getName() + "!");
+            Cooldown.newCoolDown(name, uuid, active.getCooldown(mgp.getAbilityLevel(active)));
+            //----//           //----//
 
-			//Start cooldown if ability returns true. Returns false when blocked by worldguard for example.
-			if (active.run(p)) {
-				Cooldown.newCoolDown(name, uuid, active.getCooldown(mgp.getAbilityLevel(active)));
-			}
-		}
-	}
+            //Start cooldown if ability returns true. Returns false when blocked by worldguard for example.
+            if (active.run(p)) {
+                Cooldown.newCoolDown(name, uuid, active.getCooldown(mgp.getAbilityLevel(active)));
+            }
+        }
+    }
 }

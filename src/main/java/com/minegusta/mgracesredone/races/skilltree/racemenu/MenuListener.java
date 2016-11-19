@@ -16,33 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class MenuListener implements Listener {
-    @EventHandler
-    public void buyItem(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
-        if (e.getInventory().getName() != null && e.getInventory().getName().contains(ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Perk-Points: ")) {
-            if (!e.getCursor().getType().equals(Material.AIR)) {
-                e.setCancelled(true);
-                p.updateInventory();
-                return;
-            }
-            if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) {
-                e.setCancelled(true);
-                return;
-            }
-            if (!e.getCurrentItem().hasItemMeta() || !e.getCurrentItem().getItemMeta().hasDisplayName()) {
-                e.setCancelled(true);
-                return;
-            }
-            if (!WorldCheck.isEnabled(e.getWhoClicked().getWorld())) {
-                ChatUtil.sendString((Player) e.getWhoClicked(), "This is not a races world!");
-                e.setCancelled(true);
-                return;
-            }
-            apply(p, e.getCurrentItem());
-            e.setCancelled(true);
-        }
-    }
-
     private static void apply(Player p, ItemStack i) {
         MGPlayer mgp = Races.getMGPlayer(p);
         AbilityType bought = null;
@@ -127,6 +100,33 @@ public class MenuListener implements Listener {
             AbilityMenu.buildInventory(p);
         } else {
             ChatUtil.sendString(p, "You did not have enough perk-points after all.");
+        }
+    }
+
+    @EventHandler
+    public void buyItem(InventoryClickEvent e) {
+        Player p = (Player) e.getWhoClicked();
+        if (e.getInventory().getName() != null && e.getInventory().getName().contains(ChatColor.YELLOW + "Perk Shop. " + ChatColor.RED + "Perk-Points: ")) {
+            if (!e.getCursor().getType().equals(Material.AIR)) {
+                e.setCancelled(true);
+                p.updateInventory();
+                return;
+            }
+            if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) {
+                e.setCancelled(true);
+                return;
+            }
+            if (!e.getCurrentItem().hasItemMeta() || !e.getCurrentItem().getItemMeta().hasDisplayName()) {
+                e.setCancelled(true);
+                return;
+            }
+            if (!WorldCheck.isEnabled(e.getWhoClicked().getWorld())) {
+                ChatUtil.sendString((Player) e.getWhoClicked(), "This is not a races world!");
+                e.setCancelled(true);
+                return;
+            }
+            apply(p, e.getCurrentItem());
+            e.setCancelled(true);
         }
     }
 }

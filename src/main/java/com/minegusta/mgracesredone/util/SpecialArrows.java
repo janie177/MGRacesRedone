@@ -16,26 +16,6 @@ import org.bukkit.util.Vector;
 import java.util.concurrent.ConcurrentMap;
 
 public class SpecialArrows {
-    public enum ArrowType {
-        NORMAL(1, 0), ICE(2, 2), GRAPPLE(3, 4), EXPLODE(4, 4);
-
-        private int index;
-        private int levelReq;
-
-        private ArrowType(int index, int levelReq) {
-            this.index = index;
-            this.levelReq = levelReq;
-        }
-
-        public int getLevel() {
-            return levelReq;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-    }
-
     public static ConcurrentMap<String, ArrowType> arrowMap = Maps.newConcurrentMap();
 
     public static ArrowType getArrowType(Player p) {
@@ -117,6 +97,26 @@ public class SpecialArrows {
         if (RandomUtil.chance(30)) {
             if (!WGUtil.canGetDamage(p)) return;
             l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
+        }
+    }
+
+    public enum ArrowType {
+        NORMAL(1, 0), ICE(2, 2), GRAPPLE(3, 4), EXPLODE(4, 4);
+
+        private int index;
+        private int levelReq;
+
+        private ArrowType(int index, int levelReq) {
+            this.index = index;
+            this.levelReq = levelReq;
+        }
+
+        public int getLevel() {
+            return levelReq;
+        }
+
+        public int getIndex() {
+            return index;
         }
     }
 }

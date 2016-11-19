@@ -5,23 +5,23 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
 public class ElfShooter implements ProjectileSource {
-	@Override
-	public <T extends Projectile> T launchProjectile(Class<? extends T> projectile) {
-		return null;
-	}
+    private String uuid;
 
-	@Override
-	public <T extends Projectile> T launchProjectile(Class<? extends T> projectile, Vector velocity) {
-		return null;
-	}
+    public ElfShooter(String uuid) {
+        this.uuid = uuid;
+    }
 
-	private String uuid;
+    @Override
+    public <T extends Projectile> T launchProjectile(Class<? extends T> projectile) {
+        return null;
+    }
 
-	public ElfShooter(String uuid) {
-		this.uuid = uuid;
-	}
+    @Override
+    public <T extends Projectile> T launchProjectile(Class<? extends T> projectile, Vector velocity) {
+        return null;
+    }
 
-	public String getUuid() {
-		return uuid;
-	}
+    public String getUuid() {
+        return uuid;
+    }
 }

@@ -94,21 +94,21 @@ public class HolyRain implements IAbility {
             return false;
         }
 
-            Missile.createMissile(player.getLocation(), player.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
+        Missile.createMissile(player.getLocation(), player.getLocation().getDirection().multiply(1.1), new Effect[]{Effect.MOBSPAWNER_FLAMES, Effect.FLAME}, 30);
         EffectUtil.playParticle(player, Effect.CRIT);
-            EffectUtil.playSound(player, Sound.ENTITY_LIGHTNING_THUNDER);
-            ChatUtil.sendString(player, ChatColor.DARK_RED + "You call a holy rain on your location!");
+        EffectUtil.playSound(player, Sound.ENTITY_LIGHTNING_THUNDER);
+        ChatUtil.sendString(player, ChatColor.DARK_RED + "You call a holy rain on your location!");
 
-            MGPlayer mgp = Races.getMGPlayer(player);
-            int level = mgp.getAbilityLevel(getType());
+        MGPlayer mgp = Races.getMGPlayer(player);
+        int level = mgp.getAbilityLevel(getType());
 
-            boolean heal = level > 1;
-            int duration = 9;
-            if (level > 2) {
-                duration = 18;
-            }
+        boolean heal = level > 1;
+        int duration = 9;
+        if (level > 2) {
+            duration = 18;
+        }
 
-            startRain(player.getLocation().add(0, 9, 0), heal, duration);
+        startRain(player.getLocation().add(0, 9, 0), heal, duration);
         return true;
     }
 

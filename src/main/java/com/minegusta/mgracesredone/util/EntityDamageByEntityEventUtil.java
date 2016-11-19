@@ -6,8 +6,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class EntityDamageByEntityEventUtil {
 
-	public static EntityDamageByEntityEvent createEvent(LivingEntity damager, LivingEntity damagee, EntityDamageEvent.DamageCause cause, double damage) {
-		//Return a fresh new Event.
-		return new EntityDamageByEntityEvent(damager, damagee, cause, damage);
-	}
+    public static EntityDamageByEntityEvent createEvent(LivingEntity damager, LivingEntity damagee, EntityDamageEvent.DamageCause cause, double damage) {
+        //Return a fresh new Event.
+        return new EntityDamageByEntityEvent(damager, damagee, cause, damage);
+    }
 }

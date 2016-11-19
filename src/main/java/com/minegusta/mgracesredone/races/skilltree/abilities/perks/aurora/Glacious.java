@@ -19,6 +19,10 @@ public class Glacious implements IAbility {
 
     private static ConcurrentMap<String, Boolean> toggled = Maps.newConcurrentMap();
 
+    public static boolean isToggled(Player player) {
+        return !toggled.containsKey(player.getUniqueId().toString());
+    }
+
     @Override
     public void run(Event event) {
 
@@ -38,10 +42,6 @@ public class Glacious implements IAbility {
         }
 
         return false;
-    }
-
-    public static boolean isToggled(Player player) {
-        return !toggled.containsKey(player.getUniqueId().toString());
     }
 
     @Override

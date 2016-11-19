@@ -12,63 +12,63 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Binds {
 
-	private ConcurrentMap<Bind, Boolean> binds = Maps.newConcurrentMap();
+    private ConcurrentMap<Bind, Boolean> binds = Maps.newConcurrentMap();
 
-	public Binds(List<Bind> binds) {
-		this.binds.clear();
-		binds.stream().forEach(bind -> this.binds.put(bind, true));
-	}
+    public Binds(List<Bind> binds) {
+        this.binds.clear();
+        binds.stream().forEach(bind -> this.binds.put(bind, true));
+    }
 
 
-	public Set<Bind> getBinds() {
-		return binds.keySet();
-	}
+    public Set<Bind> getBinds() {
+        return binds.keySet();
+    }
 
-	public void setBinds(List<Bind> binds) {
-		this.binds.clear();
-		binds.stream().forEach(bind -> this.binds.put(bind, true));
-	}
+    public void setBinds(List<Bind> binds) {
+        this.binds.clear();
+        binds.stream().forEach(bind -> this.binds.put(bind, true));
+    }
 
-	public boolean isBind(Material item, short data, boolean ignoreData) {
-		for (Bind b : binds.keySet()) {
-			if (b.getItem() == item && (b.getData() == data || ignoreData)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean isBind(Material item, short data, boolean ignoreData) {
+        for (Bind b : binds.keySet()) {
+            if (b.getItem() == item && (b.getData() == data || ignoreData)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public Optional<Bind> getBindForItem(Material item, short data, boolean ignoreData) {
-		for (Bind b : binds.keySet()) {
-			if (b.getItem() == item && (b.getData() == data || ignoreData)) {
-				return Optional.of(b);
-			}
-		}
-		return Optional.empty();
-	}
+    public Optional<Bind> getBindForItem(Material item, short data, boolean ignoreData) {
+        for (Bind b : binds.keySet()) {
+            if (b.getItem() == item && (b.getData() == data || ignoreData)) {
+                return Optional.of(b);
+            }
+        }
+        return Optional.empty();
+    }
 
-	public List<Bind> getBindForAbility(AbilityType type) {
-		List<Bind> bList = Lists.newArrayList();
-		for (Bind b : getBinds()) {
-			if (b.getAbilityTypes().contains(type)) bList.add(b);
-		}
-		return bList;
-	}
+    public List<Bind> getBindForAbility(AbilityType type) {
+        List<Bind> bList = Lists.newArrayList();
+        for (Bind b : getBinds()) {
+            if (b.getAbilityTypes().contains(type)) bList.add(b);
+        }
+        return bList;
+    }
 
-	public void removeBind(Bind b) {
-		binds.remove(b);
-	}
+    public void removeBind(Bind b) {
+        binds.remove(b);
+    }
 
-	public void addBind(Bind b) {
-		binds.put(b, true);
-	}
+    public void addBind(Bind b) {
+        binds.put(b, true);
+    }
 
-	public Optional<List<AbilityType>> getAbilityForItem(Material item, short data, boolean ignoreData) {
-		for (Bind b : binds.keySet()) {
-			if (b.getItem() == item && (ignoreData || data == b.getData())) {
-				return Optional.of(b.getAbilityTypes());
-			}
-		}
-		return Optional.empty();
-	}
+    public Optional<List<AbilityType>> getAbilityForItem(Material item, short data, boolean ignoreData) {
+        for (Bind b : binds.keySet()) {
+            if (b.getItem() == item && (ignoreData || data == b.getData())) {
+                return Optional.of(b.getAbilityTypes());
+            }
+        }
+        return Optional.empty();
+    }
 }

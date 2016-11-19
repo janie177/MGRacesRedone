@@ -11,15 +11,17 @@ import java.util.concurrent.TimeUnit;
 
 public class EnderRiftPortal {
 
+    private static final Effect[] effects = {Effect.PORTAL};
     public static ConcurrentMap<String, EnderRiftPortal> portals = Maps.newConcurrentMap();
-
     public ConcurrentMap<String, Long> teleported = Maps.newConcurrentMap();
-
     private String uuid;
     private Location location1;
     private Location location2;
     private int duration;
     private boolean altEntities;
+
+
+    //Static methods
 
     private EnderRiftPortal(String uuid, Location location1, Location location2, int duration, boolean altEntities) {
         this.uuid = uuid;
@@ -28,9 +30,6 @@ public class EnderRiftPortal {
         this.duration = duration;
         this.altEntities = altEntities;
     }
-
-
-    //Static methods
 
     public static void create(String uuid, Location location1, Location location2, int duration, boolean altEntities) {
         portals.put(uuid, new EnderRiftPortal(uuid, location1, location2, duration, altEntities));
@@ -86,43 +85,43 @@ public class EnderRiftPortal {
         return portals.get(uuid).getDuration();
     }
 
+
+    //Local methods
+
     public static void start(String uuid) {
         portals.get(uuid).start();
     }
 
-
-    //Local methods
-
     private Location getLocation1() {
         return location1;
-    }
-
-    private Location getLocation2() {
-        return location2;
     }
 
     private void setLocation1(Location l) {
         this.location1 = l;
     }
 
-    private void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    private int getDuration() {
-        return duration;
-    }
-
-    private void setAltEntities(boolean b) {
-        this.altEntities = b;
+    private Location getLocation2() {
+        return location2;
     }
 
     private void setLocation2(Location l) {
         this.location2 = l;
     }
 
+    private int getDuration() {
+        return duration;
+    }
+
+    private void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     private boolean getAltEntities() {
         return altEntities;
+    }
+
+    private void setAltEntities(boolean b) {
+        this.altEntities = b;
     }
 
     private String getUUID() {
@@ -164,8 +163,6 @@ public class EnderRiftPortal {
             }
         }
     }
-
-    private static final Effect[] effects = {Effect.PORTAL};
 
     private void effect(Location l) {
         EffectUtil.playParticle(l, Effect.CLOUD, 0, 0, 0, 1 / 30, 6, 30);

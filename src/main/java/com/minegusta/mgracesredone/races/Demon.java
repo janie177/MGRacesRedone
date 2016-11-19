@@ -14,6 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 public class Demon implements Race {
+    public static String getChant() {
+        return "Flames shall consume the last light, in fire I bind my soul.";
+    }
+
     @Override
     public double getHealth() {
         return 22;
@@ -121,9 +125,5 @@ public class Demon implements Race {
                 damage = 1;
             p.damage(damage);
         }
-    }
-
-    public static String getChant() {
-        return "Flames shall consume the last light, in fire I bind my soul.";
     }
 }

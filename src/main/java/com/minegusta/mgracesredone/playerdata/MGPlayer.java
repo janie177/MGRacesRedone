@@ -33,6 +33,18 @@ public class MGPlayer {
     private int perkpoints;
     private ConcurrentMap<AbilityType, Integer> abilities = Maps.newConcurrentMap();
 
+    public MGPlayer(Player p, FileConfiguration f) {
+        buildMGPlayer(p.getUniqueId().toString(), f);
+    }
+
+    public MGPlayer(UUID uuid, FileConfiguration f) {
+        buildMGPlayer(uuid.toString(), f);
+    }
+
+    public MGPlayer(String uuid, FileConfiguration f) {
+        buildMGPlayer(uuid, f);
+    }
+
     private void buildMGPlayer(String uuid, FileConfiguration f) {
         this.uuid = uuid;
         this.name = Bukkit.getPlayer(UUID.fromString(uuid)).getName();
@@ -69,18 +81,6 @@ public class MGPlayer {
         AbilityFileManager.loadAbilities(this);
 
         updateAttributes();
-    }
-
-    public MGPlayer(Player p, FileConfiguration f) {
-        buildMGPlayer(p.getUniqueId().toString(), f);
-    }
-
-    public MGPlayer(UUID uuid, FileConfiguration f) {
-        buildMGPlayer(uuid.toString(), f);
-    }
-
-    public MGPlayer(String uuid, FileConfiguration f) {
-        buildMGPlayer(uuid, f);
     }
 
     //BINDS//

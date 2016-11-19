@@ -10,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import java.util.concurrent.ConcurrentMap;
 
 public class BleedTask {
+    public static ConcurrentMap<String, Bleed> bleeding = Maps.newConcurrentMap();
     private static int id = -1;
 
     public static void start() {
@@ -21,8 +22,6 @@ public class BleedTask {
             Bukkit.getScheduler().cancelTask(id);
         }
     }
-
-    public static ConcurrentMap<String, Bleed> bleeding = Maps.newConcurrentMap();
 
     public static void addBleed(LivingEntity ent, Entity damager, int duration) {
         if (bleeding.containsKey(ent.getUniqueId().toString())) return;

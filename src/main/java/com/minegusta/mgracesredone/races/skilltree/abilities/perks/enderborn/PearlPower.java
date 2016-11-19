@@ -25,7 +25,17 @@ import java.util.concurrent.ConcurrentMap;
 
 public class PearlPower implements IAbility {
 
+    private static final double[] directions = {0.5, -0.5, 1.0, -1.0};
+    private static final Effect[] effects = {Effect.PORTAL};
     public static ConcurrentMap<String, PearlAbility> pmap = Maps.newConcurrentMap();
+
+    public static PearlAbility getFromMap(Player p) {
+        if (pmap.containsKey(p.getUniqueId().toString())) {
+            return pmap.get(p.getUniqueId().toString());
+        }
+        pmap.put(p.getUniqueId().toString(), PearlAbility.NORMAL);
+        return PearlAbility.NORMAL;
+    }
 
     private void addToMap(Player p, PearlAbility ability) {
         pmap.put(p.getUniqueId().toString(), ability);
@@ -42,53 +52,6 @@ public class PearlPower implements IAbility {
 
     private boolean isCooledDown(String name, String uuid) {
         return Cooldown.isCooledDown(name, uuid);
-    }
-
-    public static PearlAbility getFromMap(Player p) {
-        if (pmap.containsKey(p.getUniqueId().toString())) {
-            return pmap.get(p.getUniqueId().toString());
-        }
-        pmap.put(p.getUniqueId().toString(), PearlAbility.NORMAL);
-        return PearlAbility.NORMAL;
-    }
-
-    public enum PearlAbility {
-        NORMAL(0, 1, "Normal"),
-        VACUUM(1, 2, "Vacuum"),
-        MINION(3, 3, "Minion"),
-        EXPLODE(5, 4, "Exploding");
-
-        private int level;
-        private int order;
-        private String name;
-
-        PearlAbility(int level, int order, String name) {
-            this.level = level;
-            this.order = order;
-            this.name = name;
-        }
-
-        public int getLevel() {
-            return level;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getOrder() {
-            return order;
-        }
-
-        public static PearlAbility getNext(int current, int level) {
-            for (PearlAbility a : PearlAbility.values()) {
-                if (a.getOrder() == current + 1) {
-                    if (a.getLevel() <= level) return a;
-                    break;
-                }
-            }
-            return NORMAL;
-        }
     }
 
     //The actual powers with the projectile hit event.
@@ -175,9 +138,6 @@ public class PearlPower implements IAbility {
         EffectUtil.playParticle(l, Effect.CLOUD, 3, 3, 3, 1 / 20, 40, 30);
 
     }
-
-    private static final double[] directions = {0.5, -0.5, 1.0, -1.0};
-    private static final Effect[] effects = {Effect.PORTAL};
 
     private void minion(Location l, Entity pearl) {
         Enderman man = (Enderman) l.getWorld().spawnEntity(l, EntityType.ENDERMAN);
@@ -292,5 +252,44 @@ public class PearlPower implements IAbility {
 
         }
         return desc;
+    }
+
+    public enum PearlAbility {
+        NORMAL(0, 1, "Normal"),
+        VACUUM(1, 2, "Vacuum"),
+        MINION(3, 3, "Minion"),
+        EXPLODE(5, 4, "Exploding");
+
+        private int level;
+        private int order;
+        private String name;
+
+        PearlAbility(int level, int order, String name) {
+            this.level = level;
+            this.order = order;
+            this.name = name;
+        }
+
+        public static PearlAbility getNext(int current, int level) {
+            for (PearlAbility a : PearlAbility.values()) {
+                if (a.getOrder() == current + 1) {
+                    if (a.getLevel() <= level) return a;
+                    break;
+                }
+            }
+            return NORMAL;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getOrder() {
+            return order;
+        }
     }
 }

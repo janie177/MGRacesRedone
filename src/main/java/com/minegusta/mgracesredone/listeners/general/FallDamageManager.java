@@ -12,6 +12,14 @@ import java.util.concurrent.ConcurrentMap;
 public class FallDamageManager implements Listener {
     public static ConcurrentMap<String, Long> fallMap = Maps.newConcurrentMap();
 
+    public static void addToFallMap(Player p) {
+        addToFallMap(p.getUniqueId().toString());
+    }
+
+    public static void addToFallMap(String uuid) {
+        fallMap.put(uuid, System.currentTimeMillis());
+    }
+
     @EventHandler
     public void onFallDamage(EntityDamageEvent e) {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
@@ -23,13 +31,5 @@ public class FallDamageManager implements Listener {
                 fallMap.remove(p.getUniqueId().toString());
             }
         }
-    }
-
-    public static void addToFallMap(Player p) {
-        addToFallMap(p.getUniqueId().toString());
-    }
-
-    public static void addToFallMap(String uuid) {
-        fallMap.put(uuid, System.currentTimeMillis());
     }
 }
