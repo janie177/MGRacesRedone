@@ -39,7 +39,8 @@ public class PerkPointListener implements Listener {
                 String uuid = damager.getUniqueId().toString();
                 String victimUUID = victim.getUniqueId().toString();
                 MGPlayer mgp = Races.getMGPlayer(damager);
-
+                if (damager == victim) {
+                } else
                 process(uuid, victimUUID, mgp, damager);
             }
         }
