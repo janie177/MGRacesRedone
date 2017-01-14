@@ -31,7 +31,7 @@ public class Bleed {
         Bukkit.getPluginManager().callEvent(e);
 
         if (WGUtil.canGetDamage(target) && !e.isCancelled()) {
-            target.damage(e.getDamage());
+            target.damage(e.getFinalDamage());
             target.setLastDamageCause(e);
             if (target instanceof Player) {
                 target.sendMessage(ChatColor.DARK_RED + "You are bleeding..");
