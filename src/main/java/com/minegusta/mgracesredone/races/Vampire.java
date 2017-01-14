@@ -1,11 +1,10 @@
 package com.minegusta.mgracesredone.races;
-
-import com.minegusta.mgessentials.MGEssentialsPlugin;
 import com.minegusta.mgracesredone.main.Races;
 import com.minegusta.mgracesredone.playerdata.MGPlayer;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.util.*;
 import net.md_5.bungee.api.ChatColor;
+import net.minegusta.mglib.combat.CombatUtil;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -92,7 +91,7 @@ public class Vampire implements Race {
 		//Regenerate from REGENERATE Ability when NOT in combat
 		if (interval > 2 && p.getFoodLevel() > 6) {
 			interval = 0;
-			if (WeatherUtil.isNight(p.getWorld()) && regenLevel > 0 && !p.isDead() && !MGEssentialsPlugin.inCombat(p)) {
+			if (WeatherUtil.isNight(p.getWorld()) && regenLevel > 0 && !p.isDead() && !CombatUtil.getIfInCombat(p.getUniqueId().toString())) {
 				regenLevel = regenLevel > 3 ? 3 : regenLevel;
 				double max = p.getMaxHealth() - p.getHealth();
 				if (max >= regenLevel) {
