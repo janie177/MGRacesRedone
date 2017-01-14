@@ -76,11 +76,12 @@ public class WereWolfListener implements Listener {
 
             if (!WeatherUtil.isNight(damager.getWorld())) return;
 
-            if (damager.getInventory().getItemInMainHand().getType() == null || damager.getInventory().getItemInMainHand().getType() == Material.AIR) {
+            if ((damager.getInventory().getItemInMainHand().getType() == null || damager.getInventory().getItemInMainHand().getType() == Material.AIR) && e.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
                 if (mgp.hasAbility(AbilityType.CLAWS)) AbilityType.CLAWS.run(e);
                 if (mgp.hasAbility(AbilityType.CARNIVORE)) AbilityType.CARNIVORE.run(e);
             }
 
+            //Lower damage during a full moon when not using claws.
             if (isWereWolf(damager) && damager.getInventory().getItemInMainHand().getType() != Material.AIR && WeatherUtil.isNight(damager.getWorld()) && WeatherUtil.isFullMoon(damager.getWorld())) {
                 e.setDamage(e.getDamage() / 2);
             }
