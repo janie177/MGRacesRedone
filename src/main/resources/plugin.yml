@@ -2,7 +2,7 @@ main: com.minegusta.mgracesredone.main.Main
 authors: [janie177, HQM]
 name: MGRacesRedone
 version: ${project.version}
-depend: [WorldGuard, Vault, MGEssentials, MGLib]
+depend: [WorldGuard, Vault, MGLib]
 commands:
    race:
       aliases: [races, class, classes, rc]
