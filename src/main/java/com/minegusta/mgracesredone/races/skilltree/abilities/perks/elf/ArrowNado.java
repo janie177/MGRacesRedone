@@ -120,11 +120,13 @@ public class ArrowNado implements IAbility {
 							arrows.stream().filter(Entity::isValid).forEach(Entity::remove);
 						}
 
+						int chance = 10 + (targets.size() * 5);
+
 						arrows.stream().filter(ent -> ent.isValid() && !ent.isOnGround()).forEach(a ->
 						{
 							LivingEntity target = targets.get(RandomUtil.randomNumber(targets.size()) - 1);
-							if (target.isValid()) {
-								Vector v = target.getLocation().toVector().subtract(a.getLocation().toVector());
+							if (target.isValid() && RandomUtil.chance(chance)) {
+								Vector v = target.getLocation().toVector().subtract(a.getLocation().toVector()).normalize();
 								a.setVelocity(v.multiply(1.35));
 							}
 						});
