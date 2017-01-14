@@ -111,13 +111,13 @@ public class ArrowRain implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"Crouch-shoot a bow to cause a 5 second arrow rain on that location."};
+                desc = new String[]{"Crouch-shoot a bow to cause a", "5 second arrow rain on that location."};
                 break;
             case 2:
-                desc = new String[]{"Crouch-shoot a bow to cause a 10 second arrow rain at that location."};
+                desc = new String[]{"Crouch-shoot a bow to cause a", "10 second arrow rain at that location."};
                 break;
             case 3:
-                desc = new String[]{"Crouch-shoot a bow to cause a 15 second arrow rain at that location."};
+                desc = new String[]{"Crouch-shoot a bow to cause a", "15 second arrow rain at that location."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};
