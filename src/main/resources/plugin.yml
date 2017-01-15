@@ -20,7 +20,7 @@ commands:
       usage: /Race
       description: All information you need about races.
    bind:
-      aliases: [b, binds, cast, ability]
+      aliases: [b, binds, ability]
       usage: /Bind
       description: Bind an ability to an item. Right click said item to use.
    unbind:

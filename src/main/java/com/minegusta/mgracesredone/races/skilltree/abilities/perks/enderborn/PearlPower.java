@@ -187,7 +187,8 @@ public class PearlPower implements IAbility {
         man.setCustomNameVisible(true);
 
         for (Entity ent : pearl.getNearbyEntities(7, 7, 7)) {
-            if (ent instanceof LivingEntity) {
+            //Target entities nearby unless they have coldblooded level 3.
+            if (ent instanceof LivingEntity && !(ent instanceof Player && Races.getMGPlayer((Player) ent).getAbilityLevel(AbilityType.COLDBLOODED) > 2)) {
                 ((Creature) man).setTarget((LivingEntity) ent);
                 break;
             }

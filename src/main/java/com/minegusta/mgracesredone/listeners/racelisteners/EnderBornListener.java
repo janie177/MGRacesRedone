@@ -117,10 +117,8 @@ public class EnderBornListener implements Listener {
         if (!WorldCheck.isEnabled(e.getEntity().getWorld())) return;
         if (e.getTarget() instanceof Player && (e.getEntity() instanceof Enderman || e.getEntity() instanceof Endermite)) {
             Player p = (Player) e.getTarget();
-            if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.COLDBLOODED) < 3) return;
-            e.setCancelled(true);
+            if (Races.getMGPlayer(p).getAbilityLevel(AbilityType.COLDBLOODED) > 2) e.setCancelled(true);
         }
-
     }
 
     //Teleporting players with the required pearlpower level will not take damage.

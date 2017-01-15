@@ -120,7 +120,8 @@ public class ArrowNado implements IAbility {
 							arrows.stream().filter(Entity::isValid).forEach(Entity::remove);
 						}
 
-						int chance = 10 + (targets.size() * 5);
+						//Chance of arrows being fired. Higher value causes more arrows to be fired. The second int adds up when there's multiple targets.
+						int chance = 35 + (targets.size() * 5);
 
 						arrows.stream().filter(ent -> ent.isValid() && !ent.isOnGround()).forEach(a ->
 						{
