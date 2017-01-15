@@ -29,9 +29,7 @@ public class Claws implements IAbility {
 
         int level = mgp.getAbilityLevel(getType());
 
-        int damage = 2 * level;
-
-        e.setDamage(e.getDamage() + damage);
+        e.setDamage(e.getDamage() + level);
     }
 
     @Override
@@ -95,19 +93,19 @@ public class Claws implements IAbility {
 
         switch (level) {
             case 1:
-                desc = new String[]{"At night, your bare claws are stronger.", "This only works in the overworld.", "Claw damage is increased by 2."};
+                desc = new String[]{"At night, your bare claws are stronger.", "This only works in the overworld.", "Claw damage is increased to 2."};
                 break;
             case 2:
-                desc = new String[]{"Claw damage is increased to 4."};
+                desc = new String[]{"Claw damage is increased to 3."};
                 break;
             case 3:
-                desc = new String[]{"Claw damage is increased to 6."};
+                desc = new String[]{"Claw damage is increased to 4."};
                 break;
             case 4:
-                desc = new String[]{"Claw damage is increased to 8."};
+                desc = new String[]{"Claw damage is increased to 5."};
                 break;
             case 5:
-                desc = new String[]{"Claw damage is increased to 10."};
+                desc = new String[]{"Claw damage is increased to 6."};
                 break;
             default:
                 desc = new String[]{"This is an error!"};

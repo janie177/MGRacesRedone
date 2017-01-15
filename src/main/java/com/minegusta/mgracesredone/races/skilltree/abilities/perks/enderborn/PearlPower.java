@@ -181,7 +181,7 @@ public class PearlPower implements IAbility {
 
     private void minion(Location l, Entity pearl) {
         Enderman man = (Enderman) l.getWorld().spawnEntity(l, EntityType.ENDERMAN);
-        PotionUtil.updatePotion(man, PotionEffectType.INCREASE_DAMAGE, 2, 60);
+        PotionUtil.updatePotion(man, PotionEffectType.INCREASE_DAMAGE, 0, 60);
         PotionUtil.updatePotion(man, PotionEffectType.DAMAGE_RESISTANCE, 1, 60);
         man.setCustomName(ChatColor.DARK_PURPLE + "Enderborn Minion");
         man.setCustomNameVisible(true);
@@ -204,6 +204,14 @@ public class PearlPower implements IAbility {
             Endermite mite = (Endermite) pearl.getWorld().spawnEntity(pearl.getLocation(), EntityType.ENDERMITE);
             mite.setCustomNameVisible(true);
             mite.setCustomName(ChatColor.LIGHT_PURPLE + "Enderborn Minion");
+
+            for (Entity ent : pearl.getNearbyEntities(4, 4, 4)) {
+                //Target entities nearby unless they have coldblooded level 3.
+                if (ent instanceof LivingEntity && !(ent instanceof Player && Races.getMGPlayer((Player) ent).getAbilityLevel(AbilityType.COLDBLOODED) > 2)) {
+                    ((Creature) mite).setTarget((LivingEntity) ent);
+                    break;
+                }
+            }
         }
     }
 
