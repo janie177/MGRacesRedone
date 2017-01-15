@@ -7,6 +7,7 @@ import com.minegusta.mgracesredone.races.RaceType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.AbilityType;
 import com.minegusta.mgracesredone.races.skilltree.abilities.IAbility;
 import com.minegusta.mgracesredone.util.WeatherUtil;
+import net.minegusta.mglib.utils.CooldownUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -23,13 +24,23 @@ public class Claws implements IAbility {
         EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
 
         Player damager = (Player) e.getDamager();
-        MGPlayer mgp = Races.getMGPlayer(damager);
 
-        if (!WeatherUtil.isNight(damager.getWorld()) || !WeatherUtil.isOverWorld(e.getEntity().getLocation())) return;
+        String id = "clawsdamage";
+        String uuid = damager.getUniqueId().toString();
 
-        int level = mgp.getAbilityLevel(getType());
+        //Cooldown for claw damage
+        if (CooldownUtil.isCooledDown(id, uuid)) {
+            MGPlayer mgp = Races.getMGPlayer(damager);
 
-        e.setDamage(e.getDamage() + level);
+            if (!WeatherUtil.isNight(damager.getWorld()) || !WeatherUtil.isOverWorld(e.getEntity().getLocation()))
+                return;
+
+            int level = mgp.getAbilityLevel(getType());
+
+            e.setDamage(e.getDamage() + level);
+
+            CooldownUtil.newCoolDown(id, uuid, (long) 665);
+        }
     }
 
     @Override
